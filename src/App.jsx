@@ -19,7 +19,7 @@ import Contact from './components/Sections/Contact';
 import FloatingNav from './components/Layout/FloatingNav';
 import SimpleTerminal from './components/Sections/SimpleTerminal';
 import BackToTop from './components/UI/BackToTop';
-import { ModernChatbot } from './components/UI/ModernChatbot';
+import { FloatingAiAssistant } from './components/UI/FloatingAiAssistant';
 
 
 function App() {
@@ -165,7 +165,7 @@ function App() {
             }}
           />
           <BackToTop />
-          <ModernChatbot />
+          <FloatingAiAssistant />
 
           <AnimatePresence>
             {showArchitect && (
