@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Send, Bot, Sparkles, CornerDownLeft } from "lucide-react";
+import { Send, Bot, Sparkles, X } from "lucide-react";
 import { Button } from "./Button";
 import {
   ChatBubble,
@@ -20,50 +20,43 @@ export function ModernChatbot() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [showIntro, setShowIntro] = useState(true);
+  const [conversationStage, setConversationStage] = useState("intro");
+  const [userName, setUserName] = useState(null);
 
-  // Track when chatbot is opened
+  // More human intro sequence
   useEffect(() => {
-    if (messages.length === 0 && showIntro) {
+    if (messages.length === 0) {
       trackChatbotEvent('chatbot_opened');
 
-      // Stage 1: Loading
+      // First message - friendly intro
       setTimeout(() => {
-        addBotMessage("⚡ Initializing AI assistant...");
-      }, 300);
+        addBotMessage("Hey there! 👋");
+      }, 500);
 
-      // Stage 2: Personality reveal
+      // Second message - set expectations
       setTimeout(() => {
-        addBotMessage("⚡ Loading corporate speak... ERROR 404\n\n🤖 Loading personality... SUCCESS");
-      }, 1500);
+        addBotMessage("I'm Harshana's AI assistant (but cooler than most bots, I promise 😎)");
+      }, 1800);
 
-      // Stage 3: Real greeting
+      // Third message - open-ended question
       setTimeout(() => {
-        setShowIntro(false);
-        addBotMessage(
-          "Yo! 👋\n\nSo you stumbled onto Harshana's portfolio and thought \"hmm, let me see if this person is actually legit or just another resume warrior.\"\n\nSmart move.\n\nI'm basically Harshana's digital hype person, except I actually know what I'm talking about and won't waste your time with corporate BS.\n\nWhat do you wanna know?",
-          [
-            "Show me the skills 💪",
-            "Impress me (projects) 🚀",
-            "The AI stuff 🤖",
-            "Just hire them already 📧"
-          ]
-        );
-      }, 3200);
+        addBotMessage("What brings you here today? Looking to hire? Just browsing? Or did you get lost on the internet? 😄");
+      }, 3500);
     }
-  }, [messages.length, showIntro]);
+  }, []);
 
-  const addBotMessage = (content, quickReplies = null) => {
-    setMessages((prev) => [
-      ...prev,
-      {
-        id: Date.now(),
-        content,
-        sender: "ai",
-        quickReplies,
-        timestamp: new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
-      },
-    ]);
+  const addBotMessage = (content, delay = 0) => {
+    setTimeout(() => {
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: Date.now() + Math.random(),
+          content,
+          sender: "ai",
+          timestamp: new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
+        },
+      ]);
+    }, delay);
   };
 
   const addUserMessage = (content) => {
@@ -79,67 +72,113 @@ export function ModernChatbot() {
     ]);
   };
 
-  const handleQuickReply = (text) => {
-    addUserMessage(text);
-    setIsLoading(true);
+  const getBotResponse = (userText) => {
+    const lower = userText.toLowerCase();
 
-    trackChatbotEvent('quick_reply', { action: text });
+    // Greeting detection
+    if (lower.match(/^(hi|hey|hello|sup|yo|wassup|what's up)$/i)) {
+      return [
+        "Hey! 😊",
+        "Nice to meet you! So what's the deal - you hiring, or just checking out if Harshana's legit?"
+      ];
+    }
 
-    setTimeout(() => {
-      let response = "";
-      let quickReplies = [];
+    // Name detection
+    if (lower.includes("my name is") || lower.includes("i'm ") || lower.includes("i am ")) {
+      const nameMatch = userText.match(/(?:my name is|i'm|i am)\s+(\w+)/i);
+      if (nameMatch) {
+        const detectedName = nameMatch[1];
+        setUserName(detectedName);
+        return [
+          `Nice to meet you, ${detectedName}! 🤝`,
+          "So what can I help you with? Want to know about Harshana's work, skills, or just here to roast my chatbot abilities? 😅"
+        ];
+      }
+    }
 
-      if (text.includes("skills")) {
-        trackChatbotEvent('section_navigation', { sectionId: 'skills' });
-        scrollToSection('skills');
-        response = "Alright, buckle up. 🚀\n\nHarshana isn't your typical \"I know HTML\" developer. We're talking:\n\n• AI & Automation: GPT-4, Claude API, N8N workflows that actually work\n• Marketing + Tech Combo: Full-stack campaigns with real analytics, not vanity metrics\n• Actual Development: React, Python, JavaScript - code that doesn't make senior devs cry\n\nBasically, the rare human who can code AND talk to clients without making everyone uncomfortable.\n\nWanna see receipts?";
-        quickReplies = ["Show me receipts (projects) 📁", "Tell me about the AI stuff 🤖", "Just give me the resume 📄"];
-      } else if (text.includes("Impress")) {
-        trackChatbotEvent('section_navigation', { sectionId: 'projects' });
-        scrollToSection('projects');
-        response = "Oh, you want the GOOD stuff? 😏\n\nHere's what happens when you give Harshana caffeine and API keys:\n\n**Malaysian Marketing AI Platform** 🇲🇾\nNot your basic GPT wrapper. This beast handles 4 languages, cultural context, and Malaysian compliance. Most people can't even get ChatGPT to spell \"Nasi Lemak\" right.\n\n**AI Workforce Automation** ⚡\nFull campaign automation that saved 70% time. Translation: one person doing the work of three, without the existential crisis.\n\n**Legal Transcription Platform** ⚖️\nML-powered doc processing. Because lawyers have better things to do.\n\nPick your poison:";
-        quickReplies = ["Malaysian AI deep-dive 🇲🇾", "Show me the automation ⚡", "All the projects 📁"];
-      } else if (text.includes("AI stuff") || text.includes("AI 🤖")) {
-        trackChatbotEvent('section_navigation', { sectionId: 'ai-tools' });
-        scrollToSection('ai-tools');
-        response = "Ah yes, the AI stuff. 🤖\n\nLook, everyone and their grandma claims they \"do AI\" now because they used ChatGPT once. Harshana actually BUILDS this stuff:\n\n• Real GPT-4 Integration: Not just copy-pasting prompts. Actual API work, error handling, the works.\n• N8N Automation Pipelines: Marketing ops that run while you sleep. 70% time saved = more time for arguing on Twitter.\n• Cultural AI Systems: Because \"AI that understands Malaysian context\" isn't a checkbox feature.\n• Analytics That Matter: Data that drives decisions, not dashboards that look pretty.\n\nResult? 3x content output without tripling headcount. Math!\n\nWanna see it?";
-        quickReplies = ["Show me the AI tools ⚡", "The automation workflows 🔧", "I'm sold. Let's talk. 📧"];
-      } else if (text.includes("hire") || text.includes("talk") || text.includes("📧")) {
-        trackChatbotEvent('section_navigation', { sectionId: 'contact' });
-        scrollToSection('contact');
-        response = "Ooh, moving fast! I like it. 😎\n\nLook, I could give you the whole \"synergy\" speech, but let's be real - you're here because you need someone who can actually ship stuff.\n\n📧 **Email**: your-email@example.com\n💼 **LinkedIn**: [Your LinkedIn]\n📄 **Resume**: One click away\n📅 **Calendar**: Open for real conversations\n\nWhat's your move?";
-        quickReplies = ["Send email now ✉️", "Gimme the resume 📄", "Book a call 📅"];
-      } else if (text.includes("resume") || text.includes("📄")) {
-        trackChatbotEvent('download_resume');
-        response = "📄 **Boom! Resume incoming.**\n\nYour download just started. If it didn't, your browser is being weird.\n\nInside you'll find:\n✓ Actual accomplishments with numbers\n✓ Tech stack that's relevant in 2024\n✓ Projects that actually shipped\n✓ Contact info that works\n\nNo 3-page essays about \"passion for innovation.\" Just the good stuff.\n\nNow what?";
-        quickReplies = ["Let's schedule a call 📅", "I have questions 💬", "Show me more projects 🚀"];
-        window.open('/resume.pdf', '_blank');
-      } else if (text.includes("email") || text.includes("✉️")) {
-        trackChatbotEvent('email_click');
-        window.location.href = 'mailto:your-email@example.com?subject=Interview%20Request&body=Hi%20Harshana,%0D%0A%0D%0AI%20found%20your%20portfolio%20and%20would%20like%20to%20discuss...';
-        response = "✉️ **Email time!**\n\nYour email client should've just popped open.\n\nManual backup: **your-email@example.com**\n\nJust... please don't start with \"Dear Sir/Madam.\" We're not writing to the tax office. 😅";
-      } else if (text.includes("Malaysian") || text.includes("🇲🇾")) {
-        trackChatbotEvent('section_navigation', { sectionId: 'malaysian-platform' });
-        scrollToSection('malaysian-platform');
-        response = "🇲🇾 **Alright, the Malaysian AI Platform is wild.**\n\nImagine trying to make AI understand Malaysian context - not just Bahasa, but the ACTUAL way Malaysians talk. The Manglish. The cultural nuances.\n\nWhat Harshana built:\n• 3-layer AI (Kopitiam Intel, Mamak Workshop, Makcik Approval - best names ever)\n• 4 languages that actually work together\n• Cultural context engine so it doesn't suggest pork rendang 💀\n• Compliance checker for Malaysian regulations\n\nTech: GPT-4, React, N8N, custom ML, and probably too much coffee.\n\nWanna see it work?";
-        quickReplies = ["Show me the demo 🎬", "How'd you build this? 🔧", "Other projects 📁"];
-      } else {
-        response = "Hmm, interesting! 🤔\n\nI'm pretty good at this, but I'm not THAT smart. Let me help you navigate:\n\n**What I CAN help with:**\n• Skills & tech expertise\n• Project walkthroughs\n• AI capabilities\n• Getting you in touch\n\nWhat sounds most useful?";
-        quickReplies = ["Technical skills 💪", "Project portfolio 📁", "AI stuff 🤖", "Contact info 📧"];
+    // Hiring intent
+    if (lower.includes("hire") || lower.includes("hiring") || lower.includes("recruit") || lower.includes("job") || lower.includes("position")) {
+      setConversationStage("hiring");
+      return [
+        "Ooh, business time! 💼",
+        "So you're looking to hire someone who can actually ship stuff and won't ghost you after the first sprint?",
+        "You're in the right place. What role are you hiring for?"
+      ];
+    }
+
+    // Skills question
+    if (lower.includes("skill") || lower.includes("what can") || lower.includes("what does") || lower.includes("experience")) {
+      scrollToSection('skills');
+      return [
+        "Alright, let's talk skills! 💪",
+        "Harshana's that rare combo of someone who can:\n- Code without creating a tech debt nightmare\n- Actually understand marketing (not just make pretty dashboards)\n- Build AI tools that work in production (not just demos)\n- Talk to humans without sounding like a robot",
+        "The tech stack? React, Python, GPT-4, N8N, all the good stuff.",
+        "Want me to show you some actual projects where these skills were used?"
+      ];
+    }
+
+    // Project question
+    if (lower.includes("project") || lower.includes("portfolio") || lower.includes("work") || lower.includes("built")) {
+      scrollToSection('projects');
+      return [
+        "Oh man, the projects are where it gets fun! 🚀",
+        "There's this Malaysian AI platform that handles 4 languages and doesn't suggest pork rendang to Muslims (yes, that's a real problem with most AI)",
+        "Then there's the workflow automation that basically replaced 3 people's jobs without the existential crisis",
+        "Which one sounds interesting? Or want me to just show you all of them?"
+      ];
+    }
+
+    // AI question
+    if (lower.includes("ai") || lower.includes("automation") || lower.includes("gpt") || lower.includes("chatgpt")) {
+      scrollToSection('ai-tools');
+      return [
+        "Ah, you wanna talk AI! 🤖",
+        "Here's the thing - everyone says they \"do AI\" now because they used ChatGPT once.",
+        "Harshana actually BUILDS AI systems. Real APIs, real error handling, real production code.",
+        "The Malaysian platform? 3-layer AI architecture. The automation? 70% time saved. The results? Actually shipped and working.",
+        "Want to see the demos or dive into the technical details?"
+      ];
+    }
+
+    // Contact/resume
+    if (lower.includes("contact") || lower.includes("email") || lower.includes("resume") || lower.includes("cv") || lower.includes("hire")) {
+      scrollToSection('contact');
+      const response = [
+        "Awesome! Let's make this happen 📧",
+        "Here's the deal:\n- Email: your-email@example.com\n- Resume: I can send you the PDF\n- Calendar: Open for calls",
+      ];
+
+      if (userName) {
+        response[0] = `Awesome, ${userName}! Let's make this happen 📧`;
       }
 
-      setMessages((prev) => [
-        ...prev,
-        {
-          id: Date.now(),
-          content: response,
-          sender: "ai",
-          quickReplies,
-          timestamp: new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
-        },
-      ]);
-      setIsLoading(false);
-    }, 1000);
+      response.push("What works best for you - email, resume download, or schedule a call?");
+      return response;
+    }
+
+    // Funny/casual responses
+    if (lower.includes("lol") || lower.includes("haha") || lower.includes("funny") || lower.includes("😂")) {
+      return [
+        "Haha glad you're enjoying this! 😄",
+        "Way better than those \"How may I assist you today?\" bots, right?",
+        "Anyway, what else you wanna know about Harshana?"
+      ];
+    }
+
+    if (lower.includes("thanks") || lower.includes("thank you")) {
+      return [
+        "You're welcome! 😊",
+        "Honestly this is way more fun than being a boring FAQ bot.",
+        "Anything else you wanna know? Or you good?"
+      ];
+    }
+
+    // Default conversational response
+    return [
+      "Interesting question! 🤔",
+      "I can tell you about:\n- Harshana's skills and experience\n- Cool projects and case studies\n- AI capabilities and automation\n- How to get in touch",
+      "What sounds most useful to you?"
+    ];
   };
 
   const handleSubmit = (e) => {
@@ -152,136 +191,114 @@ export function ModernChatbot() {
     setIsLoading(true);
 
     setTimeout(() => {
-      let response = "";
-      let quickReplies = [];
+      const responses = getBotResponse(userText);
 
-      const lowerText = userText.toLowerCase();
+      responses.forEach((response, index) => {
+        addBotMessage(response, index * 1200);
+      });
 
-      if (lowerText.includes('hi') || lowerText.includes('hello') || lowerText.includes('hey')) {
-        response = "Hey hey! 👋\n\nLook at you being all polite and stuff. I appreciate it.\n\nSo, what brings you here? Hiring? Curious? Procrastinating at work? (No judgment, we've all been there)";
-        quickReplies = ["Show me skills 💪", "Impress me 🚀", "Let's connect 📧"];
-      } else if (lowerText.includes('hire') || lowerText.includes('hiring') || lowerText.includes('job')) {
-        response = "Ooh, we're talking business! 💼\n\nYou're looking to hire? Smart. The market's tough and you need someone who can actually ship.\n\nHere's the deal - Harshana's the rare combo of:\n✓ Can code without creating tech debt nightmares\n✓ Understands marketing (like, actually)\n✓ Builds AI stuff that works in production\n✓ Won't ghost you after the first sprint\n\nWhat do you wanna know first?";
-        quickReplies = ["Show me the work 📁", "Technical skills 💪", "Let's schedule a call 📅"];
-      } else if (lowerText.includes('thanks') || lowerText.includes('thank you')) {
-        response = "You're welcome! 😊\n\nHonestly, this is way more fun than a boring FAQ.\n\nAnything else you wanna know? Or are you good?";
-        quickReplies = ["Actually, one more thing... 💬", "Download the resume 📄", "I'm convinced. Let's talk. 📧"];
-      } else {
-        response = "Great question! Let me point you in the right direction:\n\n• Skills & expertise\n• Projects & case studies\n• AI capabilities\n• Contact info\n\nWhat interests you?";
-        quickReplies = ["Technical skills 💪", "Project portfolio 📁", "AI stuff 🤖", "Contact info 📧"];
-      }
-
-      setMessages((prev) => [
-        ...prev,
-        {
-          id: Date.now(),
-          content: response,
-          sender: "ai",
-          quickReplies,
-          timestamp: new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
-        },
-      ]);
-      setIsLoading(false);
-    }, 1000);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, responses.length * 1200);
+    }, 600);
   };
 
   const scrollToSection = (sectionId) => {
+    trackChatbotEvent('section_navigation', { sectionId });
     const element = document.getElementById(sectionId);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   };
 
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleSubmit(e);
+    }
+  };
+
   return (
     <ExpandableChat
-      size="lg"
+      size="md"
       position="bottom-right"
       icon={<Bot className="h-6 w-6" />}
     >
-      <ExpandableChatHeader className="flex-col text-center justify-center bg-gradient-to-r from-primary to-primary-light text-white">
-        <div className="flex items-center gap-2">
-          <Sparkles className="h-5 w-5" />
-          <h1 className="text-xl font-semibold">AI Assistant (with attitude)</h1>
+      <ExpandableChatHeader className="bg-white dark:bg-navy-dark border-b">
+        <div className="flex items-center justify-between w-full">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-gradient-to-br from-primary to-primary-light rounded-full flex items-center justify-center">
+              <Sparkles className="w-5 h-5 text-white" />
+            </div>
+            <div>
+              <h1 className="text-base font-semibold text-gray-900 dark:text-white">Chat with AI ✨</h1>
+              <p className="text-xs text-gray-500 dark:text-gray-400">
+                Ask me anything about Harshana
+              </p>
+            </div>
+          </div>
         </div>
-        <p className="text-sm text-white/80 mt-1">
-          No BS Mode Activated • 0% corporate jargon guaranteed
-        </p>
       </ExpandableChatHeader>
 
-      <ExpandableChatBody>
+      <ExpandableChatBody className="bg-white dark:bg-navy-darker">
         <ChatMessageList>
           {messages.map((message) => (
-            <div key={message.id}>
-              <ChatBubble
+            <ChatBubble
+              key={message.id}
+              variant={message.sender === "user" ? "sent" : "received"}
+            >
+              <ChatBubbleAvatar
+                className="h-8 w-8 shrink-0"
+                src={
+                  message.sender === "user"
+                    ? undefined
+                    : "https://api.dicebear.com/7.x/bottts/svg?seed=Harshana&backgroundColor=6366f1"
+                }
+                fallback={message.sender === "user" ? "YOU" : "AI"}
+              />
+              <ChatBubbleMessage
                 variant={message.sender === "user" ? "sent" : "received"}
+                className={message.sender === "user" ? "bg-primary text-white" : "bg-gray-100 dark:bg-navy-dark text-gray-900 dark:text-white"}
               >
-                <ChatBubbleAvatar
-                  className="h-8 w-8 shrink-0"
-                  src={
-                    message.sender === "user"
-                      ? undefined
-                      : "https://api.dicebear.com/7.x/bottts/svg?seed=Felix"
-                  }
-                  fallback={message.sender === "user" ? "YOU" : "AI"}
-                />
-                <div className="flex flex-col gap-2 max-w-[70%]">
-                  <ChatBubbleMessage
-                    variant={message.sender === "user" ? "sent" : "received"}
-                  >
-                    <div className="whitespace-pre-line">{message.content}</div>
-                  </ChatBubbleMessage>
-
-                  {/* Quick Reply Buttons */}
-                  {message.quickReplies && (
-                    <div className="flex flex-col gap-2 mt-1">
-                      {message.quickReplies.map((reply, idx) => (
-                        <Button
-                          key={idx}
-                          variant="outline"
-                          size="sm"
-                          onClick={() => handleQuickReply(reply)}
-                          className="justify-start text-left hover:bg-primary hover:text-white transition-all"
-                        >
-                          {reply}
-                        </Button>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              </ChatBubble>
-            </div>
+                <div className="whitespace-pre-line text-sm">{message.content}</div>
+              </ChatBubbleMessage>
+            </ChatBubble>
           ))}
 
           {isLoading && (
             <ChatBubble variant="received">
               <ChatBubbleAvatar
                 className="h-8 w-8 shrink-0"
-                src="https://api.dicebear.com/7.x/bottts/svg?seed=Felix"
+                src="https://api.dicebear.com/7.x/bottts/svg?seed=Harshana&backgroundColor=6366f1"
                 fallback="AI"
               />
-              <ChatBubbleMessage isLoading />
+              <ChatBubbleMessage
+                isLoading
+                className="bg-gray-100 dark:bg-navy-dark"
+              />
             </ChatBubble>
           )}
         </ChatMessageList>
       </ExpandableChatBody>
 
-      <ExpandableChatFooter>
-        <form
-          onSubmit={handleSubmit}
-          className="relative rounded-lg border bg-background focus-within:ring-1 focus-within:ring-ring p-1"
-        >
-          <ChatInput
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder="Type your message... or just click a button above 👆"
-            className="min-h-12 resize-none rounded-lg bg-background border-0 p-3 shadow-none focus-visible:ring-0"
-          />
-          <div className="flex items-center p-3 pt-0 justify-end">
-            <Button type="submit" size="sm" className="ml-auto gap-1.5" disabled={!input.trim()}>
-              Send Message
-              <CornerDownLeft className="size-3.5" />
-            </Button>
+      <ExpandableChatFooter className="bg-white dark:bg-navy-dark">
+        <form onSubmit={handleSubmit} className="flex gap-2 items-end">
+          <div className="flex-1">
+            <ChatInput
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyPress={handleKeyPress}
+              placeholder="Type your message..."
+              className="min-h-[44px] max-h-[120px] bg-gray-100 dark:bg-navy-darker border-none text-sm resize-none rounded-lg px-4 py-3"
+            />
           </div>
+          <Button
+            type="submit"
+            disabled={!input.trim() || isLoading}
+            className="h-[44px] px-4 bg-gradient-to-r from-primary to-primary-light hover:opacity-90"
+          >
+            <Send className="h-4 w-4" />
+          </Button>
         </form>
       </ExpandableChatFooter>
     </ExpandableChat>
