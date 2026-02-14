@@ -8,7 +8,6 @@ import { useParallax } from '../../hooks/useParallax';
 const Hero = () => {
     const { ref: bgRef1, y: bgY1 } = useParallax(15);
     const { ref: bgRef2, y: bgY2 } = useParallax(-20);
-    const { ref: floatingRef, y: floatingY } = useParallax(40);
 
     return (
         <section
