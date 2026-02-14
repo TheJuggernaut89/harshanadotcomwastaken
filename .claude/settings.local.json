@@ -21,7 +21,9 @@
       "Bash(git remote set-url:*)",
       "Bash(git push:*)",
       "Bash(npm install:*)",
-      "Bash(curl:*)"
+      "Bash(curl:*)",
+      "Bash(grep:*)",
+      "Bash(ls:*)"
     ]
   }
 }
