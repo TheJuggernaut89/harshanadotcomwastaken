@@ -845,10 +845,10 @@ export const mockDataEngine = {
         casual: [
           `‼️ ${product} SALE BESAR! ‼️\n\nKorang request, kami dengar! ${product} yang viral tu dah available sekarang dengan harga SPECIAL! 🎉\n\n✅ Quality terbaik\n✅ Harga berpatutan\n✅ Fast delivery\n\nNak order? PM kami sekarang atau click link dekat comments! Limited stock je tau! ⏰\n\nJangan lepaskan peluang ni! Share dengan kawan-kawan korang! 🔥`,
           
-          `Assalamualaikum & Hai semua! 👋\n\nKita ada good news! ${product} yang ramai tanya tu dah ready stock! 🎊\n\nSpecial price untuk followers kami:\n💰 Normal: RM XX\n🎉 Special: RM YY je!\n\nFree shipping for orders above RM 50! 🚚\n\nBerminat? Whatsapp kami di 012-XXX XXXX atau click link di bawah!\n\nTerima kasih atas support korang! ❤️`
+          `Assalamualaikum & Hai semua! 👋\n\nKita ada good news! ${product} yang ramai tanya tu dah ready stock! 🎊\n\nSpecial price untuk followers kami:\n💰 Normal: RM XX\n🎉 Special: RM YY je!\n\nFree shipping for orders above RM 50! 🚚\n\nBerminat? Whatsapp kami di 012-123 4567 atau click link di bawah!\n\nTerima kasih atas support korang! ❤️`
         ],
         professional: [
-          `📢 Announcement\n\n${product} is now available at selected outlets and online.\n\nPremium quality. Competitive pricing. Reliable service.\n\nFor inquiries:\n📞 Contact: 012-XXX XXXX\n🌐 Website: www.yourwebsite.com\n\nThank you for your continued support.`,
+          `📢 Announcement\n\n${product} is now available at selected outlets and online.\n\nPremium quality. Competitive pricing. Reliable service.\n\nFor inquiries:\n📞 Contact: 012-123 4567\n🌐 Website: www.yourwebsite.com\n\nThank you for your continued support.`,
           
           `Introducing ${product}\n\nDesigned to meet Malaysian needs. Built to last.\n\nKey Features:\n✓ High quality materials\n✓ Affordable pricing\n✓ Nationwide delivery\n\nOrder now through our website or visit our stores.\n\nFor more information, please contact our customer service team.`
         ],
@@ -1165,7 +1165,7 @@ export const mockDataEngine = {
       },
       {
         category: "Explicit Content",
-        keywords: ["nude", "xxx", "adult content"],
+        keywords: ["nudity", "explicit_material", "mature_content"],
         severity: "high"
       }
     ];
@@ -1524,10 +1524,5 @@ export const mockDataEngine = {
     };
   }
 };
-
-// Helper function for random selection
-function getRandomItem(array) {
-  return array[Math.floor(Math.random() * array.length)];
-}
 
 export default mockDataEngine;

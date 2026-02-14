@@ -131,13 +131,15 @@ const FloatingAiAssistant = () => {
         isTyping: true
       }]);
 
-      setTimeout(() => {
+      const timer1 = setTimeout(() => {
         typewriterEffect(currentMessage, messageIndex, () => {
-          setTimeout(() => {
+          const timer2 = setTimeout(() => {
             addMessageSequentially(index + 1);
           }, 400);
+          typewriterTimers.current.push(timer2);
         });
       }, initialDelay);
+      typewriterTimers.current.push(timer1);
     };
 
     addMessageSequentially(0);
