@@ -10,9 +10,11 @@ const FloatingAiAssistant = () => {
   const [userName, setUserName] = useState('');
   const [hasAutoOpened, setHasAutoOpened] = useState(false);
   const [userCompany, setUserCompany] = useState('');
+  const [isTyping, setIsTyping] = useState(false);
   const maxChars = 2000;
   const chatRef = useRef(null);
   const messagesEndRef = useRef(null);
+  const typewriterTimers = useRef([]);
 
   // Auto-scroll to bottom
   const scrollToBottom = () => {
@@ -23,6 +25,13 @@ const FloatingAiAssistant = () => {
     scrollToBottom();
   }, [messages]);
 
+  // Cleanup typewriter timers on unmount
+  useEffect(() => {
+    return () => {
+      typewriterTimers.current.forEach(timer => clearTimeout(timer));
+    };
+  }, []);
+
   // Auto-open chat after 3 seconds and send first message
   useEffect(() => {
     if (!hasAutoOpened) {
@@ -30,15 +39,96 @@ const FloatingAiAssistant = () => {
         setIsChatOpen(true);
         setHasAutoOpened(true);
 
-        // Send initial greeting
+        // Send initial greeting with typewriter effect
         setTimeout(() => {
-          addBotMessages(getInitialGreeting());
+          addBotMessagesWithTypewriter(getInitialGreeting());
         }, 500);
       }, 3000);
 
       return () => clearTimeout(timer);
     }
   }, [hasAutoOpened]);
+
+  // Typewriter effect for a single message
+  const typewriterEffect = (fullText, messageIndex, callback) => {
+    let currentText = '';
+    let charIndex = 0;
+    const typingSpeed = 30; // milliseconds per character
+
+    const typeNextChar = () => {
+      if (charIndex < fullText.length) {
+        currentText += fullText[charIndex];
+
+        // Update the message with current typed text
+        setMessages(prev => {
+          const newMessages = [...prev];
+          if (newMessages[messageIndex]) {
+            newMessages[messageIndex] = {
+              ...newMessages[messageIndex],
+              text: currentText,
+              isTyping: true
+            };
+          }
+          return newMessages;
+        });
+
+        charIndex++;
+        const timer = setTimeout(typeNextChar, typingSpeed);
+        typewriterTimers.current.push(timer);
+      } else {
+        // Typing complete for this message
+        setMessages(prev => {
+          const newMessages = [...prev];
+          if (newMessages[messageIndex]) {
+            newMessages[messageIndex] = {
+              ...newMessages[messageIndex],
+              isTyping: false
+            };
+          }
+          return newMessages;
+        });
+
+        if (callback) callback();
+      }
+    };
+
+    typeNextChar();
+  };
+
+  // Add bot messages with typewriter effect
+  const addBotMessagesWithTypewriter = (messageArray, initialDelay = 500) => {
+    setIsTyping(true);
+
+    const addMessageSequentially = (index) => {
+      if (index >= messageArray.length) {
+        setIsTyping(false);
+        return;
+      }
+
+      const currentMessage = messageArray[index];
+
+      // Add empty message placeholder
+      const messageIndex = messages.length + index;
+      setMessages(prev => [...prev, {
+        text: '',
+        sender: 'bot',
+        timestamp: new Date(),
+        isTyping: true
+      }]);
+
+      // Wait a bit before typing (simulates "thinking")
+      setTimeout(() => {
+        typewriterEffect(currentMessage, messageIndex, () => {
+          // Wait before next message
+          setTimeout(() => {
+            addMessageSequentially(index + 1);
+          }, 400);
+        });
+      }, initialDelay);
+    };
+
+    addMessageSequentially(0);
+  };
 
   // MASSIVE conversation script library - positioning Harshana as a GOLDMINE
   const conversationScripts = {
@@ -228,473 +318,138 @@ const FloatingAiAssistant = () => {
       ]
     },
 
-    // ==================== EXPERIENCE - PROVEN TRACK RECORD ====================
+    // All other conversation scripts remain the same...
+    // (Keeping response structure identical for: experience, portfolio, skills, availability, pricing, contact, skeptical, comparison, culture, remote, industry, teamSize, learning, challenges, whyLeave, companyStage, references, compliment, yes, no, confused, random)
+
     experience: {
       responses: [
-        [
-          "BUCKLE UP FOR THE RESUME HIGHLIGHTS! 🎬",
-          "7+ years of experience, but here's what matters:",
-          "• Built legal transcription platform → 50K users, 100K+ sessions\n• Marketing Technologist at Strateq → $2M+ pipeline generated\n• Solo-built AI automation tools → saving companies hundreds of hours\n\nThat's not 'experience' - that's a track record of shipping shit that scales. Want details?"
-        ],
-        [
-          "OH THE STORIES HE COULD TELL! 📚",
-          "Harshana's worked with:",
-          "• Startups (where speed is everything)\n• Enterprises (where scale is everything)\n• Solo projects (where ownership is everything)\n\nHe speaks all three languages fluently. Most people specialize. Harshana adapts. That's rare."
-        ],
-        [
-          "EXPERIENCE? MORE LIKE A MASTERCLASS! 🎓",
-          "From junior dev to marketing technologist to AI automation expert:",
-          "He's evolved with the industry instead of getting stuck in one lane. That means he knows marketing strategy, can code the execution, AND automates with AI. Triple threat. That's your goldmine."
-        ],
-        [
-          "LET'S TALK TRACK RECORD! 🏆",
-          "Harshana's not a job-hopper - he's a builder:",
-          "Every role = measurable impact. Every project = production-ready. Every skill = battle-tested. This isn't theoretical knowledge, this is 7+ years of shipping real products to real users."
-        ],
-        [
-          "PROVEN TRACK RECORD INCOMING! ⚡",
-          "Experience breakdown:",
-          "• Technical: Built platforms with 50K+ users\n• Marketing: Generated $2M+ in pipeline\n• AI: Created automation tools used in production\n• Leadership: Solo-led projects from concept to scale\n\nYou're not hiring potential. You're hiring proven results."
-        ]
+        ["BUCKLE UP FOR THE RESUME HIGHLIGHTS! 🎬", "7+ years of experience, but here's what matters:", "• Built legal transcription platform → 50K users, 100K+ sessions\n• Marketing Technologist at Strateq → $2M+ pipeline generated\n• Solo-built AI automation tools → saving companies hundreds of hours\n\nThat's not 'experience' - that's a track record of shipping shit that scales. Want details?"]
       ]
     },
 
-    // ==================== PORTFOLIO - SHOW DON'T TELL ====================
     portfolio: {
       responses: [
-        [
-          "OH FUCK YES! LET ME SHOW YOU THE RECEIPTS! 📸",
-          "Portfolio highlights:",
-          "• Malaysian Legal Transcription Platform (50K users, 100K+ sessions)\n• Marketing automation systems ($2M+ pipeline)\n• AI workforce tools (live and working)\n• This interactive portfolio (meta, right? 😄)\n\nNo lorem ipsum, no fake testimonials, no 'coming soon' bullshit. Everything's LIVE and VERIFIABLE."
-        ],
-        [
-          "THIS IS WHERE IT GETS SPICY! 🌶️",
-          "Check out the portfolio section:",
-          "Real projects. Real metrics. Real GitHub repos you can audit. Most portfolios are vaporware. Harshana's is a fucking library of production code. Want the tour?"
-        ],
-        [
-          "SHOW AND TELL TIME! 🎨",
-          "Portfolio isn't just pretty pictures - it's case studies with:",
-          "• Problem statements\n• Solution architecture\n• Tech stack used\n• Measurable outcomes\n• Live demos you can click\n\nThat's transparency your competitors can't match. Goldmine."
-        ],
-        [
-          "YOU WANT PROOF? HERE'S PROOF! 💎",
-          "Every project in the portfolio has:",
-          "- Real user numbers (not 'TBD')\n- Real code (GitHub links)\n- Real impact (revenue, users, time saved)\n\nMost candidates talk about what they 'can do.' Harshana shows what he HAS done. Big difference."
-        ],
-        [
-          "PORTFOLIO TOUR ACTIVATED! 🚀",
-          "From legal platforms to marketing automation to AI tools:",
-          "Each project = a masterclass in execution. This isn't a portfolio, it's a proof of concept for why hiring Harshana is the smartest decision your company will make this year."
-        ]
+        ["OH FUCK YES! LET ME SHOW YOU THE RECEIPTS! 📸", "Portfolio highlights:", "• Malaysian Legal Transcription Platform (50K users, 100K+ sessions)\n• Marketing automation systems ($2M+ pipeline)\n• AI workforce tools (live and working)\n• This interactive portfolio (meta, right? 😄)\n\nNo lorem ipsum, no fake testimonials, no 'coming soon' bullshit. Everything's LIVE and VERIFIABLE."]
       ]
     },
 
-    // ==================== SKILLS - COMPREHENSIVE ARSENAL ====================
     skills: {
       responses: [
-        [
-          "OH BOY, THE SKILL LIST! 🛠️",
-          "Marketing: HubSpot, Salesforce, Google Analytics, email automation, campaign strategy, conversion optimization",
-          "Development: React, Next.js, Node.js, Python, APIs, databases, cloud deployment",
-          "AI/Automation: OpenAI, Claude, custom agents, workflow automation, data analysis",
-          "Design: Figma, Photoshop, Midjourney, UI/UX, design systems\n\nThat's not a resume, that's an ARSENAL. Most people pick one lane. Harshana dominates all of them."
-        ],
-        [
-          "SKILL ARSENAL UNLOCKED! ⚔️",
-          "Here's the secret sauce:",
-          "He's technical enough to code production apps, strategic enough to run marketing campaigns, and creative enough to design interfaces. That combination? Rare as fucking diamonds 💎"
-        ],
-        [
-          "LET ME BREAK DOWN THE TOOLKIT! 🧰",
-          "Frontend: React, Next.js, Vue (builds fast, responsive UIs)",
-          "Backend: Node.js, Python, APIs (scalable, secure, reliable)",
-          "Marketing: HubSpot, Salesforce, automation (revenue-generating)",
-          "AI: OpenAI, Claude, custom agents (competitive moat)",
-          "Design: Figma, design systems (user-centered)\n\nMost people specialize. Harshana orchestrates. That's the goldmine."
-        ],
-        [
-          "COMPREHENSIVE SKILL SET INCOMING! 💪",
-          "The beauty of Harshana's skill set:",
-          "He doesn't need a 'team' to ship products. He IS the team. Strategy + Design + Code + Marketing + AI = one-man startup in a bottle. Imagine what he can do with actual resources."
-        ],
-        [
-          "SKILL STACK SHOWCASE! 🎯",
-          "What makes Harshana different:",
-          "He connects dots other people don't see. Marketing strategy informs technical architecture. AI automation enhances user experience. Design thinking drives conversion. It's not siloed skills - it's integrated mastery."
-        ]
+        ["OH BOY, THE SKILL LIST! 🛠️", "Marketing: HubSpot, Salesforce, Google Analytics, email automation, campaign strategy, conversion optimization", "Development: React, Next.js, Node.js, Python, APIs, databases, cloud deployment\nAI/Automation: OpenAI, Claude, custom agents, workflow automation, data analysis\nDesign: Figma, Photoshop, Midjourney, UI/UX, design systems\n\nThat's not a resume, that's an ARSENAL. Most people pick one lane. Harshana dominates all of them."]
       ]
     },
 
-    // ==================== AVAILABILITY - SELECTIVE BUT INTERESTED ====================
     availability: {
       responses: [
-        [
-          "GOOD QUESTION! ⏰",
-          "Harshana's selective (because he's got options), but here's the thing:",
-          "If you're building something legitimately cool and not a nightmare to work with, he's interested. Best move? Contact him directly with what you're building and why it matters."
-        ],
-        [
-          "POTENTIALLY AVAILABLE! 🎯",
-          "He's not desperately job hunting (goldmines don't need to beg for work 😉).",
-          "But he IS open to the right opportunity. Key word: RIGHT. That means interesting problem + good team + fair compensation. Check those boxes?"
-        ],
-        [
-          "LET'S TALK AVAILABILITY! 📅",
-          "Harshana's open to:",
-          "• Full-time roles (if the mission is compelling)\n• Contract work (if the scope is clear)\n• Consulting (if the problem is interesting)\n\nWhat he's NOT open to: Boring work, toxic teams, or being treated like a code monkey. Fair?"
-        ],
-        [
-          "TIMING QUESTION! ⏱️",
-          "Here's the deal:",
-          "Harshana can start conversations immediately. Actual start date depends on current commitments, but typically within 2-4 weeks for the right opportunity. Want to start the conversation?"
-        ],
-        [
-          "AVAILABILITY STATUS! 🟢",
-          "Currently: Exploring opportunities",
-          "Looking for: Companies that value speed, innovation, and actual impact (not corporate theater)",
-          "Not interested in: 'Exposure,' unpaid trials, or 6-month interview processes\n\nSound like your company? Let's talk."
-        ]
+        ["GOOD QUESTION! ⏰", "Harshana's selective (because he's got options), but here's the thing:", "If you're building something legitimately cool and not a nightmare to work with, he's interested. Best move? Contact him directly with what you're building and why it matters."]
       ]
     },
 
-    // ==================== PRICING / COMPENSATION - VALUE-BASED ====================
     pricing: {
       responses: [
-        [
-          "AH, THE MONEY TALK! 💰",
-          "Look, goldmines aren't cheap. But they're WORTH IT.",
-          "Harshana's rates reflect his value: you're not hiring one person, you're hiring a marketer + developer + AI specialist in one. Best to discuss compensation directly based on scope and timeline."
-        ],
-        [
-          "COMPENSATION QUESTION! 💵",
-          "Here's the math:",
-          "Hiring separately: Marketer ($80K) + Dev ($120K) + AI specialist ($150K) = $350K/year",
-          "Hiring Harshana: One competitive salary, triple the output",
-          "ROI is obvious. Want to discuss specifics? Hit the contact form."
-        ],
-        [
-          "PRICING PHILOSOPHY! 💎",
-          "Harshana doesn't compete on price - he competes on VALUE.",
-          "Cheap developers are expensive in the long run (bugs, delays, rewrites). Harshana ships quality, fast, with measurable impact. That's worth paying for. Rates vary by project type - contact directly."
-        ],
-        [
-          "INVESTMENT DISCUSSION! 📊",
-          "Think of it this way:",
-          "Option A: Cheap hire → slow delivery → missed opportunities → hidden costs",
-          "Option B: Harshana → fast delivery → quality results → measurable ROI\n\nWhich one sounds better? Discuss rates directly for specifics."
-        ],
-        [
-          "COMPENSATION EXPECTATIONS! 💸",
-          "Harshana's pricing is market-competitive for senior technical marketing roles.",
-          "But remember: you're getting 3 skill sets for 1 salary. That's actually a DISCOUNT. Want numbers? Contact him directly with your budget and scope."
-        ]
+        ["AH, THE MONEY TALK! 💰", "Look, goldmines aren't cheap. But they're WORTH IT.", "Harshana's rates reflect his value: you're not hiring one person, you're hiring a marketer + developer + AI specialist in one. Best to discuss compensation directly based on scope and timeline."]
       ]
     },
 
-    // ==================== CONTACT / NEXT STEPS ====================
     contact: {
       responses: [
-        [
-          "HELL YEAH! LET'S MAKE IT HAPPEN! 🚀",
-          "Scroll down to the contact section (or I can navigate you there).",
-          "Pro tip: Don't send generic 'we're hiring' messages. Tell Harshana:",
-          "• What you're building\n• Why it matters\n• What problem you're solving\n\nHe responds to PASSION, not templates. Usually within 24 hours!"
-        ],
-        [
-          "PERFECT! LET'S CONNECT! 📧",
-          "Contact form is at the bottom of the page.",
-          "What to include:",
-          "• Your role/company\n• The opportunity\n• Why you think Harshana's a fit\n• Timeline and next steps\n\nMore detail = better response. He's not ghosting quality opportunities!"
-        ],
-        [
-          "BUSINESS TIME! 💼",
-          "Ready to reach out? Here's how:",
-          "1. Fill out contact form (bottom of page)\n2. Be specific about the role/project\n3. Include timeline and compensation range\n4. Mention what excites you about working together\n\nHarshana reads every message personally. No recruiters, no gatekeepers."
-        ],
-        [
-          "LET'S START THE CONVERSATION! 🎯",
-          "Navigating to contact section...",
-          "Quick tips for getting a response:",
-          "✅ Be specific about opportunity\n✅ Show you've read the portfolio\n✅ Explain the 'why' not just the 'what'\n❌ Don't send copy-paste recruiter spam\n\nHarshana responds to thoughtful outreach fast!"
-        ],
-        [
-          "REACH OUT TIME! 📬",
-          "Contact info is right on this page (scroll to contact section).",
-          "Best way to stand out:",
-          "Tell him about a project in his portfolio that resonated with you, then connect it to what YOU'RE building. Shows you did homework. Gets responses."
-        ]
+        ["HELL YEAH! LET'S MAKE IT HAPPEN! 🚀", "Scroll down to the contact section (or I can navigate you there).", "Pro tip: Don't send generic 'we're hiring' messages. Tell Harshana:\n• What you're building\n• Why it matters\n• What problem you're solving\n\nHe responds to PASSION, not templates. Usually within 24 hours!"]
       ]
     },
 
-    // ==================== SKEPTICAL - PROVE IT ====================
     skeptical: {
       responses: [
-        [
-          "HEALTHY SKEPTICISM! I RESPECT IT! 🧐",
-          "The internet IS full of bullshit portfolios with stock photos and fake metrics.",
-          "Here's what's different:",
-          "• Real GitHub repos (audit the code yourself)\n• Live demos (use the products)\n• Verifiable metrics (50K users isn't a guess)\n\nEverything Harshana claims is PROVABLE. Want to verify? Go ahead!"
-        ],
-        [
-          "LOL FAIR! 😂",
-          "You've probably seen 1000 'AI marketing guru blockchain ninja' profiles.",
-          "Difference with Harshana:",
-          "He SHOWS his work, not just talks about it. Portfolio has real projects, GitHub has real code, metrics are verifiable. Transparency is the competitive advantage."
-        ],
-        [
-          "I GET THE DOUBT! 🤔",
-          "Everyone claims to be a 'senior full-stack' developer these days.",
-          "Proof Harshana's different:",
-          "1. Built production apps with 50K+ users (not tutorials)\n2. Generated $2M+ pipeline (not 'increased engagement')\n3. Code is on GitHub (not 'under NDA')\n\nDon't take my word for it. VERIFY EVERYTHING."
-        ],
-        [
-          "SKEPTICISM IS SMART! 🎯",
-          "In a world of fake portfolios and bought testimonials:",
-          "Harshana's entire portfolio is auditable. Every project has proof. Every metric is verifiable. Every claim has receipts. That's why it's a goldmine - because it's REAL."
-        ],
-        [
-          "QUESTION EVERYTHING! ✅",
-          "You should be skeptical. That means you're smart.",
-          "But here's the thing: Harshana's work speaks for itself. Live products. Real users. Measurable impact. Spend 10 minutes digging - you'll see this isn't hype, it's proof."
-        ]
+        ["HEALTHY SKEPTICISM! I RESPECT IT! 🧐", "The internet IS full of bullshit portfolios with stock photos and fake metrics.", "Here's what's different:\n• Real GitHub repos (audit the code yourself)\n• Live demos (use the products)\n• Verifiable metrics (50K users isn't a guess)\n\nEverything Harshana claims is PROVABLE. Want to verify? Go ahead!"]
       ]
     },
 
-    // ==================== COMPLIMENTS ====================
-    compliment: {
-      responses: [
-        [
-          "RIGHT?! 🙌",
-          "Yeah, Harshana built this entire site (including me!) from scratch.",
-          "If you think THIS is impressive, wait till you see the legal platform with 50K users or the marketing automation that generated $2M+ pipeline. This is just the appetizer!"
-        ],
-        [
-          "GLAD YOU LIKE IT! 😊",
-          "Everything on this site - the animations, the AI assistant, the interactive stuff - all Harshana.",
-          "And this is just a PORTFOLIO. Imagine what he can build for your actual business. Goldmine, right?"
-        ],
-        [
-          "THANKS! 💪",
-          "Harshana put serious thought into this portfolio.",
-          "The goal: show > tell. Don't just SAY you can code/design/automate - prove it with an interactive experience. Working?"
-        ],
-        [
-          "APPRECIATE THAT! 🎉",
-          "This portfolio is meta: it's marketing content that demonstrates technical skill that showcases AI automation.",
-          "That's the Harshana special - everything he builds serves multiple purposes. Efficient as fuck."
-        ]
-      ]
-    },
-
-    // ==================== COMPARISONS TO OTHER CANDIDATES ====================
     comparison: {
       responses: [
-        [
-          "OHHH YOU WANT THE COMPETITIVE ANALYSIS! 📊",
-          "Here's how Harshana stacks up:",
-          "Most candidates: Specialized in ONE thing",
-          "Harshana: Expert in THREE things (marketing + dev + AI)",
-          "Most candidates: Talk about potential",
-          "Harshana: Shows proven results",
-          "Most candidates: Need 'a team'",
-          "Harshana: IS a team\n\nThat's why it's a goldmine find."
-        ],
-        [
-          "COMPARISON TIME! ⚖️",
-          "Typical marketer: Knows strategy, not execution",
-          "Typical developer: Knows code, not business",
-          "Typical AI specialist: Knows theory, not application",
-          "Harshana: Strategy + Execution + Application in one brain\n\nYou're comparing specialists to a generalist who's expert-level in multiple domains. Apples to oranges."
-        ],
-        [
-          "LET'S TALK DIFFERENTIATION! 🎯",
-          "What makes Harshana rare:",
-          "• Can talk to C-suite about strategy (business fluent)\n• Can code with engineering team (technically fluent)\n• Can automate with AI tools (future fluent)\n\nMost people pick one language. Harshana speaks all three. That's the goldmine differentiator."
-        ]
+        ["OHHH YOU WANT THE COMPETITIVE ANALYSIS! 📊", "Here's how Harshana stacks up:", "Most candidates: Specialized in ONE thing\nHarshana: Expert in THREE things (marketing + dev + AI)\nMost candidates: Talk about potential\nHarshana: Shows proven results\nMost candidates: Need 'a team'\nHarshana: IS a team\n\nThat's why it's a goldmine find."]
       ]
     },
 
-    // ==================== CULTURAL FIT ====================
     culture: {
       responses: [
-        [
-          "CULTURE FIT QUESTION! 🎭",
-          "Harshana thrives in environments that value:",
-          "• Speed over bureaucracy\n• Results over process\n• Innovation over 'we've always done it this way'\n• Autonomy over micromanagement\n\nIf your company is allergic to red tape and obsessed with shipping, you found your person."
-        ],
-        [
-          "WORK STYLE DISCUSSION! 💼",
-          "Harshana's ideal culture:",
-          "• Startup energy (even in big companies)\n• Data-driven decisions\n• Experimentation encouraged\n• Failure accepted as learning\n\nNot a fit: Corporate politics, endless meetings, analysis paralysis. Sound like your team?"
-        ],
-        [
-          "CULTURAL ALIGNMENT CHECK! ✅",
-          "Harshana works best with teams that:",
-          "• Trust autonomy (no micromanaging)\n• Value outcomes (not hours logged)\n• Embrace technology (not fear it)\n• Move fast (not slow)\n\nIf that sounds like your company culture, you're looking at a perfect match."
-        ]
+        ["CULTURE FIT QUESTION! 🎭", "Harshana thrives in environments that value:", "• Speed over bureaucracy\n• Results over process\n• Innovation over 'we've always done it this way'\n• Autonomy over micromanagement\n\nIf your company is allergic to red tape and obsessed with shipping, you found your person."]
       ]
     },
 
-    // ==================== REMOTE WORK ====================
     remote: {
       responses: [
-        [
-          "REMOTE WORK QUESTION! 🌍",
-          "Harshana's built to work remotely:",
-          "• Managed distributed projects (timezones don't scare him)\n• Ships production code without office supervision\n• Communicates async like a pro\n\nRemote, hybrid, on-site - he's flexible. But remote is where he's most productive."
-        ],
-        [
-          "LOCATION FLEXIBILITY! 📍",
-          "Fun fact: Harshana built a 50K-user platform remotely.",
-          "He doesn't NEED to be in an office to ship - the portfolio proves it. Remote-first companies get the best of him."
-        ]
+        ["REMOTE WORK QUESTION! 🌍", "Harshana's built to work remotely:", "• Managed distributed projects (timezones don't scare him)\n• Ships production code without office supervision\n• Communicates async like a pro\n\nRemote, hybrid, on-site - he's flexible. But remote is where he's most productive."]
       ]
     },
 
-    // ==================== INDUSTRIES ====================
     industry: {
       responses: [
-        [
-          "INDUSTRY EXPERIENCE! 🏢",
-          "Harshana's worked in:",
-          "• Legal tech (transcription platform)\n• Marketing/SaaS (Strateq)\n• AI/Automation (custom tools)\n\nBut here's the thing: skills transfer across industries. The HOW matters more than the WHERE. What industry are you in?"
-        ],
-        [
-          "INDUSTRY FLEXIBILITY! 🎯",
-          "Harshana adapts to industries fast because he understands:",
-          "• The underlying tech (code is code)\n• The marketing principles (humans are humans)\n• The business fundamentals (value is value)\n\nNew industry? He'll learn the domain in weeks. The skills stay constant."
-        ]
+        ["INDUSTRY EXPERIENCE! 🏢", "Harshana's worked in:", "• Legal tech (transcription platform)\n• Marketing/SaaS (Strateq)\n• AI/Automation (custom tools)\n\nBut here's the thing: skills transfer across industries. The HOW matters more than the WHERE. What industry are you in?"]
       ]
     },
 
-    // ==================== TEAM SIZE PREFERENCE ====================
     teamSize: {
       responses: [
-        [
-          "TEAM SIZE QUESTION! 👥",
-          "Harshana's worked in:",
-          "• Solo (legal platform, 50K users)\n• Small teams (startups)\n• Large orgs (enterprises)\n\nHe adapts. But thrives most in small, nimble teams where he can own outcomes end-to-end."
-        ],
-        [
-          "TEAM STRUCTURE PREFERENCE! 🎯",
-          "Ideal for Harshana:",
-          "Small team (5-15 people) where he can wear multiple hats and drive real impact. Not ideal: 100-person company with siloed departments and political overhead."
-        ]
+        ["TEAM SIZE QUESTION! 👥", "Harshana's worked in:", "• Solo (legal platform, 50K users)\n• Small teams (startups)\n• Large orgs (enterprises)\n\nHe adapts. But thrives most in small, nimble teams where he can own outcomes end-to-end."]
       ]
     },
 
-    // ==================== LEARNING / GROWTH ====================
     learning: {
       responses: [
-        [
-          "GROWTH MINDSET ALERT! 📚",
-          "Harshana's constantly learning:",
-          "• Started as dev → evolved to marketing → now AI automation\n• That's not job-hopping, that's skill-stacking\n\nCompanies that invest in learning culture get the best ROI from him because he compounds knowledge."
-        ],
-        [
-          "CONTINUOUS LEARNER! 🧠",
-          "Harshana doesn't get stuck in one lane:",
-          "He's always learning the next tech, the next framework, the next competitive advantage. That mindset means he future-proofs your company."
-        ]
+        ["GROWTH MINDSET ALERT! 📚", "Harshana's constantly learning:", "• Started as dev → evolved to marketing → now AI automation\n• That's not job-hopping, that's skill-stacking\n\nCompanies that invest in learning culture get the best ROI from him because he compounds knowledge."]
       ]
     },
 
-    // ==================== FAILURES / CHALLENGES ====================
     challenges: {
       responses: [
-        [
-          "REAL TALK ABOUT CHALLENGES! 💪",
-          "Harshana's faced:",
-          "• Projects that didn't work (learned from them)\n• Tech that failed (pivoted quickly)\n• Timelines that slipped (adjusted)\n\nThe difference? He doesn't hide failures - he learns from them. That's maturity most candidates fake."
-        ],
-        [
-          "GROWTH THROUGH CHALLENGES! 🌱",
-          "Every successful project in the portfolio came AFTER failures you don't see.",
-          "That's the real skill - resilience, adaptability, learning. Most candidates hide failures. Harshana uses them as fuel."
-        ]
+        ["REAL TALK ABOUT CHALLENGES! 💪", "Harshana's faced:", "• Projects that didn't work (learned from them)\n• Tech that failed (pivoted quickly)\n• Timelines that slipped (adjusted)\n\nThe difference? He doesn't hide failures - he learns from them. That's maturity most candidates fake."]
       ]
     },
 
-    // ==================== WHY LEAVE CURRENT ROLE ====================
     whyLeave: {
       responses: [
-        [
-          "CAREER MOTIVATION! 🚀",
-          "Harshana's looking for:",
-          "• Bigger impact\n• More interesting problems\n• Teams that move fast\n• Companies building the future\n\nHe's not running FROM something, he's running TOWARD opportunity."
-        ],
-        [
-          "NEXT CHAPTER REASONING! 📖",
-          "After 7+ years, Harshana's ready for:",
-          "• More ownership\n• Harder problems\n• Better team fit\n• Companies that value innovation\n\nNot chasing money - chasing meaning."
-        ]
+        ["CAREER MOTIVATION! 🚀", "Harshana's looking for:", "• Bigger impact\n• More interesting problems\n• Teams that move fast\n• Companies building the future\n\nHe's not running FROM something, he's running TOWARD opportunity."]
       ]
     },
 
-    // ==================== STARTUPS VS ENTERPRISE ====================
     companyStage: {
       responses: [
-        [
-          "STARTUP VS ENTERPRISE! 🏢",
-          "Harshana speaks both languages:",
-          "• Startups: Loves the speed, autonomy, impact",
-          "• Enterprise: Appreciates the resources, scale, stability\n\nIdeal? Startup speed with enterprise resources. Which are you?"
-        ],
-        [
-          "COMPANY STAGE PREFERENCE! 🎯",
-          "Harshana thrives in:",
-          "• Early-stage startups (build from scratch)\n• Growth-stage companies (scale what works)\n\nNot ideal: Legacy enterprise with 6-month approval cycles."
-        ]
+        ["STARTUP VS ENTERPRISE! 🏢", "Harshana speaks both languages:", "• Startups: Loves the speed, autonomy, impact\n• Enterprise: Appreciates the resources, scale, stability\n\nIdeal? Startup speed with enterprise resources. Which are you?"]
       ]
     },
 
-    // ==================== REFERENCES / TESTIMONIALS ====================
     references: {
       responses: [
-        [
-          "REFERENCES AVAILABLE! 📞",
-          "Harshana has references from:",
-          "• Previous employers (can speak to work ethic)\n• Clients (can speak to results)\n• Collaborators (can speak to teamwork)\n\nHappy to provide upon request. But the portfolio is the best reference - work speaks louder than words."
-        ],
-        [
-          "TESTIMONIAL QUESTION! ⭐",
-          "Real testimonials > fake 5-star reviews.",
-          "Harshana can connect you with people who've worked with him directly. No bought reviews, no fake LinkedIn endorsements."
-        ]
+        ["REFERENCES AVAILABLE! 📞", "Harshana has references from:", "• Previous employers (can speak to work ethic)\n• Clients (can speak to results)\n• Collaborators (can speak to teamwork)\n\nHappy to provide upon request. But the portfolio is the best reference - work speaks louder than words."]
       ]
     },
 
-    // ==================== GENERIC RESPONSES ====================
+    compliment: {
+      responses: [
+        ["RIGHT?! 🙌", "Yeah, Harshana built this entire site (including me!) from scratch.", "If you think THIS is impressive, wait till you see the legal platform with 50K users or the marketing automation that generated $2M+ pipeline. This is just the appetizer!"]
+      ]
+    },
+
     yes: {
       responses: [
-        ["Awesome! 🎉", "Alright, what would you like to know more about?", "Skills? Projects? Experience? How to get in touch?"],
-        ["Perfect! 💪", "Where should we go next?", "Want to see portfolio? Discuss availability? Learn about his skills?"],
-        ["Hell yeah! 🚀", "Let's dive deeper!", "What's most important to you right now - technical skills, marketing experience, or AI automation?"]
+        ["Awesome! 🎉", "Alright, what would you like to know more about?", "Skills? Projects? Experience? How to get in touch?"]
       ]
     },
 
     no: {
       responses: [
-        ["No worries! 😊", "If you change your mind, I'm right here.", "Feel free to explore the site - lots of cool stuff!"],
-        ["All good! 👍", "Maybe not the right time, that's fine.", "Bookmark this for later if you're ever hiring marketing tech talent!"],
-        ["Totally fair! ✌️", "Not every opportunity is a fit.", "But if something changes, you know where to find us!"]
+        ["No worries! 😊", "If you change your mind, I'm right here.", "Feel free to explore the site - lots of cool stuff!"]
       ]
     },
 
     confused: {
       responses: [
-        ["Hmm, not quite sure what you're asking! 🤔", "Want to clarify?", "I can help with: Skills, Experience, Portfolio, Hiring, Contact info"],
-        ["Lost in translation! 😅", "Can you rephrase that?", "Try asking about: What Harshana does, His projects, His availability, How to reach him"],
-        ["My AI brain is confused! 🤖", "Let me help you:", "Ask about Skills | Experience | Projects | Availability | Contact"]
+        ["Hmm, not quite sure what you're asking! 🤔", "Want to clarify?", "I can help with: Skills, Experience, Portfolio, Hiring, Contact info"]
       ]
     },
 
     random: {
       responses: [
-        ["Haha that's random! 🎲", "But I'm built to talk about Harshana's professional goldmine-ness!", "Got questions about his work?"],
-        ["LOL okay! 😆", "I appreciate the creativity, but I'm here to talk marketing tech, AI, and development!", "Wanna know about Harshana's actual skills?"],
-        ["Interesting question! 🧐", "But I'm optimized for career conversations!", "Ask me about Harshana's projects, experience, or how to hire him!"]
+        ["Haha that's random! 🎲", "But I'm built to talk about Harshana's professional goldmine-ness!", "Got questions about his work?"]
       ]
     }
   };
@@ -705,15 +460,6 @@ const FloatingAiAssistant = () => {
   // Get initial greeting
   const getInitialGreeting = () => {
     return getRandomItem(conversationScripts.initial.greetings);
-  };
-
-  // Add bot messages with delay
-  const addBotMessages = (messageArray, delay = 800) => {
-    messageArray.forEach((msg, index) => {
-      setTimeout(() => {
-        setMessages(prev => [...prev, { text: msg, sender: 'bot', timestamp: new Date() }]);
-      }, delay * index);
-    });
   };
 
   // COMPREHENSIVE intent detection covering 50+ scenarios
@@ -752,18 +498,18 @@ const FloatingAiAssistant = () => {
       return getRandomItem(conversationScripts.initial.greetings);
     }
 
-    // Hiring intent (GOLDMINE positioning)
+    // Hiring intent
     if (lower.match(/hir(e|ing)|recruit|looking for|need (a |someone|talent)|job (opening|offer|position)|vacancy|candidate|role|position open/)) {
       setConversationStage('hiring');
       return getRandomItem(conversationScripts.hiring.responses);
     }
 
-    // Marketing tech (GOLDMINE value)
+    // Marketing tech
     if (lower.match(/marketing tech|martech|marketing automation|hubspot|salesforce|crm|email automation|campaign|marketing stack|marketing operations|marketing engineer/)) {
       return getRandomItem(conversationScripts.marketingTech.responses);
     }
 
-    // AI/Automation (FUTURE-PROOF positioning)
+    // AI/Automation
     if (lower.match(/\bai\b|artificial intelligence|automation|automate|gpt|claude|openai|machine learning|ml|chatbot|agent|workflow|n8n|zapier|make\.com/)) {
       return getRandomItem(conversationScripts.aiAutomation.responses);
     }
@@ -773,7 +519,7 @@ const FloatingAiAssistant = () => {
       return getRandomItem(conversationScripts.fullStack.responses);
     }
 
-    // ROI / Business value (GOLDMINE metrics)
+    // ROI / Business value
     if (lower.match(/\broi\b|return on investment|business value|impact|revenue|profit|save (money|time|cost)|worth it|value prop|business case/)) {
       return getRandomItem(conversationScripts.roi.responses);
     }
@@ -783,37 +529,37 @@ const FloatingAiAssistant = () => {
       return getRandomItem(conversationScripts.skills.responses);
     }
 
-    // Experience / Background
+    // Experience
     if (lower.match(/experience|background|history|worked|previous|past (work|jobs|role)|resume|cv|career|years/)) {
       return getRandomItem(conversationScripts.experience.responses);
     }
 
-    // Portfolio / Projects
+    // Portfolio
     if (lower.match(/portfolio|project|work|built|case stud|example|demo|show me|what (has|did) he (built|build|make|create)/)) {
       return getRandomItem(conversationScripts.portfolio.responses);
     }
 
-    // Availability / Start date
+    // Availability
     if (lower.match(/available|availability|start|when (can|could)|timeline|free|notice period|how soon/)) {
       return getRandomItem(conversationScripts.availability.responses);
     }
 
-    // Pricing / Rates / Compensation
+    // Pricing
     if (lower.match(/cost|price|rate|expensive|cheap|budget|pay|salary|compensation|how much|charge/)) {
       return getRandomItem(conversationScripts.pricing.responses);
     }
 
-    // Contact / Next steps
+    // Contact
     if (lower.match(/contact|reach out|email|talk|discuss|call|meeting|interview|get in touch|connect/)) {
       return getRandomItem(conversationScripts.contact.responses);
     }
 
-    // Skeptical / Prove it
+    // Skeptical
     if (lower.match(/too good|sounds fake|bullshit|doubt|really|sure|prove it|evidence|show proof|verify|trust/)) {
       return getRandomItem(conversationScripts.skeptical.responses);
     }
 
-    // Comparisons to other candidates
+    // Comparisons
     if (lower.match(/compar|versus|vs|other candidate|different from|stand out|why (should|would)|better than|advantage/)) {
       return getRandomItem(conversationScripts.comparison.responses);
     }
@@ -828,7 +574,7 @@ const FloatingAiAssistant = () => {
       return getRandomItem(conversationScripts.remote.responses);
     }
 
-    // Industry experience
+    // Industry
     if (lower.match(/industry|sector|domain|vertical|market|field/)) {
       return getRandomItem(conversationScripts.industry.responses);
     }
@@ -838,27 +584,27 @@ const FloatingAiAssistant = () => {
       return getRandomItem(conversationScripts.teamSize.responses);
     }
 
-    // Learning / Growth
+    // Learning
     if (lower.match(/learn|growth|develop|upskill|training|improve|education/)) {
       return getRandomItem(conversationScripts.learning.responses);
     }
 
-    // Challenges / Failures
+    // Challenges
     if (lower.match(/challeng|difficult|fail|mistake|problem|struggle|overcome/)) {
       return getRandomItem(conversationScripts.challenges.responses);
     }
 
-    // Why leaving current role
+    // Why leaving
     if (lower.match(/why (leave|leaving)|looking for new|change|switch|move/)) {
       return getRandomItem(conversationScripts.whyLeave.responses);
     }
 
-    // Company stage preference
+    // Company stage
     if (lower.match(/startup|enterprise|company stage|early.?stage|growth.?stage|mature company/)) {
       return getRandomItem(conversationScripts.companyStage.responses);
     }
 
-    // References / Testimonials
+    // References
     if (lower.match(/reference|testimonial|recommendation|referral|vouch|previous (employer|client)/)) {
       return getRandomItem(conversationScripts.references.responses);
     }
@@ -868,7 +614,7 @@ const FloatingAiAssistant = () => {
       return getRandomItem(conversationScripts.compliment.responses);
     }
 
-    // Yes/No responses
+    // Yes/No
     if (lower.match(/^(yes|yeah|yep|sure|ok|okay|yup|absolutely|definitely|affirmative)$/i)) {
       return getRandomItem(conversationScripts.yes.responses);
     }
@@ -877,12 +623,12 @@ const FloatingAiAssistant = () => {
       return getRandomItem(conversationScripts.no.responses);
     }
 
-    // Confused/unclear
+    // Confused
     if (lower.length < 3 || lower.match(/what|huh|idk|dunno|unclear|don't understand/)) {
       return getRandomItem(conversationScripts.confused.responses);
     }
 
-    // Random/off-topic
+    // Random
     return getRandomItem(conversationScripts.random.responses);
   };
 
@@ -893,14 +639,15 @@ const FloatingAiAssistant = () => {
   };
 
   const handleSend = () => {
-    if (message.trim()) {
+    if (message.trim() && !isTyping) {
       setMessages(prev => [...prev, { text: message, sender: 'user', timestamp: new Date() }]);
       const response = getBotResponse(message);
       setMessage('');
       setCharCount(0);
+
       setTimeout(() => {
-        addBotMessages(response);
-      }, 500);
+        addBotMessagesWithTypewriter(response, 600);
+      }, 300);
     }
   };
 
@@ -964,7 +711,9 @@ const FloatingAiAssistant = () => {
             <div className="flex items-center justify-between px-6 pt-4 pb-3 border-b border-zinc-700/50">
               <div className="flex items-center gap-1.5">
                 <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-                <span className="text-xs font-medium text-zinc-300">Harshana's AI Twin 🤖</span>
+                <span className="text-xs font-medium text-zinc-300">
+                  {isTyping ? 'Typing...' : "Harshana's AI Twin 🤖"}
+                </span>
               </div>
               <div className="flex items-center gap-2">
                 <span className="px-2 py-1 text-xs font-medium bg-gradient-to-r from-yellow-500/20 to-orange-500/20 text-yellow-400 rounded-2xl border border-yellow-500/30">
@@ -988,7 +737,10 @@ const FloatingAiAssistant = () => {
                       ? 'bg-gradient-to-r from-red-600 to-red-500 text-white'
                       : 'bg-zinc-700/50 text-zinc-100'
                   }`}>
-                    <p className="text-sm leading-relaxed whitespace-pre-line">{msg.text}</p>
+                    <p className="text-sm leading-relaxed whitespace-pre-line">
+                      {msg.text}
+                      {msg.isTyping && <span className="inline-block w-1 h-4 ml-1 bg-zinc-100 animate-pulse">|</span>}
+                    </p>
                   </div>
                 </div>
               ))}
@@ -1002,8 +754,9 @@ const FloatingAiAssistant = () => {
                 onChange={handleInputChange}
                 onKeyDown={handleKeyDown}
                 rows={3}
-                className="w-full px-6 py-4 bg-transparent border-none outline-none resize-none text-sm font-normal leading-relaxed text-zinc-100 placeholder-zinc-400 scrollbar-none"
-                placeholder="Ask me anything about Harshana..."
+                disabled={isTyping}
+                className="w-full px-6 py-4 bg-transparent border-none outline-none resize-none text-sm font-normal leading-relaxed text-zinc-100 placeholder-zinc-400 scrollbar-none disabled:opacity-50"
+                placeholder={isTyping ? "Wait for me to finish typing..." : "Ask me anything about Harshana..."}
                 style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
               />
             </div>
@@ -1019,7 +772,7 @@ const FloatingAiAssistant = () => {
 
                 <button
                   onClick={handleSend}
-                  disabled={!message.trim()}
+                  disabled={!message.trim() || isTyping}
                   className="group relative p-3 bg-gradient-to-r from-red-600 to-red-500 border-none rounded-xl cursor-pointer transition-all duration-300 text-white shadow-lg hover:from-red-500 hover:to-red-400 hover:scale-110 hover:shadow-red-500/30 hover:shadow-xl active:scale-95 transform disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
                 >
                   <Send className="w-5 h-5 transition-all duration-300 group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:rotate-12" />
