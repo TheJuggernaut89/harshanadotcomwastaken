@@ -94,10 +94,10 @@ function App() {
 
               <div className="relative z-10">
                 <Hero />
-                <ArtworkBanner />
                 <ValueProposition />
                 <Approach />
                 <div id="about"><AboutBento /></div>
+                <ArtworkBanner />
                 <Skills />
                 <Journey />
                 <div id="projects"><Portfolio /></div>

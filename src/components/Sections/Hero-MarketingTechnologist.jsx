@@ -82,49 +82,6 @@ const Hero = () => {
                 </motion.div>
             </div>
 
-            {/* Floating Face Image with Parallax - ENHANCED SIZE */}
-            <motion.div
-                ref={floatingRef}
-                style={{ y: floatingY }}
-                className="absolute right-4 md:right-10 bottom-10 md:bottom-20 hidden md:block will-change-transform z-20"
-                animate={{
-                    y: [0, -20, 0],
-                    rotate: [0, 5, 0, -5, 0]
-                }}
-                transition={{
-                    duration: 6,
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                }}
-            >
-                <div className="relative w-64 h-64 md:w-[450px] md:h-[450px] lg:w-[550px] lg:h-[550px]">
-                    {/* Tighter Glow Effect Behind Image */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-primary/40 to-teal/20 blur-xl rounded-full" />
-                    <div className="absolute inset-0 bg-primary/20 blur-lg rounded-full animate-pulse" />
-
-                    {/* Face Image - EVEN BIGGER */}
-                    <img
-                        src="/images/face-float2.png"
-                        alt="Harshana Jothi"
-                        className="relative z-10 w-full h-full object-contain drop-shadow-2xl"
-                        style={{ filter: 'drop-shadow(0 0 20px rgba(230, 57, 70, 0.4))' }}
-                    />
-
-                    {/* Tighter Floating Ring */}
-                    <motion.div
-                        className="absolute inset-0 border-3 border-primary/40 rounded-full"
-                        animate={{
-                            scale: [1, 1.08, 1],
-                            opacity: [0.4, 0.7, 0.4]
-                        }}
-                        transition={{
-                            duration: 4,
-                            repeat: Infinity,
-                            ease: "easeInOut"
-                        }}
-                    />
-                </div>
-            </motion.div>
 
         </section>
     );
