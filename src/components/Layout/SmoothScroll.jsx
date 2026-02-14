@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import Lenis from 'lenis';
-import Lenis from 'lenis';
 // import 'lenis/dist/lenis.css'; // REMOVED: Managed manually in global CSS to prevent blocking
 
 const SmoothScroll = ({ children }) => {
