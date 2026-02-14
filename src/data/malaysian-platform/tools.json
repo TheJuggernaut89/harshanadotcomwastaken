@@ -1,0 +1,364 @@
+{
+    "layers": [
+        {
+            "id": "kopitiam-intel",
+            "name": "Kopitiam Intel",
+            "tagline": "Where We Dengar Everything First",
+            "description": "Market intelligence layer tracking cultural moments, trends, subsidies, and cross-border patterns before they go mainstream.",
+            "icon": "coffee",
+            "color": "#8B4513",
+            "toolsCount": 5,
+            "example": "Predicts CNY opportunities 30 days ahead",
+            "tools": [
+                {
+                    "id": "culture-code",
+                    "name": "Culture Code",
+                    "description": "Malaysian cultural moment predictor",
+                    "longDescription": "Analyzes Malaysian cultural calendar, social trends, and historical data to predict optimal marketing moments 30-60 days in advance.",
+                    "techStack": [
+                        "Next.js",
+                        "TypeScript",
+                        "GPT-4",
+                        "Malaysian Calendar API"
+                    ],
+                    "buildTime": "3 days",
+                    "features": [
+                        "67+ cultural moments tracked",
+                        "30-day advance predictions",
+                        "Multi-ethnic calendar integration",
+                        "ROI scoring for each moment"
+                    ],
+                    "demoAvailable": true,
+                    "hasMockDemo": true
+                },
+                {
+                    "id": "kopitiam-oracle",
+                    "name": "Kopitiam Oracle",
+                    "description": "F&B trend prediction engine",
+                    "longDescription": "Scrapes Malaysian food blogs, TikTok, and Instagram to identify emerging F&B trends before they hit mainstream.",
+                    "techStack": [
+                        "Python",
+                        "Web Scraping",
+                        "GPT-4",
+                        "Trend Analysis"
+                    ],
+                    "buildTime": "2 days",
+                    "features": [
+                        "Real-time social media monitoring",
+                        "Trend velocity scoring",
+                        "Geographic trend mapping",
+                        "Competitor trend analysis"
+                    ],
+                    "demoAvailable": false,
+                    "hasMockDemo": true
+                },
+                {
+                    "id": "subsidy-tracker",
+                    "name": "Subsidy Tracker",
+                    "description": "Government policy impact analyzer",
+                    "longDescription": "Monitors Malaysian government announcements, subsidy changes, and policy updates to predict market impact on pricing and consumer behavior.",
+                    "techStack": [
+                        "Node.js",
+                        "News API",
+                        "GPT-4",
+                        "Policy Database"
+                    ],
+                    "buildTime": "2 days",
+                    "features": [
+                        "Real-time policy monitoring",
+                        "Price impact predictions",
+                        "Consumer behavior shifts",
+                        "Campaign timing recommendations"
+                    ],
+                    "demoAvailable": false,
+                    "hasMockDemo": true
+                },
+                {
+                    "id": "singaporean-hunter",
+                    "name": "Singaporean Hunter",
+                    "description": "Cross-border shopping tracker",
+                    "longDescription": "Tracks Singaporean shopping patterns in JB, currency exchange rates, and cross-border trends to optimize campaigns for Malaysian businesses targeting Singaporean customers.",
+                    "techStack": [
+                        "React",
+                        "Exchange Rate API",
+                        "Location Data",
+                        "GPT-4"
+                    ],
+                    "buildTime": "3 days",
+                    "features": [
+                        "SGD/MYR exchange tracking",
+                        "Weekend traffic predictions",
+                        "Popular product categories",
+                        "Optimal pricing strategies"
+                    ],
+                    "demoAvailable": false,
+                    "hasMockDemo": true
+                },
+                {
+                    "id": "festival-roi-maximizer",
+                    "name": "Festival ROI Maximizer",
+                    "description": "Budget optimization across festivals",
+                    "longDescription": "Allocates marketing budget across Malaysian festivals (CNY, Raya, Deepavali, Christmas) based on target audience, historical ROI, and cultural significance.",
+                    "techStack": [
+                        "TypeScript",
+                        "Optimization Algorithm",
+                        "Historical Data",
+                        "GPT-4"
+                    ],
+                    "buildTime": "3 days",
+                    "features": [
+                        "Multi-festival budget allocation",
+                        "Audience overlap analysis",
+                        "Historical ROI comparison",
+                        "Dynamic reallocation recommendations"
+                    ],
+                    "demoAvailable": false,
+                    "hasMockDemo": true
+                }
+            ]
+        },
+        {
+            "id": "mamak-workshop",
+            "name": "Mamak Workshop",
+            "tagline": "Boss, Apa Nak Buat Hari Ni?",
+            "description": "Content creation layer that generates campaigns, translations, scripts, and SEO in authentic Malaysian style.",
+            "icon": "chef-hat",
+            "color": "#FF8C00",
+            "toolsCount": 5,
+            "example": "Generates Rojak copy in 30 seconds",
+            "tools": [
+                {
+                    "id": "pitch-perfect",
+                    "name": "Pitch Perfect",
+                    "description": "AI pitch deck generator",
+                    "longDescription": "Creates investor-ready pitch decks tailored for Malaysian market, with local context, realistic projections, and culturally appropriate messaging.",
+                    "techStack": [
+                        "Next.js",
+                        "GPT-4",
+                        "Canva API",
+                        "Malaysian Business Data"
+                    ],
+                    "buildTime": "3 days",
+                    "features": [
+                        "Malaysian market sizing",
+                        "Local competitor analysis",
+                        "Realistic financial projections",
+                        "Cultural context integration"
+                    ],
+                    "demoAvailable": false,
+                    "hasMockDemo": true
+                },
+                {
+                    "id": "rojak-translator",
+                    "name": "Rojak Translator",
+                    "description": "Multi-language code-switching expert",
+                    "longDescription": "Translates content into authentic Malaysian Rojak (BM + English + Chinese), maintaining natural code-switching patterns used by real Malaysians.",
+                    "techStack": [
+                        "GPT-4",
+                        "Language Models",
+                        "Malaysian Corpus",
+                        "TypeScript"
+                    ],
+                    "buildTime": "2 days",
+                    "features": [
+                        "Natural code-switching",
+                        "Tone preservation",
+                        "Cultural idiom integration",
+                        "Multiple Rojak styles (Gen Z, Professional, Casual)"
+                    ],
+                    "demoAvailable": false,
+                    "hasMockDemo": true
+                },
+                {
+                    "id": "mamak-copy-generator",
+                    "name": "Mamak Copy Generator",
+                    "description": "Social media content creator",
+                    "longDescription": "Generates social media posts, captions, and ad copy in authentic Malaysian voice, with proper Rojak, cultural references, and emoji usage.",
+                    "techStack": [
+                        "React",
+                        "GPT-4",
+                        "Content Templates",
+                        "Malaysian Slang DB"
+                    ],
+                    "buildTime": "2 days",
+                    "features": [
+                        "Platform-specific formatting (IG, FB, TikTok)",
+                        "Hashtag generation (EN + BM)",
+                        "Emoji suggestions",
+                        "Multiple tone options"
+                    ],
+                    "demoAvailable": true,
+                    "hasMockDemo": true
+                },
+                {
+                    "id": "live-seller-script",
+                    "name": "Live Seller Script",
+                    "description": "TikTok Live selling script generator",
+                    "longDescription": "Creates engaging TikTok Live selling scripts with Malaysian slang, urgency tactics, and proven conversion patterns used by top Malaysian live sellers.",
+                    "techStack": [
+                        "TypeScript",
+                        "GPT-4",
+                        "TikTok API",
+                        "Script Templates"
+                    ],
+                    "buildTime": "3 days",
+                    "features": [
+                        "Urgency phrase library",
+                        "Price anchoring scripts",
+                        "Malaysian slang integration",
+                        "Call-to-action templates"
+                    ],
+                    "demoAvailable": false,
+                    "hasMockDemo": true
+                },
+                {
+                    "id": "malaysian-seo-translator",
+                    "name": "Malaysian SEO Translator",
+                    "description": "Search intent localizer",
+                    "longDescription": "Translates international SEO keywords into how Malaysians actually search (e.g., 'Best phone Malaysia' → 'HP murah bawah 1000'), with search volume data.",
+                    "techStack": [
+                        "Node.js",
+                        "Google Keyword API",
+                        "GPT-4",
+                        "Search Pattern DB"
+                    ],
+                    "buildTime": "3 days",
+                    "features": [
+                        "12,000+ Malaysian search patterns",
+                        "Search volume comparison",
+                        "Long-tail keyword generation",
+                        "Competitor keyword analysis"
+                    ],
+                    "demoAvailable": false,
+                    "hasMockDemo": true
+                }
+            ]
+        },
+        {
+            "id": "makcik-approval",
+            "name": "Makcik Approval",
+            "tagline": "Like That Also Can Meh?",
+            "description": "Compliance and optimization layer ensuring halal compliance, legal safety, cultural sensitivity, and pricing psychology.",
+            "icon": "shield-check",
+            "color": "#9370DB",
+            "toolsCount": 5,
+            "example": "Catches compliance issues before publishing",
+            "tools": [
+                {
+                    "id": "jakim-guardian",
+                    "name": "JAKIM Guardian",
+                    "description": "Halal compliance checker",
+                    "longDescription": "Scans campaign content, product descriptions, and imagery for halal compliance issues, with JAKIM certification database integration.",
+                    "techStack": [
+                        "Python",
+                        "Image Recognition",
+                        "JAKIM API",
+                        "GPT-4"
+                    ],
+                    "buildTime": "3 days",
+                    "features": [
+                        "230+ automated compliance checks",
+                        "JAKIM cert verification",
+                        "Ingredient analysis",
+                        "Visual content scanning"
+                    ],
+                    "demoAvailable": true,
+                    "hasMockDemo": true
+                },
+                {
+                    "id": "mcmc-safepost",
+                    "name": "MCMC SafePost",
+                    "description": "Legal compliance scanner",
+                    "longDescription": "Checks social media content against Malaysian Communications and Multimedia Commission (MCMC) regulations to prevent legal issues.",
+                    "techStack": [
+                        "TypeScript",
+                        "Legal Database",
+                        "GPT-4",
+                        "MCMC Guidelines"
+                    ],
+                    "buildTime": "2 days",
+                    "features": [
+                        "MCMC regulation database",
+                        "Prohibited content detection",
+                        "Risk scoring",
+                        "Suggested corrections"
+                    ],
+                    "demoAvailable": true,
+                    "hasMockDemo": true
+                },
+                {
+                    "id": "sensitivity-checker",
+                    "name": "Sensitivity Checker",
+                    "description": "Multi-ethnic appropriateness validator",
+                    "longDescription": "Validates content for cultural sensitivity across Malaysian ethnic groups (Malay, Chinese, Indian, indigenous), preventing offensive or inappropriate messaging.",
+                    "techStack": [
+                        "GPT-4",
+                        "Cultural Database",
+                        "Community Guidelines",
+                        "React"
+                    ],
+                    "buildTime": "3 days",
+                    "features": [
+                        "Multi-ethnic validation",
+                        "Religious sensitivity checks",
+                        "Cultural appropriation detection",
+                        "96/100 approval scoring"
+                    ],
+                    "demoAvailable": true,
+                    "hasMockDemo": true
+                },
+                {
+                    "id": "ringgit-psychology",
+                    "name": "Ringgit Psychology",
+                    "description": "Pricing optimizer",
+                    "longDescription": "Optimizes pricing using Malaysian consumer psychology (e.g., RM9.90 vs RM10.00), with A/B test data and conversion rate predictions.",
+                    "techStack": [
+                        "TypeScript",
+                        "Pricing Algorithm",
+                        "A/B Test Data",
+                        "GPT-4"
+                    ],
+                    "buildTime": "2 days",
+                    "features": [
+                        "Psychological pricing patterns",
+                        "Currency-specific optimization",
+                        "Conversion rate predictions",
+                        "Competitor price analysis"
+                    ],
+                    "demoAvailable": false,
+                    "hasMockDemo": true
+                },
+                {
+                    "id": "myinfluencer-rate-card",
+                    "name": "MyInfluencer Rate Card",
+                    "description": "Malaysian influencer pricing database",
+                    "longDescription": "Database of Malaysian influencer rates, engagement metrics, and ROI predictions to prevent overpaying and identify undervalued creators.",
+                    "techStack": [
+                        "Database",
+                        "Web Scraping",
+                        "Analytics",
+                        "React"
+                    ],
+                    "buildTime": "3 days",
+                    "features": [
+                        "1,000+ influencer profiles",
+                        "Engagement rate analysis",
+                        "Fair price recommendations",
+                        "ROI predictions"
+                    ],
+                    "demoAvailable": false,
+                    "hasMockDemo": true
+                }
+            ]
+        }
+    ],
+    "stats": {
+        "totalTools": 15,
+        "buildTime": "14 days",
+        "linesOfCode": "15000+",
+        "apiIntegrations": 8,
+        "culturalMoments": 67,
+        "complianceRules": 230,
+        "searchPatterns": 12000
+    }
+}

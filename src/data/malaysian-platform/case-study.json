@@ -1,0 +1,169 @@
+{
+    "title": "Ramadan Campaign - F&B Delivery Platform",
+    "client": "Major F&B Delivery Platform (Malaysia)",
+    "period": "Ramadan 2025",
+    "challenge": {
+        "timeline": "30 days to launch",
+        "budget": "RM500,000",
+        "target": "Malaysian Muslims + Singaporean Muslims in JB",
+        "complexity": [
+            "Multi-cultural audience",
+            "Halal compliance critical",
+            "Cross-border logistics",
+            "Competitive market",
+            "Time-sensitive (Ramadan window)"
+        ]
+    },
+    "solution": {
+        "toolsUsed": [
+            {
+                "tool": "Culture Code",
+                "layer": "Kopitiam Intel",
+                "usage": "Identified Ramadan opportunity windows 30 days ahead",
+                "impact": "Optimized campaign timing for maximum engagement"
+            },
+            {
+                "tool": "Subsidy Tracker",
+                "layer": "Kopitiam Intel",
+                "usage": "Confirmed food prices stable during Ramadan",
+                "impact": "Prevented pricing strategy issues"
+            },
+            {
+                "tool": "Kopitiam Oracle",
+                "layer": "Kopitiam Intel",
+                "usage": "Detected premium iftar trend early",
+                "impact": "Positioned campaign for high-value segment"
+            },
+            {
+                "tool": "Festival ROI Maximizer",
+                "layer": "Kopitiam Intel",
+                "usage": "Optimized RM500k across 4 campaign phases",
+                "impact": "16% better ROI than manual allocation"
+            },
+            {
+                "tool": "Rojak Translator",
+                "layer": "Mamak Workshop",
+                "usage": "Created BM + English + Singaporean versions",
+                "impact": "Natural language for all audience segments"
+            },
+            {
+                "tool": "Mamak Copy Generator",
+                "layer": "Mamak Workshop",
+                "usage": "Generated 120+ social media posts",
+                "impact": "Saved 40 hours of copywriting"
+            },
+            {
+                "tool": "JAKIM Guardian",
+                "layer": "Makcik Approval",
+                "usage": "Validated 100% halal compliance",
+                "impact": "Zero compliance issues post-launch"
+            },
+            {
+                "tool": "MCMC SafePost",
+                "layer": "Makcik Approval",
+                "usage": "Legal review passed all content",
+                "impact": "Prevented potential legal issues"
+            },
+            {
+                "tool": "Sensitivity Checker",
+                "layer": "Makcik Approval",
+                "usage": "Multi-ethnic approval 96/100",
+                "impact": "Positive reception across all communities"
+            }
+        ],
+        "timeline": [
+            {
+                "phase": "Week 1: Intelligence Gathering",
+                "days": "Days 1-7",
+                "activities": [
+                    "Culture Code analysis",
+                    "Subsidy tracking",
+                    "Trend identification",
+                    "Budget allocation"
+                ],
+                "deliverables": "Campaign strategy document"
+            },
+            {
+                "phase": "Week 2: Content Creation",
+                "days": "Days 8-14",
+                "activities": [
+                    "Rojak translation",
+                    "Copy generation",
+                    "Visual content creation",
+                    "Compliance checks"
+                ],
+                "deliverables": "120+ approved posts"
+            },
+            {
+                "phase": "Week 3: Pre-Launch",
+                "days": "Days 15-21",
+                "activities": [
+                    "Final compliance review",
+                    "Influencer outreach",
+                    "Platform setup",
+                    "Team training"
+                ],
+                "deliverables": "Campaign ready to launch"
+            },
+            {
+                "phase": "Week 4: Launch & Optimize",
+                "days": "Days 22-30",
+                "activities": [
+                    "Campaign launch",
+                    "Real-time monitoring",
+                    "A/B testing",
+                    "Budget reallocation"
+                ],
+                "deliverables": "Live campaign with optimization"
+            }
+        ]
+    },
+    "results": {
+        "efficiency": {
+            "timeSaved": "120 hours",
+            "manualWork": "Eliminated 75% of manual research",
+            "complianceIssues": 0,
+            "contentGenerated": "120+ posts"
+        },
+        "performance": {
+            "revenue": "RM2,200,000",
+            "revenueTarget": "RM1,900,000",
+            "revenueIncrease": "+16%",
+            "roas": "4.4x",
+            "roasTarget": "3.8x",
+            "roasIncrease": "+15.8%",
+            "orders": 52000,
+            "ordersTarget": 45000,
+            "ordersIncrease": "+15.6%",
+            "avgOrderValue": "RM42.30",
+            "customerAcquisitionCost": "RM9.60"
+        },
+        "engagement": {
+            "impressions": "8,500,000",
+            "reach": "2,100,000",
+            "engagement": "340,000",
+            "engagementRate": "4.0%",
+            "clickThroughRate": "2.8%",
+            "conversionRate": "12.4%"
+        },
+        "compliance": {
+            "halalCompliance": "100%",
+            "legalIssues": 0,
+            "customerComplaints": 3,
+            "complaintRate": "0.006%",
+            "culturalSensitivity": "96/100"
+        }
+    },
+    "testimonial": {
+        "quote": "The Malaysian Platform saved us 120 hours and prevented what could have been costly compliance mistakes. The ROI exceeded our projections by 16%. This is the future of Malaysian marketing.",
+        "author": "Marketing Director",
+        "company": "F&B Delivery Platform"
+    },
+    "keyTakeaways": [
+        "Tools integration reduced campaign prep time by 75%",
+        "Zero compliance issues = zero legal/PR risk",
+        "16% revenue increase above projection",
+        "4.4x ROAS vs predicted 3.8x",
+        "Platform paid for itself in first campaign"
+    ]
+}

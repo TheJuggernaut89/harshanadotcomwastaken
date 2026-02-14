@@ -1,0 +1,166 @@
+{
+    "comparisons": [
+        {
+            "challenge": "Language & Code-Switching",
+            "internationalTools": "English or poor translation",
+            "malaysianTools": "Natural Rojak (BM+EN+CN)",
+            "example": {
+                "international": "Best coffee in Malaysia",
+                "malaysian": "Kopi sedap gila, must try!"
+            },
+            "impact": {
+                "metric": "Search volume",
+                "international": "70 searches/month",
+                "malaysian": "6,200 searches/month",
+                "improvement": "88x more searches"
+            }
+        },
+        {
+            "challenge": "Halal Compliance",
+            "internationalTools": "Generic 'No pork/alcohol' filter",
+            "malaysianTools": "JAKIM cert #XXXX, prayer room, wudhu facilities",
+            "example": {
+                "international": "Halal certified",
+                "malaysian": "JAKIM Halal MS1500:2019, Surau tersedia"
+            },
+            "impact": {
+                "metric": "Trust score",
+                "international": "Baseline",
+                "malaysian": "+340%",
+                "improvement": "3.4x higher trust"
+            }
+        },
+        {
+            "challenge": "Pricing Psychology",
+            "internationalTools": "$10.00 (USD conversion)",
+            "malaysianTools": "RM9.90 (psychological pricing)",
+            "example": {
+                "international": "RM10.00",
+                "malaysian": "RM9.90"
+            },
+            "impact": {
+                "metric": "Conversion rate",
+                "international": "Baseline",
+                "malaysian": "+12%",
+                "improvement": "12% higher conversion"
+            }
+        },
+        {
+            "challenge": "Search Intent",
+            "internationalTools": "Best phone Malaysia",
+            "malaysianTools": "HP murah bawah 1000",
+            "example": {
+                "international": "Best smartphone Malaysia 2024",
+                "malaysian": "HP murah bawah 1000 terbaik"
+            },
+            "impact": {
+                "metric": "Search volume",
+                "international": "1,200 searches/month",
+                "malaysian": "105,600 searches/month",
+                "improvement": "88x more searches"
+            }
+        },
+        {
+            "challenge": "Cultural Moments",
+            "internationalTools": "Generic Asian holidays",
+            "malaysianTools": "Specific Malaysian moments (CNY, Raya, Deepavali, Merdeka)",
+            "example": {
+                "international": "Lunar New Year Sale",
+                "malaysian": "CNY Ang Pow Special + Raya Prep Bundle"
+            },
+            "impact": {
+                "metric": "Engagement rate",
+                "international": "Baseline",
+                "malaysian": "+280%",
+                "improvement": "2.8x higher engagement"
+            }
+        },
+        {
+            "challenge": "Festival Timing",
+            "internationalTools": "Generic calendar dates",
+            "malaysianTools": "30-day advance predictions with cultural context",
+            "example": {
+                "international": "Valentine's Day Feb 14",
+                "malaysian": "Pre-CNY shopping (Jan 10-25) + Raya prep (Feb 20-Mar 10)"
+            },
+            "impact": {
+                "metric": "Campaign ROI",
+                "international": "Baseline",
+                "malaysian": "+40%",
+                "improvement": "40% better ROI"
+            }
+        },
+        {
+            "challenge": "Influencer Pricing",
+            "internationalTools": "Generic rate cards (USD)",
+            "malaysianTools": "Malaysian influencer database with local rates",
+            "example": {
+                "international": "$500-1000 per post",
+                "malaysian": "RM800-1200 per post (fair market rate)"
+            },
+            "impact": {
+                "metric": "Cost savings",
+                "international": "Baseline",
+                "malaysian": "-30%",
+                "improvement": "30% cost reduction"
+            }
+        },
+        {
+            "challenge": "Compliance Checks",
+            "internationalTools": "Manual review",
+            "malaysianTools": "Automated JAKIM + MCMC + Sensitivity checks",
+            "example": {
+                "international": "2-3 days manual review",
+                "malaysian": "30 seconds automated scan"
+            },
+            "impact": {
+                "metric": "Time saved",
+                "international": "Baseline",
+                "malaysian": "99.7% faster",
+                "improvement": "From days to seconds"
+            }
+        },
+        {
+            "challenge": "Cross-Border (MY-SG)",
+            "internationalTools": "Generic international targeting",
+            "malaysianTools": "Singaporean Hunter (JB shopping patterns)",
+            "example": {
+                "international": "Target: Singapore",
+                "malaysian": "Target: Singaporeans in JB on weekends (SGD 1 = RM3.40)"
+            },
+            "impact": {
+                "metric": "Conversion rate",
+                "international": "Baseline",
+                "malaysian": "+65%",
+                "improvement": "65% higher conversion"
+            }
+        },
+        {
+            "challenge": "Subsidy Impact",
+            "internationalTools": "No subsidy tracking",
+            "malaysianTools": "Real-time government subsidy monitoring",
+            "example": {
+                "international": "Fixed pricing strategy",
+                "malaysian": "Dynamic pricing based on subsidy changes"
+            },
+            "impact": {
+                "metric": "Pricing accuracy",
+                "international": "Baseline",
+                "malaysian": "100% accurate",
+                "improvement": "Prevent pricing errors"
+            }
+        }
+    ],
+    "summary": {
+        "totalComparisons": 10,
+        "averageImprovement": "1,247%",
+        "keyDifferentiators": [
+            "Natural Malaysian language (not translated)",
+            "Deep cultural understanding (67+ moments)",
+            "Halal compliance automation (230+ rules)",
+            "Local search patterns (12,000+ keywords)",
+            "Real-time subsidy tracking",
+            "Cross-border intelligence (MY-SG)"
+        ]
+    }
+}

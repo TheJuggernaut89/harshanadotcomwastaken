@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run lint:*)",
+      "Bash(nvidia-smi:*)",
+      "Bash(wmic memorychip:*)",
+      "Bash(claude mcp add magic --scope user --env API_KEY=\"440022c3a8e8103bfdbf1686b2e8eae8d8742ca35b67d5e3c0551b0b7c9a6774\" -- npx -y @21st-dev/magic@latest)",
+      "Bash(claude mcp list:*)",
+      "Bash(node setup-transcription-project.js:*)",
+      "Bash(xcopy /E /I /Y \"malaysian-legal-transcription\\\\*\" \"..\\\\malaysian-legal-transcription-suite\"\")",
+      "Bash(xcopy:*)",
+      "Bash(robocopy:*)",
+      "Bash(powershell:*)",
+      "Bash(dir:*)",
+      "Bash(npm run build:*)",
+      "Bash(node -c:*)"
+    ]
+  }
+}

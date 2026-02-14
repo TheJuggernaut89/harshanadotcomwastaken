@@ -1,0 +1,200 @@
+{
+    "culturalMoments": [
+        {
+            "id": "cny-2026",
+            "name": "Chinese New Year 2026",
+            "date": "2026-01-29",
+            "duration": "15 days",
+            "opportunityScore": 95,
+            "targetAudience": [
+                "Chinese Malaysians",
+                "Cross-cultural shoppers",
+                "Singaporeans"
+            ],
+            "contentThemes": [
+                "Ang pow specials",
+                "Reunion dinner",
+                "Prosperity messaging",
+                "Red & gold aesthetics",
+                "Family gathering"
+            ],
+            "brandRecommendations": [
+                "F&B: Premium CNY sets",
+                "Retail: Gift bundles",
+                "E-commerce: Flash sales",
+                "Services: Family packages"
+            ],
+            "timingWindows": {
+                "prep": "Jan 10-25 (shopping peak)",
+                "peak": "Jan 29-Feb 5 (celebration)",
+                "post": "Feb 6-12 (extended sales)"
+            },
+            "budgetAllocation": "25% of annual festival budget"
+        },
+        {
+            "id": "ramadan-2026",
+            "name": "Ramadan 2026",
+            "date": "2026-02-18",
+            "duration": "30 days",
+            "opportunityScore": 98,
+            "targetAudience": [
+                "Muslim Malaysians",
+                "Halal-conscious consumers"
+            ],
+            "contentThemes": [
+                "Iftar specials",
+                "Sahur convenience",
+                "Spiritual messaging",
+                "Family bonding",
+                "Charity & giving"
+            ],
+            "brandRecommendations": [
+                "F&B: Iftar delivery sets",
+                "Retail: Modest fashion",
+                "E-commerce: Raya prep",
+                "Services: Family packages"
+            ],
+            "timingWindows": {
+                "prep": "Feb 1-17 (Ramadan prep)",
+                "peak": "Feb 18-Mar 19 (fasting month)",
+                "raya": "Mar 20-Apr 3 (Hari Raya)"
+            },
+            "budgetAllocation": "30% of annual festival budget"
+        },
+        {
+            "id": "deepavali-2026",
+            "name": "Deepavali 2026",
+            "date": "2026-10-29",
+            "duration": "7 days",
+            "opportunityScore": 85,
+            "targetAudience": [
+                "Indian Malaysians",
+                "Cross-cultural shoppers"
+            ],
+            "contentThemes": [
+                "Festival of lights",
+                "Traditional sweets",
+                "Gold & jewelry",
+                "Family celebration",
+                "New beginnings"
+            ],
+            "brandRecommendations": [
+                "F&B: Murukku & sweets",
+                "Retail: Traditional wear",
+                "E-commerce: Gift hampers",
+                "Services: Home cleaning"
+            ],
+            "timingWindows": {
+                "prep": "Oct 15-28 (shopping)",
+                "peak": "Oct 29-Nov 1 (celebration)",
+                "post": "Nov 2-5 (extended)"
+            },
+            "budgetAllocation": "15% of annual festival budget"
+        },
+        {
+            "id": "merdeka-2026",
+            "name": "Merdeka Day 2026",
+            "date": "2026-08-31",
+            "duration": "3 days",
+            "opportunityScore": 80,
+            "targetAudience": [
+                "All Malaysians",
+                "Patriotic consumers"
+            ],
+            "contentThemes": [
+                "National pride",
+                "Malaysian unity",
+                "Local products",
+                "Patriotic colors",
+                "Independence spirit"
+            ],
+            "brandRecommendations": [
+                "F&B: Malaysian cuisine",
+                "Retail: Local brands",
+                "E-commerce: Made in Malaysia",
+                "Services: Community events"
+            ],
+            "timingWindows": {
+                "prep": "Aug 20-30 (build-up)",
+                "peak": "Aug 31-Sep 2 (celebration)",
+                "post": "Sep 3-16 (Malaysia Day)"
+            },
+            "budgetAllocation": "10% of annual festival budget"
+        },
+        {
+            "id": "school-holidays-2026",
+            "name": "School Holidays 2026",
+            "date": "2026-06-01",
+            "duration": "30 days",
+            "opportunityScore": 75,
+            "targetAudience": [
+                "Families with children",
+                "Parents",
+                "Students"
+            ],
+            "contentThemes": [
+                "Family activities",
+                "Educational content",
+                "Travel & tourism",
+                "Entertainment",
+                "Kids products"
+            ],
+            "brandRecommendations": [
+                "F&B: Family meals",
+                "Retail: Kids products",
+                "E-commerce: Educational toys",
+                "Services: Family packages"
+            ],
+            "timingWindows": {
+                "prep": "May 15-31 (planning)",
+                "peak": "Jun 1-30 (holidays)",
+                "back-to-school": "Jul 1-15 (prep)"
+            },
+            "budgetAllocation": "8% of annual budget"
+        },
+        {
+            "id": "11-11-2026",
+            "name": "11.11 Singles Day 2026",
+            "date": "2026-11-11",
+            "duration": "1 day",
+            "opportunityScore": 92,
+            "targetAudience": [
+                "Online shoppers",
+                "Deal hunters",
+                "Young adults"
+            ],
+            "contentThemes": [
+                "Flash sales",
+                "Mega discounts",
+                "Limited time offers",
+                "Self-gifting",
+                "FOMO marketing"
+            ],
+            "brandRecommendations": [
+                "E-commerce: All categories",
+                "Retail: Online-to-offline",
+                "F&B: Delivery deals",
+                "Services: Subscription offers"
+            ],
+            "timingWindows": {
+                "prep": "Oct 25-Nov 10 (teaser)",
+                "peak": "Nov 11 (24 hours)",
+                "post": "Nov 12-15 (extended)"
+            },
+            "budgetAllocation": "12% of annual e-commerce budget"
+        }
+    ],
+    "metadata": {
+        "totalMoments": 67,
+        "categories": [
+            "Religious festivals",
+            "National holidays",
+            "E-commerce events",
+            "School holidays",
+            "Seasonal moments",
+            "Cultural celebrations"
+        ],
+        "updateFrequency": "Real-time",
+        "dataSource": "Malaysian cultural calendar + social trends"
+    }
+}
