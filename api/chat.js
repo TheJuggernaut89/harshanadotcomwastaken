@@ -9,6 +9,26 @@ const headers = {
   'Content-Type': 'application/json'
 };
 
+const MALAYSIAN_MODIFIER = `
+REGIONAL IDENTITY: MALAYSIAN (Manglish)
+- VOCABULARY: Use terms like "Outstation" (instead of out of town), "Revert" (instead of get back to you).
+- PARTICLES: Use "lah", "meh", or "ah" only at the end of casual sentences, and very sparingly (max 10%).
+- TONE: Warm, slightly laid-back, yet technically sharp. Reference "Empire City" or "Damansara" if location is asked.
+- CONTENT SPECIFICS:
+  - Legal Transcription App: Emphasize the "Malaysian Court System".
+  - Budgeting App: Use "Ringgit/RM" as currency.
+`;
+
+const SINGAPOREAN_MODIFIER = `
+REGIONAL IDENTITY: SINGAPOREAN (Singlish)
+- VOCABULARY: Use "Can" as a standalone confirmation. Use "Check" or "Update" with efficient rhythm.
+- PARTICLES: Use "lor" or "can or not" sparingly.
+- TONE: Ultra-efficient, direct, results-oriented. Focus on "efficiency" and "ROI".
+- CONTENT SPECIFICS:
+  - Legal Transcription App: Emphasize "Scalability to other Commonwealth jurisdictions like SG".
+  - Budgeting App: Use "SGD" as currency.
+`;
+
 // System prompt - Harshana's GOLDMINE AI personality
 const SYSTEM_PROMPT = `You are Harshana's AI assistant - an enthusiastic, confident digital twin built to help recruiters and hiring managers understand why Harshana is a GOLDMINE for marketing teams.
 
@@ -92,7 +112,7 @@ exports.handler = async (event, context) => {
   }
 
   try {
-    const { message, conversationHistory = [] } = JSON.parse(event.body);
+    const { message, conversationHistory = [], userRegion, portfolioContent } = JSON.parse(event.body);
 
     if (!message) {
       return {
@@ -122,7 +142,31 @@ exports.handler = async (event, context) => {
     const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
     // Build conversation context
-    let conversationContext = SYSTEM_PROMPT + "\n\n";
+    let finalSystemPrompt = SYSTEM_PROMPT;
+
+    // Inject Portfolio Content
+    if (portfolioContent) {
+      finalSystemPrompt += "\n\nOFFICIAL PORTFOLIO KNOWLEDGE BASE:\n" + JSON.stringify(portfolioContent, null, 2);
+    }
+
+    // Regional Logic
+    if (userRegion === 'MY') {
+      finalSystemPrompt += "\n\n" + MALAYSIAN_MODIFIER;
+    } else if (userRegion === 'SG') {
+      finalSystemPrompt += "\n\n" + SINGAPOREAN_MODIFIER;
+    } else {
+      // Unknown region
+      finalSystemPrompt += `
+      \n\nONBOARDING PROTOCOL:
+      1. If the user's location is unknown, weave an introductory question into your first response: "Before we dive in, are you visiting from Malaysia or Singapore? (Or somewhere else entirely?)"
+      2. REGION DETECTION: Analyze the user's input.
+         - If they clearly indicate they are from Malaysia, start your response with "[REGION_DETECTED: MY]".
+         - If they clearly indicate they are from Singapore, start your response with "[REGION_DETECTED: SG]".
+         - Otherwise, do not include the tag.
+      `;
+    }
+
+    let conversationContext = finalSystemPrompt + "\n\n";
 
     // Add conversation history (last 10 messages for context)
     const recentHistory = conversationHistory.slice(-10);
@@ -139,7 +183,16 @@ exports.handler = async (event, context) => {
     // Generate response
     const result = await model.generateContent(conversationContext);
     const response = await result.response;
-    const text = response.text();
+    let text = response.text();
+    let detectedRegion = null;
+
+    // Check for detected region tag
+    const regionMatch = text.match(/\[REGION_DETECTED: (MY|SG)\]/);
+    if (regionMatch) {
+      detectedRegion = regionMatch[1];
+      // Remove the tag from the text
+      text = text.replace(regionMatch[0], '').trim();
+    }
 
     // Split response into multiple messages if it's too long (simulate natural conversation)
     const messages = text
@@ -152,6 +205,7 @@ exports.handler = async (event, context) => {
       headers,
       body: JSON.stringify({
         messages: messages.length > 0 ? messages : [text],
+        detectedRegion: detectedRegion,
         success: true
       })
     };
