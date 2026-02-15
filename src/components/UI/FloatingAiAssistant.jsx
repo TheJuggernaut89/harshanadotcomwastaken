@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Paperclip, Link, Code, Mic, Send, Info, Bot, X } from 'lucide-react';
+import { content } from '../../data/content';
 
 const FloatingAiAssistant = () => {
   const [isChatOpen, setIsChatOpen] = useState(false);
@@ -153,7 +154,8 @@ const FloatingAiAssistant = () => {
         },
         body: JSON.stringify({
           message: userMessage,
-          conversationHistory: conversationHistory
+          conversationHistory: conversationHistory,
+          portfolioData: content
         })
       });
 
