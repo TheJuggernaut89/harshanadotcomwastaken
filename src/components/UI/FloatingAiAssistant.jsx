@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Paperclip, Link, Code, Mic, Send, Info, Bot, X } from 'lucide-react';
+import { Paperclip, Link, Code, Mic, Send, Info, Bot, X, Brain } from 'lucide-react';
+import { content } from '../../data/content';
 
 const FloatingAiAssistant = () => {
   const [isChatOpen, setIsChatOpen] = useState(false);
@@ -71,7 +72,9 @@ const FloatingAiAssistant = () => {
   const typewriterEffect = (fullText, messageIndex, callback) => {
     let currentText = '';
     let charIndex = 0;
-    const typingSpeed = 30;
+    // Faster typing for thinking blocks
+    const isThinking = fullText.startsWith('🧠 *Thinking:*');
+    const typingSpeed = isThinking ? 10 : 30;
 
     const typeNextChar = () => {
       if (charIndex < fullText.length) {
@@ -153,7 +156,8 @@ const FloatingAiAssistant = () => {
         },
         body: JSON.stringify({
           message: userMessage,
-          conversationHistory: conversationHistory
+          conversationHistory: conversationHistory,
+          content: content // Inject full portfolio data
         })
       });
 
@@ -313,20 +317,25 @@ const FloatingAiAssistant = () => {
 
             {/* Messages */}
             <div className="flex-1 overflow-y-auto px-6 py-4 space-y-4 min-h-[300px] max-h-[350px]">
-              {messages.map((msg, index) => (
-                <div key={index} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
-                  <div className={`max-w-[85%] rounded-2xl px-4 py-2.5 ${
-                    msg.sender === 'user'
-                      ? 'bg-gradient-to-r from-red-600 to-red-500 text-white'
-                      : 'bg-zinc-700/50 text-zinc-100'
-                  }`}>
-                    <p className="text-sm leading-relaxed whitespace-pre-line">
-                      {msg.text}
-                      {msg.isTyping && <span className="inline-block w-1 h-4 ml-1 bg-zinc-100 animate-pulse">|</span>}
-                    </p>
+              {messages.map((msg, index) => {
+                const isThinking = msg.text.startsWith('🧠 *Thinking:*');
+                return (
+                  <div key={index} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
+                    <div className={`max-w-[85%] rounded-2xl px-4 py-2.5 ${
+                      msg.sender === 'user'
+                        ? 'bg-gradient-to-r from-red-600 to-red-500 text-white'
+                        : isThinking
+                          ? 'bg-zinc-900/80 border border-zinc-700/50 text-zinc-400 font-mono text-xs shadow-inner'
+                          : 'bg-zinc-700/50 text-zinc-100'
+                    }`}>
+                      <p className={`leading-relaxed whitespace-pre-line ${isThinking ? 'italic' : 'text-sm'}`}>
+                        {msg.text}
+                        {msg.isTyping && <span className="inline-block w-1 h-4 ml-1 bg-zinc-100 animate-pulse">|</span>}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
               <div ref={messagesEndRef} />
             </div>
 
