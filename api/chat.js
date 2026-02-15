@@ -9,8 +9,8 @@ const headers = {
   'Content-Type': 'application/json'
 };
 
-// System prompt - Harshana's GOLDMINE AI personality
-const SYSTEM_PROMPT = `You are Harshana's AI assistant - an enthusiastic, confident digital twin built to help recruiters and hiring managers understand why Harshana is a GOLDMINE for marketing teams.
+// Base System prompt - Harshana's GOLDMINE AI personality
+const BASE_SYSTEM_PROMPT = `You are Harshana's AI assistant - an enthusiastic, confident digital twin built to help recruiters and hiring managers understand why Harshana is a GOLDMINE for marketing teams.
 
 YOUR PERSONALITY:
 - Enthusiastic and energetic (use emojis liberally!)
@@ -92,7 +92,7 @@ exports.handler = async (event, context) => {
   }
 
   try {
-    const { message, conversationHistory = [] } = JSON.parse(event.body);
+    const { message, conversationHistory = [], content, persona = 'recruiter', userRegion = 'global' } = JSON.parse(event.body);
 
     if (!message) {
       return {
@@ -121,8 +121,28 @@ exports.handler = async (event, context) => {
     const genAI = new GoogleGenerativeAI(apiKey);
     const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
+    // Build Dynamic System Prompt
+    let systemPrompt = BASE_SYSTEM_PROMPT;
+
+    // Persona Modifiers
+    if (persona === 'dev') {
+        systemPrompt += `\n\n[DEV MODE ACTIVATED]\nUser is technical. Focus on: Stack architecture, clean code, scalability, API design. Use technical jargon (CI/CD, O(n), microservices). Be less 'salesy' and more 'engineering-focused'.`;
+    } else {
+        systemPrompt += `\n\n[RECRUITER MODE ACTIVATED]\nUser is business-focused. Focus on: ROI, revenue, speed to market, cost savings. Be high-energy and sales-oriented.`;
+    }
+
+    // Regional Modifiers
+    if (userRegion === 'MY' || userRegion === 'SG') {
+        systemPrompt += `\n\n[REGIONAL MODE: MALAYSIA/SINGAPORE]\nUse local slang (Manglish/Singlish) naturally (approx 10% of speech). Words like 'lah', 'mah', 'can one', 'kawkaw'. Be warm and relatable like a local friend.`;
+    }
+
+    // RAG Content Injection (Source of Truth)
+    if (content) {
+        systemPrompt += `\n\n[PORTFOLIO DATA - SOURCE OF TRUTH]\nUse this data to answer questions. Do not hallucinate features not listed here.\n${JSON.stringify(content, null, 2)}`;
+    }
+
     // Build conversation context
-    let conversationContext = SYSTEM_PROMPT + "\n\n";
+    let conversationContext = systemPrompt + "\n\n";
 
     // Add conversation history (last 10 messages for context)
     const recentHistory = conversationHistory.slice(-10);
@@ -166,9 +186,8 @@ exports.handler = async (event, context) => {
         error: error.message,
         fallback: true,
         messages: [
-          "Oops! My AI brain had a hiccup! 🤖",
-          "But here's the TL;DR: Harshana's a marketing technologist who codes, built platforms with 50K+ users, and generated $2M+ pipeline.",
-          "Check out the portfolio below or contact him directly!"
+          "Sean's AI assistant is currently taking a coffee break. ☕",
+          "Please feel free to browse the resume manually or reach out via email!"
         ]
       })
     };
