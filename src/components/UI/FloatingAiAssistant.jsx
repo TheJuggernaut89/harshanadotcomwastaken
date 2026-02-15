@@ -68,6 +68,42 @@ const FloatingAiAssistant = () => {
     addBotMessagesWithTypewriter(initialMessages);
   };
 
+  const handleQuickReply = (text) => {
+    setMessage(text);
+    // Automatically send the message
+    // We need to use the state updater to ensure we have the latest message
+    // But since handleSend uses 'message' state, we can't just set it and call handleSend immediately
+    // So we'll call a modified send function or simulate the flow
+
+    // Add user message to UI immediately
+    setMessages(prev => [...prev, {
+      text: text,
+      sender: 'user',
+      timestamp: new Date()
+    }]);
+
+    setConversationHistory(prev => [...prev, {
+      role: 'user',
+      content: text
+    }]);
+
+    setIsTyping(true);
+    callGeminiAPI(text).then(aiResponse => {
+        if (aiResponse.messages && aiResponse.messages.length > 0) {
+            const fullResponse = aiResponse.messages.join(' ');
+            setConversationHistory(prev => [...prev, {
+              role: 'assistant',
+              content: fullResponse
+            }]);
+            setTimeout(() => {
+                addBotMessagesWithTypewriter(aiResponse.messages, 600);
+            }, 300);
+        } else {
+            setIsTyping(false);
+        }
+    });
+  };
+
   // Typewriter effect for a single message
   const typewriterEffect = (fullText, messageIndex, callback) => {
     let currentText = '';
@@ -242,7 +278,9 @@ const FloatingAiAssistant = () => {
 
   const handleBookCall = () => {
     const message = encodeURIComponent("Hi Harshana, I was chatting with your AI Business Partner and I'd like to book a call to discuss a potential role/project.");
-    window.open(`https://wa.me/601129649143?text=${message}`, '_blank');
+    // Use the phone number from content.js
+    const phoneNumber = content.personal.whatsapp.replace(/\D/g, ''); // Remove non-digits
+    window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
   };
 
   // Close chat when clicking outside
@@ -341,6 +379,31 @@ const FloatingAiAssistant = () => {
                   </div>
                 </div>
               ))}
+
+              {/* Quick Replies - Only show if no messages or last message was from bot */}
+              {!isTyping && (messages.length === 0 || messages[messages.length - 1].sender === 'bot') && (
+                <div className="flex flex-wrap gap-2 mt-2">
+                    <button
+                        onClick={() => handleQuickReply("What is his strategic SWOT analysis?")}
+                        className="text-xs bg-zinc-700/50 hover:bg-zinc-600 text-zinc-300 px-3 py-1.5 rounded-full border border-zinc-600 transition-colors"
+                    >
+                        📊 View SWOT Analysis
+                    </button>
+                    <button
+                        onClick={() => handleQuickReply("Tell me his full life story & journey")}
+                        className="text-xs bg-zinc-700/50 hover:bg-zinc-600 text-zinc-300 px-3 py-1.5 rounded-full border border-zinc-600 transition-colors"
+                    >
+                        📖 Hear the Full Story
+                    </button>
+                    <button
+                        onClick={() => handleQuickReply("Why should I hire him?")}
+                        className="text-xs bg-zinc-700/50 hover:bg-zinc-600 text-zinc-300 px-3 py-1.5 rounded-full border border-zinc-600 transition-colors"
+                    >
+                        💼 Why Hire Him?
+                    </button>
+                </div>
+              )}
+
               <div ref={messagesEndRef} />
             </div>
 

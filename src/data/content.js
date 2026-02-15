@@ -500,5 +500,39 @@ export const content = {
         salaryJustification: "For a multi-platform role, I'm looking at RM 10-15K. Here's why that's fair: Most companies either hire 3 people (marketer RM 5-6K + developer RM 4-5K + designer RM 3-4K = RM 12-15K) or use agencies (RM 10-15K/month). I deliver all three capabilities solo with proven results. You're getting team-level execution at individual cost.",
 
         uniqueValue: "What makes me different: (1) I build custom systems, not just use tools. (2) I track revenue, not just engagement. (3) I have technical skills most marketers don't—I code, build automation, integrate APIs. (4) I have entrepreneurial experience—I think like a business owner, not just an employee."
+    },
+
+    // NEW: Story Arc for "Life Story" explanation
+    story: {
+        narrative: "My journey isn't a straight line—it's an evolution of systems thinking. I started in high-stakes security (Certis CISCO), protecting banks and prisons. This taught me 'Bulletproof Protocols'—if you make a mistake, bad things happen. I took that discipline into marketing. Most marketers are chaotic; I build bulletproof workflows. Then, as a Naturalist, I learned that nature is an efficient system. I don't believe in 'growth hacking' (burning the forest); I believe in 'Organic Velocity'—using tech to speed up natural, sustainable growth. Finally, my 'Real-World MBA' as a freelancer taught me the hardest lesson: Manual labor doesn't scale. I underpriced myself and burned out. That failure forced me to become a Technologist—building systems that work while I sleep.",
+        themes: [
+            "Security → Discipline & Risk Management",
+            "Naturalist → Sustainable Ecosystems",
+            "Freelance → The Necessity of Automation"
+        ]
+    },
+
+    // NEW: Strategic SWOT Analysis
+    swot: {
+        strengths: [
+            "Bulletproof Automation (Security Background): My workflows don't break because I treat marketing funnels like security protocols.",
+            "The Organic Velocity Engine: I achieved 429% growth purely through content systems, not ad spend. I build engines that produce high-quality content at scale.",
+            "3-in-1 Uniccorn: I can strategize (CMO), build (CTO), and design (Creative Director) simultaneously."
+        ],
+        weaknesses: [
+            "High Standards (The Dealbreaker): I REFUSE to run ads without revenue tracking. I REFUSE to use generic AI copy. I won't work with teams that don't use project management tools.",
+            "Not a 'Yes Man': I will push back if a strategy relies on vanity metrics instead of revenue.",
+            "Expensive for Small Tasks: I'm overqualified for simple 'posting' roles; I need to build systems."
+        ],
+        opportunities: [
+            "Training & Upskilling: I don't just build the machine; I can train your team to pilot it. I help legacy marketing teams transition to AI-first workflows.",
+            "Scalable Architecture: I can turn your marketing from a 'department' into a 'revenue product' that runs 24/7.",
+            "Full-Stack Integration: connecting your CRM, Marketing, and Sales into one unified data flow."
+        ],
+        threats: [
+            "Vanity Metrics: The industry is drowning in 'Likes' that don't pay bills. I protect you from this.",
+            "Generic AI Noise: Everyone is using ChatGPT. Your brand will drown unless you use custom-trained AI (which I build).",
+            "The IT-Marketing Disconnect: IT locks things down; Marketing breaks things. I speak both languages to ensure speed AND security."
+        ]
     }
 };
