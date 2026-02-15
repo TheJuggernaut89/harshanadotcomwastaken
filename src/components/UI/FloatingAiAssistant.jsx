@@ -1,5 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Paperclip, Link, Code, Mic, Send, Info, Bot, X } from 'lucide-react';
+import { trackChatbotEvent } from '../../utils/chatbotAnalytics';
+
+const QUICK_REPLIES = [
+  { text: "View Skills 🚀", action: "skills" },
+  { text: "See Projects 💻", action: "projects" },
+  { text: "Contact Harshana 📬", action: "contact" }
+];
 
 const FloatingAiAssistant = () => {
   const [isChatOpen, setIsChatOpen] = useState(false);
@@ -22,6 +29,13 @@ const FloatingAiAssistant = () => {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
+  // Track chat open/close
+  useEffect(() => {
+    if (isChatOpen) {
+      trackChatbotEvent('chatbot_opened');
+    }
+  }, [isChatOpen]);
 
   // Cleanup typewriter timers on unmount
   useEffect(() => {
@@ -143,6 +157,15 @@ const FloatingAiAssistant = () => {
     addMessageSequentially(0);
   };
 
+  // Scroll to section
+  const scrollToSection = (sectionId) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+      trackChatbotEvent('section_navigation', { section: sectionId });
+    }
+  };
+
   // Call Gemini API
   const callGeminiAPI = async (userMessage) => {
     try {
@@ -185,50 +208,76 @@ const FloatingAiAssistant = () => {
     setCharCount(value.length);
   };
 
-  const handleSend = async () => {
-    if (message.trim() && !isTyping) {
-      const userMessage = message.trim();
+  const handleSendMessage = async (textToSend) => {
+    if (!textToSend.trim() || isTyping) return;
 
-      // Add user message to UI
-      setMessages(prev => [...prev, {
-        text: userMessage,
-        sender: 'user',
-        timestamp: new Date()
-      }]);
+    const userMessage = textToSend.trim();
 
-      // Add to conversation history for context
-      setConversationHistory(prev => [...prev, {
-        role: 'user',
-        content: userMessage
-      }]);
+    trackChatbotEvent('message_sent', { length: userMessage.length });
 
-      // Clear input
+    // Add user message to UI
+    setMessages(prev => [...prev, {
+      text: userMessage,
+      sender: 'user',
+      timestamp: new Date()
+    }]);
+
+    // Add to conversation history for context
+    setConversationHistory(prev => [...prev, {
+      role: 'user',
+      content: userMessage
+    }]);
+
+    // Clear input if it matches the current message state
+    if (message === userMessage) {
       setMessage('');
       setCharCount(0);
-
-      // Get AI response
-      setIsTyping(true);
-
-      const aiResponse = await callGeminiAPI(userMessage);
-
-      // Add AI response to conversation history
-      if (aiResponse.messages && aiResponse.messages.length > 0) {
-        const fullResponse = aiResponse.messages.join(' ');
-        setConversationHistory(prev => [...prev, {
-          role: 'assistant',
-          content: fullResponse
-        }]);
-      }
-
-      // Display response with typewriter effect
-      setTimeout(() => {
-        if (aiResponse.messages && aiResponse.messages.length > 0) {
-          addBotMessagesWithTypewriter(aiResponse.messages, 600);
-        } else {
-          setIsTyping(false);
-        }
-      }, 300);
     }
+
+    // Get AI response
+    setIsTyping(true);
+
+    const aiResponse = await callGeminiAPI(userMessage);
+
+    if (aiResponse.success) {
+      trackChatbotEvent('bot_message_received', { messageCount: aiResponse.messages.length });
+    } else {
+      trackChatbotEvent('error', { type: 'api_error', message: aiResponse.error || 'Unknown error' });
+    }
+
+    // Add AI response to conversation history
+    if (aiResponse.messages && aiResponse.messages.length > 0) {
+      const fullResponse = aiResponse.messages.join(' ');
+      setConversationHistory(prev => [...prev, {
+        role: 'assistant',
+        content: fullResponse
+      }]);
+    }
+
+    // Display response with typewriter effect
+    setTimeout(() => {
+      if (aiResponse.messages && aiResponse.messages.length > 0) {
+        addBotMessagesWithTypewriter(aiResponse.messages, 600);
+      } else {
+        setIsTyping(false);
+      }
+    }, 300);
+  };
+
+  const handleSend = () => {
+    handleSendMessage(message);
+  };
+
+  const handleQuickReply = (reply) => {
+    trackChatbotEvent('quick_reply', { action: reply.action, text: reply.text });
+
+    // Navigate first
+    if (reply.action === 'skills') scrollToSection('skills');
+    if (reply.action === 'projects') scrollToSection('projects');
+    if (reply.action === 'contact') scrollToSection('contact');
+
+    // Then send message
+    handleSendMessage(reply.text);
   };
 
   const handleKeyDown = (e) => {
@@ -328,6 +377,20 @@ const FloatingAiAssistant = () => {
                 </div>
               ))}
               <div ref={messagesEndRef} />
+            </div>
+
+            {/* Quick Replies */}
+            <div className="px-6 pb-2 pt-2 flex gap-2 overflow-x-auto scrollbar-none border-t border-zinc-700/30">
+              {QUICK_REPLIES.map((reply, index) => (
+                <button
+                  key={index}
+                  onClick={() => handleQuickReply(reply)}
+                  disabled={isTyping}
+                  className="whitespace-nowrap px-3 py-1.5 rounded-xl bg-zinc-800/50 border border-zinc-700/50 text-xs font-medium text-zinc-300 hover:bg-zinc-700 hover:border-zinc-600 transition-all disabled:opacity-50 hover:scale-105 active:scale-95"
+                >
+                  {reply.text}
+                </button>
+              ))}
             </div>
 
             {/* Input Section */}
