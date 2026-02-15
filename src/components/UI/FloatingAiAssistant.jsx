@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Paperclip, Link, Code, Mic, Send, Info, Bot, X } from 'lucide-react';
+import { Paperclip, Link, Code, Mic, Send, Info, Bot, X, Phone } from 'lucide-react';
+import { content } from '../../data/content';
 
 const FloatingAiAssistant = () => {
   const [isChatOpen, setIsChatOpen] = useState(false);
@@ -50,17 +51,17 @@ const FloatingAiAssistant = () => {
   // Initial greeting from AI
   const sendInitialGreeting = async () => {
     const greetings = [
-      "Hey! 👋 Quick question - are you hiring or just checking out if Harshana's legit?",
-      "What's up! 🚀 Looking to hire a marketing technologist who actually codes?",
-      "Yo! Welcome! 🎯 Fair warning: you just found a GOLDMINE for marketing teams. Hiring?",
-      "Hey there! 💼 I'm here to show you why Harshana's a 3-in-1 hire. Interested?",
-      "Sup! 🤖 Your marketing team drowning in manual work? Let me introduce you to someone who automates that shit."
+      "Hey! 👋 I'll be honest - Harshana is in high demand right now. Are you here to snap him up before someone else does?",
+      "Yo! 🚀 You just found a 3-in-1 Marketing Technologist (Marketer + Dev + Designer). Rare find. Hiring?",
+      "Welcome! 🎯 Harshana is currently wrapping up a major project and has a window opening up. Perfect timing if you're hiring.",
+      "Hey! 💼 Most marketing teams hire 3 people to do what Harshana does solo. Want to see the math?",
+      "Sup! 🤖 If you want someone who just 'posts content', look elsewhere. If you want a Revenue Systems Builder, let's talk."
     ];
 
     const randomGreeting = greetings[Math.floor(Math.random() * greetings.length)];
 
     const initialMessages = [
-      "Hey! 👋 I'm Harshana's AI twin (the more enthusiastic version 😄)",
+      "Hey! 👋 I'm Harshana's AI Business Partner.",
       randomGreeting
     ];
 
@@ -153,7 +154,8 @@ const FloatingAiAssistant = () => {
         },
         body: JSON.stringify({
           message: userMessage,
-          conversationHistory: conversationHistory
+          conversationHistory: conversationHistory,
+          portfolioContext: content
         })
       });
 
@@ -238,6 +240,11 @@ const FloatingAiAssistant = () => {
     }
   };
 
+  const handleBookCall = () => {
+    const message = encodeURIComponent("Hi Harshana, I was chatting with your AI Business Partner and I'd like to book a call to discuss a potential role/project.");
+    window.open(`https://wa.me/601129649143?text=${message}`, '_blank');
+  };
+
   // Close chat when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -302,6 +309,13 @@ const FloatingAiAssistant = () => {
                 <span className="px-2 py-1 text-xs font-medium bg-gradient-to-r from-yellow-500/20 to-orange-500/20 text-yellow-400 rounded-2xl border border-yellow-500/30">
                   💎 GOLDMINE
                 </span>
+                <button
+                  onClick={handleBookCall}
+                  className="p-1.5 rounded-full hover:bg-zinc-700/50 transition-colors text-green-400 hover:text-green-300"
+                  title="Book a Call Now"
+                >
+                  <Phone className="w-4 h-4" />
+                </button>
                 <button
                   onClick={() => setIsChatOpen(false)}
                   className="p-1.5 rounded-full hover:bg-zinc-700/50 transition-colors"
