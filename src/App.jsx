@@ -98,7 +98,7 @@ function App() {
                 <Approach />
                 <div id="about"><AboutBento /></div>
                 <ArtworkBanner />
-                <Skills />
+                <div id="skills"><Skills /></div>
                 <Journey />
                 <div id="projects"><Portfolio /></div>
                 <div id="malaysian-platform"><MalaysianPlatform /></div>
