@@ -9,6 +9,8 @@ const FloatingAiAssistant = () => {
   const [conversationHistory, setConversationHistory] = useState([]);
   const [hasAutoOpened, setHasAutoOpened] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
+  const [userRegion, setUserRegion] = useState('MY');
+  const [persona, setPersona] = useState('recruiter');
   const maxChars = 2000;
   const chatRef = useRef(null);
   const messagesEndRef = useRef(null);
@@ -20,6 +22,22 @@ const FloatingAiAssistant = () => {
   };
 
   useEffect(() => {
+    // Simple region detection
+    try {
+      const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      if (timezone && timezone.includes('Singapore')) {
+        setUserRegion('SG');
+      }
+    } catch (e) {
+      console.warn('Region detection failed', e);
+    }
+
+    // Load persona from local storage
+    const savedPersona = localStorage.getItem('ai_persona');
+    if (savedPersona) {
+      setPersona(savedPersona);
+    }
+
     scrollToBottom();
   }, [messages]);
 
@@ -115,29 +133,66 @@ const FloatingAiAssistant = () => {
   const addBotMessagesWithTypewriter = (messageArray, initialDelay = 500) => {
     setIsTyping(true);
 
-    const addMessageSequentially = (index) => {
+    const addMessageSequentially = (index, addedCount = 0) => {
       if (index >= messageArray.length) {
         setIsTyping(false);
         return;
       }
 
-      const currentMessage = messageArray[index];
-      const messageIndex = messages.length + index;
+      let currentMessage = messageArray[index];
 
-      setMessages(prev => [...prev, {
-        text: '',
-        sender: 'bot',
-        timestamp: new Date(),
-        isTyping: true
-      }]);
+      // Process [NAV: #id]
+      const navMatch = currentMessage.match(/\[NAV: (#[\w-]+)\]/);
+      if (navMatch) {
+        const targetId = navMatch[1];
+        try {
+          const element = document.querySelector(targetId);
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            element.classList.add('highlight-glow');
+            setTimeout(() => element.classList.remove('highlight-glow'), 2000);
+          }
+        } catch (e) {
+          console.warn("Navigation failed:", e);
+        }
+        currentMessage = currentMessage.replace(navMatch[0], '').trim();
+      }
 
-      setTimeout(() => {
-        typewriterEffect(currentMessage, messageIndex, () => {
-          setTimeout(() => {
-            addMessageSequentially(index + 1);
-          }, 400);
-        });
-      }, initialDelay);
+      // Process [SIMULATE: type]
+      const simMatch = currentMessage.match(/\[SIMULATE: (\w+)\]/);
+      if (simMatch) {
+        const simType = simMatch[1];
+        console.log(`Simulating ${simType}...`);
+        // Logic to render TerminalBlock would go here
+        currentMessage = currentMessage.replace(simMatch[0], '').trim();
+      }
+
+      // If message is empty after stripping commands, skip to next
+      if (!currentMessage) {
+        addMessageSequentially(index + 1, addedCount);
+        return;
+      }
+
+      // Use a functional update to get the correct index based on current state
+      setMessages(prev => {
+        const messageIndex = prev.length;
+
+        // Schedule typing for this new message
+        setTimeout(() => {
+          typewriterEffect(currentMessage, messageIndex, () => {
+            setTimeout(() => {
+              addMessageSequentially(index + 1, addedCount + 1);
+            }, 400);
+          });
+        }, initialDelay);
+
+        return [...prev, {
+          text: '', // Start empty
+          sender: 'bot',
+          timestamp: new Date(),
+          isTyping: true
+        }];
+      });
     };
 
     addMessageSequentially(0);
@@ -153,7 +208,9 @@ const FloatingAiAssistant = () => {
         },
         body: JSON.stringify({
           message: userMessage,
-          conversationHistory: conversationHistory
+          conversationHistory: conversationHistory,
+          userRegion,
+          persona
         })
       });
 

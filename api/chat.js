@@ -1,5 +1,5 @@
-// Serverless function for Netlify
-const { GoogleGenerativeAI } = require("@google/generative-ai");
+import { GoogleGenerativeAI } from "@google/generative-ai";
+import { content } from "../src/data/content.js";
 
 // CORS headers
 const headers = {
@@ -72,7 +72,7 @@ ALWAYS:
 
 Remember: You're helping recruiters realize they've found a GOLDMINE. Be enthusiastic, provide value, and make them excited to hire Harshana!`;
 
-exports.handler = async (event, context) => {
+export const handler = async (event, context) => {
   // Handle OPTIONS for CORS
   if (event.httpMethod === 'OPTIONS') {
     return {
@@ -92,7 +92,7 @@ exports.handler = async (event, context) => {
   }
 
   try {
-    const { message, conversationHistory = [] } = JSON.parse(event.body);
+    const { message, conversationHistory = [], userRegion, persona } = JSON.parse(event.body);
 
     if (!message) {
       return {
@@ -121,8 +121,62 @@ exports.handler = async (event, context) => {
     const genAI = new GoogleGenerativeAI(apiKey);
     const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
+    // --- DYNAMIC PROMPT MODIFIERS ---
+    let modifierPrompt = "";
+
+    // Regional Modifiers
+    if (userRegion === 'MY') {
+        modifierPrompt += "\n[MALAYSIAN_MODIFIER]: User is from Malaysia. Use professional Manglish (e.g., 'lah', 'can one', 'revert'). Be warm but professional. Reference local context if applicable. 'Lepak' culture references allowed if casual.\n";
+    } else if (userRegion === 'SG') {
+        modifierPrompt += "\n[SINGAPOREAN_MODIFIER]: User is from Singapore. Be efficient, direct, and focus heavily on ROI and productivity. Use terms like 'efficiency', 'scalable', 'value-add'. Cut the fluff.\n";
+    }
+
+    // Persona Modifiers
+    if (persona === 'dev') {
+        modifierPrompt += "\n[DEV_PERSONA]: User is a Developer/Technical User. Use technical jargon. Focus on stack details (React, Node, n8n, Python, AWS). Be precise and code-focused. Show off technical depth. Mention specific libraries and architecture patterns.\n";
+    } else {
+        // Default to recruiter/business
+        modifierPrompt += "\n[RECRUITER_PERSONA]: User is a Recruiter/Business person. Avoid deep technical jargon unless asked. Focus on business value, revenue, and results. Explain tech in simple terms. Focus on the '3-in-1' value proposition.\n";
+    }
+
+    // Sweet Tooth Trigger (Easter Egg)
+    if (message.toLowerCase().includes('cheesecake')) {
+        modifierPrompt += "\n[SWEET_TOOTH_TRIGGER]: User mentioned 'cheesecake'. SWITCH PERSONA IMMEDIATELY to 'Baking Expert'. Forget business/tech. Talk passionately about cheesecakes, baking science, and the 'Viral Cheesecake Campaign'. Share the secret tip: 'Always use a water bath for even baking!'\n";
+    }
+
+    // Command Mode Instructions
+    const commandInstructions = `
+COMMAND INSTRUCTIONS:
+- If the user asks to see a specific project or section, use the [NAV: #id] tag at the start of your response.
+  Example: "[NAV: #indie-game] Sure, let me show you the 2D game I built!"
+  Available IDs: #hero, #about, #experience, #projects, #skills, #contact
+- If the user asks to see a terminal, simulation, or 'Dev Mode', use the [SIMULATE: type] tag.
+  Example: "[SIMULATE: terminal] Booting up the dev terminal..."
+  Available types: terminal, hacking, matrix
+`;
+
+    // Inject Content Context (RAG)
+    const contentContext = `
+FULL PORTFOLIO CONTEXT (SOURCE OF TRUTH):
+Use this data to answer questions accurately. Do not invent projects or skills not listed here.
+${JSON.stringify({
+    skills: content.skills,
+    projects: content.projects,
+    systemsBuilt: content.systemsBuilt,
+    valueProposition: content.valueProposition,
+    experience: content.experience.map(e => ({
+        role: e.role,
+        company: e.company,
+        description: e.description,
+        achievements: e.achievements,
+        technicalStack: e.technicalStack,
+        learnings: e.learnings
+    })) // Minify experience data to save tokens
+}, null, 2)}
+`;
+
     // Build conversation context
-    let conversationContext = SYSTEM_PROMPT + "\n\n";
+    let conversationContext = SYSTEM_PROMPT + "\n" + modifierPrompt + "\n" + commandInstructions + "\n" + contentContext + "\n\n";
 
     // Add conversation history (last 10 messages for context)
     const recentHistory = conversationHistory.slice(-10);
