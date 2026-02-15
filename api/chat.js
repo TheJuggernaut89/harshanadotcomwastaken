@@ -117,9 +117,11 @@ exports.handler = async (event, context) => {
       };
     }
 
-    // Initialize Gemini
+    // Initialize Gemini (using latest stable model)
     const genAI = new GoogleGenerativeAI(apiKey);
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const model = genAI.getGenerativeModel({
+      model: "gemini-1.5-pro-latest"
+    });
 
     // Build conversation context
     let conversationContext = SYSTEM_PROMPT + "\n\n";
