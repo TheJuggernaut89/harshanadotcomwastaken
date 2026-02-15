@@ -1,5 +1,5 @@
 // Serverless function for Netlify
-const { GoogleGenerativeAI } = require("@google/generative-ai");
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
 // CORS headers
 const headers = {
@@ -57,7 +57,7 @@ CRITICAL RULES:
 `;
 };
 
-exports.handler = async (event, context) => {
+export const handler = async (event, context) => {
   // Handle OPTIONS for CORS
   if (event.httpMethod === 'OPTIONS') {
     return {
