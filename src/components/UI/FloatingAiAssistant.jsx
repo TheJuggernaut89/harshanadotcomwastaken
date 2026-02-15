@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Paperclip, Link, Code, Mic, Send, Info, Bot, X } from 'lucide-react';
+import { content } from '../../data/content';
 
 const FloatingAiAssistant = () => {
   const [isChatOpen, setIsChatOpen] = useState(false);
@@ -7,6 +8,7 @@ const FloatingAiAssistant = () => {
   const [message, setMessage] = useState('');
   const [charCount, setCharCount] = useState(0);
   const [conversationHistory, setConversationHistory] = useState([]);
+  const [userRegion, setUserRegion] = useState(null);
   const [hasAutoOpened, setHasAutoOpened] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
   const maxChars = 2000;
@@ -153,11 +155,17 @@ const FloatingAiAssistant = () => {
         },
         body: JSON.stringify({
           message: userMessage,
-          conversationHistory: conversationHistory
+          conversationHistory: conversationHistory,
+          userRegion: userRegion,
+          portfolioContent: content
         })
       });
 
       const data = await response.json();
+
+      if (data.detectedRegion) {
+        setUserRegion(data.detectedRegion);
+      }
 
       if (!response.ok) {
         throw new Error(data.error || 'API request failed');
