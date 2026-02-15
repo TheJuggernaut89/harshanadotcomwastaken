@@ -222,6 +222,42 @@ export const content = {
                 rejection: "Company didn't have enough funds to buy the necessary initial investment on equipment.",
                 status: "CONCEPT ONLY."
             }
+        },
+        {
+            title: "DayZ Modding Architecture",
+            category: "Server Architecture",
+            image: "/Visionary/DayZ-Modding.png", // Placeholder path
+            description: "Custom DayZ server environment with complex scripting and modding, demonstrating backend server logic and community management skills.",
+            proposalDetails: {
+                concept: "A highly customized game server environment requiring intricate scripting (Enforce Script), database management, and server optimization. It's not just a game; it's a live service ecosystem.",
+                geniusMoment: "Realized that managing a DayZ server is identical to managing enterprise infrastructure: uptime monitoring, database integrity, cheat detection (security), and user experience optimization. This hobby was the training ground for system architecture.",
+                pitch: "\"DayZ Modding isn't just gaming; it's distributed systems engineering. I managed player databases, wrote custom scripts for game logic, and optimized server performance under load. This is where I learned the server architecture principles I now apply to legal tech.\"",
+                status: "PASSION PROJECT / SKILL BUILDER"
+            }
+        },
+        {
+            title: "2D Indie Game for Sophia",
+            category: "Game Development",
+            image: "/Visionary/Sophia-Game.png", // Placeholder path
+            description: "A narrative-driven 2D indie game featuring cinematic storytelling and atmospheric design.",
+            proposalDetails: {
+                concept: "An emotional 2D journey focusing on narrative depth and atmospheric immersion. Utilizes volumetric lighting and particle effects to create a mood-heavy experience.",
+                geniusMoment: "Bringing cinematic techniques into a 2D space. Using lighting as a narrative device—where the light goes, the story flows. It proves that technical constraints (2D) can breed creative breakthroughs.",
+                pitch: "\"A love letter to visual storytelling. We used dynamic lighting and color grading usually reserved for 3D triple-A games to make a simple 2D world feel alive and breathing. It's about emotional resonance through visual fidelity.\"",
+                status: "IN DEVELOPMENT"
+            }
+        },
+        {
+            title: "Blender Designs",
+            category: "3D Design",
+            image: "/Visionary/Blender-Art.png", // Placeholder path
+            description: "High-fidelity 3D renders and animations focusing on photorealism and stylistic lighting.",
+            proposalDetails: {
+                concept: "A collection of 3D experiments pushing the boundaries of digital realism. Focusing on tracking shots, depth of field, and volumetric lighting to create cinematic stills and loops.",
+                geniusMoment: "Understanding that 3D isn't just about geometry; it's about the camera. Applying real-world cinematography principles—focal length, aperture, ISO—to virtual cameras to create images that feel 'captured' rather than 'rendered'.",
+                pitch: "\"Virtual production is the future of marketing content. These Blender designs aren't just art; they are proofs of concept for high-end product visualization without the high-end production studio cost. Cinematic quality, digital flexibility.\"",
+                status: "PORTFOLIO HIGHLIGHTS"
+            }
         }
     ],
 
