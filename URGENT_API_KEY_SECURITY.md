@@ -7,11 +7,9 @@
 
 ## ⚠️ SECURITY ISSUE
 
-Your Gemini API key was **PUBLICLY EXPOSED** in a screenshot:
+Your Gemini API key was **PUBLICLY EXPOSED** in a screenshot.
 
-```
-AIzaSyB0wKWqQU9L6eplee08sUQvGJq8wVX9IHc
-```
+The key ending in `...9lHc` (Google Antigrav Sean) was visible in the Google AI Studio interface.
 
 **Exposure Location:** Google AI Studio screenshot showing API Keys page
 **Visibility:** This key is now considered compromised
@@ -139,8 +137,8 @@ const model = genAI.getGenerativeModel({
 ## 🎯 CURRENT STATUS
 
 ✅ Code fix deployed (commit `1f71dd8`)
-⚠️ Waiting for NEW API key from you
-❌ Old key (AIza...9lHc) must be deleted
+⚠️ User must update Netlify environment variable with new key
+❌ Old key ending in ...9lHc must be deleted from Google AI Studio
 
 **Next Deploy:** Will work once you update Netlify env variable with new key
 
