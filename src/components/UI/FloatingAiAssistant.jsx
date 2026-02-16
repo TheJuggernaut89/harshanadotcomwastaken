@@ -111,6 +111,56 @@ const FloatingAiAssistant = () => {
     typeNextChar();
   };
 
+  // Typewriter effect that adds text to existing combined GIF message
+  const typewriterEffectForCombinedMessage = (textArray, gifMessageIndex) => {
+    let currentTextIndex = 0;
+
+    const addNextText = () => {
+      if (currentTextIndex < textArray.length) {
+        const fullText = textArray[currentTextIndex];
+        let currentChar = 0;
+
+        const typeChar = () => {
+          if (currentChar <= fullText.length) {
+            setMessages(prev => {
+              const newMessages = [...prev];
+              if (newMessages[gifMessageIndex]) {
+                const currentTexts = [...(newMessages[gifMessageIndex].textMessages || [])];
+                currentTexts[currentTextIndex] = fullText.substring(0, currentChar);
+                newMessages[gifMessageIndex] = {
+                  ...newMessages[gifMessageIndex],
+                  textMessages: currentTexts,
+                  isTyping: currentChar < fullText.length || currentTextIndex < textArray.length - 1
+                };
+              }
+              return newMessages;
+            });
+            currentChar++;
+            setTimeout(typeChar, 30);
+          } else {
+            currentTextIndex++;
+            setTimeout(addNextText, 400);
+          }
+        };
+        typeChar();
+      } else {
+        // Mark typing complete
+        setMessages(prev => {
+          const newMessages = [...prev];
+          if (newMessages[gifMessageIndex]) {
+            newMessages[gifMessageIndex] = {
+              ...newMessages[gifMessageIndex],
+              isTyping: false
+            };
+          }
+          return newMessages;
+        });
+      }
+    };
+
+    addNextText();
+  };
+
   // Add bot messages with typewriter effect
   const addBotMessagesWithTypewriter = (messageArray, initialDelay = 500) => {
     setIsTyping(true);
@@ -223,18 +273,24 @@ const FloatingAiAssistant = () => {
       // Display response with typewriter effect
       setTimeout(() => {
         if (aiResponse.messages && aiResponse.messages.length > 0) {
-          // If there's a GIF, add it before the messages
+          // If there's a GIF, create combined message with GIF + text
           if (aiResponse.gifUrl) {
             setMessages(prev => [...prev, {
               gifUrl: aiResponse.gifUrl,
               sender: 'bot',
               timestamp: new Date(),
-              isGif: true
+              isGif: true,
+              isCombined: true,
+              textMessages: [],  // Will hold typewriter text
+              isTyping: true
             }]);
 
-            // Short delay before text messages
+            // Get the index of the GIF message we just added
+            const gifMessageIndex = messages.length;
+
+            // Short delay before text starts typing into the combined message
             setTimeout(() => {
-              addBotMessagesWithTypewriter(aiResponse.messages, 400);
+              typewriterEffectForCombinedMessage(aiResponse.messages, gifMessageIndex);
             }, 800);
           } else {
             addBotMessagesWithTypewriter(aiResponse.messages, 600);
@@ -327,12 +383,13 @@ const FloatingAiAssistant = () => {
             </div>
 
             {/* Messages */}
-            <div className="flex-1 overflow-y-auto px-6 py-4 space-y-4 min-h-[300px] max-h-[350px]">
+            <div className="flex-1 overflow-y-auto px-6 py-4 space-y-4 min-h-[400px] max-h-[500px]">
               {messages.map((msg, index) => (
                 <div key={index} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
                   {msg.isGif ? (
-                    // GIF Message
-                    <div className="max-w-[70%] rounded-2xl overflow-hidden border-2 border-purple-500/15 shadow-lg shadow-purple-500/10 bg-zinc-700/50">
+                    // Combined GIF + Text Message
+                    <div className="max-w-[70%] flex flex-col gap-0 rounded-2xl overflow-hidden border-2 border-purple-500/15 shadow-lg shadow-purple-500/10 bg-zinc-700/50">
+                      {/* GIF at top */}
                       <img
                         src={msg.gifUrl}
                         alt="Reaction GIF"
@@ -340,9 +397,23 @@ const FloatingAiAssistant = () => {
                         style={{ maxHeight: '200px' }}
                         onLoad={scrollToBottom}
                       />
+
+                      {/* Text messages below GIF (if combined message) */}
+                      {msg.isCombined && msg.textMessages && msg.textMessages.length > 0 && (
+                        <div className="px-4 py-3 space-y-2">
+                          {msg.textMessages.map((text, idx) => (
+                            <p key={idx} className="text-sm leading-relaxed text-zinc-100 whitespace-pre-line">
+                              {text}
+                            </p>
+                          ))}
+                          {msg.isTyping && (
+                            <span className="inline-block w-1 h-4 ml-1 bg-zinc-100 animate-pulse">|</span>
+                          )}
+                        </div>
+                      )}
                     </div>
                   ) : (
-                    // Text Message
+                    // Regular text-only message (no GIF)
                     <div className={`max-w-[85%] rounded-2xl px-4 py-2.5 ${
                       msg.sender === 'user'
                         ? 'bg-gradient-to-r from-red-600 to-red-500 text-white'
