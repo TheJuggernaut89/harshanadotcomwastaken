@@ -21,7 +21,7 @@ const FloatingAiAssistant = () => {
 
   useEffect(() => {
     scrollToBottom();
-  }, [messages]);
+  }, [messages.length]);
 
   // Cleanup typewriter timers on unmount
   useEffect(() => {
@@ -338,6 +338,7 @@ const FloatingAiAssistant = () => {
                         alt="Reaction GIF"
                         className="w-full h-auto object-cover"
                         style={{ maxHeight: '200px' }}
+                        onLoad={scrollToBottom}
                       />
                     </div>
                   ) : (
