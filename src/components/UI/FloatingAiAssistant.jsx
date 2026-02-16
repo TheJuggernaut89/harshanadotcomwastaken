@@ -351,7 +351,7 @@ const FloatingAiAssistant = () => {
       {isChatOpen && (
         <div
           ref={chatRef}
-          className="absolute bottom-20 right-0 w-[450px] max-h-[600px] transition-all duration-300 origin-bottom-right flex flex-col"
+          className="absolute bottom-20 right-0 w-[450px] max-h-[500px] transition-all duration-300 origin-bottom-right flex flex-col"
           style={{
             animation: 'popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards',
           }}
@@ -359,7 +359,7 @@ const FloatingAiAssistant = () => {
           <div className="relative flex flex-col rounded-3xl bg-gradient-to-br from-zinc-800/95 to-zinc-900/95 border border-zinc-500/50 shadow-2xl backdrop-blur-3xl overflow-hidden h-full">
 
             {/* Header */}
-            <div className="flex items-center justify-between px-6 pt-4 pb-3 border-b border-zinc-700/50">
+            <div className="flex items-center justify-between px-6 pt-3 pb-2 border-b border-zinc-700/50">
               <div className="flex items-center gap-1.5">
                 <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
                 <span className="text-xs font-medium text-zinc-300">
@@ -383,7 +383,7 @@ const FloatingAiAssistant = () => {
             </div>
 
             {/* Messages */}
-            <div className="flex-1 overflow-y-auto px-6 py-4 space-y-4 min-h-[400px] max-h-[500px]">
+            <div className="flex-1 overflow-y-auto px-6 py-4 space-y-3 min-h-[250px] max-h-[380px]">
               {messages.map((msg, index) => (
                 <div key={index} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
                   {msg.isGif ? (
@@ -394,7 +394,7 @@ const FloatingAiAssistant = () => {
                         src={msg.gifUrl}
                         alt="Reaction GIF"
                         className="w-full h-auto object-cover"
-                        style={{ maxHeight: '200px' }}
+                        style={{ maxHeight: '180px' }}
                         onLoad={scrollToBottom}
                       />
 
@@ -436,9 +436,9 @@ const FloatingAiAssistant = () => {
                 value={message}
                 onChange={handleInputChange}
                 onKeyDown={handleKeyDown}
-                rows={3}
+                rows={2}
                 disabled={isTyping}
-                className="w-full px-6 py-4 bg-transparent border-none outline-none resize-none text-sm font-normal leading-relaxed text-zinc-100 placeholder-zinc-400 scrollbar-none disabled:opacity-50"
+                className="w-full px-6 py-3 bg-transparent border-none outline-none resize-none text-sm font-normal leading-relaxed text-zinc-100 placeholder-zinc-400 scrollbar-none disabled:opacity-50"
                 placeholder={isTyping ? "Wait for me to finish typing..." : "Ask me anything about Harshana..."}
                 style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
               />
