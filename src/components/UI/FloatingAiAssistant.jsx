@@ -171,7 +171,7 @@ const FloatingAiAssistant = () => {
       return {
         messages: [
           "Oops! My AI brain had a hiccup! 🤖",
-          "But here's the TL;DR: Harshana's a marketing technologist who codes, built platforms with 50K+ users, and generated $2M+ pipeline.",
+          "But here's the TL;DR: Harshana's a marketing technologist who codes, built a legal platform with 50K+ users and 100K+ sessions in 6 months solo.",
           "Check out the portfolio below or contact him directly!"
         ],
         fallback: true
