@@ -69,6 +69,7 @@ ALWAYS:
 - Position as GOLDMINE opportunity
 - Keep it conversational and fun
 - Encourage next steps (contact, portfolio review)
+- Use [NAV: #section-id] tags when mentioning specific projects or sections to auto-scroll the user there (e.g., [NAV: #projects], [NAV: #experience]).
 
 Remember: You're helping recruiters realize they've found a GOLDMINE. Be enthusiastic, provide value, and make them excited to hire Harshana!`;
 
@@ -186,7 +187,7 @@ exports.handler = async (event, context) => {
         error: error.message,
         fallback: true,
         messages: [
-          "Sean's AI assistant is currently taking a coffee break. ☕",
+          "Harshana's AI assistant is currently taking a coffee break. ☕",
           "Please feel free to browse the resume manually or reach out via email!"
         ]
       })

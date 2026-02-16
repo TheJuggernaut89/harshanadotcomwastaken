@@ -188,8 +188,30 @@ const FloatingAiAssistant = () => {
       }
 
       const msgContent = messageArray[index];
-      const text = typeof msgContent === 'string' ? msgContent : msgContent.text;
+      let text = typeof msgContent === 'string' ? msgContent : msgContent.text;
       const buttons = typeof msgContent === 'string' ? null : msgContent.buttons;
+
+      // Parse [NAV: #id] tag
+      const navRegex = /\[NAV:\s*(#[a-zA-Z0-9_-]+)\]/g;
+      const navMatch = navRegex.exec(text);
+
+      if (navMatch) {
+        const targetId = navMatch[1];
+        text = text.replace(navRegex, '').trim();
+
+        // Scroll to element
+        setTimeout(() => {
+          const element = document.querySelector(targetId);
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            element.classList.add('highlight-glow');
+            setTimeout(() => {
+              element.classList.remove('highlight-glow');
+            }, 2000);
+          }
+        }, 100);
+      }
+
       const messageId = Date.now() + Math.random();
 
       setMessages(prev => [...prev, {
@@ -253,7 +275,7 @@ const FloatingAiAssistant = () => {
       // Fallback responses if API fails
       return {
         messages: [
-          "Sean's AI assistant is currently taking a coffee break. ☕",
+          "Harshana's AI assistant is currently taking a coffee break. ☕",
           "Please feel free to browse the resume manually or reach out via email!"
         ],
         fallback: true
@@ -301,10 +323,10 @@ const FloatingAiAssistant = () => {
           setMessages(prev => {
              // Only add if not already added
              const lastMsg = prev[prev.length - 1];
-             if (lastMsg && lastMsg.text === "Sean's AI is thinking deeply... 🤔") return prev;
+             if (lastMsg && lastMsg.text === "Harshana's AI is thinking deeply... 🤔") return prev;
 
              return [...prev, {
-                text: "Sean's AI is thinking deeply... 🤔",
+                text: "Harshana's AI is thinking deeply... 🤔",
                 sender: 'bot',
                 timestamp: new Date(),
                 isTyping: false
@@ -318,7 +340,7 @@ const FloatingAiAssistant = () => {
       clearTimeout(thinkingTimer);
 
       // Remove "Thinking deeply" message if it was added
-      setMessages(prev => prev.filter(msg => msg.text !== "Sean's AI is thinking deeply... 🤔"));
+      setMessages(prev => prev.filter(msg => msg.text !== "Harshana's AI is thinking deeply... 🤔"));
 
       // Add AI response to conversation history
       if (aiResponse.messages && aiResponse.messages.length > 0) {
