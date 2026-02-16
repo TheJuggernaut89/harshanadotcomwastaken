@@ -120,7 +120,11 @@ exports.handler = async (event, context) => {
 
     // Initialize Gemini
     const genAI = new GoogleGenerativeAI(apiKey);
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    // Explicitly use gemini-1.5-flash for reliability and free tier quota
+    const modelName = "gemini-1.5-flash";
+    const model = genAI.getGenerativeModel({ model: modelName });
+
+    console.log(`Initialized Gemini with model: ${modelName}`); // Log for debugging deployment
 
     // Build Dynamic System Prompt
     let systemPrompt = BASE_SYSTEM_PROMPT;
