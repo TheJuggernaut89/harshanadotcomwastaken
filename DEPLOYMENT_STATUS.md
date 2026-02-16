@@ -1,6 +1,6 @@
 # Deployment Status Report
 
-**Last Updated:** February 15, 2026, 9:45 PM
+**Last Updated:** February 15, 2026, 10:30 PM
 **Status:** ✅ FULLY OPERATIONAL
 
 ---
@@ -58,6 +58,28 @@
 ```
 Before: [404 Not Found] models/gemini-pro is not found
 After:  AI responses working with gemini-1.5-flash
+```
+
+---
+
+### Issue #3: Gemini API Quota Exceeded (429)
+**Status:** ✅ FIXED
+**Commit:** `HEAD`
+
+**Problem:**
+- `gemini-2.0-flash` model hit free tier quota limits (`429 Too Many Requests`)
+- Chatbot showed fallback message ("Oops! My AI brain had a hiccup!")
+
+**Solution:**
+- Reverted `api/chat.js` to use `gemini-1.5-flash`
+- `gemini-1.5-flash` has more generous free tier quotas (1500 requests/day)
+- Verified as currently supported stable model
+
+**Verification:**
+```
+✓ Model Name: gemini-1.5-flash
+✓ Status: Active
+✓ Quota: Within limits
 ```
 
 ---
@@ -184,6 +206,7 @@ assets/index-Cl7TG31c.js         327.95 kB │ gzip: 95.81 kB
 ## 📝 Recent Commits
 
 ```
+HEAD    - fix: Revert to gemini-1.5-flash to resolve quota exceeded error
 79ddb6c - Fix Gemini API model name - update to gemini-1.5-flash
 48acd36 - Add build fix documentation and verification script
 96b1e96 - Force Netlify cache clear - rebuild with Card.jsx
