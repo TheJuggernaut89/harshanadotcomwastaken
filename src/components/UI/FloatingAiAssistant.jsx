@@ -248,7 +248,7 @@ const FloatingAiAssistant = () => {
         tools: content.tools
       };
 
-      const response = await fetch('/.netlify/functions/chat', {
+      const response = await fetch('/.netlify/functions/chat-v2', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
