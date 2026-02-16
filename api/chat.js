@@ -9,6 +9,94 @@ const headers = {
   'Content-Type': 'application/json'
 };
 
+// GIF Library - Curated reactions for different conversation contexts
+const GIF_LIBRARY = {
+  // Excitement & Success
+  mindBlown: 'https://media.giphy.com/media/26ufdipQqU2lhNA4g/giphy.gif', // Mind blown
+  excited: 'https://media.giphy.com/media/5GoVLqeAOo6PK/giphy.gif', // Excited celebration
+  celebration: 'https://media.giphy.com/media/g9582DNuQppxC/giphy.gif', // Party celebration
+
+  // Confidence & Agreement
+  chefsKiss: 'https://media.giphy.com/media/3o7TKF1fSIs1R19B8k/giphy.gif', // Chef's kiss
+  nailed: 'https://media.giphy.com/media/111ebonMs90YLu/giphy.gif', // Nailed it
+  exactlyRight: 'https://media.giphy.com/media/PS7d4tm1Hq6Sk/giphy.gif', // Exactly!
+
+  // Thinking & Consideration
+  thinking: 'https://media.giphy.com/media/3o7btPCcdNniyf0ArS/giphy.gif', // Thinking hard
+  calculating: 'https://media.giphy.com/media/DHqth0hVQoIzS/giphy.gif', // Math calculations
+
+  // Skepticism & Proof
+  showMeProof: 'https://media.giphy.com/media/26tPnAAJxXTvpLwJy/giphy.gif', // Show me the money
+  receipts: 'https://media.giphy.com/media/KzyMcEfDh4Jiw/giphy.gif', // Got receipts
+
+  // Welcome & Greeting
+  waving: 'https://media.giphy.com/media/dzaUX7CAG0Ihi/giphy.gif', // Friendly wave
+  welcome: 'https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif', // Welcome gesture
+
+  // Money & ROI
+  moneyRain: 'https://media.giphy.com/media/LdOyjZ7io5Msw/giphy.gif', // Money raining
+  stackingCash: 'https://media.giphy.com/media/67ThRZlYBvibtdF9JH/giphy.gif', // Stacking money
+
+  // Coding & Tech
+  coding: 'https://media.giphy.com/media/L8K62iTDkzGX6/giphy.gif', // Coding fast
+  hacker: 'https://media.giphy.com/media/QHE5gWI0QjqF2/giphy.gif', // Hacker typing
+
+  // Speed & Efficiency
+  fast: 'https://media.giphy.com/media/3oKIPqsXYcdjcBcXL2/giphy.gif', // Lightning fast
+  rocket: 'https://media.giphy.com/media/fwbZnTftCXVocKzfxR/giphy.gif', // Rocket launch
+
+  // Yes/Agreement
+  yesss: 'https://media.giphy.com/media/J336VCs1JC42zGRhjH/giphy.gif', // Excited yes
+  approved: 'https://media.giphy.com/media/3oEdva9BUHPIs2SkGk/giphy.gif', // Thumbs up
+
+  // Impressive/Wow
+  impressive: 'https://media.giphy.com/media/r1HGFou3mUwMw/giphy.gif', // Impressed
+  legendary: 'https://media.giphy.com/media/3oKIPsx2VAYAgEHC12/giphy.gif' // Legendary
+};
+
+// GIF context matching - Returns GIF URL based on message content
+function selectGIF(message) {
+  const lowerMessage = message.toLowerCase();
+
+  // Excitement about metrics/achievements
+  if (lowerMessage.includes('$2m') || lowerMessage.includes('50k users') || lowerMessage.includes('pipeline')) {
+    return Math.random() > 0.5 ? GIF_LIBRARY.mindBlown : GIF_LIBRARY.moneyRain;
+  }
+
+  // Skepticism/proof requests
+  if (lowerMessage.includes('proof') || lowerMessage.includes('receipts') || lowerMessage.includes('verify') || lowerMessage.includes('github')) {
+    return GIF_LIBRARY.receipts;
+  }
+
+  // Coding/technical discussions
+  if (lowerMessage.includes('code') || lowerMessage.includes('developer') || lowerMessage.includes('tech stack') || lowerMessage.includes('react')) {
+    return GIF_LIBRARY.coding;
+  }
+
+  // Speed/efficiency mentions
+  if (lowerMessage.includes('6 months') || lowerMessage.includes('solo') || lowerMessage.includes('fast') || lowerMessage.includes('speed')) {
+    return GIF_LIBRARY.rocket;
+  }
+
+  // ROI/value/pricing discussions
+  if (lowerMessage.includes('roi') || lowerMessage.includes('value') || lowerMessage.includes('goldmine') || lowerMessage.includes('3-in-1')) {
+    return GIF_LIBRARY.stackingCash;
+  }
+
+  // Agreement/confirmation
+  if (lowerMessage.includes('oh hell yes') || lowerMessage.includes('exactly') || lowerMessage.includes('correct')) {
+    return GIF_LIBRARY.yesss;
+  }
+
+  // Impressive statements
+  if (lowerMessage.includes('insane') || lowerMessage.includes('legendary') || lowerMessage.includes('impressive')) {
+    return GIF_LIBRARY.legendary;
+  }
+
+  // Default: No GIF
+  return null;
+}
+
 // System prompt - Harshana's GOLDMINE AI personality
 const SYSTEM_PROMPT = `You are Harshana's AI assistant - an enthusiastic, confident digital twin built to help recruiters and hiring managers understand why Harshana is a GOLDMINE for marketing teams.
 
@@ -45,6 +133,7 @@ CONVERSATION STYLE:
 - Always position as GOLDMINE / rare find / strategic asset
 - Encourage verification: "Check the GitHub repos", "Audit the code yourself"
 - End with questions to keep conversation going
+- Use [GIF] marker when appropriate (excitement, proof, coding topics) - system will add reaction GIF automatically
 
 COMMON QUESTIONS TO HANDLE:
 - Hiring/recruiting → Emphasize 3-in-1 value, ROI, speed
@@ -149,11 +238,15 @@ exports.handler = async (event, context) => {
       .filter(msg => msg.trim().length > 0)
       .map(msg => msg.trim());
 
+    // Select appropriate GIF based on first message content
+    const gifUrl = messages.length > 0 ? selectGIF(messages[0]) : null;
+
     return {
       statusCode: 200,
       headers,
       body: JSON.stringify({
         messages: messages.length > 0 ? messages : [text],
+        gifUrl: gifUrl, // Include GIF URL if relevant
         success: true
       })
     };

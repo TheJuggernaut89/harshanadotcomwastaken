@@ -223,7 +223,22 @@ const FloatingAiAssistant = () => {
       // Display response with typewriter effect
       setTimeout(() => {
         if (aiResponse.messages && aiResponse.messages.length > 0) {
-          addBotMessagesWithTypewriter(aiResponse.messages, 600);
+          // If there's a GIF, add it before the messages
+          if (aiResponse.gifUrl) {
+            setMessages(prev => [...prev, {
+              text: aiResponse.gifUrl,
+              sender: 'bot',
+              timestamp: new Date(),
+              isGif: true
+            }]);
+
+            // Short delay before text messages
+            setTimeout(() => {
+              addBotMessagesWithTypewriter(aiResponse.messages, 400);
+            }, 800);
+          } else {
+            addBotMessagesWithTypewriter(aiResponse.messages, 600);
+          }
         } else {
           setIsTyping(false);
         }
@@ -315,16 +330,29 @@ const FloatingAiAssistant = () => {
             <div className="flex-1 overflow-y-auto px-6 py-4 space-y-4 min-h-[300px] max-h-[350px]">
               {messages.map((msg, index) => (
                 <div key={index} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
-                  <div className={`max-w-[85%] rounded-2xl px-4 py-2.5 ${
-                    msg.sender === 'user'
-                      ? 'bg-gradient-to-r from-red-600 to-red-500 text-white'
-                      : 'bg-zinc-700/50 text-zinc-100'
-                  }`}>
-                    <p className="text-sm leading-relaxed whitespace-pre-line">
-                      {msg.text}
-                      {msg.isTyping && <span className="inline-block w-1 h-4 ml-1 bg-zinc-100 animate-pulse">|</span>}
-                    </p>
-                  </div>
+                  {msg.isGif ? (
+                    // GIF Message
+                    <div className="max-w-[70%] rounded-2xl overflow-hidden border-2 border-purple-500/30 shadow-lg shadow-purple-500/20">
+                      <img
+                        src={msg.text}
+                        alt="Reaction GIF"
+                        className="w-full h-auto object-cover"
+                        style={{ maxHeight: '200px' }}
+                      />
+                    </div>
+                  ) : (
+                    // Text Message
+                    <div className={`max-w-[85%] rounded-2xl px-4 py-2.5 ${
+                      msg.sender === 'user'
+                        ? 'bg-gradient-to-r from-red-600 to-red-500 text-white'
+                        : 'bg-zinc-700/50 text-zinc-100'
+                    }`}>
+                      <p className="text-sm leading-relaxed whitespace-pre-line">
+                        {msg.text}
+                        {msg.isTyping && <span className="inline-block w-1 h-4 ml-1 bg-zinc-100 animate-pulse">|</span>}
+                      </p>
+                    </div>
+                  )}
                 </div>
               ))}
               <div ref={messagesEndRef} />
