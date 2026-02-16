@@ -54,8 +54,8 @@ const model = genAI.getGenerativeModel({
 Queried from: `https://generativelanguage.googleapis.com/v1beta/models`
 
 ### Recommended Models for Chat:
-- ✅ `gemini-2.0-flash` (CURRENT - fast, stable)
-- ✅ `gemini-2.5-flash` (newest generation)
+- ✅ `gemini-1.5-flash` (CURRENT - stable, generous free quota)
+- ✅ `gemini-2.0-flash` (Fast, but strict free quota limits)
 - ✅ `gemini-flash-latest` (auto-updates to latest)
 - ✅ `gemini-pro-latest` (auto-updates to latest pro)
 
@@ -97,15 +97,15 @@ After Netlify deploys the fix (2-3 minutes):
 
 ## Model Selection Rationale
 
-**Why `gemini-2.0-flash`?**
-- ✅ Stable (not preview/experimental)
-- ✅ Fast response times (good for chatbot UX)
-- ✅ Supports conversation context
-- ✅ Free tier quota: 1500 requests/day
-- ✅ Available in v1beta API
-- ✅ Proven track record (not bleeding edge)
+**Why `gemini-1.5-flash`?**
+- ✅ **Stable & Reliable**: Proven stability on the v1beta API.
+- ✅ **Generous Free Quota**: Supports 1500 requests/day without `429` errors.
+- ✅ **Fast**: Optimized for low-latency chat interactions.
+- ✅ **Context Window**: Sufficient for portfolio chatbot history.
 
-**Alternative:** Could use `gemini-2.5-flash` for newest features, but 2.0 is battle-tested.
+**Why not `gemini-2.0-flash`?**
+- ❌ **Strict Quotas**: Users report frequent `429 Too Many Requests` errors on the free tier.
+- ⚠️ **Availability**: Can be unstable in certain regions or under load.
 
 ---
 
