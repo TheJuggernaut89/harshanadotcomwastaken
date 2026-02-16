@@ -177,3 +177,12 @@ To avoid this in the future:
 **ETA:** 2-3 minutes until live
 
 The AI chatbot will be fully operational after the Netlify build completes! 🎉
+
+---
+
+## Update: Reverting to Gemini 1.5 Flash (February 2026)
+
+**Issue:** User reported `429 Too Many Requests` (Quota Exceeded) with `gemini-2.0-flash`.
+**Action:** Reverted `api/chat.js` to use `gemini-1.5-flash`.
+**Reason:** `gemini-2.0-flash` appears to have stricter quota limits on the free tier compared to `gemini-1.5-flash`.
+**Note:** If `gemini-1.5-flash` returns 404 errors (as previously suspected), consider trying `gemini-1.5-flash-latest` or verifying project region settings in Google AI Studio.
