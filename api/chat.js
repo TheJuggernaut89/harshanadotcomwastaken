@@ -117,10 +117,10 @@ exports.handler = async (event, context) => {
       };
     }
 
-    // Initialize Gemini (using Gemini 2.0 Flash - latest stable model)
+    // Initialize Gemini (using Gemini 1.5 Flash - most cost-effective model)
     const genAI = new GoogleGenerativeAI(apiKey);
     const model = genAI.getGenerativeModel({
-      model: "gemini-2.0-flash"
+      model: "gemini-1.5-flash"
     });
 
     // Build conversation context
