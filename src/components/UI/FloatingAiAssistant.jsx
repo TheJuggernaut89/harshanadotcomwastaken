@@ -226,7 +226,7 @@ const FloatingAiAssistant = () => {
           // If there's a GIF, add it before the messages
           if (aiResponse.gifUrl) {
             setMessages(prev => [...prev, {
-              text: aiResponse.gifUrl,
+              gifUrl: aiResponse.gifUrl,
               sender: 'bot',
               timestamp: new Date(),
               isGif: true
@@ -332,9 +332,9 @@ const FloatingAiAssistant = () => {
                 <div key={index} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
                   {msg.isGif ? (
                     // GIF Message
-                    <div className="max-w-[70%] rounded-2xl overflow-hidden border-2 border-purple-500/30 shadow-lg shadow-purple-500/20">
+                    <div className="max-w-[70%] rounded-2xl overflow-hidden border-2 border-purple-500/15 shadow-lg shadow-purple-500/10 bg-zinc-700/50">
                       <img
-                        src={msg.text}
+                        src={msg.gifUrl}
                         alt="Reaction GIF"
                         className="w-full h-auto object-cover"
                         style={{ maxHeight: '200px' }}
