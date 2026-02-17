@@ -503,7 +503,7 @@ const FloatingAiAssistant = () => {
               aria-atomic="false"
             >
               <AnimatePresence mode="popLayout">
-                {messages.map((msg, index) => (
+                {messages.filter(msg => msg.sender !== 'user').map((msg, index) => (
                   <motion.div
                     key={`${msg.timestamp}-${index}`}
                     initial={{ opacity: 0, y: 20, scale: 0.95 }}
