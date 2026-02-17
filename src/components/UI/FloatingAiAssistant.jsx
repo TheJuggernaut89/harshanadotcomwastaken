@@ -299,7 +299,6 @@ const FloatingAiAssistant = () => {
 
       // Clear input
       setMessage('');
-      setCharCount(0);
 
       // Get AI response
       setIsTyping(true);
