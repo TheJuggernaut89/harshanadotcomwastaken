@@ -12,9 +12,11 @@ const FloatingAiAssistant = () => {
   const [hasAutoOpened, setHasAutoOpened] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
   const maxChars = 2000;
+  const MAX_MESSAGES = 50;
   const chatRef = useRef(null);
   const messagesEndRef = useRef(null);
   const typewriterTimers = useRef([]);
+  const isMountedRef = useRef(true);
 
   // Auto-scroll to bottom
   const scrollToBottom = () => {
@@ -25,9 +27,10 @@ const FloatingAiAssistant = () => {
     scrollToBottom();
   }, [messages.length]);
 
-  // Cleanup typewriter timers on unmount
+  // Cleanup typewriter timers on unmount and mark as unmounted
   useEffect(() => {
     return () => {
+      isMountedRef.current = false;
       typewriterTimers.current.forEach(timer => clearTimeout(timer));
     };
   }, []);
@@ -123,6 +126,8 @@ const FloatingAiAssistant = () => {
         let currentChar = 0;
 
         const typeChar = () => {
+          if (!isMountedRef.current) return;
+
           if (currentChar <= fullText.length) {
             setMessages(prev => {
               const newMessages = [...prev];
@@ -138,15 +143,19 @@ const FloatingAiAssistant = () => {
               return newMessages;
             });
             currentChar++;
-            setTimeout(typeChar, 30);
+            const timer = setTimeout(typeChar, 30);
+            typewriterTimers.current.push(timer);
           } else {
             currentTextIndex++;
-            setTimeout(addNextText, 400);
+            const timer = setTimeout(addNextText, 400);
+            typewriterTimers.current.push(timer);
           }
         };
         typeChar();
       } else {
         // Mark typing complete
+        if (!isMountedRef.current) return;
+
         setMessages(prev => {
           const newMessages = [...prev];
           if (newMessages[gifMessageIndex]) {
@@ -195,8 +204,12 @@ const FloatingAiAssistant = () => {
     addMessageSequentially(0);
   };
 
-  // Call Gemini API
+  // Call Gemini API with timeout
   const callGeminiAPI = async (userMessage) => {
+    // Create abort controller for timeout
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
+
     try {
       const response = await fetch('/.netlify/functions/chat', {
         method: 'POST',
@@ -206,8 +219,11 @@ const FloatingAiAssistant = () => {
         body: JSON.stringify({
           message: userMessage,
           conversationHistory: conversationHistory
-        })
+        }),
+        signal: controller.signal
       });
+
+      clearTimeout(timeoutId);
 
       const data = await response.json();
 
@@ -217,7 +233,19 @@ const FloatingAiAssistant = () => {
 
       return data;
     } catch (error) {
+      clearTimeout(timeoutId);
       console.error('Gemini API Error:', error);
+
+      // Distinguish between timeout and other errors
+      if (error.name === 'AbortError') {
+        return {
+          messages: [
+            "Whoa, that took too long! ⏰",
+            "My circuits are a bit slow today. Try asking again?"
+          ],
+          fallback: true
+        };
+      }
 
       // Fallback responses if API fails
       return {
@@ -233,6 +261,14 @@ const FloatingAiAssistant = () => {
 
   const handleInputChange = (e) => {
     const value = e.target.value;
+
+    // Enforce max length
+    if (value.length > maxChars) {
+      setMessage(value.slice(0, maxChars));
+      setCharCount(maxChars);
+      return;
+    }
+
     setMessage(value);
     setCharCount(value.length);
   };
@@ -336,6 +372,20 @@ const FloatingAiAssistant = () => {
     };
   }, []);
 
+  // Keyboard navigation - Escape to close
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape' && isChatOpen) {
+        setIsChatOpen(false);
+      }
+    };
+
+    if (isChatOpen) {
+      document.addEventListener('keydown', handleKeyDown);
+      return () => document.removeEventListener('keydown', handleKeyDown);
+    }
+  }, [isChatOpen]);
+
   return (
     <div className="fixed bottom-6 right-6 z-50">
       {/* Floating 3D Glowing AI Logo with Fluid Motion */}
@@ -355,6 +405,10 @@ const FloatingAiAssistant = () => {
           damping: 15
         }}
         onClick={() => setIsChatOpen(!isChatOpen)}
+        aria-label={isChatOpen ? "Close AI assistant chat" : "Open AI assistant chat"}
+        aria-expanded={isChatOpen}
+        aria-haspopup="dialog"
+        aria-controls="ai-chat-dialog"
         className="floating-ai-button relative w-16 h-16 rounded-full flex items-center justify-center"
         style={{
           background: 'linear-gradient(135deg, rgba(99,102,241,0.9) 0%, rgba(168,85,247,0.9) 100%)',
@@ -378,18 +432,22 @@ const FloatingAiAssistant = () => {
       {isChatOpen && (
         <div
           ref={chatRef}
-          className="absolute bottom-20 right-0 w-[450px] max-h-[500px] transition-all duration-300 origin-bottom-right flex flex-col"
+          id="ai-chat-dialog"
+          role="dialog"
+          aria-label="AI Assistant Chat"
+          aria-modal="true"
+          className="absolute bottom-20 right-0 w-[95vw] sm:w-[450px] max-h-[70vh] sm:max-h-[500px] max-w-[450px] transition-all duration-300 origin-bottom-right flex flex-col"
           style={{
             animation: 'popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards',
           }}
         >
           <div
-            className="relative flex flex-col rounded-3xl bg-gradient-to-br from-zinc-800/15 to-zinc-900/20 border border-zinc-400/20 hover:border-purple-500/30 backdrop-blur-3xl overflow-hidden h-full transition-all duration-300"
+            className="relative flex flex-col rounded-3xl bg-gradient-to-br from-zinc-800/15 to-zinc-900/20 border border-purple-500/30 hover:border-purple-500/50 backdrop-blur-3xl overflow-hidden h-full transition-all duration-300"
             style={{
               boxShadow: `
                 inset 0 1px 2px rgba(255, 255, 255, 0.1),
                 0 8px 32px rgba(0, 0, 0, 0.3),
-                0 0 1px rgba(255, 255, 255, 0.1) inset
+                inset 0 0 1px rgba(255, 255, 255, 0.1)
               `
             }}
           >
@@ -419,7 +477,12 @@ const FloatingAiAssistant = () => {
             </div>
 
             {/* Messages */}
-            <div className="flex-1 overflow-y-auto px-6 py-4 space-y-3 min-h-[250px] max-h-[380px]">
+            <div
+              className="flex-1 overflow-y-auto px-6 py-4 space-y-3 min-h-[250px] max-h-[380px]"
+              role="log"
+              aria-live="polite"
+              aria-atomic="false"
+            >
               <AnimatePresence mode="popLayout">
                 {messages.map((msg, index) => (
                   <motion.div
@@ -462,11 +525,12 @@ const FloatingAiAssistant = () => {
                           {msg.textMessages.map((text, idx) => (
                             <p key={idx} className="text-sm leading-relaxed text-zinc-100 whitespace-pre-line">
                               {text}
+                              {/* Only show cursor on last message during typing */}
+                              {msg.isTyping && idx === msg.textMessages.length - 1 && (
+                                <span className="inline-block w-1 h-4 ml-1 bg-zinc-100 animate-pulse">|</span>
+                              )}
                             </p>
                           ))}
-                          {msg.isTyping && (
-                            <span className="inline-block w-1 h-4 ml-1 bg-zinc-100 animate-pulse">|</span>
-                          )}
 
                           {/* Quick Action Chips - Show only when typing completes */}
                           {!msg.isTyping && msg.sender === 'bot' && (
@@ -523,6 +587,7 @@ const FloatingAiAssistant = () => {
                 onKeyDown={handleKeyDown}
                 rows={2}
                 disabled={isTyping}
+                maxLength={maxChars}
                 className="w-full px-6 py-3 bg-transparent border-none outline-none resize-none text-sm font-normal leading-relaxed text-zinc-100 placeholder-zinc-400 scrollbar-none disabled:opacity-50"
                 placeholder={isTyping ? "Wait for me to finish typing..." : "Ask me anything about Harshana..."}
                 style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
