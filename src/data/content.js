@@ -500,5 +500,69 @@ export const content = {
         salaryJustification: "For a multi-platform role, I'm looking at RM 10-15K. Here's why that's fair: Most companies either hire 3 people (marketer RM 5-6K + developer RM 4-5K + designer RM 3-4K = RM 12-15K) or use agencies (RM 10-15K/month). I deliver all three capabilities solo with proven results. You're getting team-level execution at individual cost.",
 
         uniqueValue: "What makes me different: (1) I build custom systems, not just use tools. (2) I track revenue, not just engagement. (3) I have technical skills most marketers don't—I code, build automation, integrate APIs. (4) I have entrepreneurial experience—I think like a business owner, not just an employee."
-    }
+    },
+
+    // Desaru & Johor Bahru Horror Stories (True Encounters)
+    horrorStories: [
+        {
+            title: "The Pontianak of Panti Forest",
+            location: "Panti Bird Sanctuary, near Desaru",
+            type: "True Encounter / JungleWalla Experience",
+            story: "During a JungleWalla birdwatching expedition, our group of four, accompanied by an Orang Asli guide, ventured deep into the Panti Forest Reserve at night. We were equipped with high-grade night vision goggles to spot nocturnal birds. Scanning the canopy, I saw a heat signature that didn't match any bird or monkey. It was a humanoid figure perched unnaturally high in a Meranti tree. Unlike an animal, it turned its head and looked directly at us. The Orang Asli guide, sensing the shift in atmosphere and seeing my reaction, immediately signaled for silence and a rapid retreat. He later confirmed that we had been noticed by a 'Cik Ponti' (Pontianak). We left the jungle immediately, the feeling of being watched following us all the way to the jeep."
+        },
+        {
+            title: "The Pale Jogger of Desaru Coast",
+            location: "Jalan Desaru (Coastal Road)",
+            type: "Local Legend / Driver Encounter",
+            story: "The long stretch of road connecting the Desaru hotels is pitch black at night. A common sighting reported by late-night drivers is the 'Pale Jogger.' Witnesses describe a figure in white sports attire jogging along the shoulder of the road at 2 AM. The terrifying part isn't the jogging—it's the speed. Cars driving at 80km/h report the jogger keeping pace effortlessly beside them, with a face that appears blurred or featureless when illuminated by headlights. Drivers are warned never to look in the rearview mirror after passing him."
+        },
+        {
+            title: "The Crying Baby of Sungai Lebam",
+            location: "Sungai Lebam Mangroves",
+            type: "River Cruise Encounter",
+            story: "During the evening firefly river cruises, boatmen are strictly trained on one rule: 'If you hear a baby crying, do not shine your torch.' Tourists often ask about the sound of a wailing infant coming from the thick mangrove roots near the water's edge. It is said to be the spirit of an abandoned child or a 'Toyol' lure. Experienced guides will rev the boat engine louder to drown out the sound, knowing that acknowledging the cry or shining a light on it invites the entity to follow the boat back to the jetty."
+        },
+        {
+            title: "The Check-in at 3 AM",
+            location: "Abandoned Resort Strip, Desaru",
+            type: "Urban Legend / Hotel Staff Story",
+            story: "Desaru has a history of abandoned resorts from the 1990s boom. A security guard at a now-demolished hotel shared a recurring logbook entry. Every few months, the front desk phone would ring at 3 AM from Room 304—a room that had been stripped of furniture and electricity for years. When guards went to investigate, they would find the door unlocked and a distinct smell of wet ocean sand in the middle of the room, along with damp footprints leading from the balcony (which faces the sea) to the bathroom, and then vanishing."
+        },
+        {
+            title: "The Plantation Worker's Shortcut",
+            location: "Felda Settlements near Penawar",
+            type: "Local Encounter",
+            story: "Motorcyclists taking shortcuts through the oil palm estates near Bandar Penawar often warn of the 'Hantu Galah' (Bamboo Ghost). A plantation worker rushing home for Maghrib prayers reported seeing what looked like two white tree trunks blocking his path. When he looked up, he realized they were legs. The entity was so tall its head was lost in the palm fronds above. It simply stepped over him as he sped past, the wind from its movement smelling of rotting flowers."
+        },
+        {
+            title: "The Passenger on E22",
+            location: "Senai-Desaru Expressway (SDE)",
+            type: "Highway Haunting",
+            story: "The SDE highway cuts through massive swathes of jungle and plantation. Solo drivers late at night report a sudden, unexplained heaviness in their vehicle, as if carrying extra weight. This is often accompanied by the strong scent of jasmine or frangipani inside the car. The rule is simple: Do not look at your backseat in the rearview mirror. Those who have looked report seeing an elderly woman with red eyes staring back at them, silently asking for a ride to the nearest toll plaza."
+        },
+        {
+            title: "The Fisherman of Tanjung Balau",
+            location: "Tanjung Balau Fishing Village",
+            type: "Maritime Folklore",
+            story: "Fishermen in Tanjung Balau speak of the 'Ghost Ship' that appears during the monsoon season. It looks like an old wooden junk from a bygone era, sailing against the wind with tattered black sails. Locals believe it collects the souls of those lost at sea. If you are fishing alone and hear your name called from the water, you must not answer. Answering gives the spirit permission to board your vessel."
+        },
+        {
+            title: "The Yellow Umbrella",
+            location: "Desaru Fruit Farm Area",
+            type: "Agricultural Haunting",
+            story: "Workers at the fruit orchards have reported seeing a woman walking among the durian trees during heavy rain. She always carries a bright yellow vintage umbrella. The unsettling detail is that she glides rather than walks, and if you look closely at the hem of her long skirt, there are no feet touching the muddy ground. She is believed to be the guardian of the land, inspecting the harvest, but crossing her path is considered a bad omen for your health."
+        },
+        {
+            title: "The Kota Tinggi Waterfall Watcher",
+            location: "Kota Tinggi Waterfalls",
+            type: "Recreational Hazard / Bunian",
+            story: "Just a short drive from Desaru, this famous waterfall has a dark reputation. Families picnicking near the rock pools have reported their young children talking to an 'invisible friend' in the water. The children say their friend wants them to 'come play at the house under the waterfall.' Locals believe a Bunian (elf/spirit) community lives behind the cascade, and they are always looking for human children to adopt into their realm."
+        },
+        {
+            title: "The Guardian of the River",
+            location: "Sedili River",
+            type: "Jungle Legend",
+            story: "River guides on the Sedili Besar speak of the 'White Crocodile' (Buaya Putih). It is not an albino animal, but a spirit guardian. Sightings are extremely rare and are said to precede major events or disasters. Unlike normal crocodiles that are aggressive, this entity floats motionless, watching boats pass. It is considered the elder spirit of the river. If you see it, you must bow your head in respect and offer a silent prayer, or risk your engine failing in the middle of the crocodile-infested waters."
+        }
+    ]
 };
