@@ -34,19 +34,36 @@ IMPORTANT:
 
 Return ONLY the JSON array, no explanations.`;
 
-    const response = await fetch('/api/generate-chips', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ prompt })
-    });
+    // Add timeout to prevent hanging
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
 
-    if (!response.ok) {
-      console.error('Chip generation API error:', response.status);
+    try {
+      const response = await fetch('/api/generate-chips', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt }),
+        signal: controller.signal
+      });
+
+      clearTimeout(timeoutId);
+
+      if (!response.ok) {
+        console.error('Chip generation API error:', response.status);
+        return [];
+      }
+
+      const data = await response.json();
+      return data.chips || [];
+    } catch (fetchError) {
+      clearTimeout(timeoutId);
+      if (fetchError.name === 'AbortError') {
+        console.error('Chip generation timeout - took longer than 10 seconds');
+      } else {
+        console.error('Error in chip fetch:', fetchError);
+      }
       return [];
     }
-
-    const data = await response.json();
-    return data.chips || [];
   } catch (error) {
     console.error('Error generating chips:', error);
     return [];

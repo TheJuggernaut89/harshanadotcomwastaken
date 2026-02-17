@@ -17,6 +17,7 @@ const FloatingAiAssistant = () => {
   const chatRef = useRef(null);
   const typewriterTimers = useRef([]);
   const isMountedRef = useRef(true);
+  const gifMessageIndexRef = useRef(null);
 
   // Auto-scroll using proper hook
   const { scrollRef, scrollToBottom } = useAutoScroll({
@@ -28,7 +29,9 @@ const FloatingAiAssistant = () => {
   useEffect(() => {
     return () => {
       isMountedRef.current = false;
+      // Clear all timers and reset array
       typewriterTimers.current.forEach(timer => clearTimeout(timer));
+      typewriterTimers.current = [];
     };
   }, []);
 
@@ -196,9 +199,11 @@ const FloatingAiAssistant = () => {
       }
 
       const currentMessage = messageArray[index];
-      const messageIndex = messages.length + index;
+      let actualMessageIndex = null;
 
       setMessages(prev => {
+        // Calculate index from CURRENT state to avoid stale closure
+        actualMessageIndex = prev.length;
         const lastUserMessage = prev.filter(m => m.sender === 'user').slice(-1)[0];
         return [...prev, {
           text: '',
@@ -211,11 +216,14 @@ const FloatingAiAssistant = () => {
       });
 
       setTimeout(() => {
-        typewriterEffect(currentMessage, messageIndex, () => {
-          setTimeout(() => {
-            addMessageSequentially(index + 1);
-          }, 400);
-        });
+        // Use the actual index calculated from state, not closure
+        if (actualMessageIndex !== null) {
+          typewriterEffect(currentMessage, actualMessageIndex, () => {
+            setTimeout(() => {
+              addMessageSequentially(index + 1);
+            }, 400);
+          });
+        }
       }, initialDelay);
     };
 
@@ -287,9 +295,10 @@ const FloatingAiAssistant = () => {
     }
   };
 
-  const handleSend = async () => {
-    if (message.trim() && !isTyping) {
-      const userMessage = message.trim();
+  const handleSend = async (messageOverride = null) => {
+    const messageToSend = messageOverride || message;
+    if (messageToSend.trim() && !isTyping) {
+      const userMessage = messageToSend.trim();
 
       // Add user message to UI
       setMessages(prev => [...prev, {
@@ -298,11 +307,15 @@ const FloatingAiAssistant = () => {
         timestamp: new Date()
       }]);
 
-      // Add to conversation history for context
-      setConversationHistory(prev => [...prev, {
-        role: 'user',
-        content: userMessage
-      }]);
+      // Add to conversation history for context (limit to last 50 messages)
+      setConversationHistory(prev => {
+        const newHistory = [...prev, {
+          role: 'user',
+          content: userMessage
+        }];
+        // Keep only last 50 messages to prevent memory bloat
+        return newHistory.slice(-50);
+      });
 
       // Clear input
       setMessage('');
@@ -326,12 +339,10 @@ const FloatingAiAssistant = () => {
         if (aiResponse.messages && aiResponse.messages.length > 0) {
           // If there's a GIF, create combined message with GIF + text
           if (aiResponse.gifUrl) {
-            // Use callback form to get CURRENT state and calculate correct index
-            let correctGifMessageIndex;
-
+            // Use ref to reliably store the message index
             setMessages(prev => {
-              // Calculate index from CURRENT state (not stale closure)
-              correctGifMessageIndex = prev.length;
+              // Store index in ref for reliable access in setTimeout
+              gifMessageIndexRef.current = prev.length;
               const lastUserMessage = prev.filter(m => m.sender === 'user').slice(-1)[0];
 
               return [...prev, {
@@ -349,7 +360,9 @@ const FloatingAiAssistant = () => {
 
             // Short delay before text starts typing into the combined message
             setTimeout(() => {
-              typewriterEffectForCombinedMessage(aiResponse.messages, correctGifMessageIndex);
+              if (gifMessageIndexRef.current !== null) {
+                typewriterEffectForCombinedMessage(aiResponse.messages, gifMessageIndexRef.current);
+              }
             }, 800);
           } else {
             addBotMessagesWithTypewriter(aiResponse.messages, 600);
@@ -371,10 +384,8 @@ const FloatingAiAssistant = () => {
   // Handle chip click - auto-send chip action as message
   const handleChipClick = (chipAction) => {
     setMessage(chipAction);
-    // Use setTimeout to ensure state updates, then send
-    setTimeout(() => {
-      handleSend(chipAction);
-    }, 0);
+    // Pass chipAction directly to avoid state update race condition
+    handleSend(chipAction);
   };
 
   // Close chat when clicking outside
