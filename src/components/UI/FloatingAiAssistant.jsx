@@ -205,7 +205,8 @@ const FloatingAiAssistant = () => {
           sender: 'bot',
           timestamp: new Date(),
           isTyping: true,
-          userQuestion: lastUserMessage?.text || ''
+          userQuestion: lastUserMessage?.text || '',
+          isLastInTransaction: index === messageArray.length - 1
         }];
       });
 
@@ -341,7 +342,8 @@ const FloatingAiAssistant = () => {
                 isCombined: true,
                 textMessages: [],  // Will hold typewriter text
                 isTyping: true,
-                userQuestion: lastUserMessage?.text || ''
+                userQuestion: lastUserMessage?.text || '',
+                isLastInTransaction: true
               }];
             });
 
@@ -553,7 +555,7 @@ const FloatingAiAssistant = () => {
                           ))}
 
                           {/* Quick Action Chips - Show only when typing completes */}
-                          {!msg.isTyping && msg.sender === 'bot' && (
+                          {!msg.isTyping && msg.sender === 'bot' && msg.isLastInTransaction && (
                             <QuickActionChips
                               messageText={msg.textMessages.join(' ')}
                               userQuestion={msg.userQuestion}
@@ -586,7 +588,7 @@ const FloatingAiAssistant = () => {
                       </p>
 
                       {/* Quick Action Chips - Show only for bot messages when typing completes */}
-                      {!msg.isTyping && msg.sender === 'bot' && (
+                      {!msg.isTyping && msg.sender === 'bot' && msg.isLastInTransaction && (
                         <QuickActionChips
                           messageText={msg.text}
                           userQuestion={msg.userQuestion}
