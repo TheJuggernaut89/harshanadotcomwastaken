@@ -166,6 +166,9 @@ const FloatingAiAssistant = () => {
           }
           return newMessages;
         });
+
+        // CRITICAL: Reset global isTyping state to re-enable input
+        setIsTyping(false);
       }
     };
 
