@@ -313,22 +313,27 @@ const FloatingAiAssistant = () => {
         if (aiResponse.messages && aiResponse.messages.length > 0) {
           // If there's a GIF, create combined message with GIF + text
           if (aiResponse.gifUrl) {
-            setMessages(prev => [...prev, {
-              gifUrl: aiResponse.gifUrl,
-              sender: 'bot',
-              timestamp: new Date(),
-              isGif: true,
-              isCombined: true,
-              textMessages: [],  // Will hold typewriter text
-              isTyping: true
-            }]);
+            // Use callback form to get CURRENT state and calculate correct index
+            let correctGifMessageIndex;
 
-            // Get the index of the GIF message we just added
-            const gifMessageIndex = messages.length;
+            setMessages(prev => {
+              // Calculate index from CURRENT state (not stale closure)
+              correctGifMessageIndex = prev.length;
+
+              return [...prev, {
+                gifUrl: aiResponse.gifUrl,
+                sender: 'bot',
+                timestamp: new Date(),
+                isGif: true,
+                isCombined: true,
+                textMessages: [],  // Will hold typewriter text
+                isTyping: true
+              }];
+            });
 
             // Short delay before text starts typing into the combined message
             setTimeout(() => {
-              typewriterEffectForCombinedMessage(aiResponse.messages, gifMessageIndex);
+              typewriterEffectForCombinedMessage(aiResponse.messages, correctGifMessageIndex);
             }, 800);
           } else {
             addBotMessagesWithTypewriter(aiResponse.messages, 600);
