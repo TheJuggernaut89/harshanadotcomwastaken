@@ -196,12 +196,16 @@ const FloatingAiAssistant = () => {
       const currentMessage = messageArray[index];
       const messageIndex = messages.length + index;
 
-      setMessages(prev => [...prev, {
-        text: '',
-        sender: 'bot',
-        timestamp: new Date(),
-        isTyping: true
-      }]);
+      setMessages(prev => {
+        const lastUserMessage = prev.filter(m => m.sender === 'user').slice(-1)[0];
+        return [...prev, {
+          text: '',
+          sender: 'bot',
+          timestamp: new Date(),
+          isTyping: true,
+          userQuestion: lastUserMessage?.text || ''
+        }];
+      });
 
       setTimeout(() => {
         typewriterEffect(currentMessage, messageIndex, () => {
@@ -324,6 +328,7 @@ const FloatingAiAssistant = () => {
             setMessages(prev => {
               // Calculate index from CURRENT state (not stale closure)
               correctGifMessageIndex = prev.length;
+              const lastUserMessage = prev.filter(m => m.sender === 'user').slice(-1)[0];
 
               return [...prev, {
                 gifUrl: aiResponse.gifUrl,
@@ -332,7 +337,8 @@ const FloatingAiAssistant = () => {
                 isGif: true,
                 isCombined: true,
                 textMessages: [],  // Will hold typewriter text
-                isTyping: true
+                isTyping: true,
+                userQuestion: lastUserMessage?.text || ''
               }];
             });
 
@@ -547,6 +553,7 @@ const FloatingAiAssistant = () => {
                           {!msg.isTyping && msg.sender === 'bot' && (
                             <QuickActionChips
                               messageText={msg.textMessages.join(' ')}
+                              userQuestion={msg.userQuestion}
                               onChipClick={handleChipClick}
                             />
                           )}
@@ -579,6 +586,7 @@ const FloatingAiAssistant = () => {
                       {!msg.isTyping && msg.sender === 'bot' && (
                         <QuickActionChips
                           messageText={msg.text}
+                          userQuestion={msg.userQuestion}
                           onChipClick={handleChipClick}
                         />
                       )}
