@@ -50,10 +50,10 @@ export function useAutoScroll(options = {}) {
     if (!scrollRef.current) return;
 
     const atBottom = checkIsAtBottom(scrollRef.current);
-    setScrollState((prev) => ({
+    setScrollState({
       isAtBottom: atBottom,
-      autoScrollEnabled: atBottom ? true : prev.autoScrollEnabled,
-    }));
+      autoScrollEnabled: true, // Always keep auto-scroll enabled
+    });
   }, [checkIsAtBottom]);
 
   useEffect(() => {
@@ -96,18 +96,8 @@ export function useAutoScroll(options = {}) {
   }, [scrollState.autoScrollEnabled, scrollToBottom]);
 
   const disableAutoScroll = useCallback(() => {
-    const atBottom = scrollRef.current
-      ? checkIsAtBottom(scrollRef.current)
-      : false;
-
-    if (!atBottom) {
-      userHasScrolled.current = true;
-      setScrollState((prev) => ({
-        ...prev,
-        autoScrollEnabled: false,
-      }));
-    }
-  }, [checkIsAtBottom]);
+    // Removed disabling logic - always keep auto-scroll enabled
+  }, []);
 
   return {
     scrollRef,
