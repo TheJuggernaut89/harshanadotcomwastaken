@@ -8,7 +8,6 @@ const FloatingAiAssistant = () => {
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState('');
-  const [charCount, setCharCount] = useState(0);
   const [conversationHistory, setConversationHistory] = useState([]);
   const [hasAutoOpened, setHasAutoOpened] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
@@ -20,7 +19,7 @@ const FloatingAiAssistant = () => {
 
   // Auto-scroll using proper hook
   const { scrollRef, scrollToBottom } = useAutoScroll({
-    dependencies: [messages],
+    content: messages,
     smooth: true
   });
 
@@ -276,14 +275,9 @@ const FloatingAiAssistant = () => {
     const value = e.target.value;
 
     // Enforce max length
-    if (value.length > maxChars) {
-      setMessage(value.slice(0, maxChars));
-      setCharCount(maxChars);
-      return;
+    if (value.length <= maxChars) {
+      setMessage(value);
     }
-
-    setMessage(value);
-    setCharCount(value.length);
   };
 
   const handleSend = async () => {
@@ -598,35 +592,28 @@ const FloatingAiAssistant = () => {
             </div>
 
             {/* Input Section */}
-            <div className="relative border-t border-zinc-700/50">
-              <textarea
-                value={message}
-                onChange={handleInputChange}
-                onKeyDown={handleKeyDown}
-                rows={2}
-                disabled={isTyping}
-                maxLength={maxChars}
-                className="w-full px-6 py-3 bg-transparent border-none outline-none resize-none text-sm font-normal leading-relaxed text-zinc-100 placeholder-zinc-400 scrollbar-none disabled:opacity-50"
-                placeholder={isTyping ? "Wait for me to finish typing..." : "Ask me anything about Harshana..."}
-                style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-              />
-            </div>
+            <div className="relative border-t border-zinc-700/50 px-3 py-3">
+              <div className="relative w-full">
+                <textarea
+                  value={message}
+                  onChange={handleInputChange}
+                  onKeyDown={handleKeyDown}
+                  rows={2}
+                  disabled={isTyping}
+                  maxLength={maxChars}
+                  className="w-full pl-3 pr-14 py-2 bg-transparent border-none outline-none resize-none text-sm font-normal leading-relaxed text-zinc-100 placeholder-zinc-400 scrollbar-none disabled:opacity-50"
+                  placeholder={isTyping ? "Wait for me to finish typing..." : "Ask me anything about Harshana..."}
+                  style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+                />
 
-            {/* Controls */}
-            <div className="px-4 pb-4">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <div className="text-xs font-medium text-zinc-400">
-                    <span className="text-zinc-300">{charCount}</span>/<span className="text-zinc-400">{maxChars}</span>
-                  </div>
-                </div>
-
+                {/* Send Button - Integrated Inside Textarea */}
                 <button
                   onClick={handleSend}
                   disabled={!message.trim() || isTyping}
-                  className="group relative p-3 bg-gradient-to-r from-red-600 to-red-500 border-none rounded-xl cursor-pointer transition-all duration-300 text-white shadow-lg hover:from-red-500 hover:to-red-400 hover:scale-110 hover:shadow-red-500/30 hover:shadow-xl active:scale-95 transform disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 group p-2.5 bg-gradient-to-r from-red-600 to-red-500 border-none rounded-full cursor-pointer transition-all duration-300 text-white shadow-lg hover:from-red-500 hover:to-red-400 hover:scale-110 hover:shadow-red-500/30 hover:shadow-xl active:scale-95 transform disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                  aria-label="Send message"
                 >
-                  <Send className="w-5 h-5 transition-all duration-300 group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:rotate-12" />
+                  <Send className="w-5 h-5 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:rotate-12" />
                 </button>
               </div>
             </div>

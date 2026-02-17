@@ -247,7 +247,7 @@ const QuickActionChips = ({ messageText, onChipClick }) => {
       });
     }
 
-    return chips.slice(0, 4); // Max 4 chips
+    return chips.slice(0, 2); // Max 2 chips per message
   };
 
   const chips = generateChips(messageText);
