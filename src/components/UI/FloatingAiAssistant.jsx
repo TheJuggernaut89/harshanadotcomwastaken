@@ -10,6 +10,7 @@ const FloatingAiAssistant = () => {
   const [message, setMessage] = useState('');
   const [conversationHistory, setConversationHistory] = useState([]);
   const [hasAutoOpened, setHasAutoOpened] = useState(false);
+  const [greetingGiven, setGreetingGiven] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
   const maxChars = 2000;
   const MAX_MESSAGES = 50;
@@ -65,6 +66,7 @@ const FloatingAiAssistant = () => {
     ];
 
     addBotMessagesWithTypewriter(initialMessages);
+    setGreetingGiven(true);  // Mark greeting as sent
   };
 
   // Typewriter effect for a single message
@@ -220,7 +222,7 @@ const FloatingAiAssistant = () => {
   };
 
   // Call Gemini API with timeout
-  const callGeminiAPI = async (userMessage) => {
+  const callGeminiAPI = async (userMessage, greetingGiven = false) => {
     // Create abort controller for timeout
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
@@ -233,7 +235,8 @@ const FloatingAiAssistant = () => {
         },
         body: JSON.stringify({
           message: userMessage,
-          conversationHistory: conversationHistory
+          conversationHistory: conversationHistory,
+          greetingGiven: greetingGiven
         }),
         signal: controller.signal
       });
@@ -306,7 +309,7 @@ const FloatingAiAssistant = () => {
       // Get AI response
       setIsTyping(true);
 
-      const aiResponse = await callGeminiAPI(userMessage);
+      const aiResponse = await callGeminiAPI(userMessage, greetingGiven);
 
       // Add AI response to conversation history
       if (aiResponse.messages && aiResponse.messages.length > 0) {

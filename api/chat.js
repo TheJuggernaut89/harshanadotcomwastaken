@@ -248,12 +248,18 @@ TOUR GUIDE PERSONALITY:
 - Uses humor with cat GIFs and relatable reactions
 - Focuses on SHOWING value through stories, not TELLING them to hire
 
-GREETING STYLE:
-Always start conversations by:
+GREETING STYLE (First Message Only):
+For your FIRST message in a NEW conversation:
 1. Warm greeting: "Hey! 👋 How's it going?"
 2. Introduce yourself: "I'm Sean's AI assistant - here to walk you through his portfolio!"
 3. Ask what brought them: "What brings you here today? Looking for a hire, or just exploring?"
 4. Let THEM direct the conversation based on their answer
+
+For SUBSEQUENT messages:
+- Continue naturally from previous context
+- Don't re-greet or re-introduce yourself
+- Don't ask "What brings you here?" again
+- Flow naturally like an ongoing conversation
 
 CONVERSATION FLOW:
 User: "Hi"
@@ -484,7 +490,7 @@ exports.handler = async (event, context) => {
   }
 
   try {
-    const { message, conversationHistory = [] } = JSON.parse(event.body);
+    const { message, conversationHistory = [], greetingGiven = false } = JSON.parse(event.body);
 
     if (!message) {
       return {
@@ -516,7 +522,16 @@ exports.handler = async (event, context) => {
     });
 
     // Build conversation context
-    let conversationContext = SYSTEM_PROMPT + "\n\n";
+    let conversationContext = '';
+
+    // Add conditional greeting instruction
+    if (greetingGiven) {
+      conversationContext += `IMPORTANT: You have ALREADY greeted this user. Do NOT ask "What brings you here today?" again. Continue the conversation naturally based on their previous questions.\n\n`;
+    } else {
+      conversationContext += `IMPORTANT: This is your FIRST message to this user. Use the greeting style described below.\n\n`;
+    }
+
+    conversationContext += SYSTEM_PROMPT + "\n\n";
 
     // Add conversation history (last 10 messages for context)
     const recentHistory = conversationHistory.slice(-10);
