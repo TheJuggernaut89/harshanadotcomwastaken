@@ -23,7 +23,13 @@
       "Bash(npm install:*)",
       "Bash(curl:*)",
       "Bash(grep:*)",
-      "Bash(ls:*)"
+      "Bash(ls:*)",
+      "Bash(find:*)",
+      "Bash(python:*)",
+      "Bash(cat:*)",
+      "WebFetch(domain:generativelanguage.googleapis.com)",
+      "WebFetch(domain:harshanajothiresume2026.netlify.app)",
+      "WebFetch(domain:api.github.com)"
     ]
   }
 }
