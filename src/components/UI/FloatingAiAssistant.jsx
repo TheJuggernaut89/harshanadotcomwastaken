@@ -458,7 +458,7 @@ const FloatingAiAssistant = () => {
           }}
         >
           <div
-            className="relative flex flex-col rounded-3xl bg-gradient-to-br from-zinc-800/30 to-zinc-900/30 border border-purple-500/30 hover:border-purple-500/50 backdrop-blur-3xl overflow-hidden h-full transition-all duration-300"
+            className="relative flex flex-col rounded-3xl bg-gradient-to-br from-zinc-800/70 to-zinc-900/70 border border-purple-500/30 hover:border-purple-500/50 backdrop-blur-3xl overflow-hidden h-full transition-all duration-300"
             style={{
               boxShadow: `
                 inset 0 1px 2px rgba(255, 255, 255, 0.1),
