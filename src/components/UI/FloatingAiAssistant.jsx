@@ -1,5 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Paperclip, Link, Code, Mic, Send, Info, Bot, X } from 'lucide-react';
+import { Paperclip, Link, Code, Mic, Send, Info, Bot, X, MessageCircle } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import QuickActionChips from './QuickActionChips';
 
 const FloatingAiAssistant = () => {
   const [isChatOpen, setIsChatOpen] = useState(false);
@@ -309,6 +311,15 @@ const FloatingAiAssistant = () => {
     }
   };
 
+  // Handle chip click - auto-send chip action as message
+  const handleChipClick = (chipAction) => {
+    setMessage(chipAction);
+    // Use setTimeout to ensure state updates, then send
+    setTimeout(() => {
+      handleSend(chipAction);
+    }, 0);
+  };
+
   // Close chat when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -327,25 +338,41 @@ const FloatingAiAssistant = () => {
 
   return (
     <div className="fixed bottom-6 right-6 z-50">
-      {/* Floating 3D Glowing AI Logo */}
-      <button
-        className={`floating-ai-button relative w-16 h-16 rounded-full flex items-center justify-center transition-all duration-500 transform ${
-          isChatOpen ? 'rotate-90' : 'rotate-0'
-        }`}
+      {/* Floating 3D Glowing AI Logo with Fluid Motion */}
+      <motion.button
+        whileHover={{
+          scale: 1.1,
+          rotate: isChatOpen ? 90 : 10,
+          boxShadow: '0 0 30px rgba(139, 92, 246, 0.8), 0 0 60px rgba(139, 92, 246, 0.4), 0 0 90px rgba(139, 92, 246, 0.2)'
+        }}
+        whileTap={{ scale: 0.9 }}
+        animate={{
+          rotate: isChatOpen ? 90 : 0
+        }}
+        transition={{
+          type: 'spring',
+          stiffness: 200,
+          damping: 15
+        }}
         onClick={() => setIsChatOpen(!isChatOpen)}
+        className="floating-ai-button relative w-16 h-16 rounded-full flex items-center justify-center"
         style={{
-          background: 'linear-gradient(135deg, rgba(99,102,241,0.8) 0%, rgba(168,85,247,0.8) 100%)',
-          boxShadow: '0 0 20px rgba(139, 92, 246, 0.7), 0 0 40px rgba(124, 58, 237, 0.5), 0 0 60px rgba(109, 40, 217, 0.3)',
+          background: 'linear-gradient(135deg, rgba(99,102,241,0.9) 0%, rgba(168,85,247,0.9) 100%)',
+          boxShadow: '0 0 20px rgba(139, 92, 246, 0.7), 0 0 40px rgba(124, 58, 237, 0.5), 0 0 60px rgba(109, 40, 217, 0.3), inset 0 1px 2px rgba(255, 255, 255, 0.2)',
           border: '2px solid rgba(255, 255, 255, 0.2)',
         }}
       >
         <div className="absolute inset-0 rounded-full bg-gradient-to-b from-white/20 to-transparent opacity-30"></div>
         <div className="absolute inset-0 rounded-full border-2 border-white/10"></div>
-        <div className="relative z-10">
+        <motion.div
+          animate={{ rotate: isChatOpen ? -90 : 0 }}
+          transition={{ type: 'spring', stiffness: 200, damping: 15 }}
+          className="relative z-10"
+        >
           {isChatOpen ? <X className="w-8 h-8 text-white" /> : <Bot className="w-8 h-8 text-white" />}
-        </div>
+        </motion.div>
         <div className="absolute inset-0 rounded-full animate-ping opacity-20 bg-indigo-500"></div>
-      </button>
+      </motion.button>
 
       {/* Chat Interface */}
       {isChatOpen && (
@@ -356,7 +383,16 @@ const FloatingAiAssistant = () => {
             animation: 'popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards',
           }}
         >
-          <div className="relative flex flex-col rounded-3xl bg-gradient-to-br from-zinc-800/95 to-zinc-900/95 border border-zinc-500/50 shadow-2xl backdrop-blur-3xl overflow-hidden h-full">
+          <div
+            className="relative flex flex-col rounded-3xl bg-gradient-to-br from-zinc-800/15 to-zinc-900/20 border border-zinc-400/20 hover:border-purple-500/30 backdrop-blur-3xl overflow-hidden h-full transition-all duration-300"
+            style={{
+              boxShadow: `
+                inset 0 1px 2px rgba(255, 255, 255, 0.1),
+                0 8px 32px rgba(0, 0, 0, 0.3),
+                0 0 1px rgba(255, 255, 255, 0.1) inset
+              `
+            }}
+          >
 
             {/* Header */}
             <div className="flex items-center justify-between px-6 pt-3 pb-2 border-b border-zinc-700/50">
@@ -384,11 +420,33 @@ const FloatingAiAssistant = () => {
 
             {/* Messages */}
             <div className="flex-1 overflow-y-auto px-6 py-4 space-y-3 min-h-[250px] max-h-[380px]">
-              {messages.map((msg, index) => (
-                <div key={index} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
-                  {msg.isGif ? (
-                    // Combined GIF + Text Message
-                    <div className="max-w-[70%] flex flex-col gap-0 rounded-2xl overflow-hidden border-2 border-purple-500/15 shadow-lg shadow-purple-500/10 bg-zinc-700/50">
+              <AnimatePresence mode="popLayout">
+                {messages.map((msg, index) => (
+                  <motion.div
+                    key={`${msg.timestamp}-${index}`}
+                    initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.9 }}
+                    transition={{
+                      duration: 0.3,
+                      type: 'spring',
+                      stiffness: 100,
+                      damping: 15
+                    }}
+                    className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}
+                  >
+                    {msg.isGif ? (
+                      // Combined GIF + Text Message
+                      <motion.div
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.4, type: 'spring', stiffness: 100 }}
+                        whileHover={{
+                          borderColor: 'rgba(139, 92, 246, 0.5)',
+                          boxShadow: '0 12px 32px rgba(139, 92, 246, 0.2)'
+                        }}
+                        className="max-w-[70%] flex flex-col gap-0 rounded-2xl overflow-hidden border-2 border-purple-500/25 bg-zinc-700/30 backdrop-blur-lg shadow-xl shadow-purple-500/15 transition-all duration-300"
+                      >
                       {/* GIF at top */}
                       <img
                         src={msg.gifUrl}
@@ -409,24 +467,51 @@ const FloatingAiAssistant = () => {
                           {msg.isTyping && (
                             <span className="inline-block w-1 h-4 ml-1 bg-zinc-100 animate-pulse">|</span>
                           )}
+
+                          {/* Quick Action Chips - Show only when typing completes */}
+                          {!msg.isTyping && msg.sender === 'bot' && (
+                            <QuickActionChips
+                              messageText={msg.textMessages.join(' ')}
+                              onChipClick={handleChipClick}
+                            />
+                          )}
                         </div>
                       )}
-                    </div>
+                    </motion.div>
                   ) : (
                     // Regular text-only message (no GIF)
-                    <div className={`max-w-[85%] rounded-2xl px-4 py-2.5 ${
-                      msg.sender === 'user'
-                        ? 'bg-gradient-to-r from-red-600 to-red-500 text-white'
-                        : 'bg-zinc-700/50 text-zinc-100'
-                    }`}>
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.3 }}
+                      whileHover={msg.sender === 'bot' ? {
+                        backgroundColor: 'rgba(63, 63, 70, 0.6)',
+                        borderColor: 'rgba(139, 92, 246, 0.3)',
+                        boxShadow: '0 8px 24px rgba(139, 92, 246, 0.15)'
+                      } : {}}
+                      className={`max-w-[85%] rounded-2xl px-4 py-2.5 ${
+                        msg.sender === 'user'
+                          ? 'bg-gradient-to-r from-red-600 to-red-500 text-white'
+                          : 'bg-zinc-700/30 text-zinc-100 border border-purple-500/15 backdrop-blur-md shadow-lg shadow-black/10'
+                      } transition-all duration-300`}
+                    >
                       <p className="text-sm leading-relaxed whitespace-pre-line">
                         {msg.text}
                         {msg.isTyping && <span className="inline-block w-1 h-4 ml-1 bg-zinc-100 animate-pulse">|</span>}
                       </p>
-                    </div>
+
+                      {/* Quick Action Chips - Show only for bot messages when typing completes */}
+                      {!msg.isTyping && msg.sender === 'bot' && (
+                        <QuickActionChips
+                          messageText={msg.text}
+                          onChipClick={handleChipClick}
+                        />
+                      )}
+                    </motion.div>
                   )}
-                </div>
-              ))}
+                  </motion.div>
+                ))}
+              </AnimatePresence>
               <div ref={messagesEndRef} />
             </div>
 
