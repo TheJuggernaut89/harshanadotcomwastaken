@@ -51,7 +51,57 @@ const GIF_LIBRARY = {
 
   // Impressive/Wow
   impressive: 'https://media.giphy.com/media/r1HGFou3mUwMw/giphy.gif', // Impressed
-  legendary: 'https://media.giphy.com/media/3oKIPsx2VAYAgEHC12/giphy.gif' // Legendary
+  legendary: 'https://media.giphy.com/media/3oKIPsx2VAYAgEHC12/giphy.gif', // Legendary
+
+  // CAT CONFUSION (2-3)
+  catConfused1: 'https://media.giphy.com/media/qZgHBlenHa1zKqy6Zn/giphy.gif', // confused cat head tilt
+  catConfused2: 'https://media.giphy.com/media/blPpTGDhn6hEI/giphy.gif', // confused blinking cat
+  catConfusedWtf: 'https://media.giphy.com/media/SYcpSY0lNdPIHhCvjT/giphy.gif', // cat wtf face
+
+  // CAT SARCASM (2-3)
+  catSarcasm1: 'https://media.giphy.com/media/wr7oA0rSjnWuiLJOY5/giphy.gif', // cat slow blink
+  catSideEye: 'https://media.giphy.com/media/hECJDGJs4hQjjWLqRV/giphy.gif', // cat side-eye
+  catUnimpressed: 'https://media.giphy.com/media/GAXXHdS0zXawVLOJLY/giphy.gif', // unimpressed cat
+
+  // CAT JUDGING (2-3)
+  catJudging1: 'https://media.giphy.com/media/GXCHDWmtSFm3n15aJc/giphy.gif', // judgmental cat stare
+  catGlare: 'https://media.giphy.com/media/hECJDGJs4hQjjWLqRV/giphy.gif', // cat glaring
+  catSkeptical: 'https://media.giphy.com/media/KsMT02cXvy0AN7j4Md/giphy.gif', // skeptical cat
+
+  // CAT EXCITEMENT (2-3)
+  catExcited1: 'https://media.giphy.com/media/qLDmUqjsMaUS5pskO9/giphy.gif', // excited cat jump
+  catZoomies: 'https://media.giphy.com/media/ualbOr84O4kpUQ7YGF/giphy.gif', // cat zoomies
+  catHappy: 'https://media.giphy.com/media/L0RSwJZ6mYYU4hdyJm/giphy.gif', // happy cat
+
+  // CAT FACEPALM (2-3)
+  catFacepalm1: 'https://media.giphy.com/media/yFQ0ywscgobJK/giphy.gif', // cat cover eyes
+  catSigh: 'https://media.giphy.com/media/xT0GqtpF1NWd9VbstO/giphy.gif', // cat sighing
+  catOhNo: 'https://media.giphy.com/media/teYBuLqP73jW2qVUI1/giphy.gif', // cat oh no
+
+  // CAT WORKING (2-3)
+  catTyping: 'https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif', // cat typing
+  catBusy: 'https://media.giphy.com/media/mcsPU3SkKrYDdW3aAU/giphy.gif', // busy cat
+  catOnComputer: 'https://media.giphy.com/media/13GIgrGdslD9oQ/giphy.gif', // cat on laptop
+
+  // CAT LAZY/CHILL (2-3)
+  catLazy: 'https://media.giphy.com/media/q2OyUwyJ7ydiM/giphy.gif', // lazy cat
+  catNapping: 'https://media.giphy.com/media/pVkmGyqYRt4qY/giphy.gif', // cat napping
+  catRelaxed: 'https://media.giphy.com/media/tqj4m9BRURayxQAIW9/giphy.gif', // relaxed cat
+
+  // CAT DRAMATIC (2-3)
+  catDramatic1: 'https://media.giphy.com/media/fYLrVmLXG9tVL4Aykg/giphy.gif', // dramatic cat
+  catShocked: 'https://media.giphy.com/media/QZpDATBs8QzcLZo9uI/giphy.gif', // shocked cat
+  catGasp: 'https://media.giphy.com/media/ASvQ3A2Q7blzq/giphy.gif', // cat gasping
+
+  // CAT DISAPPROVAL (2-3)
+  catNo: 'https://media.giphy.com/media/rCxogJBzaeZuU/giphy.gif', // cat saying no
+  catNope: 'https://media.giphy.com/media/nR4L10XlJcSeQ/giphy.gif', // nope cat
+  catGrumpy: 'https://media.giphy.com/media/WTjnWYENpLxS8JQ5rz/giphy.gif', // grumpy cat
+
+  // CAT SURPRISED (2-3)
+  catSurprised1: 'https://media.giphy.com/media/Cdkk6wFFqisTe/giphy.gif', // surprised wide-eyed cat
+  catOMG: 'https://media.giphy.com/media/PUBxelwT57jsQ/giphy.gif', // cat OMG face
+  catStartled: 'https://media.giphy.com/media/ebFG4jcnC1Ny8/giphy.gif' // startled cat
 };
 
 // GIF context matching - Returns GIF URL based on message content
@@ -91,6 +141,81 @@ function selectGIF(message) {
   // Impressive statements
   if (lowerMessage.includes('insane') || lowerMessage.includes('legendary') || lowerMessage.includes('impressive')) {
     return GIF_LIBRARY.legendary;
+  }
+
+  // CAT CONFUSION
+  if (lowerMessage.includes('confused') || lowerMessage.includes('puzzled') ||
+      lowerMessage.includes('unclear') || lowerMessage.includes('don\'t understand') ||
+      lowerMessage.includes('wait what')) {
+    const confused = [GIF_LIBRARY.catConfused1, GIF_LIBRARY.catConfused2, GIF_LIBRARY.catConfusedWtf];
+    return confused[Math.floor(Math.random() * confused.length)];
+  }
+
+  // CAT SARCASM
+  if (lowerMessage.includes('obviously') || lowerMessage.includes('really?') ||
+      lowerMessage.includes('sure') || lowerMessage.includes('yeah right') ||
+      lowerMessage.includes('of course')) {
+    const sarcasm = [GIF_LIBRARY.catSarcasm1, GIF_LIBRARY.catSideEye, GIF_LIBRARY.catUnimpressed];
+    return sarcasm[Math.floor(Math.random() * sarcasm.length)];
+  }
+
+  // CAT JUDGING
+  if (lowerMessage.includes('skeptical') || lowerMessage.includes('judging') ||
+      lowerMessage.includes('side-eye') || lowerMessage.includes('disapprove') ||
+      lowerMessage.includes('doubt')) {
+    const judging = [GIF_LIBRARY.catJudging1, GIF_LIBRARY.catGlare, GIF_LIBRARY.catSkeptical];
+    return judging[Math.floor(Math.random() * judging.length)];
+  }
+
+  // CAT EXCITEMENT (complement existing excitement triggers)
+  if (lowerMessage.includes('amazing') || lowerMessage.includes('wow') ||
+      lowerMessage.includes('love it') || lowerMessage.includes('cool')) {
+    const excited = [GIF_LIBRARY.catExcited1, GIF_LIBRARY.catZoomies, GIF_LIBRARY.catHappy];
+    return excited[Math.floor(Math.random() * excited.length)];
+  }
+
+  // CAT FACEPALM
+  if (lowerMessage.includes('oops') || lowerMessage.includes('mistake') ||
+      lowerMessage.includes('fail') || lowerMessage.includes('facepalm')) {
+    const facepalm = [GIF_LIBRARY.catFacepalm1, GIF_LIBRARY.catSigh, GIF_LIBRARY.catOhNo];
+    return facepalm[Math.floor(Math.random() * facepalm.length)];
+  }
+
+  // CAT WORKING
+  if (lowerMessage.includes('working') || lowerMessage.includes('busy') ||
+      lowerMessage.includes('grinding') || lowerMessage.includes('focused')) {
+    const working = [GIF_LIBRARY.catTyping, GIF_LIBRARY.catBusy, GIF_LIBRARY.catOnComputer];
+    return working[Math.floor(Math.random() * working.length)];
+  }
+
+  // CAT LAZY/CHILL
+  if (lowerMessage.includes('lazy') || lowerMessage.includes('relax') ||
+      lowerMessage.includes('chill') || lowerMessage.includes('nap') ||
+      lowerMessage.includes('break')) {
+    const lazy = [GIF_LIBRARY.catLazy, GIF_LIBRARY.catNapping, GIF_LIBRARY.catRelaxed];
+    return lazy[Math.floor(Math.random() * lazy.length)];
+  }
+
+  // CAT DRAMATIC
+  if (lowerMessage.includes('dramatic') || lowerMessage.includes('intense') ||
+      lowerMessage.includes('over the top') || lowerMessage.includes('theatrical')) {
+    const dramatic = [GIF_LIBRARY.catDramatic1, GIF_LIBRARY.catShocked, GIF_LIBRARY.catGasp];
+    return dramatic[Math.floor(Math.random() * dramatic.length)];
+  }
+
+  // CAT DISAPPROVAL
+  if (lowerMessage.includes('no') || lowerMessage.includes('nope') ||
+      lowerMessage.includes('disagree') || lowerMessage.includes('wrong')) {
+    const disapprove = [GIF_LIBRARY.catNo, GIF_LIBRARY.catNope, GIF_LIBRARY.catGrumpy];
+    return disapprove[Math.floor(Math.random() * disapprove.length)];
+  }
+
+  // CAT SURPRISED
+  if (lowerMessage.includes('surprise') || lowerMessage.includes('shocked') ||
+      lowerMessage.includes('unexpected') || lowerMessage.includes('omg') ||
+      lowerMessage.includes('what')) {
+    const surprised = [GIF_LIBRARY.catSurprised1, GIF_LIBRARY.catOMG, GIF_LIBRARY.catStartled];
+    return surprised[Math.floor(Math.random() * surprised.length)];
   }
 
   // Default: No GIF
