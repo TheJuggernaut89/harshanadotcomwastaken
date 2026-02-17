@@ -51,17 +51,16 @@ const FloatingAiAssistant = () => {
   // Initial greeting from AI
   const sendInitialGreeting = async () => {
     const greetings = [
-      "Hey! 👋 Quick question - are you hiring or just checking out if Harshana's legit?",
-      "What's up! 🚀 Looking to hire a marketing technologist who actually codes?",
-      "Yo! Welcome! 🎯 Fair warning: you just found a GOLDMINE for marketing teams. Hiring?",
-      "Hey there! 💼 I'm here to show you why Harshana's a 3-in-1 hire. Interested?",
-      "Sup! 🤖 Your marketing team drowning in manual work? Let me introduce you to someone who automates that shit."
+      "Hey! 👋 How's your day going? I'm Sean's AI tour guide - here to show you around his portfolio! What brings you here today? 😊",
+      "Hi there! 🎯 I'm Sean's AI assistant. Just browsing, or looking for something specific? I can give you the full tour!",
+      "Welcome! 👋 I'm here to walk you through Sean's portfolio. How can I help you today?",
+      "Hey! 😊 What's up? I'm Sean's AI twin (the more helpful version 😄). Want a tour of the portfolio, or got specific questions?",
+      "Hi! 🚀 I'm Sean's portfolio guide. Looking to hire someone who codes + does marketing, or just exploring? Either way, I got you!"
     ];
 
     const randomGreeting = greetings[Math.floor(Math.random() * greetings.length)];
 
     const initialMessages = [
-      "Hey! 👋 I'm Harshana's AI twin (the more enthusiastic version 😄)",
       randomGreeting
     ];
 
@@ -453,7 +452,7 @@ const FloatingAiAssistant = () => {
           }}
         >
           <div
-            className="relative flex flex-col rounded-3xl bg-gradient-to-br from-zinc-800/15 to-zinc-900/20 border border-purple-500/30 hover:border-purple-500/50 backdrop-blur-3xl overflow-hidden h-full transition-all duration-300"
+            className="relative flex flex-col rounded-3xl bg-gradient-to-br from-zinc-800/30 to-zinc-900/30 border border-purple-500/30 hover:border-purple-500/50 backdrop-blur-3xl overflow-hidden h-full transition-all duration-300"
             style={{
               boxShadow: `
                 inset 0 1px 2px rgba(255, 255, 255, 0.1),
