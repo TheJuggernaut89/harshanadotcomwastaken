@@ -94,6 +94,9 @@ const FloatingAiAssistant = () => {
           return newMessages;
         });
 
+        // Smooth scroll to bottom as text is typing
+        scrollToBottom();
+
         charIndex++;
         const timer = setTimeout(typeNextChar, typingSpeed);
         typewriterTimers.current.push(timer);
@@ -108,6 +111,9 @@ const FloatingAiAssistant = () => {
           }
           return newMessages;
         });
+
+        // Final scroll when done typing
+        scrollToBottom();
 
         if (callback) callback();
       }
@@ -142,6 +148,10 @@ const FloatingAiAssistant = () => {
               }
               return newMessages;
             });
+
+            // Smooth scroll to bottom as text is typing
+            scrollToBottom();
+
             currentChar++;
             const timer = setTimeout(typeChar, 30);
             typewriterTimers.current.push(timer);
@@ -169,6 +179,9 @@ const FloatingAiAssistant = () => {
 
         // CRITICAL: Reset global isTyping state to re-enable input
         setIsTyping(false);
+
+        // Final scroll to ensure bottom is visible
+        scrollToBottom();
       }
     };
 
