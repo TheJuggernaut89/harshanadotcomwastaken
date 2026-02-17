@@ -85,7 +85,7 @@ export default function FloatingNav({ isOpen, toggleMenu, toggleArchitect }) {
             {/* Floating Trigger Button */}
             <motion.button
                 onClick={handleInteraction}
-                className="fixed bottom-5 right-5 md:bottom-8 md:right-8 z-50 w-14 h-14 md:w-20 md:h-20 rounded-full bg-gradient-to-r from-primary to-pink-500 text-white flex items-center justify-center transition-all"
+                className="fixed bottom-5 right-5 md:bottom-8 md:right-8 z-50 w-14 h-14 md:w-20 md:h-20 rounded-full bg-gradient-to-r from-primary to-pink-500 text-white flex items-center justify-center transition-all animate-pulse-slow"
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 transition={{ delay: 1, type: "spring", stiffness: 260, damping: 20 }}

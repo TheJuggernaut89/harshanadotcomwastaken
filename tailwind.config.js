@@ -97,7 +97,7 @@ export default {
                 'gradient-y': 'gradient-y 15s ease infinite',
                 'gradient-xy': 'gradient-xy 15s ease infinite',
                 'float': 'float 6s ease-in-out infinite',
-                'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                 'slide-up': 'slide-up 0.3s ease-out',
             },
             keyframes: {

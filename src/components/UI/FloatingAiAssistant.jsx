@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Paperclip, Link, Code, Mic, Send, Info, Bot, X, MessageCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import QuickActionChips from './QuickActionChips';
+import { useAutoScroll } from '../../hooks/useAutoScroll';
 
 const FloatingAiAssistant = () => {
   const [isChatOpen, setIsChatOpen] = useState(false);
@@ -14,18 +15,14 @@ const FloatingAiAssistant = () => {
   const maxChars = 2000;
   const MAX_MESSAGES = 50;
   const chatRef = useRef(null);
-  const messagesEndRef = useRef(null);
   const typewriterTimers = useRef([]);
   const isMountedRef = useRef(true);
 
-  // Auto-scroll to bottom
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages.length]);
+  // Auto-scroll using proper hook
+  const { scrollRef, scrollToBottom } = useAutoScroll({
+    dependencies: [messages],
+    smooth: true
+  });
 
   // Cleanup typewriter timers on unmount and mark as unmounted
   useEffect(() => {
@@ -499,6 +496,7 @@ const FloatingAiAssistant = () => {
 
             {/* Messages */}
             <div
+              ref={scrollRef}
               className="flex-1 overflow-y-auto px-6 py-4 space-y-3 min-h-[250px] max-h-[380px]"
               role="log"
               aria-live="polite"
@@ -597,7 +595,6 @@ const FloatingAiAssistant = () => {
                   </motion.div>
                 ))}
               </AnimatePresence>
-              <div ref={messagesEndRef} />
             </div>
 
             {/* Input Section */}
