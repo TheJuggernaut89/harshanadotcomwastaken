@@ -1,12 +1,15 @@
 // Serverless function for Netlify
 const { GoogleGenerativeAI } = require("@google/generative-ai");
+const { checkRateLimit } = require("./utils/rateLimiter");
+const { validateMessage, validateConversationHistory } = require("./utils/validator");
 
 // CORS headers
 const headers = {
-  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Origin': 'https://harshanajothiresume2026.netlify.app',
   'Access-Control-Allow-Headers': 'Content-Type',
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
-  'Content-Type': 'application/json'
+  'Content-Type': 'application/json',
+  'X-Content-Type-Options': 'nosniff'
 };
 
 // GIF Library - Curated reactions for different conversation contexts
@@ -497,15 +500,55 @@ exports.handler = async (event, context) => {
   }
 
   try {
+    // Rate limiting check
+    const clientIp = event.headers['x-forwarded-for']?.split(',')[0] ||
+                     event.headers['client-ip'] ||
+                     'unknown';
+
+    const rateLimitResult = checkRateLimit(clientIp);
+
+    if (!rateLimitResult.allowed) {
+      return {
+        statusCode: 429,
+        headers: {
+          ...headers,
+          'X-RateLimit-Limit': '20',
+          'X-RateLimit-Remaining': '0',
+          'X-RateLimit-Reset': rateLimitResult.resetTime.toString(),
+          'Retry-After': Math.ceil((rateLimitResult.resetTime - Date.now()) / 1000).toString()
+        },
+        body: JSON.stringify({
+          error: 'Too many requests. Please wait a moment before trying again.',
+          retryAfter: Math.ceil((rateLimitResult.resetTime - Date.now()) / 1000)
+        })
+      };
+    }
+
     const { message, conversationHistory = [], greetingGiven = false } = JSON.parse(event.body);
 
-    if (!message) {
+    // Validate message input
+    const messageValidation = validateMessage(message);
+    if (!messageValidation.valid) {
       return {
         statusCode: 400,
         headers,
-        body: JSON.stringify({ error: 'Message is required' })
+        body: JSON.stringify({ error: messageValidation.error })
       };
     }
+
+    // Validate conversation history
+    const historyValidation = validateConversationHistory(conversationHistory);
+    if (!historyValidation.valid) {
+      return {
+        statusCode: 400,
+        headers,
+        body: JSON.stringify({ error: historyValidation.error })
+      };
+    }
+
+    // Use sanitized inputs
+    const sanitizedMessage = messageValidation.sanitized;
+    const sanitizedHistory = historyValidation.sanitized;
 
     // Get API key from environment variable
     const apiKey = process.env.GEMINI_API_KEY;
@@ -541,7 +584,7 @@ exports.handler = async (event, context) => {
     conversationContext += SYSTEM_PROMPT + "\n\n";
 
     // Add conversation history (last 10 messages for context)
-    const recentHistory = conversationHistory.slice(-10);
+    const recentHistory = sanitizedHistory.slice(-10);
     if (recentHistory.length > 0) {
       conversationContext += "CONVERSATION HISTORY:\n";
       recentHistory.forEach(msg => {
@@ -550,7 +593,7 @@ exports.handler = async (event, context) => {
       conversationContext += "\n";
     }
 
-    conversationContext += `User: ${message}\nAssistant:`;
+    conversationContext += `User: ${sanitizedMessage}\nAssistant:`;
 
     // Generate response
     const result = await model.generateContent(conversationContext);

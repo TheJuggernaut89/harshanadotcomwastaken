@@ -291,8 +291,8 @@ export const printAnalyticsSummary = () => {
   return stats;
 };
 
-// Export for use in browser console
-if (typeof window !== 'undefined') {
+// Export for use in browser console (development only)
+if (typeof window !== 'undefined' && import.meta.env.DEV) {
   window.chatbotAnalytics = {
     getStats: getChatbotStats,
     getFunnel: getChatbotFunnel,
