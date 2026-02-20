@@ -7,8 +7,37 @@ export const content = {
             "Growth Engineer"
         ],
         heroTitle: "Hi, I'm Harshana Jothi",
-        tagline: "I build marketing systems that drive measurable revenue using automation, AI, and analytics. Most marketers can't code. Most developers don't understand marketing. I bridge that gap.",
+        tagline: "I build marketing systems that drive measurable revenue using automation, AI, and analytics. Full-stack AI specialist: from sales agents to graphic designers to business development tools. Most marketers can't code. Most developers don't understand marketing. I bridge that gap.",
         bio: "Marketing Technologist combining technical skills (n8n, APIs, coding) with marketing expertise (social media, conversion, attribution) and creative execution (Adobe-certified design, video editing). I don't just run campaigns. I build the systems that make them scalable and revenue-focused.",
+        currentRoles: [
+            "Marketing Technologist",
+            "Revenue Systems Builder",
+            "Full-Stack AI Graphic Designer",
+            "AI Sales Agent Developer",
+            "AI Business Development Analyst"
+        ],
+        hobbies: [
+            {
+                name: "Hiking & Outdoor Adventures",
+                description: "Exploring Malaysia's natural beauty and challenging trails",
+                why: "Clears my mind and provides fresh perspective on complex problems"
+            },
+            {
+                name: "Gaming & DayZ Server Development",
+                description: "Building and managing custom DayZ game servers",
+                why: "Combines technical skills (server management, mods) with community building"
+            },
+            {
+                name: "MMA Workouts",
+                description: "Mixed martial arts training and fitness",
+                why: "Discipline and mental toughness that translates to work challenges"
+            },
+            {
+                name: "Gym & Fitness",
+                description: "Regular strength training and conditioning",
+                why: "Maintains energy and focus for demanding technical work"
+            }
+        ],
         location: "Damansara Perdana, Malaysia",
         status: "Available for Full-time / Hybrid",
         email: "jothiharshana188@gmail.com",
@@ -222,6 +251,30 @@ export const content = {
                 rejection: "Company didn't have enough funds to buy the necessary initial investment on equipment.",
                 status: "CONCEPT ONLY."
             }
+        },
+        {
+            title: "Medical Patient Advocate App",
+            category: "Healthcare AI",
+            image: "/Visionary/Medical Patient Advocate.png",
+            description: "An AI-powered app that helps patients prepare for doctor visits by analyzing symptoms, drafting informed questions, and suggesting evidence-based treatment options using FDA API and medical databases. Designed to improve patient-doctor communication and reduce medical anxiety.",
+            proposalDetails: {
+                concept: "Most patients feel unprepared for doctor visits and struggle to articulate symptoms or ask the right questions. This app bridges that gap using AI to transform vague complaints into structured medical inquiries backed by FDA data.",
+                geniusMoment: "Realized that anti-doctor sentiment often stems from poor communication, not bad medicine. An AI that helps patients ask better questions leads to better diagnoses and improved trust in healthcare.",
+                pitch: "**The Problem:**\n- Patients forget symptoms or questions during appointments\n- Medical jargon intimidates patients from asking clarifying questions\n- Doctors have limited time, leading to rushed consultations\n- Misunderstanding treatment plans leads to poor compliance\n\n**The Solution:**\n1. **Symptom Analyzer** - Users describe symptoms in natural language; AI structures them medically\n2. **Question Drafter** - Generates specific, relevant questions to ask the doctor\n3. **Treatment Explainer** - Translates doctor recommendations into plain English\n4. **Medication Checker** - Cross-references FDA data for drug interactions and side effects\n5. **Follow-up Tracker** - Reminds patients of medication schedules and follow-up appointments\n\n**Tech Stack:**\n- FDA OpenFDA API for drug information\n- Claude API for natural language processing\n- Medical knowledge base (Mayo Clinic, NIH resources)\n- HIPAA-compliant data handling\n- Mobile-first Progressive Web App (PWA)\n\n**Target Users:**\n- Patients with chronic conditions requiring regular doctor visits\n- Elderly patients who struggle with medical terminology\n- Non-native speakers navigating healthcare systems\n- Anxious patients who need structured support\n\n**Business Model:**\n- Freemium: Basic symptom analysis free\n- Premium: Unlimited questions, medication tracking, family accounts\n- B2B: Partnerships with clinics for patient preparation tools",
+                status: "In Development - FDA API integrated, frontend 40% complete"
+            }
+        },
+        {
+            title: "Accessible Legal Transcription Platform (PersonaPlex Integration)",
+            category: "Accessibility AI",
+            image: "/Visionary/Legal Transcription Accessibility.png",
+            description: "An AI-powered legal transcription proofreading system using PersonaPlex (NVIDIA's speech-to-speech AI) to enable disabled workers in Malaysia to review and correct legal documents through natural voice interaction. Reduces barriers for visually impaired, mobility-impaired, and neurodiverse workers.",
+            proposalDetails: {
+                concept: "Legal transcription proofreading traditionally requires precise visual focus and mouse/keyboard dexterity. PersonaPlex's speech-to-speech AI removes these barriers by allowing workers to interact with transcripts entirely through voice commands and audio feedback.",
+                geniusMoment: "Discovered PersonaPlex (NVIDIA's Moshi 7B model) provides <200ms latency voice AI with persona control - perfect for creating a 'legal document expert' voice assistant that can read transcripts, identify errors, and accept verbal corrections in real-time.",
+                pitch: "**The Problem:**\n- Legal transcription requires intense visual focus (excludes blind/low-vision workers)\n- Precise typing needed for corrections (excludes mobility-impaired workers)\n- Malaysian disabled unemployment rate is high despite capable workforce\n- Existing transcription tools not designed for accessibility\n\n**The Solution: Voice-First Proofreading Workflow**\n\n1. **Audio Input:** Original legal recording + AI-generated transcript\n2. **PersonaPlex AI Editor:**\n   - Persona: \"You are a legal document expert who reads transcripts aloud and identifies errors\"\n   - Reads transcript sections aloud with natural speech\n   - Highlights potential errors (grammar, legal terminology, dates)\n3. **Voice Commands:**\n   - Worker: \"Read paragraph 3\"\n   - Worker: \"Fix the date on line 5 to March 15th, 2024\"\n   - Worker: \"Replace 'plaintiff' with 'respondent' in sentence 2\"\n4. **Verification Loop:** AI reads back corrections for confirmation\n5. **Output:** Corrected transcript + audit log of changes\n\n**Technical Architecture:**\n- **PersonaPlex Server:** Python/PyTorch backend with Moshi 7B model\n- **Web Client:** React TypeScript with WebSocket for real-time audio streaming\n- **Text Prompt:** Custom legal expert persona with Malaysian legal terminology\n- **Voice Selection:** Professional, clear voice optimized for legal terms\n- **Accessibility Features:**\n  - Keyboard-only navigation (no mouse required)\n  - Screen reader compatibility for UI elements\n  - Adjustable speech rate and volume\n  - Text captions for deaf workers\n  - High contrast mode for low vision\n\n**Deployment:**\n- AWS Singapore or on-premise Malaysian servers (PDPA compliance)\n- <200ms latency for natural conversation\n- HTTPS/WSS secure connections\n- GPU acceleration: NVIDIA A100/H100 or CPU fallback\n\n**Target Users:**\n- Visually impaired legal transcriptionists\n- Mobility-impaired workers (cannot use mouse/keyboard effectively)\n- Neurodiverse workers who prefer auditory processing\n- Workers with dyslexia or reading difficulties\n\n**Impact:**\n- Opens legal transcription jobs to disabled Malaysians\n- Reduces unemployment in disabled community\n- Provides competitive pay for skilled workers\n- Demonstrates AI as enabler, not replacement",
+                status: "Planning Phase - Technical architecture designed, deployment strategy in progress, pilot program with 5 workers planned for Q2 2025"
+            }
         }
     ],
 
@@ -229,27 +282,57 @@ export const content = {
     aiWorkforce: [
         {
             name: "AI Sales Agent",
+            role: "Lead Qualification Specialist",
+            description: "24/7 automated lead qualification with intelligent CRM integration",
             features: [
                 "24/7 Lead Qualification",
                 "Instant Response Protocol",
                 "CRM Auto-Entry"
-            ]
+            ],
+            capabilities: [
+                "Qualify leads via conversational AI on website forms",
+                "Auto-enters validated leads into CRM with enrichment data",
+                "Schedules follow-ups and sends personalized outreach",
+                "Provides lead scoring based on behavior and responses"
+            ],
+            status: "Operational",
+            techStack: ["Claude API", "n8n", "CRM Integration", "Natural Language Processing"]
         },
         {
             name: "AI Graphic Designer",
+            role: "Visual Content Generator",
+            description: "Brand-consistent visual generation at scale for marketing campaigns",
             features: [
                 "Brand-Consistent Visuals",
-                "high-Speed Asset Generation",
+                "High-Speed Asset Generation",
                 "Multi-Format Adaptation"
-            ]
+            ],
+            capabilities: [
+                "Generate brand-consistent social media graphics",
+                "Multi-format outputs (Instagram, Facebook, LinkedIn, TikTok)",
+                "Maintains style guide and color palette consistency",
+                "A/B testing variations for optimization"
+            ],
+            status: "Operational",
+            techStack: ["Higgsfield", "Midjourney API", "Custom Style Transfer", "n8n Automation"]
         },
         {
             name: "AI Business Development",
+            role: "Market Intelligence Analyst",
+            description: "Continuous market monitoring with opportunity identification",
             features: [
                 "Market Trend Analysis",
                 "Competitor Monitoring",
                 "Opportunity Spotting"
-            ]
+            ],
+            capabilities: [
+                "Analyzes market trends from multiple data sources",
+                "Identifies business opportunities and partnership potential",
+                "Monitors competitor activities and industry shifts",
+                "Provides actionable insights with risk/opportunity scoring"
+            ],
+            status: "In Development",
+            techStack: ["Claude API", "Web Scraping", "Sentiment Analysis", "Trend Detection"]
         }
     ],
 
