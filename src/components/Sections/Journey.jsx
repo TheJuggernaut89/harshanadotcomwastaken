@@ -3,17 +3,16 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { content } from '../../data/content';
 import { upsideDownContent } from '../../data/content-upsidedown';
 import { useTruthMode } from '../../context/TruthModeContext';
-import { Briefcase, Calendar, ChevronDown, MapPin, Lightbulb, Unlock, Lock, ExternalLink } from 'lucide-react';
+import { Briefcase, Calendar, ChevronDown, MapPin, Lightbulb, Unlock, Lock, ExternalLink, Image as ImageIcon } from 'lucide-react';
 
 const Journey = () => {
-    const [expandedIndex, setExpandedIndex] = useState(0); // First one expanded by default
+    const [expandedIndex, setExpandedIndex] = useState(0);
     const { isTruthMode } = useTruthMode();
 
     const toggleExpand = (index) => {
         setExpandedIndex(expandedIndex === index ? null : index);
     };
 
-    // Helper function to get truth data by company name
     const getTruthData = (companyName) => {
         const companyMap = {
             'Cream of Creams Sdn Bhd': 'creamOfCreams',
@@ -27,34 +26,35 @@ const Journey = () => {
     };
 
     return (
-        <section id="experience" className="py-20 bg-gray-50 dark:bg-navy-dark/50">
-            <div className="container mx-auto px-6">
+        <section id="experience" className="py-16 sm:py-20 bg-gray-50 dark:bg-navy-dark/50 overflow-x-hidden">
+            <div className="container mx-auto px-4 sm:px-6">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     className="text-center mb-10"
                 >
-                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-bold mb-4">
+                    <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 text-primary text-xs sm:text-sm font-bold mb-4">
                         {isTruthMode ? <Unlock size={14} /> : <Lock size={14} />}
-                        {isTruthMode ? 'Truth Mode Active' : 'Professional Journey'}
+                        {isTruthMode ? 'Truth Mode' : 'Career Journey'}
                     </div>
-                    <h2 className="text-3xl md:text-4xl font-bold mb-3">
-                        {isTruthMode ? "My Real Story" : "Career Timeline"}
+                    <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3">
+                        {isTruthMode ? "The Real Story" : "Where I've Worked"}
                     </h2>
-                    <p className="text-gray-600 dark:text-gray-400 max-w-xl mx-auto">
+                    <p className="text-gray-600 dark:text-gray-400 max-w-xl mx-auto text-sm sm:text-base">
                         {isTruthMode 
-                            ? "What LinkedIn doesn't tell you - the real Malaysian experience! 😄" 
-                            : "From security operations to AI-powered marketing innovation"}
+                            ? "What LinkedIn doesn't tell you 😄" 
+                            : "From security to marketing — an unusual path"}
                     </p>
                 </motion.div>
 
-                {/* Accordion Timeline */}
+                {/* Timeline */}
                 <div className="max-w-3xl mx-auto space-y-3">
                     {content.experience.map((item, index) => {
                         const truthData = getTruthData(item.company);
                         const showTruthContent = isTruthMode && truthData;
                         const isExpanded = expandedIndex === index;
+                        const hasGallery = item.workplaceGallery && item.workplaceGallery.length > 0;
 
                         return (
                             <motion.div
@@ -71,42 +71,61 @@ const Journey = () => {
                                         : 'border-gray-200 dark:border-white/10 bg-white dark:bg-navy-dark/50 hover:border-gray-300 dark:hover:border-white/20'
                                 }`}
                             >
-                                {/* Header - Always visible */}
+                                {/* Header */}
                                 <button
                                     onClick={() => toggleExpand(index)}
-                                    className="w-full p-5 flex items-center gap-4 text-left"
+                                    className="w-full p-4 sm:p-5 flex items-center gap-3 sm:gap-4 text-left"
                                 >
-                                    {/* Timeline dot */}
-                                    <div className={`w-3 h-3 rounded-full flex-shrink-0 ${
-                                        isTruthMode ? 'bg-green-500' : 'bg-primary'
-                                    }`} />
-                                    
-                                    {/* Period */}
-                                    <div className={`px-3 py-1 rounded-full text-xs font-bold ${
-                                        isTruthMode 
-                                            ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400' 
-                                            : 'bg-primary/10 text-primary'
-                                    }`}>
-                                        {item.period}
-                                    </div>
-                                    
-                                    {/* Title & Company */}
-                                    <div className="flex-1 min-w-0">
-                                        <h3 className="font-bold text-lg truncate">
-                                            {showTruthContent ? truthData.jobTitle.reveal : item.role}
-                                        </h3>
-                                        <p className={`text-sm flex items-center gap-1 ${
-                                            isTruthMode ? 'text-green-600 dark:text-green-400' : 'text-primary'
+                                    {/* Company Image/Icon */}
+                                    {item.workplaceImage ? (
+                                        <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl overflow-hidden flex-shrink-0 bg-gray-100">
+                                            <img 
+                                                src={item.workplaceImage} 
+                                                alt={item.company}
+                                                className="w-full h-full object-cover"
+                                                onError={(e) => {
+                                                    e.target.style.display = 'none';
+                                                    e.target.nextSibling.style.display = 'flex';
+                                                }}
+                                            />
+                                            <div className="w-full h-full items-center justify-center bg-primary/10 hidden">
+                                                <Briefcase size={20} className="text-primary" />
+                                            </div>
+                                        </div>
+                                    ) : (
+                                        <div className={`w-12 h-12 sm:w-14 sm:h-14 rounded-xl flex items-center justify-center flex-shrink-0 ${
+                                            isTruthMode ? 'bg-green-100 dark:bg-green-900/30' : 'bg-primary/10'
                                         }`}>
-                                            <Briefcase size={12} />
-                                            {item.company}
-                                        </p>
+                                            <Briefcase size={20} className={isTruthMode ? 'text-green-600' : 'text-primary'} />
+                                        </div>
+                                    )}
+                                    
+                                    <div className="flex-1 min-w-0">
+                                        {/* Role - Fixed: No truncate, allow wrap */}
+                                        <h3 className="font-bold text-base sm:text-lg leading-tight mb-1 break-words">
+                                            {showTruthContent ? truthData.jobTitle?.reveal : item.role}
+                                        </h3>
+                                        {/* Company & Period */}
+                                        <div className="flex flex-wrap items-center gap-2 text-xs sm:text-sm">
+                                            <span className={`font-medium ${isTruthMode ? 'text-green-600 dark:text-green-400' : 'text-primary'}`}>
+                                                {item.company}
+                                            </span>
+                                            <span className="text-gray-300">•</span>
+                                            <span className="text-gray-500">{item.period}</span>
+                                        </div>
                                     </div>
                                     
-                                    {/* Expand icon */}
+                                    {/* Gallery indicator */}
+                                    {hasGallery && (
+                                        <div className="hidden sm:flex items-center gap-1 text-xs text-gray-400 mr-2">
+                                            <ImageIcon size={12} />
+                                            <span>{item.workplaceGallery.length}</span>
+                                        </div>
+                                    )}
+                                    
                                     <ChevronDown 
                                         size={20} 
-                                        className={`text-gray-400 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`} 
+                                        className={`text-gray-400 transition-transform duration-300 flex-shrink-0 ${isExpanded ? 'rotate-180' : ''}`} 
                                     />
                                 </button>
 
@@ -120,10 +139,32 @@ const Journey = () => {
                                             transition={{ duration: 0.3 }}
                                             className="overflow-hidden"
                                         >
-                                            <div className="px-5 pb-5 pt-0">
+                                            <div className="px-4 sm:px-5 pb-5 pt-0">
+                                                {/* Gallery Images */}
+                                                {hasGallery && (
+                                                    <div className="mb-4">
+                                                        <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2 flex items-center gap-2">
+                                                            <ImageIcon size={12} />
+                                                            Gallery
+                                                        </p>
+                                                        <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
+                                                            {item.workplaceGallery.slice(0, 4).map((img, idx) => (
+                                                                <div key={idx} className="aspect-square rounded-lg overflow-hidden bg-gray-100">
+                                                                    <img 
+                                                                        src={img.url} 
+                                                                        alt={img.caption || `Work ${idx + 1}`}
+                                                                        className="w-full h-full object-cover hover:scale-110 transition-transform"
+                                                                        loading="lazy"
+                                                                    />
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                    </div>
+                                                )}
+
                                                 {/* Description */}
                                                 <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed mb-4">
-                                                    {showTruthContent ? truthData.description.reveal : item.description}
+                                                    {showTruthContent ? truthData.description?.reveal : item.description}
                                                 </p>
 
                                                 {/* Location */}
@@ -132,21 +173,21 @@ const Journey = () => {
                                                     {item.location}
                                                 </div>
 
-                                                {/* Achievements */}
+                                                {/* Key Achievements - Simplified */}
                                                 {item.achievements && item.achievements.length > 0 && (
                                                     <div className="mb-4">
                                                         <h4 className={`text-xs font-bold uppercase tracking-wider mb-2 ${
                                                             isTruthMode ? 'text-green-600' : 'text-primary'
                                                         }`}>
-                                                            Key Achievements
+                                                            Key Wins
                                                         </h4>
-                                                        <ul className="space-y-2">
+                                                        <ul className="space-y-1.5">
                                                             {item.achievements.slice(0, 3).map((achievement, idx) => {
                                                                 const truthAchievement = showTruthContent && truthData.achievements?.[idx];
                                                                 return (
                                                                     <li key={idx} className="flex gap-2 text-sm text-gray-600 dark:text-gray-400">
                                                                         <span className={isTruthMode ? 'text-green-500' : 'text-primary'}>•</span>
-                                                                        {truthAchievement ? truthAchievement.reveal : achievement}
+                                                                        <span className="break-words">{truthAchievement ? truthAchievement.reveal : achievement}</span>
                                                                     </li>
                                                                 );
                                                             })}
@@ -154,33 +195,16 @@ const Journey = () => {
                                                     </div>
                                                 )}
 
-                                                {/* Key Learnings */}
-                                                {item.learnings && item.learnings.length > 0 && (
-                                                    <div className="bg-teal/5 rounded-xl p-4">
-                                                        <h4 className="text-xs font-bold uppercase tracking-wider text-teal mb-2 flex items-center gap-2">
-                                                            <Lightbulb size={12} />
-                                                            What I Learned
-                                                        </h4>
-                                                        <ul className="space-y-2">
-                                                            {item.learnings.slice(0, 2).map((learning, idx) => (
-                                                                <li key={idx} className="text-sm text-gray-600 dark:text-gray-400">
-                                                                    {learning}
-                                                                </li>
-                                                            ))}
-                                                        </ul>
-                                                    </div>
-                                                )}
-
-                                                {/* Link if available */}
+                                                {/* Link */}
                                                 {item.socialLinks?.tiktok && (
                                                     <a 
                                                         href={item.socialLinks.tiktok}
                                                         target="_blank"
                                                         rel="noopener noreferrer"
-                                                        className="inline-flex items-center gap-2 mt-4 text-sm font-bold text-primary hover:underline"
+                                                        className="inline-flex items-center gap-2 text-sm font-bold text-primary hover:underline"
                                                     >
                                                         <ExternalLink size={14} />
-                                                        View on TikTok
+                                                        See work on TikTok
                                                     </a>
                                                 )}
                                             </div>
@@ -200,8 +224,8 @@ const Journey = () => {
                         viewport={{ once: true }}
                         className="mt-8 text-center"
                     >
-                        <p className="text-sm text-gray-500">
-                            💡 <span className="font-bold">Pro tip:</span> Ask the AI chatbot about "truth mode" for the unfiltered version!
+                        <p className="text-xs sm:text-sm text-gray-500">
+                            💡 <span className="font-bold">Pro tip:</span> Ask the AI about "truth mode"
                         </p>
                     </motion.div>
                 )}

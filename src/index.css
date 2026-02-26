@@ -317,10 +317,39 @@
 }
 
 html,
-body {
+body,
+#root {
     max-width: 100vw;
     overflow-x: hidden;
     position: relative;
+}
+
+/* Force all sections to not overflow */
+section {
+    overflow-x: hidden;
+}
+
+/* Mobile-specific overflow fix */
+@media (max-width: 768px) {
+    * {
+        max-width: 100vw;
+    }
+    
+    .section-title {
+        position: relative;
+        display: inline-block;
+    }
+    
+    .section-title::after {
+        content: '';
+        position: absolute;
+        bottom: -8px;
+        left: 0;
+        width: 60px;
+        height: 4px;
+        background: var(--accent-primary);
+        border-radius: 9999px;
+    }
 }
 
 @layer components {

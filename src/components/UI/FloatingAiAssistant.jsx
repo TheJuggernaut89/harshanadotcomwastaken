@@ -609,7 +609,7 @@ const FloatingAiAssistant = () => {
                           : 'bg-zinc-800 text-white border border-purple-500/30 shadow-lg shadow-black/20'
                       } transition-all duration-300`}
                     >
-                      <p className="text-sm leading-relaxed whitespace-pre-line font-medium">
+                      <p className="text-sm leading-relaxed whitespace-pre-line font-medium text-white">
                         {msg.text}
                         {msg.isTyping && <span className="inline-block w-1 h-4 ml-1 bg-white animate-pulse">|</span>}
                       </p>
@@ -639,7 +639,7 @@ const FloatingAiAssistant = () => {
                   rows={2}
                   disabled={isTyping}
                   maxLength={maxChars}
-                  className="w-full pl-3 pr-14 py-2 bg-transparent border-none outline-none resize-none text-sm font-normal leading-relaxed text-zinc-100 placeholder-zinc-400 scrollbar-none disabled:opacity-50"
+                  className="w-full pl-3 pr-14 py-2 bg-transparent border-none outline-none resize-none text-sm font-normal leading-relaxed text-white placeholder-zinc-400 scrollbar-none disabled:opacity-50"
                   placeholder={isTyping ? "Wait for me to finish typing..." : "Ask me anything about Harshana..."}
                   style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
                 />
@@ -690,7 +690,7 @@ const FloatingAiAssistant = () => {
 
         .floating-ai-button:hover {
           transform: scale(1.1) rotate(5deg);
-          box-shadow: 0 0 30px rgba(139, 92, 246, 0.9), 0 0 50px rgba(124, 58, 237, 0.7), 0 0 70px rgba(109, 40, 217, 0.5);
+          boxShadow: 0 0 30px rgba(139, 92, 246, 0.9), 0 0 50px rgba(124, 58, 237, 0.7), 0 0 70px rgba(109, 40, 217, 0.5);
         }
 
         .scrollbar-none::-webkit-scrollbar {

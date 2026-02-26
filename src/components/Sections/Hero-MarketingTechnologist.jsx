@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, MessageCircle } from 'lucide-react';
+import { ArrowRight, MessageCircle, Code, Palette, TrendingUp } from 'lucide-react';
 import { content } from '../../data/content';
 import { fadeInUp, staggerContainer } from '../../utils/animations';
 import { useParallax } from '../../hooks/useParallax';
@@ -27,7 +27,7 @@ const Hero = () => {
                 className="absolute bottom-1/4 -right-1/4 w-1/2 h-1/2 bg-teal/10 blur-[120px] rounded-full will-change-transform"
             />
 
-            <div className="container mx-auto relative z-10 px-6">
+            <div className="container mx-auto relative z-10 px-4 sm:px-6 overflow-x-hidden">
                 <motion.div
                     variants={staggerContainer}
                     initial="initial"
@@ -44,37 +44,71 @@ const Hero = () => {
 
                     <motion.h1
                         variants={fadeInUp}
-                        className="text-5xl md:text-8xl font-bold mb-6 leading-tight"
+                        className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold mb-6 leading-[1.1] sm:leading-tight"
                     >
-                        <span className="text-primary">Marketing</span> <br />
-                        <span className="hero-gradient-title">Technologist</span>
+                        <span className="text-primary">Marketing</span>{' '}
+                        <span className="hero-gradient-title inline-block">Technologist</span>
                     </motion.h1>
 
                     <motion.p
                         variants={fadeInUp}
-                        className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-10 leading-relaxed font-medium max-w-3xl"
+                        className="text-lg sm:text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8 sm:mb-10 leading-relaxed font-medium max-w-3xl"
                     >
                         {content.personal.tagline}
                     </motion.p>
 
+                    {/* 3-in-1 Visual Cards - Mobile Optimized */}
+                    <motion.div
+                        variants={fadeInUp}
+                        className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-8 sm:mb-12"
+                    >
+                        <div className="flex items-center gap-3 glass-card px-4 py-3 rounded-xl border border-primary/10">
+                            <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                                <Code size={20} className="text-primary" />
+                            </div>
+                            <div>
+                                <p className="text-xs text-gray-500 uppercase tracking-wider">Developer</p>
+                                <p className="text-sm font-semibold">Automation & APIs</p>
+                            </div>
+                        </div>
+                        <div className="flex items-center gap-3 glass-card px-4 py-3 rounded-xl border border-primary/10">
+                            <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                                <TrendingUp size={20} className="text-primary" />
+                            </div>
+                            <div>
+                                <p className="text-xs text-gray-500 uppercase tracking-wider">Marketer</p>
+                                <p className="text-sm font-semibold">Growth Strategy</p>
+                            </div>
+                        </div>
+                        <div className="flex items-center gap-3 glass-card px-4 py-3 rounded-xl border border-primary/10">
+                            <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                                <Palette size={20} className="text-primary" />
+                            </div>
+                            <div>
+                                <p className="text-xs text-gray-500 uppercase tracking-wider">Designer</p>
+                                <p className="text-sm font-semibold">Visual Content</p>
+                            </div>
+                        </div>
+                    </motion.div>
+
                     {/* Growth Stats Highlight */}
                     <motion.div
                         variants={fadeInUp}
-                        className="flex overflow-x-auto snap-x snap-mandatory md:grid md:grid-cols-4 gap-4 mb-12 pb-4 -mx-6 px-6 md:mx-0 md:px-0 scrollbar-hide"
+                        className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-8 sm:mb-12"
                     >
                         {content.stats && content.stats.slice(0, 4).map((stat, i) => (
-                            <div key={i} className="min-w-[40vw] md:min-w-0 snap-center glass-card p-4 rounded-xl border border-primary/10 bg-white/50 dark:bg-navy/50 flex-shrink-0">
-                                <div className="text-3xl font-bold text-primary mb-1">{stat.value}</div>
-                                <div className="text-sm text-gray-500 font-bold uppercase tracking-wider">{stat.label}</div>
+                            <div key={i} className="glass-card p-3 sm:p-4 rounded-xl border border-primary/10 bg-white/50 dark:bg-navy/50">
+                                <div className="text-2xl sm:text-3xl font-bold text-primary mb-1">{stat.value}</div>
+                                <div className="text-xs sm:text-sm text-gray-500 font-bold uppercase tracking-wider">{stat.label}</div>
                             </div>
                         ))}
                     </motion.div>
 
-                    <motion.div variants={fadeInUp} className="flex flex-wrap gap-4 mb-20">
-                        <a href="#projects" className="btn-primary flex items-center gap-2">
+                    <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+                        <a href="#projects" className="btn-primary flex items-center justify-center gap-2 text-center">
                             View My Work <ArrowRight size={20} />
                         </a>
-                        <a href="#contact" className="btn-outline flex items-center gap-2">
+                        <a href="#contact" className="btn-outline flex items-center justify-center gap-2 text-center">
                             Let's Talk Strategy <MessageCircle size={20} />
                         </a>
                     </motion.div>
