@@ -1,551 +1,822 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Terminal, ArrowRight, Clock, Users, Zap, TrendingUp, AlertCircle, CheckCircle2, HelpCircle } from 'lucide-react';
+import { 
+    Terminal, ArrowRight, Clock, Users, Zap, TrendingUp, 
+    AlertCircle, CheckCircle2, HelpCircle, Sparkles, 
+    ChevronRight, Play, RotateCcw, Lightbulb, Brain,
+    Target, Rocket, Award
+} from 'lucide-react';
 
-// Tooltip Component
-const CommandTooltip = ({ text, show }) => {
-    if (!show || !text) return null;
+// Evolution stages data - simplified and user-friendly
+const evolutionStages = {
+    'content-creation': [
+        { stage: 0, name: 'Manual Process', icon: '👥', time: '4-6 hrs', team: '3 people', color: 'red' },
+        { stage: 1, name: 'AI Assistance', icon: '🤖', time: '2 hrs', team: '2 people', color: 'orange' },
+        { stage: 2, name: 'Smart Automation', icon: '⚡', time: '45 min', team: '1 person', color: 'yellow' },
+        { stage: 3, name: 'Self-Improving', icon: '🧠', time: '15 min', team: '0.5 person', color: 'green' }
+    ],
+    'lead-generation': [
+        { stage: 0, name: 'Manual Prospecting', icon: '🔍', time: '8-10 hrs', team: '2 people', color: 'red' },
+        { stage: 1, name: 'AI Scoring', icon: '📊', time: '4 hrs', team: '2 people', color: 'orange' },
+        { stage: 2, name: 'Auto Outreach', icon: '📧', time: '1.5 hrs', team: '1 person', color: 'yellow' },
+        { stage: 3, name: 'Autonomous System', icon: '🎯', time: '15 min', team: '0.3 person', color: 'green' }
+    ],
+    'customer-service': [
+        { stage: 0, name: 'Human Only', icon: '👤', time: '2-24 hrs', team: '3 agents', color: 'red' },
+        { stage: 1, name: 'AI Triage', icon: '📋', time: '30 min', team: '2 agents', color: 'orange' },
+        { stage: 2, name: 'Smart Responses', icon: '💬', time: '2 min', team: '1 agent', color: 'yellow' },
+        { stage: 3, name: 'Anticipatory AI', icon: '🔮', time: '<1 min', team: '0.3 agent', color: 'green' }
+    ]
+};
+
+// Stage details
+const stageDetails = {
+    'content-creation': {
+        0: { title: 'The Old Way', desc: 'Manual brainstorming, design in Photoshop, copywriting by hand', insight: 'Teams spent 80% of time on repetitive tasks' },
+        1: { title: 'AI Enters', desc: 'AI suggests topics, generates basic copy, automates resizing', insight: 'First 40% time savings with minimal effort' },
+        2: { title: 'Full Automation', desc: 'AI creates complete campaigns across all platforms automatically', insight: 'One person now does the work of three' },
+        3: { title: 'Living System', desc: 'AI learns from performance, self-optimizes, predicts trends', insight: 'System improves itself while you sleep' }
+    },
+    'lead-generation': {
+        0: { title: 'Manual Prospecting', desc: 'LinkedIn searching, spreadsheet data entry, manual emails', insight: 'Sales reps spent 8+ hours weekly on repetitive outreach' },
+        1: { title: 'Smart Scoring', desc: 'AI identifies high-potential prospects, prioritizes leads', insight: 'Focus on the 20% of leads that convert 80%' },
+        2: { title: 'Auto Personalization', desc: 'AI writes unique emails for each prospect automatically', insight: '10x volume with 3x better response rates' },
+        3: { title: 'Revenue Intelligence', desc: 'AI predicts intent, orchestrates multi-channel, self-improves', insight: '65% win rate vs 15% industry average' }
+    },
+    'customer-service': {
+        0: { title: 'Human Bottleneck', desc: 'Wait for tickets, manual categorization, human responses only', insight: 'Customers waited hours for simple answers' },
+        1: { title: 'AI Triage', desc: 'AI categorizes and routes tickets, suggests responses', insight: 'Immediate routing to right department' },
+        2: { title: 'Instant Responses', desc: 'AI handles 80% of queries automatically in under 2 minutes', insight: 'Most issues resolved before human sees them' },
+        3: { title: 'Predictive Support', desc: 'AI anticipates issues, reaches out before customers complain', insight: 'Zero-minute response time' }
+    }
+};
+
+// Terminal content for each stage
+const getTerminalContent = (workflow, stage) => {
+    const contents = {
+        'content-creation': {
+            0: [
+                { text: '$ meeting_schedule --type=brainstorm --duration=60min', type: 'cmd' },
+                { text: '👥 3 team members in conference room...', type: 'info' },
+                { text: '✓ Ideas collected on whiteboard', type: 'success' },
+                { text: '$ open_photoshop --template=new', type: 'cmd' },
+                { text: '🎨 Designer creating assets manually...', type: 'info' },
+                { text: '⏱️  90 minutes elapsed', type: 'warning' },
+                { text: '$ write_copy --platform=facebook', type: 'cmd' },
+                { text: '📝 Copywriter drafting text...', type: 'info' },
+                { text: 'Total time: 4.5 hours | Status: Exhausted 😫', type: 'result' }
+            ],
+            1: [
+                { text: '$ ai_trends --scan=social_media', type: 'cmd' },
+                { text: '🤖 Analyzing 50,000 posts...', type: 'info' },
+                { text: '✓ 3 trending topics identified', type: 'success' },
+                { text: '$ ai_generate --drafts=5', type: 'cmd' },
+                { text: '✓ First drafts ready in 30 seconds', type: 'success' },
+                { text: '$ human_review --edits=minor', type: 'cmd' },
+                { text: '👤 Copywriter polishing AI drafts...', type: 'info' },
+                { text: 'Total time: 2 hours | Status: Much better! 😊', type: 'result' }
+            ],
+            2: [
+                { text: '$ campaign_init --auto=true', type: 'cmd' },
+                { text: '⚡ AI analyzing brand voice...', type: 'info' },
+                { text: '$ generate_multiplatform --count=15', type: 'cmd' },
+                { text: '🚀 Facebook: 3 carousels created', type: 'success' },
+                { text: '🚀 Instagram: 4 reels + stories created', type: 'success' },
+                { text: '🚀 TikTok: 4 videos with trending audio', type: 'success' },
+                { text: '$ schedule_optimal --engagement=max', type: 'cmd' },
+                { text: '✓ Posted at best times automatically', type: 'success' },
+                { text: 'Total time: 45 minutes | Status: Efficient! 🚀', type: 'result' }
+            ],
+            3: [
+                { text: '$ living_pipeline --activate', type: 'cmd' },
+                { text: '🧠 Self-monitoring trends 24/7...', type: 'info' },
+                { text: '📈 Detected viral pattern early!', type: 'success' },
+                { text: '$ auto_create --trend=viral_pattern', type: 'cmd' },
+                { text: '⚡ Generated content in 2 minutes', type: 'success' },
+                { text: '🎯 Micro-tested 5 variants...', type: 'info' },
+                { text: '✓ Winner identified, scaled automatically', type: 'success' },
+                { text: '📊 Performance: +340% engagement', type: 'success' },
+                { text: 'Total time: 15 minutes | Status: Self-running! 🎆', type: 'result' }
+            ]
+        },
+        'lead-generation': {
+            0: [
+                { text: '$ linkedin_search --industry=tech', type: 'cmd' },
+                { text: '🔍 Manually browsing profiles...', type: 'info' },
+                { text: '$ copy_paste --to=spreadsheet', type: 'cmd' },
+                { text: '📝 Data entry: Name, Title, Company...', type: 'info' },
+                { text: '⏱️  2 hours for 20 prospects', type: 'warning' },
+                { text: '$ write_email --template=generic', type: 'cmd' },
+                { text: '📧 Sent 20 identical emails...', type: 'info' },
+                { text: '📉 2% response rate', type: 'error' },
+                { text: 'Total time: 8 hours | Status: Burned out 🔥', type: 'result' }
+            ],
+            1: [
+                { text: '$ ai_scan --companies=1000', type: 'cmd' },
+                { text: '🤖 Finding Malaysian tech companies...', type: 'info' },
+                { text: '✓ 342 companies match criteria', type: 'success' },
+                { text: '$ score_prospects --model=ai', type: 'cmd' },
+                { text: '📊 Analyzing engagement signals...', type: 'info' },
+                { text: '✓ 89 high-priority prospects found', type: 'success' },
+                { text: '👥 Sales focuses on hot leads only', type: 'success' },
+                { text: 'Total time: 4 hours | Status: Focused! 🎯', type: 'result' }
+            ],
+            2: [
+                { text: '$ enrich_data --depth=full', type: 'cmd' },
+                { text: '📈 Gathering company intel...', type: 'info' },
+                { text: '$ generate_outreach --personalized', type: 'cmd' },
+                { text: '✓ 89 unique emails written', type: 'success' },
+                { text: '🎯 Each mentions their recent news', type: 'success' },
+                { text: '$ auto_sequence --days=7', type: 'cmd' },
+                { text: '📧 Day 1 sent, Day 3 queued...', type: 'info' },
+                { text: '📈 18% response rate (9x better!)', type: 'success' },
+                { text: 'Total time: 1.5 hours | Status: Scaled! 📈', type: 'result' }
+            ],
+            3: [
+                { text: '$ intent_ai --monitor=signals', type: 'cmd' },
+                { text: '🔮 Detected: Company raised Series B', type: 'success' },
+                { text: '$ auto_orchestrate --channels=5', type: 'cmd' },
+                { text: '📧 Email → LinkedIn → SMS sequence', type: 'info' },
+                { text: '🎯 5 agents working in parallel...', type: 'info' },
+                { text: '✓ Meeting booked automatically', type: 'success' },
+                { text: '📊 Win rate: 65% | Industry avg: 15%', type: 'success' },
+                { text: 'Total time: 15 minutes | Status: Unstoppable! 🏆', type: 'result' }
+            ]
+        },
+        'customer-service': {
+            0: [
+                { text: '$ check_inbox --manual', type: 'cmd' },
+                { text: '👤 Agent reading new ticket...', type: 'info' },
+                { text: '❓ Customer asking about shipping', type: 'info' },
+                { text: '$ search_knowledge --query=shipping', type: 'cmd' },
+                { text: '🔍 Agent browsing help articles...', type: 'info' },
+                { text: '⏱️  20 minutes searching', type: 'warning' },
+                { text: '$ draft_response --approval=manager', type: 'cmd' },
+                { text: '⏳ Waiting for manager approval...', type: 'warning' },
+                { text: 'Total time: 4 hours | Status: Customer frustrated 😤', type: 'result' }
+            ],
+            1: [
+                { text: '$ ai_triage --activate', type: 'cmd' },
+                { text: '🤖 Categorizing incoming tickets...', type: 'info' },
+                { text: '✓ Shipping: 23 tickets | Refunds: 12', type: 'success' },
+                { text: '$ route_smart --priority=urgent', type: 'cmd' },
+                { text: '📋 Urgent issues flagged for humans', type: 'success' },
+                { text: '🤖 Routine questions routed to AI', type: 'success' },
+                { text: '⚡ Right ticket → Right agent instantly', type: 'success' },
+                { text: 'Total time: 30 minutes | Status: Organized! 📋', type: 'result' }
+            ],
+            2: [
+                { text: '$ ai_respond --mode=instant', type: 'cmd' },
+                { text: '💬 New ticket: "Where is my order?"', type: 'info' },
+                { text: '🤖 AI analyzing sentiment...', type: 'info' },
+                { text: '✓ Friendly tone detected', type: 'success' },
+                { text: '$ search_kb --intent=tracking', type: 'cmd' },
+                { text: '✓ Answer found in 0.3 seconds', type: 'success' },
+                { text: '📤 Response sent automatically', type: 'success' },
+                { text: '⏱️  Total resolution: 1.8 seconds', type: 'success' },
+                { text: 'Total time: 2 minutes | Status: Instant! ⚡', type: 'result' }
+            ],
+            3: [
+                { text: '$ proactive_ai --monitor=behavior', type: 'cmd' },
+                { text: '🔮 Detected: Cart abandonment pattern', type: 'success' },
+                { text: '$ auto_outreach --channel=chat', type: 'cmd' },
+                { text: '💬 "Having trouble with checkout?"', type: 'info' },
+                { text: '✓ Customer helped before asking!', type: 'success' },
+                { text: '🌧️ Weather alert: Storm in area', type: 'info' },
+                { text: '📢 Proactive: "Expect shipping delays"', type: 'success' },
+                { text: '❤️  CSAT: 98% | Response: <1 min', type: 'success' },
+                { text: 'Total time: <1 minute | Status: Magical! ✨', type: 'result' }
+            ]
+        }
+    };
+    
+    return contents[workflow][stage];
+};
+
+// Typewriter text component
+const TypewriterText = ({ text, delay = 0, speed = 30, className = '' }) => {
+    const [displayText, setDisplayText] = useState('');
+    const [started, setStarted] = useState(false);
+
+    useEffect(() => {
+        const startTimer = setTimeout(() => setStarted(true), delay);
+        return () => clearTimeout(startTimer);
+    }, [delay]);
+
+    useEffect(() => {
+        if (!started) return;
+        
+        let index = 0;
+        const timer = setInterval(() => {
+            if (index < text.length) {
+                setDisplayText(text.slice(0, index + 1));
+                index++;
+            } else {
+                clearInterval(timer);
+            }
+        }, speed);
+
+        return () => clearInterval(timer);
+    }, [started, text, speed]);
 
     return (
+        <span className={className}>
+            {displayText}
+            {displayText.length < text.length && (
+                <motion.span
+                    animate={{ opacity: [1, 0] }}
+                    transition={{ repeat: Infinity, duration: 0.5 }}
+                    className="inline-block w-0.5 h-4 bg-current align-middle ml-0.5"
+                />
+            )}
+        </span>
+    );
+};
+
+// Evolution timeline component
+const EvolutionTimeline = ({ workflow, currentStage, completedStage, onStageClick }) => {
+    const stages = evolutionStages[workflow];
+    
+    return (
+        <div className="mb-6">
+            <div className="flex items-center justify-between mb-4">
+                {stages.map((s, idx) => (
+                    <React.Fragment key={idx}>
+                        <motion.button
+                            onClick={() => onStageClick(idx)}
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            className={`relative flex flex-col items-center p-3 rounded-xl transition-all ${
+                                currentStage === idx 
+                                    ? 'bg-white/10 ring-2 ring-teal shadow-lg shadow-teal/20' 
+                                    : completedStage >= idx
+                                        ? 'bg-white/5 opacity-90'
+                                        : 'bg-white/5 opacity-40'
+                            }`}
+                        >
+                            <span className="text-2xl mb-1">{s.icon}</span>
+                            <span className={`text-[10px] font-bold uppercase tracking-wider ${
+                                s.color === 'red' ? 'text-red-400' :
+                                s.color === 'orange' ? 'text-orange-400' :
+                                s.color === 'yellow' ? 'text-yellow-400' :
+                                'text-green-400'
+                            }`}>
+                                Stage {s.stage}
+                            </span>
+                            <span className="text-xs text-white/80 text-center leading-tight mt-1">
+                                {s.name}
+                            </span>
+                            {completedStage >= idx && currentStage !== idx && (
+                                <div className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-green-500 flex items-center justify-center">
+                                    <CheckCircle2 size={12} className="text-white" />
+                                </div>
+                            )}
+                            {currentStage === idx && (
+                                <motion.div
+                                    layoutId="activeStage"
+                                    className="absolute -bottom-1 w-2 h-2 rounded-full bg-teal"
+                                />
+                            )}
+                        </motion.button>
+                        {idx < stages.length - 1 && (
+                            <div className="flex-1 h-0.5 bg-white/10 mx-2 relative">
+                                <motion.div 
+                                    className="absolute left-0 top-0 h-full bg-gradient-to-r from-teal to-green-400"
+                                    initial={{ width: '0%' }}
+                                    animate={{ width: completedStage > idx ? '100%' : '0%' }}
+                                    transition={{ duration: 0.5 }}
+                                />
+                                <ChevronRight size={14} className="absolute right-0 top-1/2 -translate-y-1/2 text-white/30" />
+                            </div>
+                        )}
+                    </React.Fragment>
+                ))}
+            </div>
+        </div>
+    );
+};
+
+// Stage detail panel with typewriter effect
+const StageDetail = ({ workflow, stage, isVisible, delay = 0 }) => {
+    const d = stageDetails[workflow][stage];
+    const colors = ['red', 'orange', 'yellow', 'green'];
+    const color = colors[stage];
+    
+    if (!isVisible) return null;
+    
+    return (
         <motion.div
-            initial={{ opacity: 0, y: -5 }}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -5 }}
-            className="ml-6 mb-2 flex items-start gap-2 text-gray-400 text-xs"
+            className={`p-4 rounded-xl border-l-4 ${
+                color === 'red' ? 'bg-red-500/10 border-red-400' :
+                color === 'orange' ? 'bg-orange-500/10 border-orange-400' :
+                color === 'yellow' ? 'bg-yellow-500/10 border-yellow-400' :
+                'bg-green-500/10 border-green-400'
+            }`}
         >
-            <HelpCircle size={12} className="text-blue-400 mt-0.5 flex-shrink-0" />
-            <span className="italic">{text}</span>
+            <h4 className="font-bold text-white mb-2 flex items-center gap-2">
+                <Lightbulb size={16} className="text-yellow-400" />
+                <TypewriterText text={d.title} delay={delay} speed={40} />
+            </h4>
+            <p className="text-sm text-gray-300 mb-3">
+                <TypewriterText text={d.desc} delay={delay + 300} speed={25} />
+            </p>
+            <div className="flex items-start gap-2 text-xs">
+                <Sparkles size={12} className="text-teal mt-0.5 flex-shrink-0" />
+                <span className="text-teal/80 italic">
+                    <TypewriterText text={d.insight} delay={delay + 800} speed={30} />
+                </span>
+            </div>
         </motion.div>
+    );
+};
+
+// Stats panel with typewriter numbers
+const StatsPanel = ({ workflow, stage, isVisible, delay = 0 }) => {
+    const stages = evolutionStages[workflow];
+    const current = stages[stage];
+    const start = stages[0];
+    
+    if (!isVisible) return null;
+    
+    const efficiency = stage === 0 ? '0%' : stage === 1 ? '~40%' : stage === 2 ? '~85%' : '95%+';
+    const aiUsage = stage === 0 ? '0%' : stage === 1 ? '30%' : stage === 2 ? '80%' : '95%';
+    
+    return (
+        <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: delay / 1000 }}
+            className="bg-white dark:bg-navy-dark rounded-xl p-4 border border-navy/10 dark:border-white/10"
+        >
+            <h4 className="font-bold text-sm mb-3 flex items-center gap-2">
+                <Target size={14} className="text-primary" />
+                <TypewriterText text="Impact Metrics" delay={delay} speed={40} />
+            </h4>
+            <div className="space-y-3">
+                <div className="flex justify-between items-center">
+                    <span className="text-xs text-gray-500">Time</span>
+                    <div className="flex items-center gap-2">
+                        <span className="text-xs text-gray-400 line-through">{start.time}</span>
+                        <ArrowRight size={10} className="text-teal" />
+                        <span className="text-sm font-bold text-teal">
+                            <TypewriterText text={current.time} delay={delay + 200} speed={50} />
+                        </span>
+                    </div>
+                </div>
+                <div className="flex justify-between items-center">
+                    <span className="text-xs text-gray-500">Team</span>
+                    <div className="flex items-center gap-2">
+                        <span className="text-xs text-gray-400">{start.team}</span>
+                        <ArrowRight size={10} className="text-teal" />
+                        <span className="text-sm font-bold text-teal">
+                            <TypewriterText text={current.team} delay={delay + 400} speed={50} />
+                        </span>
+                    </div>
+                </div>
+                <div className="h-px bg-gray-200 dark:bg-gray-700 my-2" />
+                <div className="flex items-center justify-between">
+                    <span className="text-xs font-bold text-gray-600">Efficiency</span>
+                    <span className="text-lg font-bold text-green-500">
+                        <TypewriterText text={efficiency} delay={delay + 600} speed={60} />
+                    </span>
+                </div>
+            </div>
+        </motion.div>
+    );
+};
+
+// Mode badges with typewriter
+const ModeBadge = ({ stage, isVisible, delay = 0 }) => {
+    if (!isVisible) return null;
+    
+    const modes = ['Manual', 'Assisted', 'Automated', 'Autonomous'];
+    
+    return (
+        <div className="bg-gradient-to-br from-teal/10 to-teal/5 rounded-xl p-3 border border-teal/20">
+            <Award size={16} className="text-teal mb-1" />
+            <p className="text-lg font-bold text-teal">
+                <TypewriterText text={modes[stage]} delay={delay} speed={50} />
+            </p>
+            <p className="text-[10px] text-gray-500 uppercase tracking-wider">Mode</p>
+        </div>
+    );
+};
+
+const AIUsageBadge = ({ stage, isVisible, delay = 0 }) => {
+    if (!isVisible) return null;
+    
+    const usage = ['0%', '30%', '80%', '95%'];
+    
+    return (
+        <div className="bg-gradient-to-br from-primary/10 to-primary/5 rounded-xl p-3 border border-primary/20">
+            <Brain size={16} className="text-primary mb-1" />
+            <p className="text-lg font-bold text-primary">
+                <TypewriterText text={usage[stage]} delay={delay} speed={50} />
+            </p>
+            <p className="text-[10px] text-gray-500 uppercase tracking-wider">AI Usage</p>
+        </div>
     );
 };
 
 const WorkforceWorkflows = () => {
     const [activeWorkflow, setActiveWorkflow] = useState('content-creation');
-    const [isExecuting, setIsExecuting] = useState(false);
-    const [commandIndex, setCommandIndex] = useState(0);
-    const [typingText, setTypingText] = useState('');
-    const [showAfter, setShowAfter] = useState(false);
+    const [evolutionStage, setEvolutionStage] = useState(0);
+    const [completedStage, setCompletedStage] = useState(-1);
+    const [isPlaying, setIsPlaying] = useState(false);
+    const [terminalLines, setTerminalLines] = useState([]);
+    const [currentLine, setCurrentLine] = useState(0);
+    const [typingLine, setTypingLine] = useState('');
     const [charIndex, setCharIndex] = useState(0);
-    const [showTooltip, setShowTooltip] = useState(false);
+    const terminalRef = useRef(null);
+
+    // Typewriter effect for terminal
+    useEffect(() => {
+        if (!isPlaying) return;
+        
+        const lines = getTerminalContent(activeWorkflow, evolutionStage);
+        
+        if (currentLine < lines.length) {
+            const line = lines[currentLine];
+            
+            if (charIndex < line.text.length) {
+                // Still typing current line
+                const timer = setTimeout(() => {
+                    setTypingLine(prev => prev + line.text[charIndex]);
+                    setCharIndex(prev => prev + 1);
+                }, 25);
+                return () => clearTimeout(timer);
+            } else {
+                // Line complete, move to next
+                const timer = setTimeout(() => {
+                    setTerminalLines(prev => [...prev, line]);
+                    setTypingLine('');
+                    setCharIndex(0);
+                    setCurrentLine(prev => prev + 1);
+                }, line.type === 'result' ? 800 : 300);
+                return () => clearTimeout(timer);
+            }
+        } else {
+            // Stage complete
+            const timer = setTimeout(() => {
+                setCompletedStage(evolutionStage);
+                
+                if (evolutionStage < 3) {
+                    // Move to next stage
+                    setEvolutionStage(prev => prev + 1);
+                    setCurrentLine(0);
+                    setTypingLine('');
+                    setCharIndex(0);
+                } else {
+                    // All done
+                    setIsPlaying(false);
+                }
+            }, 1500);
+            return () => clearTimeout(timer);
+        }
+    }, [isPlaying, currentLine, charIndex, evolutionStage, activeWorkflow]);
+
+    // Auto-scroll terminal to bottom
+    useEffect(() => {
+        if (terminalRef.current) {
+            terminalRef.current.scrollTop = terminalRef.current.scrollHeight;
+        }
+    }, [terminalLines, typingLine]);
+
+    const handleWorkflowChange = (key) => {
+        setActiveWorkflow(key);
+        setEvolutionStage(0);
+        setCompletedStage(-1);
+        setTerminalLines([]);
+        setCurrentLine(0);
+        setTypingLine('');
+        setCharIndex(0);
+        setIsPlaying(false);
+    };
+
+    const handlePlay = () => {
+        setTerminalLines([]);
+        setCurrentLine(0);
+        setTypingLine('');
+        setCharIndex(0);
+        setEvolutionStage(0);
+        setCompletedStage(-1);
+        setIsPlaying(true);
+    };
+
+    const handleStageClick = (stage) => {
+        setEvolutionStage(stage);
+        setCompletedStage(stage - 1);
+        setTerminalLines(getTerminalContent(activeWorkflow, stage));
+        setCurrentLine(100);
+        setTypingLine('');
+        setCharIndex(0);
+        setIsPlaying(false);
+    };
 
     const workflows = {
         'content-creation': {
-            name: 'Content Creation Workflow',
-            description: 'Multi-platform content generation and distribution',
-            before: {
-                time: '4-6 hours per campaign',
-                team: '3 people (Marketer, Designer, Copywriter)',
-                steps: [
-                    'Manual brainstorming session (60 min)',
-                    'Design creation in Photoshop (90 min)',
-                    'Copywriting for each platform (45 min)',
-                    'Manual resizing for platforms (30 min)',
-                    'Review and approval rounds (45 min)',
-                    'Manual posting to each platform (30 min)'
-                ],
-                issues: [
-                    'High coordination overhead',
-                    'Inconsistent brand voice',
-                    'Platform-specific delays',
-                    'Human error in scheduling'
-                ]
-            },
-            after: {
-                time: '45 minutes per campaign',
-                team: '1 person (Marketing Technologist)',
-                steps: [
-                    'AI-powered trend analysis (5 min)',
-                    'Automated multi-format generation (10 min)',
-                    'AI copywriting with brand voice (5 min)',
-                    'Automated platform optimization (10 min)',
-                    'One-click review dashboard (10 min)',
-                    'Automated scheduling & distribution (5 min)'
-                ],
-                benefits: [
-                    '87% time reduction',
-                    '3x faster deployment',
-                    'Zero scheduling errors',
-                    'Consistent brand voice'
-                ]
-            },
-            commands: [
-                { cmd: '$ initialize_campaign --type="product_launch"', tooltip: 'Starting a new campaign: Sets up the project and loads your brand settings', delay: 800, pauseAfter: 400 },
-                { cmd: '✓ Campaign initialized: PROD_LAUNCH_2026', tooltip: null, delay: 400, pauseAfter: 600 },
-                { cmd: '$ analyze_trends --platform="all" --region="MY"', tooltip: 'Scanning social media: Checking 50,000+ posts to find trending topics', delay: 1000, pauseAfter: 500 },
-                { cmd: '  → Scanning TikTok...', tooltip: 'Looking at viral videos, trending sounds, and popular hashtags', delay: 600, pauseAfter: 300 },
-                { cmd: '  → Scanning Instagram...', tooltip: 'Analyzing Reels, Stories, and post engagement patterns', delay: 600, pauseAfter: 300 },
-                { cmd: '  → Scanning Facebook...', tooltip: 'Finding what Malaysians are sharing, liking, and commenting on', delay: 600, pauseAfter: 400 },
-                { cmd: '✓ Trend analysis complete: 3 high-potential topics identified', tooltip: 'These topics have 89% confidence based on AI prediction models', delay: 600, pauseAfter: 800 },
-                { cmd: '$ generate_content --format="multi_platform" --count=15', tooltip: 'Creating content: Making posts optimized for each platform automatically', delay: 1200, pauseAfter: 400 },
-                { cmd: '  → Facebook: 3 carousel posts generated', tooltip: 'Carousel format works best on Facebook for product showcases', delay: 300, pauseAfter: 200 },
-                { cmd: '  → Instagram: 4 reels + 4 stories generated', tooltip: 'Reels get 3x more engagement than static posts on Instagram', delay: 300, pauseAfter: 200 },
-                { cmd: '  → TikTok: 4 short videos generated', tooltip: 'TikTok videos are 15-60 seconds with trending audio added', delay: 300, pauseAfter: 400 },
-                { cmd: '✓ Content generation complete: 15 assets ready', tooltip: 'All content follows your brand guidelines and voice automatically', delay: 600, pauseAfter: 800 },
-                { cmd: '$ optimize_scheduling --strategy="engagement_max"', tooltip: 'Smart timing: AI finds the best time to post for maximum engagement', delay: 1000, pauseAfter: 500 },
-                { cmd: '✓ Optimal schedule calculated: 95% coverage predicted', tooltip: '95% of your audience will see at least one post in their feed', delay: 600, pauseAfter: 800 },
-                { cmd: '$ deploy_campaign --auto_publish=true', tooltip: 'Publishing: Posts go live automatically at the scheduled times', delay: 1000, pauseAfter: 400 },
-                { cmd: '✓ Campaign deployed successfully!', tooltip: null, delay: 400, pauseAfter: 600 },
-                { cmd: '', tooltip: null, delay: 200, pauseAfter: 200 },
-                { cmd: '📊 Expected Results:', tooltip: null, delay: 400, pauseAfter: 300 },
-                { cmd: '   • Estimated Reach: 80K-120K', tooltip: 'Based on your follower count and typical engagement rates', delay: 300, pauseAfter: 200 },
-                { cmd: '   • Predicted Engagement: 8.5%', tooltip: 'Industry average is 3-5%, this campaign beats that by 2x', delay: 300, pauseAfter: 200 },
-                { cmd: '   • Time Saved: 5.25 hours', tooltip: 'That means you saved RM 400+ in labor costs for this campaign', delay: 300, pauseAfter: 500 }
-            ]
+            name: 'Content Creation',
+            emoji: '🎨',
+            desc: 'From manual design to self-running campaigns'
         },
         'lead-generation': {
-            name: 'Lead Generation Workflow',
-            description: 'Automated prospect identification and outreach',
-            before: {
-                time: '8-10 hours per week',
-                team: '2 people (Sales + Marketing)',
-                steps: [
-                    'Manual LinkedIn prospecting (120 min)',
-                    'Data entry into spreadsheet (60 min)',
-                    'Email template customization (90 min)',
-                    'Manual email sending (45 min)',
-                    'Follow-up tracking (45 min)',
-                    'Response management (120 min)'
-                ],
-                issues: [
-                    'Low volume capacity',
-                    'Generic messaging',
-                    'Missed follow-ups',
-                    'No prioritization'
-                ]
-            },
-            after: {
-                time: '1.5 hours per week',
-                team: '1 person (AI-assisted)',
-                steps: [
-                    'AI prospect scoring (15 min)',
-                    'Automated data enrichment (10 min)',
-                    'AI personalized messaging (10 min)',
-                    'Automated sequencing (5 min)',
-                    'Smart follow-up triggers (automated)',
-                    'Priority inbox alerts (20 min)'
-                ],
-                benefits: [
-                    '85% time reduction',
-                    '10x lead volume',
-                    '3x response rate',
-                    '100% follow-up rate'
-                ]
-            },
-            commands: [
-                { cmd: '$ scan_prospects --criteria="tech_companies_MY" --size="50-200"', tooltip: 'Finding companies: Searching for Malaysian tech companies with 50-200 employees', delay: 1000, pauseAfter: 500 },
-                { cmd: '✓ Scanning 1,247 companies...', tooltip: 'Checking company databases, LinkedIn, and business registries', delay: 800, pauseAfter: 600 },
-                { cmd: '✓ Found 342 qualified prospects', tooltip: 'These companies match your ideal customer profile', delay: 600, pauseAfter: 800 },
-                { cmd: '$ enrich_data --source="linkedin" --depth="full"', tooltip: 'Getting details: Finding decision makers, company info, and contact details', delay: 1200, pauseAfter: 400 },
-                { cmd: '  → Fetching company details...', tooltip: 'Industry, revenue, employee count, recent news, funding status', delay: 400, pauseAfter: 300 },
-                { cmd: '  → Extracting decision makers...', tooltip: 'Finding CEOs, CTOs, Marketing Directors with verified emails', delay: 400, pauseAfter: 300 },
-                { cmd: '  → Analyzing company signals...', tooltip: 'Recent hiring, funding rounds, product launches = buying signals', delay: 400, pauseAfter: 400 },
-                { cmd: '✓ Data enrichment complete: 342 profiles enhanced', tooltip: 'Each profile now has 15+ data points for personalization', delay: 600, pauseAfter: 800 },
-                { cmd: '$ score_prospects --model="engagement_prediction"', tooltip: 'AI scoring: Predicting which prospects are most likely to respond', delay: 1000, pauseAfter: 500 },
-                { cmd: '✓ Scoring complete: 89 high-priority prospects identified', tooltip: 'These prospects have 60%+ predicted response rate', delay: 600, pauseAfter: 800 },
-                { cmd: '$ generate_outreach --style="personalized" --tone="professional"', tooltip: 'Writing emails: AI creates unique messages for each prospect', delay: 1200, pauseAfter: 400 },
-                { cmd: '✓ 89 personalized emails generated', tooltip: 'Each email mentions their company, role, and recent activities', delay: 600, pauseAfter: 800 },
-                { cmd: '$ schedule_campaign --sequence="3_touch" --days="7"', tooltip: 'Smart follow-ups: Sending 3 emails over 7 days automatically', delay: 1000, pauseAfter: 500 },
-                { cmd: '✓ Campaign scheduled: Day 1, 3, 7 touchpoints', tooltip: 'If they don\'t respond to email 1, email 2 goes automatically', delay: 600, pauseAfter: 600 },
-                { cmd: '', tooltip: null, delay: 200, pauseAfter: 200 },
-                { cmd: '📈 Projected Outcomes:', tooltip: null, delay: 400, pauseAfter: 300 },
-                { cmd: '   • Expected Open Rate: 42%', tooltip: 'Personalization increases opens by 26% vs generic emails', delay: 300, pauseAfter: 200 },
-                { cmd: '   • Predicted Response: 18%', tooltip: 'AI-scored prospects respond 3x more than random outreach', delay: 300, pauseAfter: 200 },
-                { cmd: '   • Qualified Leads: 16-20', tooltip: 'That\'s 16-20 sales conversations from 1.5 hours of work', delay: 300, pauseAfter: 500 }
-            ]
+            name: 'Lead Generation', 
+            emoji: '🎯',
+            desc: 'From cold calling to revenue intelligence'
         },
         'customer-service': {
-            name: 'Customer Service Workflow',
-            description: '24/7 automated support with AI triage',
-            before: {
-                time: 'Business hours only (8 hours)',
-                team: '2-3 support agents',
-                steps: [
-                    'Manual inbox monitoring',
-                    'Read and categorize inquiry',
-                    'Search knowledge base',
-                    'Draft response',
-                    'Manager approval for complex cases',
-                    'Send response'
-                ],
-                issues: [
-                    'Limited coverage hours',
-                    'Response delays (4-24 hours)',
-                    'Inconsistent answers',
-                    'Agent burnout on repetitive queries'
-                ]
-            },
-            after: {
-                time: '24/7 automated coverage',
-                team: 'AI Agent + 1 human supervisor',
-                steps: [
-                    'Instant message reception',
-                    'AI sentiment analysis & categorization',
-                    'Automated response for 80% of queries',
-                    'Smart escalation to human',
-                    'Knowledge base auto-update',
-                    'Continuous learning from interactions'
-                ],
-                benefits: [
-                    '24/7 availability',
-                    '2-minute avg response time',
-                    '80% automation rate',
-                    '95% satisfaction score'
-                ]
-            },
-            commands: [
-                { cmd: '$ initialize_support_ai --mode="production"', tooltip: 'Starting AI support: Loading your company knowledge and policies', delay: 800, pauseAfter: 400 },
-                { cmd: '✓ AI Support Agent initialized', tooltip: null, delay: 400, pauseAfter: 600 },
-                { cmd: '$ load_knowledge_base --source="documentation"', tooltip: 'Learning from docs: AI reads all your FAQs, guides, and policies', delay: 1000, pauseAfter: 500 },
-                { cmd: '✓ Loaded 2,847 support articles', tooltip: 'AI can now answer questions about products, policies, troubleshooting', delay: 600, pauseAfter: 800 },
-                { cmd: '$ monitor_channels --platforms="email,chat,social"', tooltip: 'Watching inbox: AI monitors all customer communication channels', delay: 800, pauseAfter: 400 },
-                { cmd: '✓ Monitoring 3 channels...', tooltip: 'Email, Facebook Messenger, and website chat are being watched', delay: 400, pauseAfter: 600 },
-                { cmd: '', tooltip: null, delay: 200, pauseAfter: 200 },
-                { cmd: '📬 New Inquiry Received:', tooltip: null, delay: 600, pauseAfter: 300 },
-                { cmd: '  → Source: Facebook Messenger', tooltip: 'Customer messaged your Facebook page', delay: 300, pauseAfter: 200 },
-                { cmd: '  → Query: "How to use your product for catering?"', tooltip: 'They want bulk order information for an event', delay: 300, pauseAfter: 400 },
-                { cmd: '$ analyze_intent --query="catering_usage"', tooltip: 'Understanding: AI figures out what they really need', delay: 1000, pauseAfter: 500 },
-                { cmd: '✓ Intent: Product Usage | Confidence: 94%', tooltip: 'AI is 94% sure this is about bulk ordering/catering', delay: 500, pauseAfter: 300 },
-                { cmd: '✓ Sentiment: Positive | Priority: Medium', tooltip: 'Customer is friendly, not urgent, doesn\'t need immediate escalation', delay: 400, pauseAfter: 600 },
-                { cmd: '$ search_knowledge --keywords="catering+bulk+usage"', tooltip: 'Finding answer: Searching your documentation for relevant info', delay: 800, pauseAfter: 400 },
-                { cmd: '✓ Found 3 relevant articles', tooltip: 'Bulk ordering guide, catering packages, minimum order quantities', delay: 400, pauseAfter: 600 },
-                { cmd: '$ generate_response --tone="helpful" --detail="comprehensive"', tooltip: 'Writing reply: AI creates a friendly, complete answer', delay: 1200, pauseAfter: 500 },
-                { cmd: '✓ Response generated and sent (1.8 sec total)', tooltip: 'From receiving message to sending reply: under 2 seconds', delay: 600, pauseAfter: 600 },
-                { cmd: '', tooltip: null, delay: 200, pauseAfter: 200 },
-                { cmd: '✅ Customer satisfied | Query resolved | No escalation needed', tooltip: 'AI handled this completely - no human agent needed', delay: 400, pauseAfter: 500 }
-            ]
+            name: 'Customer Service',
+            emoji: '💬',
+            desc: 'From ticket queues to anticipatory support'
         }
     };
 
-    const currentWorkflow = workflows[activeWorkflow];
-    const currentCommand = currentWorkflow?.commands[commandIndex];
-
-    // Typewriter effect
-    useEffect(() => {
-        if (!isExecuting || !currentCommand) return;
-
-        if (charIndex < currentCommand.cmd.length) {
-            const timer = setTimeout(() => {
-                setTypingText(prev => prev + currentCommand.cmd[charIndex]);
-                setCharIndex(prev => prev + 1);
-            }, 60); // 60ms per character
-
-            return () => clearTimeout(timer);
-        } else {
-            // Show tooltip briefly
-            if (currentCommand.tooltip) {
-                setShowTooltip(true);
-            }
-
-            // Command fully typed, wait then move to next
-            const timer = setTimeout(() => {
-                setShowTooltip(false);
-                setCommandIndex(prev => prev + 1);
-                setTypingText('');
-                setCharIndex(0);
-            }, currentCommand.pauseAfter);
-
-            return () => clearTimeout(timer);
-        }
-    }, [isExecuting, charIndex, currentCommand, commandIndex]);
-
-    // Check if execution is complete
-    useEffect(() => {
-        if (isExecuting && commandIndex >= currentWorkflow.commands.length) {
-            setTimeout(() => {
-                setShowAfter(true);
-                setIsExecuting(false);
-            }, 1000);
-        }
-    }, [isExecuting, commandIndex, currentWorkflow]);
-
-    const handleExecute = () => {
-        setCommandIndex(0);
-        setCharIndex(0);
-        setTypingText('');
-        setShowAfter(false);
-        setShowTooltip(false);
-        setIsExecuting(true);
-    };
-
-    const handleReset = () => {
-        setCommandIndex(0);
-        setCharIndex(0);
-        setTypingText('');
-        setShowAfter(false);
-        setShowTooltip(false);
-        setIsExecuting(false);
-    };
-
-    // Get completed commands
-    const completedCommands = currentWorkflow.commands.slice(0, commandIndex);
+    const current = workflows[activeWorkflow];
+    const stages = evolutionStages[activeWorkflow];
+    const currentLines = getTerminalContent(activeWorkflow, evolutionStage);
+    const currentLineData = currentLines[currentLine];
 
     return (
         <section className="py-24 bg-gradient-to-b from-white to-navy/5 dark:from-navy-dark dark:to-white/5">
             <div className="container mx-auto px-6">
+                {/* Header */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    className="text-left md:text-center mb-16"
+                    className="text-center mb-12"
                 >
-                    <h2 className="section-title text-3xl md:text-5xl">Workforce Transformation</h2>
-                    <p className="text-xl text-gray-600 dark:text-gray-300 mt-4 max-w-2xl mx-auto">
-                        Watch AI-powered workflows eliminate bottlenecks and multiply efficiency in real-time
+                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-bold mb-4">
+                        <Rocket size={16} />
+                        Interactive Demo
+                    </div>
+                    <h2 className="text-4xl md:text-5xl font-bold mb-4">
+                        Workforce Transformation
+                    </h2>
+                    <p className="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+                        Watch how AI evolves your workflows from manual → magical in 4 stages
                     </p>
                 </motion.div>
 
-                <div className="max-w-7xl mx-auto">
-                    {/* Workflow Selector */}
-                    <div className="flex flex-wrap gap-3 mb-8">
-                        {Object.entries(workflows).map(([key, workflow]) => (
-                            <button
-                                key={key}
-                                onClick={() => {
-                                    setActiveWorkflow(key);
-                                    handleReset();
-                                }}
-                                className={`px-6 py-3 rounded-lg font-bold text-sm transition-all ${activeWorkflow === key
-                                        ? 'bg-primary text-white shadow-lg shadow-primary/30'
-                                        : 'bg-white dark:bg-navy-dark border border-navy/10 dark:border-white/10 hover:border-primary/50'
-                                    }`}
+                {/* Workflow Selector */}
+                <div className="flex flex-wrap justify-center gap-3 mb-8">
+                    {Object.entries(workflows).map(([key, wf]) => (
+                        <button
+                            key={key}
+                            onClick={() => handleWorkflowChange(key)}
+                            className={`px-6 py-3 rounded-xl font-bold text-sm transition-all flex items-center gap-2 ${
+                                activeWorkflow === key
+                                    ? 'bg-primary text-white shadow-lg shadow-primary/30 scale-105'
+                                    : 'bg-white dark:bg-navy-dark border border-navy/10 dark:border-white/10 hover:border-primary/50'
+                            }`}
+                        >
+                            <span>{wf.emoji}</span>
+                            {wf.name}
+                        </button>
+                    ))}
+                </div>
+
+                {/* Main Interface */}
+                <div className="max-w-5xl mx-auto">
+                    {/* Evolution Timeline */}
+                    <EvolutionTimeline 
+                        workflow={activeWorkflow}
+                        currentStage={evolutionStage}
+                        completedStage={completedStage}
+                        onStageClick={handleStageClick}
+                    />
+
+                    <div className="grid lg:grid-cols-5 gap-6">
+                        {/* Left: Terminal */}
+                        <div className="lg:col-span-3">
+                            <motion.div 
+                                className="bg-navy-dark rounded-2xl overflow-hidden shadow-2xl border border-white/10"
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
                             >
-                                {workflow.name}
-                            </button>
-                        ))}
-                    </div>
-
-                    {/* Before/After Comparison */}
-                    <div className="grid lg:grid-cols-2 gap-6 mb-8">
-                        {/* BEFORE State */}
-                        <motion.div
-                            initial={{ opacity: 0, x: -20 }}
-                            animate={{ opacity: showAfter ? 0.5 : 1, x: 0 }}
-                            className="glass-card p-8 rounded-xl border-2 border-red-500/30 bg-red-50/50 dark:bg-red-900/10"
-                        >
-                            <div className="flex items-center gap-3 mb-6">
-                                <div className="w-12 h-12 rounded-full bg-red-500/20 flex items-center justify-center">
-                                    <AlertCircle size={24} className="text-red-600 dark:text-red-400" />
-                                </div>
-                                <div>
-                                    <h3 className="text-xl font-bold text-red-900 dark:text-red-300">BEFORE Automation</h3>
-                                    <p className="text-sm text-red-700 dark:text-red-400">Manual Process</p>
-                                </div>
-                            </div>
-
-                            <div className="space-y-4 mb-6">
-                                <div className="flex items-center gap-3">
-                                    <Clock size={18} className="text-red-600 dark:text-red-400" />
-                                    <div>
-                                        <p className="text-xs font-bold text-red-700 dark:text-red-400 uppercase">Time Required</p>
-                                        <p className="text-lg font-bold text-red-900 dark:text-red-300">{currentWorkflow.before.time}</p>
+                                {/* Terminal Header */}
+                                <div className="bg-white/5 px-4 py-3 flex items-center justify-between border-b border-white/10">
+                                    <div className="flex items-center gap-2">
+                                        <div className="flex gap-1.5">
+                                            <div className="w-3 h-3 rounded-full bg-red-500/80" />
+                                            <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
+                                            <div className="w-3 h-3 rounded-full bg-green-500/80" />
+                                        </div>
+                                        <Terminal size={14} className="text-white/40 ml-3" />
+                                        <span className="text-xs text-white/40 font-mono">ai-workflow.exe</span>
+                                    </div>
+                                    <div className="flex items-center gap-3">
+                                        <span className="text-xs text-white/40">
+                                            Stage {evolutionStage + 1}/4
+                                        </span>
+                                        <button
+                                            onClick={handlePlay}
+                                            disabled={isPlaying}
+                                            className="flex items-center gap-1.5 px-3 py-1.5 bg-teal text-navy-dark rounded-lg text-xs font-bold hover:bg-teal/90 transition-all disabled:opacity-50"
+                                        >
+                                            {isPlaying ? (
+                                                <>
+                                                    <div className="w-3 h-3 border-2 border-navy-dark/30 border-t-navy-dark rounded-full animate-spin" />
+                                                    Running...
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <Play size={12} fill="currentColor" />
+                                                    Watch Evolution
+                                                </>
+                                            )}
+                                        </button>
                                     </div>
                                 </div>
-                                <div className="flex items-center gap-3">
-                                    <Users size={18} className="text-red-600 dark:text-red-400" />
-                                    <div>
-                                        <p className="text-xs font-bold text-red-700 dark:text-red-400 uppercase">Team Size</p>
-                                        <p className="text-lg font-bold text-red-900 dark:text-red-300">{currentWorkflow.before.team}</p>
-                                    </div>
+
+                                {/* Terminal Content */}
+                                <div ref={terminalRef} className="p-4 font-mono text-sm h-[320px] overflow-y-auto bg-black/20">
+                                    {terminalLines.length === 0 && !isPlaying && (
+                                        <div className="text-gray-500 flex items-center gap-2 h-full justify-center">
+                                            <Terminal size={16} />
+                                            <span>Click "Watch Evolution" to see the transformation...</span>
+                                        </div>
+                                    )}
+                                    
+                                    <AnimatePresence>
+                                        {terminalLines.map((line, idx) => (
+                                            <motion.div
+                                                key={idx}
+                                                initial={{ opacity: 0, x: -10 }}
+                                                animate={{ opacity: 1, x: 0 }}
+                                                className="mb-2"
+                                            >
+                                                <span className={
+                                                    line.type === 'cmd' ? 'text-primary' :
+                                                    line.type === 'success' ? 'text-green-400' :
+                                                    line.type === 'error' ? 'text-red-400' :
+                                                    line.type === 'warning' ? 'text-yellow-400' :
+                                                    line.type === 'result' ? 'text-teal font-bold' :
+                                                    'text-gray-400'
+                                                }>
+                                                    {line.type === 'cmd' && '$ '}
+                                                    {line.text}
+                                                </span>
+                                            </motion.div>
+                                        ))}
+                                    </AnimatePresence>
+                                    
+                                    {/* Currently typing line */}
+                                    {isPlaying && typingLine && currentLineData && (
+                                        <div>
+                                            <span className={
+                                                currentLineData.type === 'cmd' ? 'text-primary' :
+                                                currentLineData.type === 'success' ? 'text-green-400' :
+                                                currentLineData.type === 'error' ? 'text-red-400' :
+                                                currentLineData.type === 'warning' ? 'text-yellow-400' :
+                                                currentLineData.type === 'result' ? 'text-teal font-bold' :
+                                                'text-gray-400'
+                                            }>
+                                                {currentLineData.type === 'cmd' && '$ '}
+                                                {typingLine}
+                                                <motion.span
+                                                    animate={{ opacity: [1, 0] }}
+                                                    transition={{ repeat: Infinity, duration: 0.5 }}
+                                                    className="inline-block w-2 h-4 bg-teal align-middle ml-1"
+                                                />
+                                            </span>
+                                        </div>
+                                    )}
                                 </div>
-                            </div>
 
-                            <div className="mb-6">
-                                <h4 className="text-sm font-bold text-red-800 dark:text-red-400 mb-3 uppercase">Process Steps</h4>
-                                <ul className="space-y-2">
-                                    {currentWorkflow.before.steps.map((step, idx) => (
-                                        <li key={idx} className="text-sm text-red-800 dark:text-red-300 flex gap-2">
-                                            <span className="text-red-500">•</span>
-                                            {step}
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
+                                {/* Progress Bar */}
+                                <div className="h-1 bg-white/5">
+                                    <motion.div 
+                                        className="h-full bg-gradient-to-r from-teal to-green-400"
+                                        animate={{ width: `${((completedStage + 1 + (currentLine / currentLines.length)) / 4) * 100}%` }}
+                                    />
+                                </div>
+                            </motion.div>
+                        </div>
 
-                            <div>
-                                <h4 className="text-sm font-bold text-red-800 dark:text-red-400 mb-3 uppercase">Key Issues</h4>
-                                <ul className="space-y-2">
-                                    {currentWorkflow.before.issues.map((issue, idx) => (
-                                        <li key={idx} className="text-sm text-red-800 dark:text-red-300 flex gap-2">
-                                            <AlertCircle size={14} className="text-red-500 mt-0.5 flex-shrink-0" />
-                                            {issue}
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-                        </motion.div>
+                        {/* Right: Stage Info - APPEARS AFTER COMPLETION */}
+                        <div className="lg:col-span-2 space-y-4">
+                            {/* Only show if this stage or previous is completed */}
+                            <AnimatePresence mode="wait">
+                                {completedStage >= evolutionStage - 1 && (
+                                    <motion.div
+                                        key={`stage-${evolutionStage}`}
+                                        initial={{ opacity: 0, x: 20 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        exit={{ opacity: 0, x: -20 }}
+                                        className="space-y-4"
+                                    >
+                                        {/* Stage Detail */}
+                                        <StageDetail 
+                                            workflow={activeWorkflow} 
+                                            stage={evolutionStage}
+                                            isVisible={true}
+                                            delay={completedStage >= evolutionStage ? 0 : 500}
+                                        />
+                                        
+                                        {/* Stats Panel */}
+                                        <StatsPanel 
+                                            workflow={activeWorkflow}
+                                            stage={evolutionStage}
+                                            isVisible={true}
+                                            delay={completedStage >= evolutionStage ? 300 : 800}
+                                        />
 
-                        {/* AFTER State */}
-                        <motion.div
-                            initial={{ opacity: 0, x: 20 }}
-                            animate={{ opacity: showAfter ? 1 : 0.5, x: 0, scale: showAfter ? 1.02 : 1 }}
-                            className="glass-card p-8 rounded-xl border-2 border-teal/30 bg-teal-50/50 dark:bg-teal-900/10 relative overflow-hidden"
-                        >
-                            {showAfter && (
+                                        {/* Quick Stats */}
+                                        <div className="grid grid-cols-2 gap-3">
+                                            <ModeBadge 
+                                                stage={evolutionStage}
+                                                isVisible={true}
+                                                delay={completedStage >= evolutionStage ? 600 : 1100}
+                                            />
+                                            <AIUsageBadge 
+                                                stage={evolutionStage}
+                                                isVisible={true}
+                                                delay={completedStage >= evolutionStage ? 800 : 1300}
+                                            />
+                                        </div>
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
+
+                            {/* Waiting message */}
+                            {completedStage < evolutionStage - 1 && (
                                 <motion.div
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
-                                    className="absolute inset-0 bg-gradient-to-br from-teal/5 to-primary/5 pointer-events-none"
-                                />
+                                    className="h-full flex items-center justify-center text-gray-500"
+                                >
+                                    <div className="text-center">
+                                        <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center mx-auto mb-3">
+                                            <Clock size={20} className="text-teal animate-pulse" />
+                                        </div>
+                                        <p className="text-sm">Watch the terminal...</p>
+                                        <p className="text-xs text-gray-400 mt-1">Info appears after each stage</p>
+                                    </div>
+                                </motion.div>
                             )}
-
-                            <div className="relative z-10">
-                                <div className="flex items-center gap-3 mb-6">
-                                    <div className="w-12 h-12 rounded-full bg-teal/20 flex items-center justify-center">
-                                        <CheckCircle2 size={24} className="text-teal-600 dark:text-teal-400" />
-                                    </div>
-                                    <div>
-                                        <h3 className="text-xl font-bold text-teal-900 dark:text-teal-300">AFTER Automation</h3>
-                                        <p className="text-sm text-teal-700 dark:text-teal-400">AI-Powered System</p>
-                                    </div>
-                                </div>
-
-                                <div className="space-y-4 mb-6">
-                                    <div className="flex items-center gap-3">
-                                        <Zap size={18} className="text-teal-600 dark:text-teal-400" />
-                                        <div>
-                                            <p className="text-xs font-bold text-teal-700 dark:text-teal-400 uppercase">Time Required</p>
-                                            <p className="text-lg font-bold text-teal-900 dark:text-teal-300">{currentWorkflow.after.time}</p>
-                                        </div>
-                                    </div>
-                                    <div className="flex items-center gap-3">
-                                        <Users size={18} className="text-teal-600 dark:text-teal-400" />
-                                        <div>
-                                            <p className="text-xs font-bold text-teal-700 dark:text-teal-400 uppercase">Team Size</p>
-                                            <p className="text-lg font-bold text-teal-900 dark:text-teal-300">{currentWorkflow.after.team}</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="mb-6">
-                                    <h4 className="text-sm font-bold text-teal-800 dark:text-teal-400 mb-3 uppercase">Optimized Steps</h4>
-                                    <ul className="space-y-2">
-                                        {currentWorkflow.after.steps.map((step, idx) => (
-                                            <li key={idx} className="text-sm text-teal-800 dark:text-teal-300 flex gap-2">
-                                                <span className="text-teal-500">✓</span>
-                                                {step}
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </div>
-
-                                <div>
-                                    <h4 className="text-sm font-bold text-teal-800 dark:text-teal-400 mb-3 uppercase">Key Benefits</h4>
-                                    <ul className="space-y-2">
-                                        {currentWorkflow.after.benefits.map((benefit, idx) => (
-                                            <li key={idx} className="text-sm text-teal-800 dark:text-teal-300 flex gap-2">
-                                                <TrendingUp size={14} className="text-teal-500 mt-0.5 flex-shrink-0" />
-                                                {benefit}
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </div>
-                            </div>
-                        </motion.div>
+                        </div>
                     </div>
 
-                    {/* Terminal Execution */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="glass-card p-6 rounded-xl border-2 border-primary/20 bg-navy-dark text-teal"
-                    >
-                        <div className="flex items-center justify-between mb-4">
-                            <div className="flex items-center gap-3">
-                                <Terminal size={20} className="text-teal" />
-                                <h3 className="font-bold text-white">Live Workflow Execution</h3>
-                            </div>
-                            <div className="flex items-center gap-3">
-                                {isExecuting && (
-                                    <div className="flex items-center gap-2">
-                                        <div className="w-2 h-2 rounded-full bg-teal animate-pulse" />
-                                        <span className="text-xs font-bold text-teal">RUNNING</span>
-                                    </div>
-                                )}
-                                <button
-                                    onClick={isExecuting ? null : handleExecute}
-                                    disabled={isExecuting}
-                                    className="px-6 py-2 bg-teal text-navy-dark rounded-lg font-bold text-sm hover:bg-teal/90 transition-all disabled:opacity-50"
-                                >
-                                    {isExecuting ? 'Executing...' : 'Execute Workflow'}
-                                </button>
-                            </div>
-                        </div>
-
-                        <div className="bg-black/30 rounded-lg p-6 font-mono text-sm min-h-[400px] max-h-[500px] overflow-y-auto">
-                            {/* Completed commands */}
-                            {completedCommands.map((cmd, idx) => (
-                                <div key={idx} className="mb-1">
-                                    <span className={
-                                        cmd.cmd.startsWith('✓') ? 'text-teal' :
-                                            cmd.cmd.startsWith('$') ? 'text-primary' :
-                                                cmd.cmd.startsWith('📊') || cmd.cmd.startsWith('📈') || cmd.cmd.startsWith('📬') ? 'text-blue-400' :
-                                                    'text-gray-400'
-                                    }>
-                                        {cmd.cmd}
-                                    </span>
-                                    {cmd.tooltip && (
-                                        <div className="ml-6 mb-2 flex items-start gap-2 text-gray-400 text-xs">
-                                            <HelpCircle size={12} className="text-blue-400 mt-0.5 flex-shrink-0" />
-                                            <span className="italic">{cmd.tooltip}</span>
-                                        </div>
-                                    )}
-                                </div>
-                            ))}
-
-                            {/* Currently typing command */}
-                            {isExecuting && typingText && (
-                                <div>
-                                    <span className={
-                                        typingText.startsWith('✓') ? 'text-teal' :
-                                            typingText.startsWith('$') ? 'text-primary' :
-                                                typingText.startsWith('📊') || typingText.startsWith('📈') || typingText.startsWith('📬') ? 'text-blue-400' :
-                                                    'text-gray-400'
-                                    }>
-                                        {typingText}
-                                        <motion.span
-                                            animate={{ opacity: [1, 0.3, 1] }}
-                                            transition={{ repeat: Infinity, duration: 1 }}
-                                            className="inline-block w-2 h-4 bg-teal ml-1"
-                                        />
-                                    </span>
-                                    {showTooltip && currentCommand?.tooltip && (
-                                        <CommandTooltip text={currentCommand.tooltip} show={showTooltip} />
-                                    )}
-                                </div>
-                            )}
-
-                            {!isExecuting && commandIndex === 0 && (
-                                <div className="text-gray-500 flex items-center gap-2">
-                                    <Terminal size={16} />
-                                    <span>Ready to execute. Click "Execute Workflow" to begin...</span>
-                                </div>
-                            )}
-                        </div>
-                    </motion.div>
-
-                    {/* Results Summary */}
-                    {showAfter && (
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            className="mt-6 glass-card p-8 rounded-xl border-2 border-teal/30 bg-gradient-to-r from-teal/10 to-primary/10"
-                        >
-                            <div className="flex items-center justify-center gap-3 mb-6">
-                                <div className="w-16 h-16 rounded-full bg-teal/20 flex items-center justify-center">
-                                    <CheckCircle2 size={32} className="text-teal" />
+                    {/* Bottom: Before/After Summary */}
+                    <div className="grid md:grid-cols-2 gap-6 mt-6">
+                        <div className="bg-red-50 dark:bg-red-900/10 rounded-xl p-6 border border-red-200 dark:border-red-800">
+                            <div className="flex items-center gap-3 mb-4">
+                                <div className="w-10 h-10 rounded-full bg-red-100 dark:bg-red-800 flex items-center justify-center">
+                                    <span className="text-xl">😫</span>
                                 </div>
                                 <div>
-                                    <h3 className="text-2xl font-bold text-teal">Workflow Complete!</h3>
-                                    <p className="text-gray-600 dark:text-gray-400">AI automation delivered in seconds</p>
+                                    <h4 className="font-bold text-red-800 dark:text-red-300">Before AI</h4>
+                                    <p className="text-xs text-red-600 dark:text-red-400">Manual Everything</p>
                                 </div>
                             </div>
+                            <ul className="space-y-2 text-sm text-red-700 dark:text-red-300">
+                                <li className="flex items-start gap-2">
+                                    <AlertCircle size={14} className="mt-0.5 flex-shrink-0" />
+                                    {activeWorkflow === 'content-creation' && 'Hours of manual design work'}
+                                    {activeWorkflow === 'lead-generation' && 'Cold calling, low response rates'}
+                                    {activeWorkflow === 'customer-service' && 'Long wait times, frustrated customers'}
+                                </li>
+                                <li className="flex items-start gap-2">
+                                    <Clock size={14} className="mt-0.5 flex-shrink-0" />
+                                    {stages[0].time} to complete tasks
+                                </li>
+                                <li className="flex items-start gap-2">
+                                    <Users size={14} className="mt-0.5 flex-shrink-0" />
+                                    {stages[0].team} required
+                                </li>
+                            </ul>
+                        </div>
 
-                            <div className="flex items-center justify-center gap-2 text-sm text-gray-600 dark:text-gray-400">
-                                <ArrowRight size={16} className="text-primary" />
-                                <span>This transformation is happening right now at scale across all campaigns</span>
+                        <div className="bg-green-50 dark:bg-green-900/10 rounded-xl p-6 border border-green-200 dark:border-green-800">
+                            <div className="flex items-center gap-3 mb-4">
+                                <div className="w-10 h-10 rounded-full bg-green-100 dark:bg-green-800 flex items-center justify-center">
+                                    <span className="text-xl">🚀</span>
+                                </div>
+                                <div>
+                                    <h4 className="font-bold text-green-800 dark:text-green-300">After AI</h4>
+                                    <p className="text-xs text-green-600 dark:text-green-400">Fully Automated</p>
+                                </div>
                             </div>
-                        </motion.div>
-                    )}
+                            <ul className="space-y-2 text-sm text-green-700 dark:text-green-300">
+                                <li className="flex items-start gap-2">
+                                    <CheckCircle2 size={14} className="mt-0.5 flex-shrink-0" />
+                                    {activeWorkflow === 'content-creation' && 'AI creates campaigns while you sleep'}
+                                    {activeWorkflow === 'lead-generation' && '10x leads, 3x better responses'}
+                                    {activeWorkflow === 'customer-service' && 'Instant responses, 98% satisfaction'}
+                                </li>
+                                <li className="flex items-start gap-2">
+                                    <Zap size={14} className="mt-0.5 flex-shrink-0" />
+                                    {stages[3].time} to complete (95% faster)
+                                </li>
+                                <li className="flex items-start gap-2">
+                                    <TrendingUp size={14} className="mt-0.5 flex-shrink-0" />
+                                    {stages[3].team} needed
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>

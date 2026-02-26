@@ -35,20 +35,28 @@ const FloatingAiAssistant = () => {
     };
   }, []);
 
-  // Auto-open chat after 3 seconds and send first message
+  // Auto-open chat on first scroll (not time-based)
   useEffect(() => {
     if (!hasAutoOpened) {
-      const timer = setTimeout(() => {
-        setIsChatOpen(true);
-        setHasAutoOpened(true);
+      const handleFirstScroll = () => {
+        // Only trigger if user has scrolled past hero section (300px)
+        if (window.scrollY > 300) {
+          setIsChatOpen(true);
+          setHasAutoOpened(true);
+          
+          // Send initial AI greeting
+          setTimeout(() => {
+            sendInitialGreeting();
+          }, 500);
+          
+          // Remove listener after triggering
+          window.removeEventListener('scroll', handleFirstScroll);
+        }
+      };
 
-        // Send initial AI greeting
-        setTimeout(() => {
-          sendInitialGreeting();
-        }, 500);
-      }, 3000);
-
-      return () => clearTimeout(timer);
+      window.addEventListener('scroll', handleFirstScroll, { passive: true });
+      
+      return () => window.removeEventListener('scroll', handleFirstScroll);
     }
   }, [hasAutoOpened]);
 
@@ -419,7 +427,7 @@ const FloatingAiAssistant = () => {
   }, [isChatOpen]);
 
   return (
-    <div className="fixed bottom-6 right-6 z-50">
+    <div className="fixed bottom-6 left-6 z-50">
       {/* Floating 3D Glowing AI Logo with Fluid Motion */}
       <motion.button
         whileHover={{
@@ -460,6 +468,15 @@ const FloatingAiAssistant = () => {
         <div className="absolute inset-0 rounded-full animate-ping opacity-20 bg-indigo-500"></div>
       </motion.button>
 
+      {/* Backdrop Overlay - Prevents interaction with site behind */}
+      {isChatOpen && (
+        <div 
+          className="fixed inset-0 bg-black/40 z-[-1]"
+          onClick={() => setIsChatOpen(false)}
+          aria-hidden="true"
+        />
+      )}
+
       {/* Chat Interface */}
       {isChatOpen && (
         <div
@@ -468,18 +485,17 @@ const FloatingAiAssistant = () => {
           role="dialog"
           aria-label="AI Assistant Chat"
           aria-modal="true"
-          className="absolute bottom-20 right-0 w-[95vw] sm:w-[450px] max-h-[70vh] sm:max-h-[500px] max-w-[450px] transition-all duration-300 origin-bottom-right flex flex-col"
+          className="absolute bottom-20 left-0 w-[95vw] sm:w-[450px] max-h-[70vh] sm:max-h-[500px] max-w-[450px] transition-all duration-300 origin-bottom-left flex flex-col"
           style={{
             animation: 'popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards',
           }}
         >
           <div
-            className="relative flex flex-col rounded-3xl bg-gradient-to-br from-zinc-800/70 to-zinc-900/70 border border-purple-500/30 hover:border-purple-500/50 backdrop-blur-3xl overflow-hidden h-full transition-all duration-300"
+            className="relative flex flex-col rounded-3xl bg-zinc-900 border border-purple-500/30 overflow-hidden h-full transition-all duration-300"
             style={{
               boxShadow: `
-                inset 0 1px 2px rgba(255, 255, 255, 0.1),
-                0 8px 32px rgba(0, 0, 0, 0.3),
-                inset 0 0 1px rgba(255, 255, 255, 0.1)
+                0 20px 60px rgba(0, 0, 0, 0.5),
+                0 0 0 1px rgba(255, 255, 255, 0.05)
               `
             }}
           >
@@ -541,7 +557,7 @@ const FloatingAiAssistant = () => {
                           borderColor: 'rgba(139, 92, 246, 0.5)',
                           boxShadow: '0 12px 32px rgba(139, 92, 246, 0.2)'
                         }}
-                        className="max-w-[70%] flex flex-col gap-0 rounded-2xl overflow-hidden border-2 border-purple-500/25 bg-zinc-700/30 backdrop-blur-lg shadow-xl shadow-purple-500/15 transition-all duration-300"
+                        className="max-w-[70%] flex flex-col gap-0 rounded-2xl overflow-hidden border-2 border-purple-500/25 bg-zinc-800 shadow-xl shadow-purple-500/15 transition-all duration-300"
                       >
                       {/* GIF at top */}
                       <img
@@ -556,7 +572,7 @@ const FloatingAiAssistant = () => {
                       {msg.isCombined && msg.textMessages && msg.textMessages.length > 0 && (
                         <div className="px-4 py-3 space-y-2">
                           {msg.textMessages.map((text, idx) => (
-                            <p key={idx} className="text-sm leading-relaxed text-zinc-100 whitespace-pre-line">
+                            <p key={idx} className="text-sm leading-relaxed text-white whitespace-pre-line font-medium">
                               {text}
                               {/* Only show cursor on last message during typing */}
                               {msg.isTyping && idx === msg.textMessages.length - 1 && (
@@ -583,19 +599,19 @@ const FloatingAiAssistant = () => {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.3 }}
                       whileHover={msg.sender === 'bot' ? {
-                        backgroundColor: 'rgba(63, 63, 70, 0.6)',
-                        borderColor: 'rgba(139, 92, 246, 0.3)',
+                        backgroundColor: 'rgba(63, 63, 70, 1)',
+                        borderColor: 'rgba(139, 92, 246, 0.5)',
                         boxShadow: '0 8px 24px rgba(139, 92, 246, 0.15)'
                       } : {}}
-                      className={`max-w-[85%] rounded-2xl px-4 py-2.5 ${
+                      className={`max-w-[85%] rounded-2xl px-4 py-3 ${
                         msg.sender === 'user'
                           ? 'bg-gradient-to-r from-red-600 to-red-500 text-white'
-                          : 'bg-zinc-700/30 text-zinc-100 border border-purple-500/15 backdrop-blur-md shadow-lg shadow-black/10'
+                          : 'bg-zinc-800 text-white border border-purple-500/30 shadow-lg shadow-black/20'
                       } transition-all duration-300`}
                     >
-                      <p className="text-sm leading-relaxed whitespace-pre-line">
+                      <p className="text-sm leading-relaxed whitespace-pre-line font-medium">
                         {msg.text}
-                        {msg.isTyping && <span className="inline-block w-1 h-4 ml-1 bg-zinc-100 animate-pulse">|</span>}
+                        {msg.isTyping && <span className="inline-block w-1 h-4 ml-1 bg-white animate-pulse">|</span>}
                       </p>
 
                       {/* Quick Action Chips - Show only for bot messages when typing completes */}
@@ -628,25 +644,26 @@ const FloatingAiAssistant = () => {
                   style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
                 />
 
-                {/* Send Button - Integrated Inside Textarea */}
+                {/* Send Button - Larger touch target for mobile */}
                 <button
-                  onClick={handleSend}
+                  onClick={() => handleSend()}
                   disabled={!message.trim() || isTyping}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 group p-2.5 bg-gradient-to-r from-red-600 to-red-500 border-none rounded-full cursor-pointer transition-all duration-300 text-white shadow-lg hover:from-red-500 hover:to-red-400 hover:scale-110 hover:shadow-red-500/30 hover:shadow-xl active:scale-95 transform disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 group w-12 h-12 flex items-center justify-center bg-gradient-to-r from-red-600 to-red-500 border-none rounded-full cursor-pointer transition-all duration-300 text-white shadow-lg hover:from-red-500 hover:to-red-400 hover:scale-110 hover:shadow-red-500/30 hover:shadow-xl active:scale-95 transform disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
                   aria-label="Send message"
+                  type="button"
                 >
                   <Send className="w-5 h-5 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:rotate-12" />
                 </button>
               </div>
             </div>
 
-            {/* Floating Overlay */}
-            <div
-              className="absolute inset-0 rounded-3xl pointer-events-none"
+            {/* Send button touch feedback overlay */}
+            <div 
+              className="absolute inset-0 rounded-3xl pointer-events-none opacity-0 hover:opacity-100 transition-opacity"
               style={{
-                background: 'linear-gradient(135deg, rgba(239, 68, 68, 0.05), transparent, rgba(147, 51, 234, 0.05))'
+                background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.03), transparent, rgba(239, 68, 68, 0.03))'
               }}
-            ></div>
+            />
           </div>
         </div>
       )}

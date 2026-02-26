@@ -345,11 +345,11 @@ const ToolsPlatforms = () => {
                     className="mt-12 flex flex-wrap justify-center gap-6 text-sm"
                 >
                     <div className="flex items-center gap-2">
-                        <div className="w-3 h-3 rounded-full bg-teal"></div>
+                        <div className="w-3 h-3 rounded-full bg-blue-500"></div>
                         <span className="text-gray-600 dark:text-gray-400">Expert (90%+)</span>
                     </div>
                     <div className="flex items-center gap-2">
-                        <div className="w-3 h-3 rounded-full bg-blue-500"></div>
+                        <div className="w-3 h-3 rounded-full bg-teal"></div>
                         <span className="text-gray-600 dark:text-gray-400">Advanced (75-89%)</span>
                     </div>
                     <div className="flex items-center gap-2">

@@ -33,16 +33,16 @@ export default function TreeNodeTooltip({ node, index = 0 }) {
 
   // Get success rate color
   const getSuccessColor = (rate) => {
-    if (rate >= 90) return "text-teal";
-    if (rate >= 75) return "text-blue-500";
+    if (rate >= 90) return "text-blue-500";
+    if (rate >= 75) return "text-teal";
     if (rate >= 60) return "text-primary";
     return "text-gray-500";
   };
 
   // Get proficiency badge
   const getProficiencyBadge = (rate) => {
-    if (rate >= 90) return { text: "Expert", class: "bg-teal/10 text-teal" };
-    if (rate >= 75) return { text: "Advanced", class: "bg-blue-500/10 text-blue-500" };
+    if (rate >= 90) return { text: "Expert", class: "bg-blue-500/10 text-blue-500" };
+    if (rate >= 75) return { text: "Advanced", class: "bg-teal/10 text-teal" };
     if (rate >= 60) return { text: "Proficient", class: "bg-primary/10 text-primary" };
     return { text: "Learning", class: "bg-gray-500/10 text-gray-500" };
   };

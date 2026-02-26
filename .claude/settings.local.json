@@ -30,7 +30,10 @@
       "WebFetch(domain:generativelanguage.googleapis.com)",
       "WebFetch(domain:harshanajothiresume2026.netlify.app)",
       "WebFetch(domain:api.github.com)",
-      "Bash(du:*)"
+      "Bash(du:*)",
+      "Bash(git fetch:*)",
+      "Bash(vercel:*)",
+      "Bash(vercel whoami:*)"
     ]
   }
 }

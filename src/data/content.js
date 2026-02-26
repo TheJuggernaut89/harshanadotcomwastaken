@@ -255,7 +255,7 @@ export const content = {
         {
             title: "Medical Patient Advocate App",
             category: "Healthcare AI",
-            image: "/Visionary/Medical Patient Advocate.png",
+            image: "/Visionary/Medical Patient Advocate.svg",
             description: "An AI-powered app that helps patients prepare for doctor visits by analyzing symptoms, drafting informed questions, and suggesting evidence-based treatment options using FDA API and medical databases. Designed to improve patient-doctor communication and reduce medical anxiety.",
             proposalDetails: {
                 concept: "Most patients feel unprepared for doctor visits and struggle to articulate symptoms or ask the right questions. This app bridges that gap using AI to transform vague complaints into structured medical inquiries backed by FDA data.",
@@ -267,7 +267,7 @@ export const content = {
         {
             title: "Accessible Legal Transcription Platform (PersonaPlex Integration)",
             category: "Accessibility AI",
-            image: "/Visionary/Legal Transcription Accessibility.png",
+            image: "/Visionary/Legal Transcription Accessibility.svg",
             description: "An AI-powered legal transcription proofreading system using PersonaPlex (NVIDIA's speech-to-speech AI) to enable disabled workers in Malaysia to review and correct legal documents through natural voice interaction. Reduces barriers for visually impaired, mobility-impaired, and neurodiverse workers.",
             proposalDetails: {
                 concept: "Legal transcription proofreading traditionally requires precise visual focus and mouse/keyboard dexterity. PersonaPlex's speech-to-speech AI removes these barriers by allowing workers to interact with transcripts entirely through voice commands and audio feedback.",

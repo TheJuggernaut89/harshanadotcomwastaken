@@ -104,10 +104,9 @@ export default function FloatingNav({ isOpen, toggleMenu, toggleArchitect }) {
                             animate={{ rotate: 0, opacity: 1 }}
                             exit={{ rotate: 90, opacity: 0 }}
                             transition={{ duration: 0.2 }}
-                            className="flex flex-col items-center justify-center"
+                            className="flex items-center justify-center"
                         >
                             <Menu className="w-8 h-8" />
-                            {isMobile && <span className="text-[8px] font-bold uppercase mt-1">2x Tap</span>}
                         </motion.div>
                     ) : (
                         <motion.div
@@ -122,15 +121,19 @@ export default function FloatingNav({ isOpen, toggleMenu, toggleArchitect }) {
                     )}
                 </AnimatePresence>
 
-                {/* Visual Feedback for Mobile */}
+                {/* Visual Feedback for Mobile - Shows briefly then fades */}
                 {isMobile && !isOpen && (
                     <motion.div
-                        className="absolute -top-12 bg-black/80 text-white text-[10px] px-2 py-1 rounded backdrop-blur-sm pointer-events-none"
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 2 }}
+                        className="absolute -top-10 bg-black/80 text-white text-[10px] px-3 py-1.5 rounded-full backdrop-blur-sm pointer-events-none whitespace-nowrap"
+                        initial={{ opacity: 0, y: 5 }}
+                        animate={{ opacity: [0, 1, 1, 0], y: [5, 0, 0, -5] }}
+                        transition={{ 
+                            delay: 1,
+                            duration: 4,
+                            times: [0, 0.1, 0.8, 1]
+                        }}
                     >
-                        Double Tap to Open
+                        Double tap to open
                     </motion.div>
                 )}
 
