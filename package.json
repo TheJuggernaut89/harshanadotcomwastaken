@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && npm run copy-static",
+    "copy-static": "cp -r creative dist/ 2>nul || xcopy /E /I /Y creative dist\\creative 2>nul || true",
     "lint": "eslint .",
     "preview": "vite preview",
     "predeploy": "npm run build",
