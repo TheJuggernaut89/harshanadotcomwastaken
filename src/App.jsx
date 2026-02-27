@@ -3,8 +3,9 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { FileText } from 'lucide-react';
 import ParticleBackground from './components/Layout/ParticleBackground';
 import SmoothScroll from './components/Layout/SmoothScroll';
-import WelcomeIntro from './components/Sections/WelcomeIntro';
-import LoadingScreen from './components/Layout/LoadingScreen';
+// Intro and Loading removed - go straight to portfolio
+// import WelcomeIntro from './components/Sections/WelcomeIntro';
+// import LoadingScreen from './components/Layout/LoadingScreen';
 import Hero from './components/Sections/Hero-MarketingTechnologist';
 import ValueProposition from './components/Sections/ValueProposition';
 import AboutBento from './components/Sections/AboutBento';
@@ -21,9 +22,10 @@ import { FloatingAiAssistant } from './components/UI/FloatingAiAssistant';
 import { trackChatbotEvent } from './utils/chatbotAnalytics';
 
 function App() {
-  const [showIntro, setShowIntro] = useState(true);
+  // Skip intro and loading - go straight to portfolio
+  const [showIntro, setShowIntro] = useState(false);
   const [showLoading, setShowLoading] = useState(false);
-  const [showMain, setShowMain] = useState(false);
+  const [showMain, setShowMain] = useState(true);
   
   // Navigation State
   const [isNavOpen, setIsNavOpen] = useState(false);
@@ -53,30 +55,10 @@ function App() {
     };
   }, []);
 
-  const handleIntroComplete = () => {
-    setShowIntro(false);
-    setShowLoading(true);
-  };
-
-  const handleLoadingComplete = () => {
-    setShowLoading(false);
-    setShowMain(true);
-  };
-
   return (
     <div className="relative min-h-screen">
       <AnimatePresence mode="wait">
-        {/* Welcome Intro */}
-        {showIntro && (
-          <WelcomeIntro key="welcome" onComplete={handleIntroComplete} />
-        )}
-
-        {/* Loading Screen */}
-        {showLoading && (
-          <LoadingScreen key="loading" onComplete={handleLoadingComplete} />
-        )}
-
-        {/* Main App */}
+        {/* Main App - Intro and Loading skipped */}
         {showMain && (
           <SmoothScroll>
             <motion.main
