@@ -39,11 +39,18 @@ if (fs.existsSync(builtIndex)) {
   }
 }
 
-// Copy landing.html (terminal boot) to dist root
-const landingFile = path.join(__dirname, 'landing.html');
-if (fs.existsSync(landingFile)) {
-  fs.copyFileSync(landingFile, path.join(distDir, 'index.html'));
+// Copy terminal boot source to dist root
+const terminalSource = path.join(__dirname, 'terminal-boot-source.html');
+if (fs.existsSync(terminalSource)) {
+  fs.copyFileSync(terminalSource, path.join(distDir, 'index.html'));
   console.log('✓ Copied terminal boot to index.html');
+} else {
+  // Fallback to landing.html if exists
+  const landingFile = path.join(__dirname, 'landing.html');
+  if (fs.existsSync(landingFile)) {
+    fs.copyFileSync(landingFile, path.join(distDir, 'index.html'));
+    console.log('✓ Copied terminal boot to index.html');
+  }
 }
 
 // Copy creative folder
