@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>Harshana Jothi | System Boot</title>
+    <meta name="description" content="Select your preferred portfolio mode">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --terminal-green: #00ff00;
+            --terminal-dark: #003300;
+            --terminal-dim: #00aa00;
+            --bg-black: #000000;
+        }
+
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            background: var(--bg-black);
+            color: var(--terminal-green);
+            min-height: 100vh;
+            overflow: hidden;
+            position: relative;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* Scan Lines Overlay - reduced on mobile */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.15),
+                rgba(0, 0, 0, 0.15) 1px,
+                transparent 1px,
+                transparent 2px
+            );
+            pointer-events: none;
+            z-index: 1000;
+            opacity: 0.2;
+        }
+
+        /* CRT Flicker - disabled on mobile */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 255, 0, 0.02);
+            pointer-events: none;
+            z-index: 1001;
+            animation: flicker 0.15s infinite;
+        }
+
+        @keyframes flicker {
+            0%, 100% { opacity: 0.02; }
+            50% { opacity: 0.04; }
+        }
+
+        /* Boot Container */
+        #boot-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-black);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 1.5rem;
+            z-index: 100;
+            cursor: pointer; /* Tap to skip hint */
+        }
+
+        #boot-content {
+            max-width: 800px;
+            width: 100%;
+        }
+
+        .boot-line {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 1.2em;
+            background: var(--terminal-green);
+            animation: blink 1s infinite;
+            vertical-align: text-bottom;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        /* ASCII Art */
+        .ascii-art {
+            font-size: 0.65rem;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            color: var(--terminal-dim);
+        }
+
+        /* Mode Selector */
+        #mode-selector {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-black);
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 200;
+            padding: 1rem;
+        }
+
+        .mode-container {
+            border: 1px solid var(--terminal-green);
+            padding: 1.5rem;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.2), inset 0 0 20px rgba(0, 255, 0, 0.05);
+        }
+
+        .mode-title {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+        }
+
+        .mode-option {
+            display: block;
+            padding: 1.25rem 1rem;
+            margin: 0.75rem 0;
+            border: 1px solid var(--terminal-dark);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            color: var(--terminal-green);
+            background: transparent;
+            font-family: inherit;
+            font-size: 1rem;
+            text-align: left;
+            width: 100%;
+            border-radius: 4px;
+            -webkit-touch-callout: none;
+            user-select: none;
+        }
+
+        .mode-option:hover,
+        .mode-option:focus {
+            background: rgba(0, 255, 0, 0.1);
+            border-color: var(--terminal-green);
+            transform: translateX(10px);
+            outline: none;
+        }
+
+        /* Touch feedback */
+        .mode-option:active {
+            background: rgba(0, 255, 0, 0.2);
+            transform: scale(0.98);
+        }
+
+        .mode-option.selected {
+            background: var(--terminal-green);
+            color: var(--bg-black);
+            font-weight: bold;
+            border-color: var(--terminal-green);
+        }
+
+        .mode-number {
+            display: inline-block;
+            width: 35px;
+            color: var(--terminal-dim);
+            font-weight: bold;
+        }
+
+        .mode-option:hover .mode-number,
+        .mode-option.selected .mode-number {
+            color: inherit;
+        }
+
+        .mode-desc {
+            color: var(--terminal-dim);
+            font-size: 0.85rem;
+            margin-left: 35px;
+            margin-top: 0.25rem;
+        }
+
+        .mode-option:hover .mode-desc,
+        .mode-option.selected .mode-desc {
+            color: inherit;
+            opacity: 0.8;
+        }
+
+        .input-line {
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--terminal-dark);
+        }
+
+        .input-prompt {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .user-input {
+            background: transparent;
+            border: none;
+            color: var(--terminal-green);
+            font-family: inherit;
+            font-size: 1rem;
+            outline: none;
+            width: 100%;
+            caret-color: var(--terminal-green);
+        }
+
+        /* Loading Screen */
+        #loading-screen {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-black);
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 300;
+            padding: 1rem;
+        }
+
+        .loading-text {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .progress-bar {
+            width: 80%;
+            max-width: 300px;
+            height: 24px;
+            border: 1px solid var(--terminal-green);
+            padding: 3px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--terminal-green);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        /* Glitch Effect */
+        .glitch {
+            animation: glitch 0.3s ease;
+        }
+
+        @keyframes glitch {
+            0% { transform: translateX(0); text-shadow: none; }
+            20% { transform: translateX(-5px); text-shadow: 2px 0 #ff0000, -2px 0 #00ffff; }
+            40% { transform: translateX(5px); text-shadow: -2px 0 #ff0000, 2px 0 #00ffff; }
+            60% { transform: translateX(-3px); text-shadow: 2px 0 #ff0000, -2px 0 #00ffff; }
+            80% { transform: translateX(3px); text-shadow: -2px 0 #ff0000, 2px 0 #00ffff; }
+            100% { transform: translateX(0); text-shadow: none; }
+        }
+
+        .flash {
+            animation: flash 0.1s ease;
+        }
+
+        @keyframes flash {
+            0%, 100% { background: var(--bg-black); }
+            50% { background: #ffffff; }
+        }
+
+        /* Skip Hint */
+        .skip-hint {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            font-size: 0.85rem;
+            color: var(--terminal-dim);
+            opacity: 0.7;
+            z-index: 500;
+            padding: 0.5rem;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 4px;
+        }
+
+        .skip-hint.touch::after {
+            content: " (Tap anywhere to skip)";
+        }
+
+        /* Easter Egg Screen */
+        #easter-egg {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-black);
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 400;
+            padding: 1.5rem;
+        }
+
+        .teh-tarik-art {
+            font-size: 0.75rem;
+            line-height: 1.2;
+            margin: 2rem 0;
+            color: var(--terminal-green);
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 768px) {
+            .boot-line {
+                font-size: 1rem;
+                line-height: 1.7;
+            }
+
+            .ascii-art {
+                font-size: 0.5rem;
+                margin-bottom: 1rem;
+            }
+
+            .mode-container {
+                padding: 1.25rem;
+                border-width: 2px;
+            }
+
+            .mode-option {
+                padding: 1.1rem 0.75rem;
+                margin: 0.5rem 0;
+            }
+
+            .mode-title {
+                font-size: 1rem;
+                letter-spacing: 0.1em;
+            }
+
+            .mode-desc {
+                font-size: 0.8rem;
+                margin-left: 30px;
+            }
+
+            /* Disable CRT flicker on mobile for performance */
+            body::after {
+                display: none;
+            }
+
+            /* Reduce scan lines */
+            body::before {
+                opacity: 0.1;
+            }
+
+            .skip-hint {
+                font-size: 0.75rem;
+                left: 1rem;
+                right: 1rem;
+                text-align: center;
+            }
+
+            /* Smaller progress bar on mobile */
+            .progress-bar {
+                width: 90%;
+            }
+        }
+
+        /* Reduced motion preference */
+        @media (prefers-reduced-motion: reduce) {
+            .cursor {
+                animation: none;
+                opacity: 1;
+            }
+
+            .glitch, .flash, .shake {
+                animation: none !important;
+            }
+
+            body::after {
+                animation: none;
+            }
+        }
+
+        /* Touch device optimizations */
+        @media (pointer: coarse) {
+            .mode-option:hover {
+                transform: none;
+            }
+
+            .mode-option:active {
+                transform: scale(0.98);
+                background: rgba(0, 255, 0, 0.15);
+            }
+
+            /* Disable shake animation on touch */
+            .shake {
+                animation: none !important;
+            }
+        }
+
+        /* Screen shake */
+        .shake {
+            animation: shake 0.3s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            50% { transform: translateX(5px); }
+            75% { transform: translateX(-3px); }
+        }
+
+        /* Hidden */
+        .hidden {
+            display: none !important;
+        }
+
+        /* Swipe hint for mobile */
+        .swipe-hint {
+            display: none;
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--terminal-dim);
+            margin-top: 1rem;
+            opacity: 0.7;
+        }
+
+        @media (pointer: coarse) {
+            .swipe-hint {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Skip Hint -->
+    <div class="skip-hint" id="skip-hint">[ESC] to skip intro</div>
+
+    <!-- Phase 1: Boot Screen -->
+    <div id="boot-screen">
+        <div id="boot-content">
+            <!-- ASCII Art -->
+            <pre class="ascii-art" id="ascii-logo">
+    ___________________
+   |  INITIALIZING   |
+   |   MARKETING     |
+   | TECHNOLOGIST    |
+   |_________________|
+          | |
+          | |
+         (   )
+          | |
+          | |
+          | |
+         /   \
+        /_____\
+            </pre>
+            <div id="boot-text"></div>
+            <span class="cursor" id="boot-cursor"></span>
+        </div>
+    </div>
+
+    <!-- Phase 3: Mode Selector -->
+    <div id="mode-selector">
+        <div class="mode-container">
+            <div class="mode-title">=== SELECT MODE ===</div>
+            
+            <button class="mode-option" data-mode="professional" data-url="./professional/index.html">
+                <span class="mode-number">[1]</span>
+                PROFESSIONAL MODE
+                <div class="mode-desc">Traditional CV, HR-friendly, corporate ready</div>
+            </button>
+
+            <button class="mode-option" data-mode="creative" data-url="./creative/index.html">
+                <span class="mode-number">[2]</span>
+                CREATIVE MODE
+                <div class="mode-desc">Interactive portfolio, full experience</div>
+            </button>
+
+            <button class="mode-option" data-mode="brutal" data-url="./brutal/index.html">
+                <span class="mode-number">[3]</span>
+                BRUTAL MODE
+                <div class="mode-desc">Unfiltered truth, password required</div>
+            </button>
+
+            <div class="swipe-hint">Tap a mode to select</div>
+
+            <div class="input-line">
+                <div class="input-prompt">
+                    <span>></span>
+                    <input type="text" class="user-input" id="mode-input" maxlength="20" autocomplete="off" inputmode="numeric">
+                    <span class="cursor"></span>
+                </div>
+            </div>
+
+            <div id="auto-select-hint" style="margin-top: 1rem; font-size: 0.8rem; color: var(--terminal-dim);">
+                Auto-selecting CREATIVE MODE in <span id="countdown">5</span>s...
+            </div>
+        </div>
+    </div>
+
+    <!-- Easter Egg Screen -->
+    <div id="easter-egg">
+        <pre class="teh-tarik-art">
+    _______________________
+   |  TEH TARIK PROTOCOL  |
+   |      UNLOCKED        |
+   |______________________|
+            
+           (     )
+            )   (
+           (     )
+            |   |
+            |   |
+           /     \
+          |_______|
+          | ~~~   |
+          | ~~~   |
+          |_______|
+        </pre>
+        <div style="text-align: center;">
+            <p style="margin-bottom: 1rem;">Secret mode activated!</p>
+            <p style="color: var(--terminal-dim);">Redirecting to Creative Mode with extra teh tarik...</p>
+        </div>
+    </div>
+
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div class="loading-text" id="loading-text">INITIALIZING...</div>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progress-fill"></div>
+        </div>
+    </div>
+
+    <script>
+        // Boot Sequence Configuration
+        const bootLines = [
+            { text: "INITIALIZING HARSHANA_JOTHI.exe...", delay: 300 },
+            { text: "> Loading Python modules...", delay: 400, status: "[OK]" },
+            { text: "> Calibrating AI prediction models...", delay: 600, status: "[OK]" },
+            { text: "> Loading viral content algorithms...", delay: 500, status: "[OK]" },
+            { text: "> Connecting to Malaysian marketing databases...", delay: 700, status: "[OK]" },
+            { text: "> Brewing teh tarik...", delay: 800, status: "[OK]" },
+            { text: "> Systems nominal.", delay: 400 },
+            { text: "> Access granted.", delay: 300 },
+            { text: "", delay: 200 },
+            { text: "Welcome, visitor.", delay: 400 }
+        ];
+
+        // State
+        let currentLine = 0;
+        let charIndex = 0;
+        let isSkipping = false;
+        let autoSelectTimer = null;
+        let countdownValue = 5;
+        let easterEggActivated = false;
+
+        // Detect touch device
+        const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
+
+        // DOM Elements
+        const bootScreen = document.getElementById('boot-screen');
+        const bootText = document.getElementById('boot-text');
+        const bootCursor = document.getElementById('boot-cursor');
+        const modeSelector = document.getElementById('mode-selector');
+        const loadingScreen = document.getElementById('loading-screen');
+        const easterEgg = document.getElementById('easter-egg');
+        const modeInput = document.getElementById('mode-input');
+        const countdownSpan = document.getElementById('countdown');
+        const autoSelectHint = document.getElementById('auto-select-hint');
+        const skipHint = document.getElementById('skip-hint');
+
+        // Update skip hint for mobile
+        if (isTouchDevice) {
+            skipHint.textContent = "Tap anywhere to skip intro";
+            skipHint.classList.add('touch');
+        }
+
+        // Typewriter Effect
+        function typeLine(line, callback) {
+            if (isSkipping) {
+                bootText.innerHTML += line.text + (line.status ? ` <span style="color: var(--terminal-dim)">${line.status}</span>` : '') + '\n';
+                if (callback) callback();
+                return;
+            }
+
+            const lineElement = document.createElement('div');
+            lineElement.className = 'boot-line';
+            bootText.appendChild(lineElement);
+
+            function typeChar() {
+                if (isSkipping) {
+                    lineElement.textContent = line.text;
+                    if (line.status) {
+                        lineElement.innerHTML += ` <span style="color: var(--terminal-dim)">${line.status}</span>`;
+                    }
+                    if (callback) callback();
+                    return;
+                }
+
+                if (charIndex < line.text.length) {
+                    lineElement.textContent += line.text.charAt(charIndex);
+                    charIndex++;
+                    // Faster typing on mobile
+                    const typeSpeed = isTouchDevice ? 20 : 30;
+                    setTimeout(typeChar, typeSpeed + Math.random() * 15);
+                } else {
+                    if (line.status) {
+                        lineElement.innerHTML += ` <span style="color: var(--terminal-dim)">${line.status}</span>`;
+                    }
+                    charIndex = 0;
+                    setTimeout(callback, line.delay);
+                }
+            }
+
+            typeChar();
+        }
+
+        // Boot Sequence
+        function runBootSequence() {
+            if (currentLine < bootLines.length) {
+                typeLine(bootLines[currentLine], () => {
+                    currentLine++;
+                    runBootSequence();
+                });
+            } else {
+                setTimeout(showGlitchTransition, 500);
+            }
+        }
+
+        // Glitch Transition
+        function showGlitchTransition() {
+            // Disable glitch on touch devices for better performance
+            if (!isTouchDevice) {
+                document.body.classList.add('flash');
+                bootScreen.classList.add('glitch', 'shake');
+            }
+
+            setTimeout(() => {
+                document.body.classList.remove('flash');
+                bootScreen.classList.remove('glitch', 'shake');
+                showModeSelector();
+            }, isTouchDevice ? 100 : 300);
+        }
+
+        // Show Mode Selector
+        function showModeSelector() {
+            bootScreen.style.display = 'none';
+            modeSelector.style.display = 'flex';
+            
+            // Only auto-focus on desktop
+            if (!isTouchDevice) {
+                modeInput.focus();
+            }
+            
+            startAutoSelect();
+        }
+
+        // Auto-select countdown
+        function startAutoSelect() {
+            autoSelectTimer = setInterval(() => {
+                countdownValue--;
+                countdownSpan.textContent = countdownValue;
+                
+                if (countdownValue <= 0) {
+                    clearInterval(autoSelectTimer);
+                    selectMode('creative', './creative/index.html');
+                }
+            }, 1000);
+        }
+
+        // Mode Selection
+        function selectMode(mode, url) {
+            clearInterval(autoSelectTimer);
+            autoSelectHint.style.display = 'none';
+
+            // Highlight selected option
+            document.querySelectorAll('.mode-option').forEach(btn => {
+                if (btn.dataset.mode === mode) {
+                    btn.classList.add('selected');
+                }
+            });
+
+            // Show loading screen
+            setTimeout(() => {
+                modeSelector.style.display = 'none';
+                loadingScreen.style.display = 'flex';
+                
+                document.getElementById('loading-text').textContent = `LOADING ${mode.toUpperCase()} MODE...`;
+                
+                // Animate progress bar
+                let progress = 0;
+                const progressInterval = setInterval(() => {
+                    progress += Math.random() * 30;
+                    if (progress >= 100) {
+                        progress = 100;
+                        clearInterval(progressInterval);
+                        document.getElementById('progress-fill').style.width = '100%';
+                        
+                        // Redirect
+                        setTimeout(() => {
+                            window.location.href = url;
+                        }, 300);
+                    } else {
+                        document.getElementById('progress-fill').style.width = progress + '%';
+                    }
+                }, 100);
+            }, 500);
+        }
+
+        // Easter Egg
+        function showEasterEgg() {
+            clearInterval(autoSelectTimer);
+            easterEggActivated = true;
+            modeSelector.style.display = 'none';
+            easterEgg.style.display = 'flex';
+            
+            setTimeout(() => {
+                selectMode('creative', './creative/index.html');
+            }, 2000);
+        }
+
+        // Event Listeners
+
+        // Click on mode options
+        document.querySelectorAll('.mode-option').forEach(btn => {
+            btn.addEventListener('click', () => {
+                selectMode(btn.dataset.mode, btn.dataset.url);
+            });
+        });
+
+        // Tap to skip (mobile)
+        if (isTouchDevice) {
+            bootScreen.addEventListener('click', () => {
+                if (!isSkipping && bootScreen.style.display !== 'none') {
+                    isSkipping = true;
+                    showModeSelector();
+                }
+            });
+
+            bootScreen.addEventListener('touchstart', (e) => {
+                if (!isSkipping && bootScreen.style.display !== 'none') {
+                    isSkipping = true;
+                    showModeSelector();
+                }
+            }, { passive: true });
+        }
+
+        // Keyboard input
+        modeInput.addEventListener('input', (e) => {
+            const value = e.target.value.toLowerCase();
+            
+            // Check for easter egg
+            if (value === 'mamak') {
+                showEasterEgg();
+                return;
+            }
+
+            // Check for mode selection
+            if (value === '1' || value === 'professional') {
+                selectMode('professional', './professional/index.html');
+            } else if (value === '2' || value === 'creative') {
+                selectMode('creative', './creative/index.html');
+            } else if (value === '3' || value === 'brutal') {
+                selectMode('brutal', './brutal/index.html');
+            }
+        });
+
+        // Keypress handler
+        modeInput.addEventListener('keypress', (e) => {
+            if (easterEggActivated) return;
+            
+            if (e.key >= '1' && e.key <= '3') {
+                setTimeout(() => {
+                    const value = modeInput.value;
+                    if (value === '1') selectMode('professional', './professional/index.html');
+                    else if (value === '2') selectMode('creative', './creative/index.html');
+                    else if (value === '3') selectMode('brutal', './brutal/index.html');
+                }, 100);
+            }
+        });
+
+        // ESC to skip
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                isSkipping = true;
+                clearInterval(autoSelectTimer);
+                
+                if (bootScreen.style.display !== 'none') {
+                    showModeSelector();
+                }
+            }
+        });
+
+        // Prevent scroll on mobile
+        document.addEventListener('wheel', (e) => {
+            if (bootScreen.style.display !== 'none') {
+                e.preventDefault();
+            }
+        }, { passive: false });
+
+        document.addEventListener('touchmove', (e) => {
+            if (bootScreen.style.display !== 'none') {
+                e.preventDefault();
+            }
+        }, { passive: false });
+
+        // Start boot sequence on load
+        window.addEventListener('load', () => {
+            setTimeout(runBootSequence, 500);
+        });
+
+        // Keep input focused on desktop only
+        if (!isTouchDevice) {
+            setInterval(() => {
+                if (modeSelector.style.display === 'flex' && document.activeElement !== modeInput) {
+                    modeInput.focus();
+                }
+            }, 100);
+        }
+    </script>
+</body>
+</html>
