@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Harshana Jothi | System Boot</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --terminal-green: #00ff00;
+            --terminal-dark: #003300;
+            --terminal-dim: #00aa00;
+            --bg-black: #000000;
+        }
+
+        @font-face {
+            font-family: 'Terminal';
+            src: local('Courier New'), local('Courier'), monospace;
+        }
+
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            background: var(--bg-black);
+            color: var(--terminal-green);
+            min-height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Scan Lines Overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.15),
+                rgba(0, 0, 0, 0.15) 1px,
+                transparent 1px,
+                transparent 2px
+            );
+            pointer-events: none;
+            z-index: 1000;
+            opacity: 0.3;
+        }
+
+        /* CRT Flicker */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 255, 0, 0.02);
+            pointer-events: none;
+            z-index: 1001;
+            animation: flicker 0.15s infinite;
+        }
+
+        @keyframes flicker {
+            0%, 100% { opacity: 0.02; }
+            50% { opacity: 0.04; }
+        }
+
+        /* Boot Container */
+        #boot-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-black);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 2rem;
+            z-index: 100;
+        }
+
+        #boot-content {
+            max-width: 800px;
+            width: 100%;
+        }
+
+        .boot-line {
+            font-size: 1rem;
+            line-height: 1.8;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 1.2em;
+            background: var(--terminal-green);
+            animation: blink 1s infinite;
+            vertical-align: text-bottom;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        /* ASCII Art */
+        .ascii-art {
+            font-size: 0.7rem;
+            line-height: 1.2;
+            margin-bottom: 2rem;
+            color: var(--terminal-dim);
+        }
+
+        /* Mode Selector */
+        #mode-selector {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-black);
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 200;
+            padding: 2rem;
+        }
+
+        .mode-container {
+            border: 1px solid var(--terminal-green);
+            padding: 2rem;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.2), inset 0 0 20px rgba(0, 255, 0, 0.05);
+        }
+
+        .mode-title {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+        }
+
+        .mode-option {
+            display: block;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            border: 1px solid var(--terminal-dark);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: var(--terminal-green);
+            background: transparent;
+            font-family: inherit;
+            font-size: 1rem;
+            text-align: left;
+            width: 100%;
+        }
+
+        .mode-option:hover,
+        .mode-option:focus {
+            background: rgba(0, 255, 0, 0.1);
+            border-color: var(--terminal-green);
+            transform: translateX(10px);
+            outline: none;
+        }
+
+        .mode-option.selected {
+            background: var(--terminal-green);
+            color: var(--bg-black);
+            font-weight: bold;
+            border-color: var(--terminal-green);
+        }
+
+        .mode-number {
+            display: inline-block;
+            width: 30px;
+            color: var(--terminal-dim);
+        }
+
+        .mode-option:hover .mode-number,
+        .mode-option.selected .mode-number {
+            color: inherit;
+        }
+
+        .mode-desc {
+            color: var(--terminal-dim);
+            font-size: 0.85rem;
+            margin-left: 30px;
+        }
+
+        .mode-option:hover .mode-desc,
+        .mode-option.selected .mode-desc {
+            color: inherit;
+            opacity: 0.8;
+        }
+
+        .input-line {
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--terminal-dark);
+        }
+
+        .input-prompt {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .user-input {
+            background: transparent;
+            border: none;
+            color: var(--terminal-green);
+            font-family: inherit;
+            font-size: 1rem;
+            outline: none;
+            width: 100%;
+            caret-color: var(--terminal-green);
+        }
+
+        /* Loading Screen */
+        #loading-screen {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-black);
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 300;
+        }
+
+        .loading-text {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .progress-bar {
+            width: 300px;
+            height: 20px;
+            border: 1px solid var(--terminal-green);
+            padding: 2px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--terminal-green);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        /* Glitch Effect */
+        .glitch {
+            animation: glitch 0.3s ease;
+        }
+
+        @keyframes glitch {
+            0% {
+                transform: translateX(0);
+                text-shadow: none;
+            }
+            20% {
+                transform: translateX(-5px);
+                text-shadow: 2px 0 #ff0000, -2px 0 #00ffff;
+            }
+            40% {
+                transform: translateX(5px);
+                text-shadow: -2px 0 #ff0000, 2px 0 #00ffff;
+            }
+            60% {
+                transform: translateX(-3px);
+                text-shadow: 2px 0 #ff0000, -2px 0 #00ffff;
+            }
+            80% {
+                transform: translateX(3px);
+                text-shadow: -2px 0 #ff0000, 2px 0 #00ffff;
+            }
+            100% {
+                transform: translateX(0);
+                text-shadow: none;
+            }
+        }
+
+        .flash {
+            animation: flash 0.1s ease;
+        }
+
+        @keyframes flash {
+            0%, 100% { background: var(--bg-black); }
+            50% { background: #ffffff; }
+        }
+
+        /* Skip Button */
+        .skip-hint {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            font-size: 0.75rem;
+            color: var(--terminal-dim);
+            opacity: 0.6;
+            z-index: 500;
+        }
+
+        /* Easter Egg */
+        #easter-egg {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-black);
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 400;
+            padding: 2rem;
+        }
+
+        .teh-tarik-art {
+            font-size: 0.8rem;
+            line-height: 1.2;
+            margin: 2rem 0;
+            color: var(--terminal-green);
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 768px) {
+            .boot-line {
+                font-size: 0.9rem;
+            }
+
+            .ascii-art {
+                font-size: 0.5rem;
+            }
+
+            .mode-container {
+                padding: 1.5rem;
+            }
+
+            .mode-option {
+                padding: 1.5rem;
+            }
+
+            .mode-title {
+                font-size: 1rem;
+            }
+        }
+
+        /* Screen shake for glitch */
+        .shake {
+            animation: shake 0.3s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            50% { transform: translateX(5px); }
+            75% { transform: translateX(-3px); }
+        }
+
+        /* Hidden */
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Skip Hint -->
+    <div class="skip-hint">[ESC] to skip intro</div>
+
+    <!-- Phase 1: Boot Screen -->
+    <div id="boot-screen">
+        <div id="boot-content">
+            <!-- ASCII Art -->
+            <pre class="ascii-art" id="ascii-logo">
+    ___________________
+   |  INITIALIZING   |
+   |   MARKETING     |
+   | TECHNOLOGIST    |
+   |_________________|
+          | |
+          | |
+         (   )
+          | |
+          | |
+          | |
+         /   \
+        /_____\
+            </pre>
+            <div id="boot-text"></div>
+            <span class="cursor" id="boot-cursor"></span>
+        </div>
+    </div>
+
+    <!-- Phase 3: Mode Selector -->
+    <div id="mode-selector">
+        <div class="mode-container">
+            <div class="mode-title">=== SELECT MODE ===</div>
+            
+            <button class="mode-option" data-mode="professional" data-url="./index.html">
+                <span class="mode-number">[1]</span>
+                PROFESSIONAL MODE
+                <div class="mode-desc">Traditional CV, HR-friendly, corporate ready</div>
+            </button>
+
+            <button class="mode-option" data-mode="creative" data-url="./creative/index.html">
+                <span class="mode-number">[2]</span>
+                CREATIVE MODE
+                <div class="mode-desc">Interactive portfolio, full experience</div>
+            </button>
+
+            <button class="mode-option" data-mode="brutal" data-url="./brutal/index.html">
+                <span class="mode-number">[3]</span>
+                BRUTAL MODE
+                <div class="mode-desc">Unfiltered truth, password required</div>
+            </button>
+
+            <div class="input-line">
+                <div class="input-prompt">
+                    <span>></span>
+                    <input type="text" class="user-input" id="mode-input" maxlength="20" autocomplete="off" autofocus>
+                    <span class="cursor"></span>
+                </div>
+            </div>
+
+            <div id="auto-select-hint" style="margin-top: 1rem; font-size: 0.8rem; color: var(--terminal-dim);">
+                Auto-selecting CREATIVE MODE in <span id="countdown">5</span>s...
+            </div>
+        </div>
+    </div>
+
+    <!-- Easter Egg Screen -->
+    <div id="easter-egg">
+        <pre class="teh-tarik-art">
+    _______________________
+   |  TEH TARIK PROTOCOL  |
+   |      UNLOCKED        |
+   |______________________|
+            
+           (     )
+            )   (
+           (     )
+            |   |
+            |   |
+           /     \
+          |_______|
+          | ~~~   |
+          | ~~~   |
+          |_______|
+        </pre>
+        <div style="text-align: center;">
+            <p style="margin-bottom: 1rem;">Secret mode activated!</p>
+            <p style="color: var(--terminal-dim);">Redirecting to Creative Mode with extra teh tarik...</p>
+        </div>
+    </div>
+
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div class="loading-text" id="loading-text">INITIALIZING...</div>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progress-fill"></div>
+        </div>
+    </div>
+
+    <script>
+        // Boot Sequence Configuration
+        const bootLines = [
+            { text: "INITIALIZING HARSHANA_JOTHI.exe...", delay: 300 },
+            { text: "> Loading Python modules...", delay: 400, status: "[OK]" },
+            { text: "> Calibrating AI prediction models...", delay: 600, status: "[OK]" },
+            { text: "> Loading viral content algorithms...", delay: 500, status: "[OK]" },
+            { text: "> Connecting to Malaysian marketing databases...", delay: 700, status: "[OK]" },
+            { text: "> Brewing teh tarik...", delay: 800, status: "[OK]" },
+            { text: "> Systems nominal.", delay: 400 },
+            { text: "> Access granted.", delay: 300 },
+            { text: "", delay: 200 },
+            { text: "Welcome, visitor.", delay: 400 }
+        ];
+
+        // State
+        let currentLine = 0;
+        let charIndex = 0;
+        let isSkipping = false;
+        let autoSelectTimer = null;
+        let countdownValue = 5;
+        let easterEggActivated = false;
+
+        // DOM Elements
+        const bootScreen = document.getElementById('boot-screen');
+        const bootText = document.getElementById('boot-text');
+        const bootCursor = document.getElementById('boot-cursor');
+        const modeSelector = document.getElementById('mode-selector');
+        const loadingScreen = document.getElementById('loading-screen');
+        const easterEgg = document.getElementById('easter-egg');
+        const modeInput = document.getElementById('mode-input');
+        const countdownSpan = document.getElementById('countdown');
+        const autoSelectHint = document.getElementById('auto-select-hint');
+
+        // Typewriter Effect
+        function typeLine(line, callback) {
+            if (isSkipping) {
+                bootText.innerHTML += line.text + (line.status ? ` <span style="color: var(--terminal-dim)">${line.status}</span>` : '') + '\n';
+                if (callback) callback();
+                return;
+            }
+
+            const lineElement = document.createElement('div');
+            lineElement.className = 'boot-line';
+            bootText.appendChild(lineElement);
+
+            function typeChar() {
+                if (isSkipping) {
+                    lineElement.textContent = line.text;
+                    if (line.status) {
+                        lineElement.innerHTML += ` <span style="color: var(--terminal-dim)">${line.status}</span>`;
+                    }
+                    if (callback) callback();
+                    return;
+                }
+
+                if (charIndex < line.text.length) {
+                    lineElement.textContent += line.text.charAt(charIndex);
+                    charIndex++;
+                    setTimeout(typeChar, 30 + Math.random() * 20);
+                } else {
+                    if (line.status) {
+                        lineElement.innerHTML += ` <span style="color: var(--terminal-dim)">${line.status}</span>`;
+                    }
+                    charIndex = 0;
+                    setTimeout(callback, line.delay);
+                }
+            }
+
+            typeChar();
+        }
+
+        // Boot Sequence
+        function runBootSequence() {
+            if (currentLine < bootLines.length) {
+                typeLine(bootLines[currentLine], () => {
+                    currentLine++;
+                    runBootSequence();
+                });
+            } else {
+                setTimeout(showGlitchTransition, 500);
+            }
+        }
+
+        // Glitch Transition
+        function showGlitchTransition() {
+            // Flash white
+            document.body.classList.add('flash');
+            
+            // RGB split and shake
+            bootScreen.classList.add('glitch', 'shake');
+
+            setTimeout(() => {
+                document.body.classList.remove('flash');
+                bootScreen.classList.remove('glitch', 'shake');
+                showModeSelector();
+            }, 300);
+        }
+
+        // Show Mode Selector
+        function showModeSelector() {
+            bootScreen.style.display = 'none';
+            modeSelector.style.display = 'flex';
+            modeInput.focus();
+            startAutoSelect();
+        }
+
+        // Auto-select countdown
+        function startAutoSelect() {
+            autoSelectTimer = setInterval(() => {
+                countdownValue--;
+                countdownSpan.textContent = countdownValue;
+                
+                if (countdownValue <= 0) {
+                    clearInterval(autoSelectTimer);
+                    selectMode('creative', './creative/index.html');
+                }
+            }, 1000);
+        }
+
+        // Mode Selection
+        function selectMode(mode, url) {
+            clearInterval(autoSelectTimer);
+            autoSelectHint.style.display = 'none';
+
+            // Highlight selected option
+            document.querySelectorAll('.mode-option').forEach(btn => {
+                if (btn.dataset.mode === mode) {
+                    btn.classList.add('selected');
+                }
+            });
+
+            // Show loading screen
+            setTimeout(() => {
+                modeSelector.style.display = 'none';
+                loadingScreen.style.display = 'flex';
+                
+                document.getElementById('loading-text').textContent = `LOADING ${mode.toUpperCase()} MODE...`;
+                
+                // Animate progress bar
+                let progress = 0;
+                const progressInterval = setInterval(() => {
+                    progress += Math.random() * 30;
+                    if (progress >= 100) {
+                        progress = 100;
+                        clearInterval(progressInterval);
+                        document.getElementById('progress-fill').style.width = '100%';
+                        
+                        // Redirect
+                        setTimeout(() => {
+                            window.location.href = url;
+                        }, 300);
+                    } else {
+                        document.getElementById('progress-fill').style.width = progress + '%';
+                    }
+                }, 100);
+            }, 500);
+        }
+
+        // Easter Egg
+        function showEasterEgg() {
+            clearInterval(autoSelectTimer);
+            easterEggActivated = true;
+            modeSelector.style.display = 'none';
+            easterEgg.style.display = 'flex';
+            
+            setTimeout(() => {
+                selectMode('creative', './creative/index.html');
+            }, 2000);
+        }
+
+        // Event Listeners
+
+        // Click on mode options
+        document.querySelectorAll('.mode-option').forEach(btn => {
+            btn.addEventListener('click', () => {
+                selectMode(btn.dataset.mode, btn.dataset.url);
+            });
+        });
+
+        // Keyboard input
+        modeInput.addEventListener('input', (e) => {
+            const value = e.target.value.toLowerCase();
+            
+            // Check for easter egg
+            if (value === 'mamak') {
+                showEasterEgg();
+                return;
+            }
+
+            // Check for mode selection
+            if (value === '1' || value === 'professional') {
+                selectMode('professional', './index.html');
+            } else if (value === '2' || value === 'creative') {
+                selectMode('creative', './creative/index.html');
+            } else if (value === '3' || value === 'brutal') {
+                selectMode('brutal', './brutal/index.html');
+            }
+        });
+
+        // Prevent non-numeric input (except for mamak)
+        modeInput.addEventListener('keypress', (e) => {
+            if (easterEggActivated) return;
+            
+            // Allow letters for "mamak" easter egg
+            if (e.key >= '1' && e.key <= '3') {
+                // Auto-select on number press
+                setTimeout(() => {
+                    const value = modeInput.value;
+                    if (value === '1') selectMode('professional', './index.html');
+                    else if (value === '2') selectMode('creative', './creative/index.html');
+                    else if (value === '3') selectMode('brutal', './brutal/index.html');
+                }, 100);
+            }
+        });
+
+        // ESC to skip
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                isSkipping = true;
+                clearInterval(autoSelectTimer);
+                
+                if (bootScreen.style.display !== 'none') {
+                    showModeSelector();
+                }
+            }
+        });
+
+        // Prevent scroll
+        document.addEventListener('wheel', (e) => e.preventDefault(), { passive: false });
+        document.addEventListener('touchmove', (e) => e.preventDefault(), { passive: false });
+
+        // Start boot sequence on load
+        window.addEventListener('load', () => {
+            setTimeout(runBootSequence, 500);
+        });
+
+        // Keep input focused
+        setInterval(() => {
+            if (modeSelector.style.display === 'flex' && document.activeElement !== modeInput) {
+                modeInput.focus();
+            }
+        }, 100);
+    </script>
+</body>
+</html>
