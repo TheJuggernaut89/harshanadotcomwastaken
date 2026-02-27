@@ -263,12 +263,17 @@
             position: relative;
             overflow: hidden;
             cursor: pointer;
-            opacity: 0;
-            transform: translateY(30px);
+            opacity: 1;
+            transform: translateY(0);
             transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .bento-item.visible {
+        .bento-item.animate-in {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .bento-item.animate-in.visible {
             opacity: 1;
             transform: translateY(0);
         }
@@ -998,7 +1003,7 @@
         <!-- Bento Grid -->
         <section class="bento-grid" id="grid">
             <!-- Row 1 -->
-            <div class="bento-item span-2 featured-image" data-id="cheesecake">
+            <div class="bento-item span-2 featured-image animate-in" data-id="cheesecake">
                 <div class="placeholder" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
                     <div class="placeholder-icon">🍰</div>
                     <div class="placeholder-text">429% ROI Cheesecake</div>
@@ -1012,12 +1017,12 @@
                 </div>
             </div>
 
-            <div class="bento-item category-card" data-id="category">
+            <div class="bento-item category-card animate-in" data-id="category">
                 <div class="category-label">Clearance</div>
                 <div class="category-name">Trauma.</div>
             </div>
 
-            <div class="bento-item product-card" data-id="python">
+            <div class="bento-item product-card animate-in" data-id="python">
                 <span class="product-tag">HOT</span>
                 <div class="product-image-wrap">
                     <div class="placeholder" style="background: #e3f2fd;">
@@ -1035,7 +1040,7 @@
             </div>
 
             <!-- Row 2 -->
-            <div class="bento-item text-card" data-id="about">
+            <div class="bento-item text-card animate-in" data-id="about">
                 <div>
                     <div class="text-card-header">About</div>
                     <h3 class="text-card-title">Mamak-driven philosophy</h3>
@@ -1054,7 +1059,7 @@
                 </div>
             </div>
 
-            <div class="bento-item span-2-row text-card" style="background: #fafafa;" data-id="philosophy">
+            <div class="bento-item span-2-row text-card animate-in" style="background: #fafafa;" data-id="philosophy">
                 <div>
                     <div class="text-card-header">War Story</div>
                     <h3 class="text-card-title">Less but better<br>(unlike my clients)</h3>
@@ -1064,7 +1069,7 @@
             </div>
 
             <!-- Row 3 -->
-            <div class="bento-item product-card" data-id="guru">
+            <div class="bento-item product-card animate-in" data-id="guru">
                 <div class="product-image-wrap">
                     <div class="placeholder" style="background: #f3e5f5;">
                         <div class="placeholder-icon">🧙‍♂️</div>
@@ -1080,7 +1085,7 @@
                 </div>
             </div>
 
-            <div class="bento-item category-card" style="background: #1a1a1a;" data-id="modular">
+            <div class="bento-item category-card animate-in" style="background: #1a1a1a;" data-id="modular">
                 <div class="category-label">System</div>
                 <div class="category-name" style="font-size: 36px;">Bullshit.</div>
             </div>
@@ -1095,7 +1100,7 @@
                 </div>
             </div>
 
-            <div class="bento-item product-card" data-id="scopecreep">
+            <div class="bento-item product-card animate-in" data-id="scopecreep">
                 <span class="product-tag sale">DANGER</span>
                 <div class="product-image-wrap">
                     <div class="placeholder" style="background: #ffebee;">
