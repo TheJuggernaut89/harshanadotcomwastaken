@@ -17,6 +17,7 @@ const __dirname = path.dirname(__filename);
 const distDir = path.join(__dirname, 'dist');
 const professionalDir = path.join(distDir, 'professional');
 const creativeDir = path.join(distDir, 'creative');
+const brutalDir = path.join(distDir, 'brutal');
 
 console.log('Running post-build reorganization...');
 
@@ -26,6 +27,9 @@ if (!fs.existsSync(professionalDir)) {
 }
 if (!fs.existsSync(creativeDir)) {
   fs.mkdirSync(creativeDir, { recursive: true });
+}
+if (!fs.existsSync(brutalDir)) {
+  fs.mkdirSync(brutalDir, { recursive: true });
 }
 
 // Move built React app to professional/
@@ -64,9 +68,20 @@ if (fs.existsSync(creativeSource)) {
   console.log('✓ Copied creative mode');
 }
 
+// Copy brutal folder
+const brutalSource = path.join(__dirname, 'brutal');
+if (fs.existsSync(brutalSource)) {
+  fs.copyFileSync(
+    path.join(brutalSource, 'index.html'),
+    path.join(brutalDir, 'index.html')
+  );
+  console.log('✓ Copied brutal mode');
+}
+
 console.log('Post-build complete!');
 console.log('');
 console.log('Structure:');
 console.log('  / (root) -> Terminal boot');
 console.log('  /professional/ -> React app');
 console.log('  /creative/ -> Creative mode');
+console.log('  /brutal/ -> Brutal mode (trauma clearance)');
