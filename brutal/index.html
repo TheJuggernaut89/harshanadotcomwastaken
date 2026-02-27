@@ -106,22 +106,6 @@
             gap: 24px;
         }
 
-        .mode-link {
-            font-size: 13px;
-            color: #666;
-            text-decoration: none;
-            padding: 8px 16px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            transition: all 0.3s ease;
-        }
-
-        .mode-link:hover {
-            background: #000;
-            color: #fff;
-            border-color: #000;
-        }
-
         .cart-btn {
             position: relative;
             background: none;
@@ -166,9 +150,9 @@
             to { transform: scale(1); }
         }
 
-        /* Hero - Milo Store Style */
+        /* Hero */
         .hero {
-            padding: 160px 40px 80px;
+            padding: 180px 40px 100px;
             max-width: 1400px;
             margin: 0 auto;
         }
@@ -176,50 +160,49 @@
         .hero-content {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 80px;
+            gap: 60px;
             align-items: start;
         }
 
         .hero-left h1 {
-            font-size: clamp(64px, 10vw, 140px);
+            font-size: 120px;
             font-weight: 700;
-            letter-spacing: -0.04em;
-            line-height: 0.95;
-            margin-bottom: 0;
-            opacity: 0;
-            transform: translateY(60px);
-            animation: miloFadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            animation-delay: 0.3s;
+            letter-spacing: -4px;
+            line-height: 1;
+            margin-bottom: 40px;
+            color: #000;
+            transform: translateY(100%);
+            animation: slideUpText 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation-delay: 0.6s;
         }
 
-        @keyframes miloFadeUp {
-            to { 
-                opacity: 1;
-                transform: translateY(0);
-            }
+        @keyframes slideUpText {
+            to { transform: translateY(0); }
         }
 
         .hero-right {
-            padding-top: 40px;
+            padding-top: 20px;
             opacity: 0;
-            transform: translateY(40px);
-            animation: miloFadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            animation-delay: 0.5s;
+            animation: fadeIn 1s ease forwards;
+            animation-delay: 0.8s;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
         }
 
         .hero-text {
-            font-size: 16px;
-            line-height: 1.7;
-            color: #555;
-            max-width: 380px;
-            margin-bottom: 48px;
-            font-weight: 400;
+            font-size: 18px;
+            line-height: 1.6;
+            color: #333;
+            max-width: 400px;
+            margin-bottom: 40px;
         }
 
         .hero-links {
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 12px;
         }
 
         .hero-link {
@@ -228,37 +211,36 @@
             text-decoration: none;
             display: flex;
             align-items: center;
-            gap: 10px;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            gap: 8px;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             position: relative;
             width: fit-content;
-            font-weight: 500;
         }
 
         .hero-link:hover {
             color: #000;
-            transform: translateX(6px);
+            transform: translateX(4px);
         }
 
         .arrow {
-            font-size: 13px;
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            font-size: 12px;
+            transition: transform 0.3s;
         }
 
         .hero-link:hover .arrow {
-            transform: translateX(6px);
+            transform: translateX(4px);
         }
 
-        /* Bento Grid - Milo Store Style */
+        /* Bento Grid */
         .bento-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            grid-auto-rows: 320px;
-            gap: 8px;
-            background: transparent;
-            padding: 0 40px;
+            grid-auto-rows: 350px;
+            gap: 2px;
+            background: #f0f0f0;
+            padding: 2px;
             max-width: 1400px;
-            margin: 0 auto 60px;
+            margin: 0 auto 40px;
         }
 
         .bento-item {
@@ -268,23 +250,12 @@
             cursor: pointer;
             opacity: 1;
             transform: translateY(0);
-            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-            border-radius: 4px;
-        }
-
-        .bento-item.animate-in {
-            opacity: 0;
-            transform: translateY(24px);
-        }
-
-        .bento-item.animate-in.visible {
-            opacity: 1;
-            transform: translateY(0);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .bento-item:hover {
-            transform: translateY(-6px) scale(1.01);
-            box-shadow: 0 24px 48px rgba(0,0,0,0.08);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
             z-index: 10;
         }
 
@@ -309,153 +280,135 @@
             filter: brightness(1.05);
         }
 
-        /* Text cards - Milo Store Style */
+        /* Text cards - FIXED COLORS */
         .text-card {
-            padding: 36px;
+            padding: 40px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             height: 100%;
-            background: #fafafa;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            background: #fff;
+            transition: background 0.4s ease;
         }
 
         .text-card:hover {
-            background: #f5f5f5;
+            background: #fafafa;
         }
 
         .text-card-header {
-            font-size: 11px;
+            font-size: 12px;
             text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: #888;
-            margin-bottom: 16px;
+            letter-spacing: 1px;
+            color: #666;
+            margin-bottom: 20px;
             font-weight: 600;
         }
 
         .text-card-title {
-            font-size: 28px;
+            font-size: 32px;
             font-weight: 700;
-            letter-spacing: -0.02em;
-            line-height: 1.15;
-            margin-bottom: 16px;
-            color: #111;
+            letter-spacing: -1px;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            color: #000;
             transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .text-card:hover .text-card-title {
-            transform: translateX(6px);
+            transform: translateX(4px);
         }
 
         .text-card-desc {
             font-size: 14px;
-            line-height: 1.6;
+            line-height: 1.5;
             color: #555;
-            max-width: 260px;
+            max-width: 280px;
         }
 
         .text-card-footer {
             margin-top: auto;
             padding-top: 20px;
             font-size: 12px;
-            color: #aaa;
-            font-weight: 500;
+            color: #888;
         }
 
-        /* Product cards - Milo Store Style */
+        /* Product cards - FIXED COLORS */
         .product-card {
             position: relative;
-            background: #fff;
-            border: 1px solid #eee;
+            background: #f8f8f8;
         }
 
         .product-image-wrap {
             width: 100%;
-            height: 72%;
+            height: 70%;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 32px;
-            background: linear-gradient(135deg, #fafafa 0%, #f5f5f5 100%);
+            padding: 40px;
+            background: #f5f5f5;
             overflow: hidden;
         }
 
         .product-img {
-            max-width: 75%;
-            max-height: 75%;
+            max-width: 80%;
+            max-height: 80%;
             object-fit: contain;
-            transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .product-card:hover .product-img {
-            transform: scale(1.08);
+            transform: scale(1.1) rotate(-2deg);
         }
 
         .product-info {
-            padding: 18px 22px;
-            height: 28%;
+            padding: 20px 24px;
+            height: 30%;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: space-between;
             background: #fff;
-            border-top: 1px solid #f0f0f0;
+            border-top: 1px solid #eee;
         }
 
         .product-name {
             font-size: 14px;
             font-weight: 600;
-            margin-bottom: 6px;
-            color: #111;
-            letter-spacing: -0.01em;
+            margin-bottom: 4px;
+            color: #000;
         }
 
         .product-price {
             font-size: 13px;
-            color: #777;
-            font-weight: 500;
+            color: #666;
         }
 
         .product-tag {
             position: absolute;
-            top: 14px;
-            left: 14px;
-            background: #111;
+            top: 16px;
+            left: 16px;
+            background: #000;
             color: #fff;
-            padding: 7px 14px;
-            font-size: 10px;
-            font-weight: 700;
-            letter-spacing: 1px;
-            text-transform: uppercase;
+            padding: 6px 12px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
             z-index: 5;
-            transform: translateY(-10px);
-            opacity: 0;
-            animation: slideDownTag 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            animation-delay: 0.8s;
-            border-radius: 2px;
-        }
-
-        @keyframes slideDownTag {
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
         }
 
         .product-tag.sale {
-            background: #e53935;
+            background: #ff0000;
         }
 
-        /* Category cards - Milo Store Style */
+        /* Category cards - FIXED COLORS */
         .category-card {
-            background: #111;
+            background: #000;
             color: #fff;
-            padding: 36px;
+            padding: 40px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             position: relative;
             overflow: hidden;
-            border-radius: 4px;
         }
 
         .category-card::before {
@@ -465,7 +418,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.05) 100%);
+            background: linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.1) 100%);
             opacity: 0;
             transition: opacity 0.6s ease;
         }
@@ -475,20 +428,18 @@
         }
 
         .category-label {
-            font-size: 11px;
+            font-size: 12px;
             text-transform: uppercase;
-            letter-spacing: 1.5px;
-            opacity: 0.5;
-            font-weight: 600;
+            letter-spacing: 1px;
+            color: rgba(255,255,255,0.6);
         }
 
         .category-name {
-            font-size: 42px;
+            font-size: 48px;
             font-weight: 700;
-            letter-spacing: -0.03em;
+            letter-spacing: -2px;
             color: #fff;
             transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            line-height: 1.1;
         }
 
         .category-card:hover .category-name {
@@ -528,30 +479,30 @@
             font-size: 24px;
             font-weight: 700;
             margin-bottom: 8px;
+            color: #fff;
         }
 
         .overlay-desc {
             font-size: 14px;
-            opacity: 0.8;
+            color: rgba(255,255,255,0.8);
         }
 
-        /* Click indicator - Milo Store Style */
+        /* Click indicator */
         .click-indicator {
             position: absolute;
-            bottom: 18px;
-            right: 18px;
-            width: 44px;
-            height: 44px;
-            background: rgba(255,255,255,0.95);
+            bottom: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.9);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             opacity: 0;
             transform: scale(0.8);
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: all 0.3s ease;
             z-index: 20;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
 
         .bento-item:hover .click-indicator {
@@ -560,9 +511,9 @@
         }
 
         .click-indicator svg {
-            width: 18px;
-            height: 18px;
-            stroke: #111;
+            width: 20px;
+            height: 20px;
+            stroke: #000;
             stroke-width: 2;
             fill: none;
         }
@@ -663,12 +614,14 @@
             letter-spacing: -2px;
             line-height: 1.1;
             margin-bottom: 15px;
+            color: #fff;
             text-shadow: 4px 4px 0 rgba(0,0,0,0.3);
         }
 
         .brutal-subtitle {
             font-size: 20px;
             font-weight: 700;
+            color: #fff;
             opacity: 0.95;
         }
 
@@ -676,6 +629,7 @@
             font-size: 17px;
             line-height: 1.8;
             margin-bottom: 25px;
+            color: #fff;
             font-weight: 400;
         }
 
@@ -780,7 +734,7 @@
         .original-price {
             font-size: 24px;
             text-decoration: line-through;
-            opacity: 0.6;
+            color: rgba(255,255,255,0.6);
             font-weight: 500;
         }
 
@@ -824,6 +778,7 @@
             border: 4px solid #fff;
             text-align: center;
             font-size: 15px;
+            color: #fff;
             line-height: 1.6;
             background: rgba(255,255,255,0.05);
         }
@@ -836,7 +791,7 @@
             50% { opacity: 0; }
         }
 
-        /* Placeholder improvements */
+        /* Placeholder - FIXED */
         .placeholder {
             width: 100%;
             height: 100%;
@@ -844,7 +799,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            color: #666;
+            color: #fff;
             font-size: 14px;
             font-weight: 500;
         }
@@ -852,22 +807,20 @@
         .placeholder-icon {
             font-size: 64px;
             margin-bottom: 10px;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
         }
 
         .placeholder-text {
             font-size: 12px;
             text-transform: uppercase;
             letter-spacing: 1px;
-            opacity: 0.9;
             color: #fff;
             font-weight: 600;
             text-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
 
-        /* Footer - Milo Store Style */
+        /* Footer */
         footer {
-            padding: 50px 40px;
+            padding: 60px 40px;
             border-top: 1px solid #eee;
             max-width: 1400px;
             margin: 0 auto;
@@ -885,27 +838,25 @@
         }
 
         .footer-left {
-            font-size: 13px;
-            color: #888;
-            font-weight: 500;
+            font-size: 14px;
+            color: #666;
         }
 
         .footer-right {
             display: flex;
-            gap: 32px;
+            gap: 24px;
         }
 
         .footer-link {
-            font-size: 13px;
+            font-size: 14px;
             color: #666;
             text-decoration: none;
             position: relative;
             transition: color 0.3s;
-            font-weight: 500;
         }
 
         .footer-link:hover {
-            color: #111;
+            color: #000;
         }
 
         /* Responsive */
@@ -987,8 +938,6 @@
         <nav>
             <a href="#" class="logo">Milo.</a>
             <div class="nav-right">
-                <a href="../professional/index.html" class="mode-link">Pro</a>
-                <a href="../creative/index.html" class="mode-link">Creative</a>
                 <button class="cart-btn" onclick="showCart()">
                     <svg class="cart-icon" viewBox="0 0 24 24">
                         <path d="M6 6h15l-1.5 9h-12L6 6zm0 0L5 3H2m4 3l1.5 9"/>
@@ -1027,7 +976,7 @@
         <!-- Bento Grid -->
         <section class="bento-grid" id="grid">
             <!-- Row 1 -->
-            <div class="bento-item span-2 featured-image animate-in" data-id="cheesecake">
+            <div class="bento-item span-2 featured-image" data-id="cheesecake">
                 <div class="placeholder" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
                     <div class="placeholder-icon">🍰</div>
                     <div class="placeholder-text">429% ROI Cheesecake</div>
@@ -1041,12 +990,12 @@
                 </div>
             </div>
 
-            <div class="bento-item category-card animate-in" data-id="category">
+            <div class="bento-item category-card" data-id="category">
                 <div class="category-label">Clearance</div>
                 <div class="category-name">Trauma.</div>
             </div>
 
-            <div class="bento-item product-card animate-in" data-id="python">
+            <div class="bento-item product-card" data-id="python">
                 <span class="product-tag">HOT</span>
                 <div class="product-image-wrap">
                     <div class="placeholder" style="background: #e3f2fd;">
@@ -1064,7 +1013,7 @@
             </div>
 
             <!-- Row 2 -->
-            <div class="bento-item text-card animate-in" data-id="about">
+            <div class="bento-item text-card" data-id="about">
                 <div>
                     <div class="text-card-header">About</div>
                     <h3 class="text-card-title">Mamak-driven philosophy</h3>
@@ -1083,7 +1032,7 @@
                 </div>
             </div>
 
-            <div class="bento-item span-2-row text-card animate-in" style="background: #fafafa;" data-id="philosophy">
+            <div class="bento-item span-2-row text-card" style="background: #fafafa;" data-id="philosophy">
                 <div>
                     <div class="text-card-header">War Story</div>
                     <h3 class="text-card-title">Less but better<br>(unlike my clients)</h3>
@@ -1093,7 +1042,7 @@
             </div>
 
             <!-- Row 3 -->
-            <div class="bento-item product-card animate-in" data-id="guru">
+            <div class="bento-item product-card" data-id="guru">
                 <div class="product-image-wrap">
                     <div class="placeholder" style="background: #f3e5f5;">
                         <div class="placeholder-icon">🧙‍♂️</div>
@@ -1109,7 +1058,7 @@
                 </div>
             </div>
 
-            <div class="bento-item category-card animate-in" style="background: #1a1a1a;" data-id="modular">
+            <div class="bento-item category-card" style="background: #1a1a1a;" data-id="modular">
                 <div class="category-label">System</div>
                 <div class="category-name" style="font-size: 36px;">Bullshit.</div>
             </div>
@@ -1124,7 +1073,7 @@
                 </div>
             </div>
 
-            <div class="bento-item product-card animate-in" data-id="scopecreep">
+            <div class="bento-item product-card" data-id="scopecreep">
                 <span class="product-tag sale">DANGER</span>
                 <div class="product-image-wrap">
                     <div class="placeholder" style="background: #ffebee;">
@@ -1244,7 +1193,7 @@
 
             jesaisquoi: {
                 title: "50 AI POSTS IN 2 MINS",
-                subtitle: "The "Je Ne Sais Quoi" Incident",
+                subtitle: "The 'Je Ne Sais Quoi' Incident",
                 badge: "FRENCH<br>LOL",
                 condition: "EXISTENTIAL CRISIS",
                 originalPrice: "3 WEEKS + DIGNITY",
@@ -1324,7 +1273,7 @@
 
             raya: {
                 title: "RAYA CONTENT PACKAGE",
-                subtitle: "The "Not Muslim Enough" Feedback Loop",
+                subtitle: "The 'Not Muslim Enough' Feedback Loop",
                 badge: "COMIC<br>SANS",
                 condition: "CULTURALLY DECEASED",
                 originalPrice: "CULTURAL INTEGRITY",
@@ -1363,7 +1312,7 @@
             },
 
             scopecreep: {
-                title: "47 "CAN YOU JUST"",
+                title: "47 'CAN YOU JUST'",
                 subtitle: "Scope Creep: The Malaysian Edition",
                 badge: "DANGER",
                 condition: "GAINED SENTIENCE & QUIT",
@@ -1545,27 +1494,13 @@
             }
         };
 
-        // Intersection Observer
+        // Footer observer
         const observerOptions = {
             root: null,
             rootMargin: '0px',
             threshold: 0.1
         };
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.bento-item').forEach((item) => {
-            observer.observe(item);
-        });
-
-        // Footer observer
         const footer = document.querySelector('footer');
         if (footer) {
             const footerObserver = new IntersectionObserver((entries) => {
