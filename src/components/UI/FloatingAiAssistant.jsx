@@ -3,6 +3,7 @@ import { Paperclip, Link, Code, Mic, Send, Info, Bot, X, MessageCircle } from 'l
 import { motion, AnimatePresence } from 'framer-motion';
 import QuickActionChips from './QuickActionChips';
 import { useAutoScroll } from '../../hooks/useAutoScroll';
+import { trackChatbotEvent, getChatbotStats } from '../../utils/chatbotAnalytics';
 
 const FloatingAiAssistant = () => {
   const [isChatOpen, setIsChatOpen] = useState(false);
@@ -43,6 +44,9 @@ const FloatingAiAssistant = () => {
         if (window.scrollY > 300) {
           setIsChatOpen(true);
           setHasAutoOpened(true);
+          
+          // Track chatbot opened event
+          trackChatbotEvent('chatbot_opened', { trigger: 'auto_scroll' });
           
           // Send initial AI greeting
           setTimeout(() => {
@@ -308,6 +312,12 @@ const FloatingAiAssistant = () => {
     if (messageToSend.trim() && !isTyping) {
       const userMessage = messageToSend.trim();
 
+      // Track message sent event
+      trackChatbotEvent('message_sent', { 
+        length: userMessage.length,
+        isChip: !!messageOverride 
+      });
+
       // Add user message to UI
       setMessages(prev => [...prev, {
         text: userMessage,
@@ -391,10 +401,21 @@ const FloatingAiAssistant = () => {
 
   // Handle chip click - auto-send chip action as message
   const handleChipClick = (chipAction) => {
+    // Track quick reply clicked
+    trackChatbotEvent('quick_reply', { action: chipAction });
+    
     setMessage(chipAction);
     // Pass chipAction directly to avoid state update race condition
     handleSend(chipAction);
   };
+
+  // Track when chat is manually opened/closed
+  useEffect(() => {
+    if (isChatOpen && hasAutoOpened) {
+      // Only track manual opens (not auto-opens which are tracked separately)
+      trackChatbotEvent('chatbot_opened', { trigger: 'manual_click' });
+    }
+  }, [isChatOpen]);
 
   // Close chat when clicking outside
   useEffect(() => {

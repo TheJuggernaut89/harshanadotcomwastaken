@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Mail, MessageSquare, Phone, Send, Github, Linkedin, Twitter, Sparkles, ArrowRight, Users, Zap, Building2, Lightbulb, Coffee, Briefcase } from 'lucide-react';
+import { trackChatbotEvent } from '../../utils/chatbotAnalytics';
 
 const ChooseYourAdventure = () => {
     const [stage, setStage] = useState('start');
@@ -415,6 +416,7 @@ const ChooseYourAdventure = () => {
                                 <div className="space-y-4">
                                     <a
                                         href={`mailto:jothiharshana188@gmail.com?subject=${encodeURIComponent(currentStory.cta)}`}
+                                        onClick={() => trackChatbotEvent('email_click', { context: currentStory.title })}
                                         className="w-full flex items-center justify-center gap-3 px-8 py-4 bg-primary text-white rounded-xl font-bold text-lg shadow-lg shadow-primary/30 hover:shadow-xl hover:shadow-primary/40 transition-all"
                                     >
                                         <Mail size={20} />
@@ -453,13 +455,14 @@ const ChooseYourAdventure = () => {
                 >
                     <span className="text-sm text-gray-600 dark:text-gray-400">Or connect directly:</span>
                     {[
-                        { icon: <Linkedin size={20} />, href: '#', label: 'LinkedIn' },
+                        { icon: <Linkedin size={20} />, href: 'https://linkedin.com/in/harshanajothi', label: 'LinkedIn', trackType: 'linkedin_click' },
                         { icon: <Twitter size={20} />, href: '#', label: 'Twitter' },
                         { icon: <Github size={20} />, href: '#', label: 'GitHub' }
                     ].map((social, i) => (
                         <motion.a
                             key={i}
                             href={social.href}
+                            onClick={() => social.trackType && trackChatbotEvent(social.trackType, { location: 'contact_section' })}
                             whileHover={{ y: -3, scale: 1.1 }}
                             className="w-10 h-10 rounded-full border border-primary/20 hover:border-primary/50 flex items-center justify-center hover:bg-primary/10 transition-all"
                             title={social.label}

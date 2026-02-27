@@ -18,6 +18,7 @@ import MakcikApprovalEvolution from './components/Sections/MakcikApprovalEvoluti
 import Contact from './components/Sections/Contact';
 import FloatingNav from './components/Layout/FloatingNav';
 import { FloatingAiAssistant } from './components/UI/FloatingAiAssistant';
+import { trackChatbotEvent } from './utils/chatbotAnalytics';
 
 function App() {
   const [showIntro, setShowIntro] = useState(true);
@@ -129,6 +130,7 @@ function App() {
                       <a 
                         href="/resume.pdf" 
                         download
+                        onClick={() => trackChatbotEvent('download_resume', { location: 'footer' })}
                         className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 hover:bg-primary/20 text-primary font-medium text-sm transition-all"
                       >
                         <FileText size={16} />
