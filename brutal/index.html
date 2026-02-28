@@ -4,8 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Milo. - Trauma Clearance</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+        :root {
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+            --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
 
         * {
             margin: 0;
@@ -19,53 +26,115 @@
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: #fafafa;
-            color: #111;
+            background: #fff;
+            color: #000;
             line-height: 1.5;
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
+            cursor: none;
         }
 
-        /* Scrollbar */
-        ::-webkit-scrollbar {
-            width: 6px;
+        /* Custom Cursor */
+        .cursor {
+            position: fixed;
+            width: 40px;
+            height: 40px;
+            border: 1px solid #000;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: difference;
+            background: transparent;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s, background 0.3s;
         }
 
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1;
+        .cursor.hover {
+            width: 60px;
+            height: 60px;
+            background: rgba(255,255,255,0.1);
         }
 
-        ::-webkit-scrollbar-thumb {
-            background: #ccc;
-            border-radius: 3px;
+        .cursor-dot {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            background: #000;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10000;
+            mix-blend-mode: difference;
+            transform: translate(-50%, -50%);
         }
 
         /* Navigation */
-        nav {
+        header {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             z-index: 100;
+            padding: 24px 48px;
+            transition: all 0.5s var(--ease-out-expo);
+        }
+
+        header.scrolled {
+            background: rgba(255,255,255,0.9);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+            padding: 16px 48px;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 48px;
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(20px) saturate(180%);
-            -webkit-backdrop-filter: blur(20px) saturate(180%);
-            border-bottom: 1px solid rgba(0,0,0,0.06);
         }
 
         .logo {
-            font-size: 22px;
-            font-weight: 700;
-            letter-spacing: -0.5px;
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: -2px;
             text-decoration: none;
-            color: #111;
+            color: #000;
+            position: relative;
+            display: inline-block;
         }
 
-        .nav-right {
+        .nav-links {
+            display: flex;
+            gap: 48px;
+        }
+
+        .nav-link {
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: #000;
+            position: relative;
+            padding: 8px 0;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: #000;
+            transition: width 0.4s var(--ease-out-expo);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .nav-actions {
             display: flex;
             align-items: center;
             gap: 24px;
@@ -75,350 +144,567 @@
             position: relative;
             background: none;
             border: none;
-            cursor: pointer;
+            cursor: none;
             padding: 8px;
-            transition: transform 0.2s ease;
         }
 
-        .cart-btn:hover {
-            transform: scale(1.05);
-        }
-
-        .cart-icon {
-            width: 22px;
-            height: 22px;
-            stroke: #111;
+        .cart-btn svg {
+            width: 24px;
+            height: 24px;
+            stroke: #000;
             stroke-width: 1.5;
             fill: none;
         }
 
         .cart-count {
             position: absolute;
-            top: 2px;
-            right: 2px;
-            background: #111;
+            top: -4px;
+            right: -4px;
+            background: #000;
             color: #fff;
-            font-size: 9px;
-            font-weight: 700;
-            width: 16px;
-            height: 16px;
+            width: 20px;
+            height: 20px;
             border-radius: 50%;
+            font-size: 11px;
+            font-weight: 700;
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
-        /* Hero */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: none;
+            padding: 8px;
+        }
+
+        .menu-toggle svg {
+            width: 24px;
+            height: 24px;
+            stroke: #000;
+            stroke-width: 1.5;
+            fill: none;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            z-index: 90;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            clip-path: circle(0% at calc(100% - 60px) 40px);
+            transition: clip-path 0.8s var(--ease-out-expo);
+        }
+
+        .mobile-menu.active {
+            clip-path: circle(150% at calc(100% - 60px) 40px);
+        }
+
+        .mobile-menu nav {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            text-align: center;
+        }
+
+        .mobile-menu .nav-link {
+            font-size: 48px;
+            font-weight: 600;
+            text-transform: none;
+            letter-spacing: -1px;
+        }
+
+        /* Hero Section */
         .hero {
-            padding: 160px 48px 80px;
-            max-width: 1400px;
-            margin: 0 auto;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            padding: 120px 48px 80px;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+        }
+
+        .hero-bg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: scale(1.1);
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0.2) 100%);
+            z-index: 1;
         }
 
         .hero-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 80px;
-            align-items: end;
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 900px;
         }
 
-        .hero-left h1 {
-            font-size: clamp(80px, 12vw, 160px);
-            font-weight: 800;
-            letter-spacing: -0.04em;
-            line-height: 0.9;
-            color: #111;
-        }
-
-        .hero-right {
-            padding-bottom: 20px;
-        }
-
-        .hero-text {
-            font-size: 16px;
-            line-height: 1.7;
-            color: #555;
-            max-width: 420px;
-            margin-bottom: 32px;
-        }
-
-        .hero-links {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .hero-link {
-            font-size: 14px;
+        .hero-label {
+            font-size: 12px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
             color: #666;
-            text-decoration: none;
-            display: flex;
+            margin-bottom: 32px;
+            opacity: 0;
+        }
+
+        .hero-title {
+            font-size: clamp(60px, 12vw, 140px);
+            font-weight: 800;
+            letter-spacing: -4px;
+            line-height: 0.95;
+            margin-bottom: 48px;
+        }
+
+        .hero-title-line {
+            display: block;
+            overflow: hidden;
+        }
+
+        .hero-title-line span {
+            display: inline-block;
+            transform: translateY(100%) rotateX(-90deg);
+            opacity: 0;
+            transform-origin: bottom;
+        }
+
+        .hero-title-line.gradient span {
+            background: linear-gradient(135deg, #999 0%, #333 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-cta {
+            display: inline-flex;
             align-items: center;
-            gap: 8px;
-            transition: all 0.3s ease;
-            width: fit-content;
-        }
-
-        .hero-link:hover {
-            color: #111;
-            gap: 12px;
-        }
-
-        /* Bento Grid - Milo Store Style */
-        .bento-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            grid-auto-rows: 280px;
-            gap: 12px;
-            padding: 0 48px 60px;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .bento-item {
-            background: #fff;
+            gap: 16px;
+            background: #000;
+            color: #fff;
+            padding: 20px 40px;
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-decoration: none;
+            opacity: 0;
+            transform: translateY(40px);
             position: relative;
             overflow: hidden;
-            cursor: pointer;
-            border-radius: 12px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .bento-item:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 32px rgba(0,0,0,0.1);
-        }
-
-        .bento-item.span-2 {
-            grid-column: span 2;
-        }
-
-        .bento-item.span-2-row {
-            grid-row: span 2;
-        }
-
-        /* Images */
-        .item-image {
+        .hero-cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
             width: 100%;
             height: 100%;
-            object-fit: cover;
-            transition: transform 0.6s ease;
+            background: #333;
+            transition: left 0.5s var(--ease-out-expo);
+            z-index: 0;
         }
 
-        .bento-item:hover .item-image {
-            transform: scale(1.05);
+        .hero-cta:hover::before {
+            left: 0;
         }
 
-        /* Text cards */
-        .text-card {
-            padding: 32px;
+        .hero-cta span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-cta svg {
+            width: 18px;
+            height: 18px;
+            stroke: currentColor;
+            stroke-width: 2;
+            fill: none;
+            position: relative;
+            z-index: 1;
+            animation: arrowBounce 1.5s infinite;
+        }
+
+        @keyframes arrowBounce {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(6px); }
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
             display: flex;
             flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            opacity: 0;
+        }
+
+        .scroll-indicator::before {
+            content: '';
+            width: 1px;
+            height: 60px;
+            background: linear-gradient(to bottom, #000, transparent);
+            animation: scrollLine 2s infinite;
+        }
+
+        @keyframes scrollLine {
+            0%, 100% { transform: scaleY(1); opacity: 1; }
+            50% { transform: scaleY(0.5); opacity: 0.5; }
+        }
+
+        /* Featured Section */
+        .featured {
+            padding: 120px 48px;
+        }
+
+        .featured-header {
+            max-width: 1400px;
+            margin: 0 auto 80px;
+            display: flex;
             justify-content: space-between;
-            height: 100%;
-            background: #fff;
+            align-items: flex-end;
+            gap: 48px;
         }
 
-        .text-card-header {
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
+        .featured-title {
+            font-size: clamp(48px, 6vw, 80px);
+            font-weight: 800;
+            letter-spacing: -2px;
+            line-height: 1;
+        }
+
+        .featured-title span {
+            display: block;
             color: #999;
-            margin-bottom: 12px;
-            font-weight: 600;
         }
 
-        .text-card-title {
-            font-size: 26px;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            line-height: 1.2;
-            margin-bottom: 12px;
-            color: #111;
-        }
-
-        .text-card-desc {
-            font-size: 14px;
-            line-height: 1.6;
+        .featured-desc {
+            max-width: 400px;
+            font-size: 17px;
+            line-height: 1.7;
             color: #666;
         }
 
-        .text-card-footer {
-            margin-top: auto;
-            padding-top: 20px;
-            font-size: 12px;
-            color: #bbb;
-            font-weight: 500;
+        /* Product Grid */
+        .product-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
         }
 
-        /* Product cards */
         .product-card {
             position: relative;
-            background: #f8f8f8;
+            cursor: none;
+        }
+
+        .product-card:nth-child(even) {
+            margin-top: 48px;
         }
 
         .product-image-wrap {
-            width: 100%;
-            height: 75%;
+            position: relative;
+            aspect-ratio: 4/5;
             overflow: hidden;
-            border-radius: 12px 12px 0 0;
+            background: #f5f5f5;
         }
 
-        .product-image-wrap img {
+        .product-image {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            transition: transform 0.8s var(--ease-out-expo);
         }
 
-        .product-info {
-            padding: 16px 20px;
-            height: 25%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            background: #fff;
-        }
-
-        .product-name {
-            font-size: 14px;
-            font-weight: 600;
-            color: #111;
-            margin-bottom: 4px;
-            letter-spacing: -0.01em;
-        }
-
-        .product-price {
-            font-size: 13px;
-            color: #888;
+        .product-card:hover .product-image {
+            transform: scale(1.1);
         }
 
         .product-tag {
             position: absolute;
-            top: 12px;
-            left: 12px;
-            background: #111;
+            top: 20px;
+            left: 20px;
+            background: #000;
             color: #fff;
-            padding: 6px 12px;
-            font-size: 10px;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-            border-radius: 6px;
-            z-index: 5;
-        }
-
-        .product-tag.sale {
-            background: #e74c3c;
-        }
-
-        /* Category cards */
-        .category-card {
-            background: #111;
-            color: #fff;
-            padding: 32px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            border-radius: 12px;
-        }
-
-        .category-label {
+            padding: 8px 16px;
             font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: rgba(255,255,255,0.5);
             font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: all 0.5s var(--ease-out-expo);
         }
 
-        .category-name {
-            font-size: 36px;
-            font-weight: 800;
-            letter-spacing: -0.03em;
-            color: #fff;
-            line-height: 1;
+        .product-card.visible .product-tag {
+            opacity: 1;
+            transform: translateX(0);
         }
 
-        /* Featured image cards */
-        .featured-image {
-            position: relative;
-        }
-
-        .featured-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 12px;
-        }
-
-        .image-overlay {
+        .product-hover {
             position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            padding: 32px;
-            background: linear-gradient(transparent 0%, rgba(0,0,0,0.6) 100%);
-            border-radius: 0 0 12px 12px;
+            inset: 0;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding: 24px;
+            opacity: 0;
+            transition: opacity 0.4s;
         }
 
-        .overlay-title {
-            font-size: 20px;
-            font-weight: 700;
+        .product-card:hover .product-hover {
+            opacity: 1;
+        }
+
+        .add-to-cart {
+            background: #fff;
+            color: #000;
+            border: none;
+            padding: 16px 32px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: none;
+            transform: translateY(20px);
+            transition: all 0.4s var(--ease-out-expo);
+        }
+
+        .product-card:hover .add-to-cart {
+            transform: translateY(0);
+        }
+
+        .add-to-cart:hover {
+            background: #000;
             color: #fff;
+        }
+
+        .product-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-top: 20px;
+            transition: transform 0.4s var(--ease-out-expo);
+        }
+
+        .product-card:hover .product-info {
+            transform: translateX(10px);
+        }
+
+        .product-name {
+            font-size: 17px;
+            font-weight: 500;
             margin-bottom: 4px;
         }
 
-        .overlay-desc {
+        .product-category {
             font-size: 13px;
-            color: rgba(255,255,255,0.7);
+            color: #999;
         }
 
-        /* Click indicator */
-        .click-indicator {
-            position: absolute;
-            bottom: 16px;
-            right: 16px;
-            width: 40px;
-            height: 40px;
-            background: rgba(255,255,255,0.95);
-            border-radius: 50%;
-            display: flex;
+        .product-price {
+            font-size: 17px;
+            font-weight: 500;
+        }
+
+        /* Editorial Section */
+        .editorial {
+            padding: 120px 48px;
+            background: #f5f5f5;
+        }
+
+        .editorial-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
             align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transform: scale(0.8);
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
 
-        .bento-item:hover .click-indicator {
-            opacity: 1;
-            transform: scale(1);
+        .editorial-image {
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 4/5;
         }
 
-        .click-indicator svg {
+        .editorial-image img {
+            width: 100%;
+            height: 120%;
+            object-fit: cover;
+            transform: translateY(-10%);
+        }
+
+        .editorial-content {
+            padding-left: 40px;
+        }
+
+        .editorial-label {
+            font-size: 12px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #999;
+            margin-bottom: 24px;
+        }
+
+        .editorial-title {
+            font-size: clamp(40px, 4vw, 64px);
+            font-weight: 800;
+            letter-spacing: -2px;
+            line-height: 1.1;
+            margin-bottom: 32px;
+        }
+
+        .editorial-text {
+            font-size: 18px;
+            line-height: 1.8;
+            color: #666;
+            margin-bottom: 32px;
+        }
+
+        .editorial-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: #000;
+            border-bottom: 2px solid #000;
+            padding-bottom: 4px;
+            transition: gap 0.3s;
+        }
+
+        .editorial-link:hover {
+            gap: 20px;
+        }
+
+        .editorial-link svg {
             width: 16px;
             height: 16px;
-            stroke: #111;
+            stroke: currentColor;
             stroke-width: 2;
             fill: none;
         }
 
-        /* Modal Overlay */
+        /* Trust Section (Dark) */
+        .trust {
+            background: #000;
+            color: #fff;
+            padding: 140px 48px;
+        }
+
+        .trust-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .trust-title {
+            font-size: clamp(40px, 5vw, 64px);
+            font-weight: 800;
+            letter-spacing: -2px;
+            line-height: 1.1;
+            margin-bottom: 20px;
+        }
+
+        .trust-subtitle {
+            font-size: 17px;
+            color: rgba(255,255,255,0.5);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .trust-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+
+        .trust-item {
+            padding: 40px 32px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+            transition: all 0.4s;
+        }
+
+        .trust-item:hover {
+            background: rgba(255,255,255,0.08);
+            transform: translateY(-8px);
+        }
+
+        .trust-icon {
+            width: 56px;
+            height: 56px;
+            margin: 0 auto 24px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .trust-icon svg {
+            width: 24px;
+            height: 24px;
+            stroke: #fff;
+            stroke-width: 1.5;
+            fill: none;
+        }
+
+        .trust-item h4 {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .trust-item p {
+            font-size: 14px;
+            color: rgba(255,255,255,0.4);
+            line-height: 1.6;
+        }
+
+        /* Modal (War Stories) */
         .modal-overlay {
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+            inset: 0;
             background: rgba(0,0,0,0.95);
             backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            z-index: 1000;
+            z-index: 200;
             opacity: 0;
             visibility: hidden;
-            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: all 0.5s var(--ease-out-expo);
             overflow-y: auto;
-            padding: 20px;
+            padding: 40px 20px;
         }
 
         .modal-overlay.active {
@@ -426,13 +712,38 @@
             visibility: visible;
         }
 
+        .modal-close {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            width: 56px;
+            height: 56px;
+            background: #fff;
+            border: none;
+            border-radius: 50%;
+            cursor: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            color: #000;
+            z-index: 201;
+            transition: all 0.3s var(--ease-spring);
+        }
+
+        .modal-close:hover {
+            transform: rotate(90deg) scale(1.1);
+            background: #e74c3c;
+            color: #fff;
+        }
+
         .modal-content {
             max-width: 700px;
-            margin: 80px auto 40px;
+            margin: 60px auto;
             color: #fff;
             transform: translateY(50px);
             opacity: 0;
-            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.1s;
+            transition: all 0.6s var(--ease-out-expo) 0.1s;
         }
 
         .modal-overlay.active .modal-content {
@@ -440,77 +751,55 @@
             opacity: 1;
         }
 
-        .modal-close {
-            position: fixed;
-            top: 24px;
-            right: 24px;
-            width: 48px;
-            height: 48px;
-            background: #fff;
-            border: none;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            color: #111;
-            z-index: 1001;
-            transition: all 0.3s ease;
-        }
-
-        .modal-close:hover {
-            transform: rotate(90deg);
-            background: #111;
-            color: #fff;
-        }
-
         /* Brutal Content Styles */
         .brutal-header {
             border: 3px solid #fff;
-            padding: 32px;
-            margin-bottom: 32px;
+            padding: 40px;
+            margin-bottom: 40px;
             position: relative;
             background: #e74c3c;
-            border-radius: 12px;
         }
 
         .brutal-badge {
             position: absolute;
-            top: -16px;
-            right: -16px;
+            top: -20px;
+            right: -20px;
             background: #f1c40f;
-            color: #111;
-            padding: 16px 20px;
-            font-size: 14px;
+            color: #000;
+            padding: 20px 24px;
+            font-size: 16px;
             font-weight: 800;
             border-radius: 50%;
             transform: rotate(12deg);
-            border: 3px solid #111;
+            border: 3px solid #000;
             text-align: center;
             line-height: 1.2;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: rotate(12deg) translateY(0); }
+            50% { transform: rotate(12deg) translateY(-10px); }
         }
 
         .brutal-title {
-            font-size: 42px;
+            font-size: 48px;
             font-weight: 900;
-            letter-spacing: -0.02em;
+            letter-spacing: -1px;
             line-height: 1.1;
-            margin-bottom: 12px;
-            color: #fff;
+            margin-bottom: 16px;
         }
 
         .brutal-subtitle {
-            font-size: 16px;
+            font-size: 18px;
             font-weight: 600;
             color: rgba(255,255,255,0.9);
         }
 
         .brutal-body {
-            font-size: 16px;
+            font-size: 17px;
             line-height: 1.8;
-            margin-bottom: 20px;
-            color: #fff;
+            margin-bottom: 24px;
         }
 
         .brutal-body strong {
@@ -520,406 +809,1181 @@
 
         .dialogue-box {
             background: rgba(255,255,255,0.08);
-            border-left: 3px solid #f1c40f;
-            padding: 24px;
-            margin: 24px 0;
+            border-left: 4px solid #f1c40f;
+            padding: 28px;
+            margin: 28px 0;
             font-family: 'Courier New', monospace;
-            border-radius: 0 8px 8px 0;
         }
 
         .dialogue-line {
-            margin-bottom: 16px;
-            line-height: 1.6;
-        }
-
-        .dialogue-line:last-child {
-            margin-bottom: 0;
+            margin-bottom: 20px;
         }
 
         .dialogue-speaker {
             color: #f1c40f;
             font-weight: 700;
-            margin-bottom: 4px;
             font-size: 12px;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
+            margin-bottom: 6px;
         }
 
         .dialogue-text {
-            color: #fff;
-            padding-left: 16px;
-            font-size: 14px;
+            padding-left: 20px;
+            font-size: 15px;
         }
 
         .hover-reveal {
             background: #f1c40f;
-            color: #111;
-            padding: 20px;
-            margin: 24px 0;
+            color: #000;
+            padding: 24px;
+            margin: 28px 0;
             font-weight: 700;
-            font-size: 14px;
-            border-radius: 8px;
-            line-height: 1.5;
+            font-size: 15px;
         }
 
         .condition-tag {
             display: inline-block;
             background: #111;
-            color: #fff;
-            padding: 10px 20px;
-            font-size: 12px;
+            padding: 12px 24px;
+            font-size: 13px;
             font-weight: 700;
-            margin: 16px 0;
-            border: 2px solid #fff;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            border-radius: 6px;
-        }
-
-        .marquee {
-            background: #f1c40f;
-            color: #111;
-            padding: 12px 0;
-            overflow: hidden;
-            white-space: nowrap;
-            margin: 24px 0;
-            border-radius: 6px;
-        }
-
-        .marquee-content {
-            display: inline-block;
-            animation: marqueeScroll 20s linear infinite;
-            font-size: 14px;
-            font-weight: 700;
             letter-spacing: 2px;
-        }
-
-        @keyframes marqueeScroll {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
+            border: 2px solid #fff;
+            margin: 20px 0;
         }
 
         .price-tag {
             display: flex;
             align-items: baseline;
-            gap: 16px;
-            margin: 24px 0;
-            padding: 20px;
+            gap: 20px;
+            margin: 28px 0;
+            padding: 24px;
             background: rgba(255,255,255,0.08);
-            border-radius: 8px;
-            flex-wrap: wrap;
         }
 
         .original-price {
-            font-size: 20px;
+            font-size: 22px;
             text-decoration: line-through;
             color: rgba(255,255,255,0.5);
-            font-weight: 500;
         }
 
         .sale-price {
-            font-size: 36px;
+            font-size: 42px;
             font-weight: 900;
             color: #f1c40f;
         }
 
         .buy-button-brutal {
             width: 100%;
-            padding: 20px;
+            padding: 24px;
             background: #e74c3c;
             color: #fff;
             border: none;
-            font-size: 18px;
+            font-size: 20px;
             font-weight: 800;
             text-transform: uppercase;
-            cursor: pointer;
-            margin: 20px 0;
-            letter-spacing: 2px;
-            border-radius: 8px;
-            transition: all 0.3s ease;
+            letter-spacing: 3px;
+            cursor: none;
+            transition: all 0.3s;
         }
 
         .buy-button-brutal:hover {
             background: #f1c40f;
-            color: #111;
-            transform: translateY(-2px);
+            color: #000;
         }
 
         .footer-brutal {
-            margin-top: 40px;
-            padding: 24px;
+            margin-top: 48px;
+            padding: 28px;
             border: 2px solid rgba(255,255,255,0.2);
             text-align: center;
-            font-size: 14px;
             color: rgba(255,255,255,0.7);
-            line-height: 1.6;
-            border-radius: 8px;
         }
 
         .blink {
-            animation: blinkAnim 1s step-end infinite;
+            animation: blink 1s step-end infinite;
         }
 
-        @keyframes blinkAnim {
+        @keyframes blink {
             50% { opacity: 0; }
+        }
+
+        /* Newsletter */
+        .newsletter {
+            padding: 140px 48px;
+        }
+
+        .newsletter-content {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .newsletter-title {
+            font-size: clamp(40px, 5vw, 64px);
+            font-weight: 800;
+            letter-spacing: -2px;
+            margin-bottom: 20px;
+        }
+
+        .newsletter-text {
+            font-size: 17px;
+            color: #666;
+            margin-bottom: 48px;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 16px;
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            padding: 20px 28px;
+            border: 1px solid #ccc;
+            font-size: 15px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .newsletter-form input:focus {
+            border-color: #000;
+        }
+
+        .newsletter-form button {
+            padding: 20px 40px;
+            background: #000;
+            color: #fff;
+            border: none;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: none;
+            transition: background 0.3s;
+        }
+
+        .newsletter-form button:hover {
+            background: #333;
+        }
+
+        /* Cart Sidebar */
+        .cart-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.4);
+            backdrop-filter: blur(10px);
+            z-index: 150;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.5s var(--ease-out-expo);
+        }
+
+        .cart-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .cart-sidebar {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 450px;
+            max-width: 100%;
+            height: 100%;
+            background: #fff;
+            z-index: 160;
+            transform: translateX(100%);
+            transition: transform 0.6s var(--ease-out-expo);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cart-sidebar.active {
+            transform: translateX(0);
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 32px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cart-title {
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        .cart-close {
+            background: none;
+            border: none;
+            cursor: none;
+            padding: 8px;
+            transition: transform 0.3s;
+        }
+
+        .cart-close:hover {
+            transform: rotate(90deg);
+        }
+
+        .cart-close svg {
+            width: 24px;
+            height: 24px;
+            stroke: #000;
+            stroke-width: 1.5;
+            fill: none;
+        }
+
+        .cart-items {
+            flex: 1;
+            overflow-y: auto;
+            padding: 24px 32px;
+        }
+
+        .cart-item {
+            display: flex;
+            gap: 20px;
+            padding: 20px 0;
+            border-bottom: 1px solid #eee;
+            opacity: 0;
+            transform: translateX(30px);
+        }
+
+        .cart-item.visible {
+            opacity: 1;
+            transform: translateX(0);
+            transition: all 0.5s var(--ease-out-expo);
+        }
+
+        .cart-item-image {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+        }
+
+        .cart-item-info {
+            flex: 1;
+        }
+
+        .cart-item-info h4 {
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .cart-item-info p {
+            font-size: 13px;
+            color: #999;
+            margin-bottom: 12px;
+        }
+
+        .cart-item-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border: 1px solid #ddd;
+            border-radius: 100px;
+            padding: 6px 16px;
+        }
+
+        .quantity-control button {
+            background: none;
+            border: none;
+            cursor: none;
+            padding: 4px;
+            color: #666;
+            transition: color 0.3s;
+        }
+
+        .quantity-control button:hover {
+            color: #000;
+        }
+
+        .cart-item-price {
+            font-weight: 600;
+        }
+
+        .cart-footer {
+            padding: 32px;
+            border-top: 1px solid #eee;
+        }
+
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            font-size: 18px;
+            margin-bottom: 24px;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            padding: 20px;
+            background: #000;
+            color: #fff;
+            border: none;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: none;
+            transition: background 0.3s;
+        }
+
+        .checkout-btn:hover {
+            background: #333;
+        }
+
+        .cart-empty {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            color: #999;
+        }
+
+        .cart-empty svg {
+            width: 64px;
+            height: 64px;
+            stroke: #ccc;
+            stroke-width: 1;
+            fill: none;
+            margin-bottom: 16px;
         }
 
         /* Footer */
         footer {
-            padding: 48px;
-            border-top: 1px solid #eee;
+            background: #000;
+            color: #fff;
+            padding: 80px 48px 40px;
+        }
+
+        .footer-grid {
             max-width: 1400px;
             margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 64px;
+            margin-bottom: 64px;
         }
 
-        .footer-left {
-            font-size: 13px;
-            color: #999;
+        .footer-brand h3 {
+            font-size: 32px;
+            font-weight: 800;
+            letter-spacing: -2px;
+            margin-bottom: 24px;
         }
 
-        .footer-right {
-            display: flex;
-            gap: 32px;
+        .footer-brand p {
+            font-size: 15px;
+            color: rgba(255,255,255,0.5);
+            line-height: 1.7;
+            max-width: 300px;
         }
 
-        .footer-link {
-            font-size: 13px;
-            color: #666;
+        .footer-col h4 {
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 24px;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col li {
+            margin-bottom: 12px;
+        }
+
+        .footer-col a {
+            font-size: 14px;
+            color: rgba(255,255,255,0.5);
             text-decoration: none;
             transition: color 0.3s;
         }
 
-        .footer-link:hover {
-            color: #111;
+        .footer-col a:hover {
+            color: #fff;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 12px;
+        }
+
+        .social-links a {
+            width: 44px;
+            height: 44px;
+            border: 1px solid rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .social-links a:hover {
+            background: #fff;
+            color: #000;
+        }
+
+        .social-links svg {
+            width: 18px;
+            height: 18px;
+            stroke: currentColor;
+            stroke-width: 1.5;
+            fill: none;
+        }
+
+        .footer-bottom {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding-top: 40px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            color: rgba(255,255,255,0.4);
+        }
+
+        .footer-bottom a {
+            color: rgba(255,255,255,0.4);
+            text-decoration: none;
+            margin-left: 32px;
+            transition: color 0.3s;
+        }
+
+        .footer-bottom a:hover {
+            color: #fff;
         }
 
         /* Responsive */
         @media (max-width: 1024px) {
-            .bento-grid {
+            body {
+                cursor: auto;
+            }
+
+            .cursor, .cursor-dot {
+                display: none;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .product-grid {
                 grid-template-columns: repeat(2, 1fr);
-                padding: 0 24px 40px;
             }
 
-            .hero {
-                padding: 140px 24px 60px;
-            }
-
-            .hero-content {
+            .editorial-grid {
                 grid-template-columns: 1fr;
-                gap: 40px;
             }
 
-            nav {
-                padding: 16px 24px;
+            .editorial-content {
+                padding-left: 0;
+            }
+
+            .trust-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
             }
         }
 
         @media (max-width: 640px) {
-            .bento-grid {
-                grid-template-columns: 1fr;
-                grid-auto-rows: 240px;
+            header, header.scrolled {
+                padding: 16px 24px;
             }
 
-            .bento-item.span-2,
-            .bento-item.span-2-row {
-                grid-column: span 1;
-                grid-row: span 1;
+            .hero, .featured, .editorial, .trust, .newsletter {
+                padding-left: 24px;
+                padding-right: 24px;
             }
 
-            .hero-left h1 {
-                font-size: 64px;
-            }
-
-            .brutal-title {
-                font-size: 28px;
-            }
-
-            footer {
+            .featured-header {
                 flex-direction: column;
-                gap: 20px;
+                align-items: flex-start;
+            }
+
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .product-card:nth-child(even) {
+                margin-top: 0;
+            }
+
+            .trust-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 16px;
                 text-align: center;
             }
-        }
 
-        @media (prefers-reduced-motion: reduce) {
-            *, *::before, *::after {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
+            .footer-bottom a {
+                margin: 0 16px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="page-wrapper">
-        <!-- Navigation -->
-        <nav>
-            <a href="#" class="logo">Milo.</a>
-            <div class="nav-right">
-                <button class="cart-btn" onclick="showCart()">
-                    <svg class="cart-icon" viewBox="0 0 24 24">
-                        <path d="M6 6h15l-1.5 9h-12L6 6zm0 0L5 3H2m4 3l1.5 9"/>
-                        <circle cx="9" cy="20" r="1"/>
-                        <circle cx="18" cy="20" r="1"/>
-                    </svg>
-                    <span class="cart-count">8</span>
+    <!-- Custom Cursor -->
+    <div class="cursor"></div>
+    <div class="cursor-dot"></div>
+
+    <!-- Navigation -->
+    <header id="header">
+        <div class="nav-container">
+            <a href="#" class="logo" data-magnetic>MILO.</a>
+            <nav class="nav-links">
+                <a href="#shop" class="nav-link" data-magnetic>Our Pieces</a>
+                <a href="#studio" class="nav-link" data-magnetic>The Studio</a>
+                <a href="#contact" class="nav-link" data-magnetic>Get in Touch</a>
+            </nav>
+            <div class="nav-actions">
+                <button class="cart-btn" id="cartBtn" data-magnetic>
+                    <svg viewBox="0 0 24 24"><path d="M6 6h15l-1.5 9h-12L6 6zm0 0L5 3H2m4 3l1.5 9"/><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/></svg>
+                    <span class="cart-count" id="cartCount">0</span>
+                </button>
+                <button class="menu-toggle" id="menuToggle" data-magnetic>
+                    <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
                 </button>
             </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <nav>
+            <a href="#shop" class="nav-link">Our Pieces</a>
+            <a href="#studio" class="nav-link">The Studio</a>
+            <a href="#contact" class="nav-link">Get in Touch</a>
         </nav>
-
-        <!-- Hero -->
-        <section class="hero">
-            <div class="hero-content">
-                <div class="hero-left">
-                    <h1>Milo.</h1>
-                </div>
-                <div class="hero-right">
-                    <p class="hero-text">
-                        After spending years in the Malaysian creative industry surviving on teh tarik and broken dreams, we've compiled the ultimate collection of career trauma. Each item represents a real client, a real nightmare, and a real reason I drink kopi O at 4AM.
-                    </p>
-                    <div class="hero-links">
-                        <a href="#grid" class="hero-link">
-                            <span>View all war stories</span>
-                            <span class="arrow">→</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Bento Grid -->
-        <section class="bento-grid" id="grid">
-            <!-- Row 1 -->
-            <div class="bento-item span-2 featured-image" data-id="cheesecake">
-                <img src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=800&q=80" alt="Cheesecake">
-                <div class="image-overlay">
-                    <div class="overlay-title">The Clingy Cheesecake</div>
-                    <div class="overlay-desc">17 missed calls at 3AM</div>
-                </div>
-                <div class="click-indicator">
-                    <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                </div>
-            </div>
-
-            <div class="bento-item category-card" data-id="category">
-                <div class="category-label">Clearance</div>
-                <div class="category-name">Trauma.</div>
-            </div>
-
-            <div class="bento-item product-card" data-id="python">
-                <span class="product-tag">HOT</span>
-                <div class="product-image-wrap">
-                    <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=600&q=80" alt="Code">
-                </div>
-                <div class="product-info">
-                    <div class="product-name">3 Python Scripts</div>
-                    <div class="product-price">RM47,500 value</div>
-                </div>
-                <div class="click-indicator">
-                    <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                </div>
-            </div>
-
-            <!-- Row 2 -->
-            <div class="bento-item text-card" data-id="about">
-                <div>
-                    <div class="text-card-header">About</div>
-                    <h3 class="text-card-title">Mamak-driven philosophy</h3>
-                    <p class="text-card-desc">Best strategy sessions happen at 2:47AM at Raju Corner, SS2. No PowerPoint. Just teh tarik.</p>
-                </div>
-                <div class="text-card-footer">01 / 08</div>
-            </div>
-
-            <div class="bento-item featured-image" data-id="jesaisquoi">
-                <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600&q=80" alt="AI">
-                <div class="image-overlay">
-                    <div class="overlay-title">50 AI Posts</div>
-                    <div class="overlay-desc">The "Je Ne Sais Quoi" Incident</div>
-                </div>
-                <div class="click-indicator">
-                    <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                </div>
-            </div>
-
-            <div class="bento-item span-2-row text-card" style="background: #f5f5f5;" data-id="philosophy">
-                <div>
-                    <div class="text-card-header">War Story</div>
-                    <h3 class="text-card-title">Less but better<br>(unlike my clients)</h3>
-                    <p class="text-card-desc">I automate Excel so I don't have to sit in 3-hour meetings about whether the button should be blue or slightly bluer.</p>
-                </div>
-                <div class="text-card-footer">02 / 08</div>
-            </div>
-
-            <!-- Row 3 -->
-            <div class="bento-item product-card" data-id="guru">
-                <div class="product-image-wrap">
-                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&q=80" alt="Analytics">
-                </div>
-                <div class="product-info">
-                    <div class="product-name">89% Accuracy AI</div>
-                    <div class="product-price">Lost to astrology</div>
-                </div>
-                <div class="click-indicator">
-                    <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                </div>
-            </div>
-
-            <div class="bento-item category-card" style="background: #1a1a1a;" data-id="modular">
-                <div class="category-label">System</div>
-                <div class="category-name" style="font-size: 28px;">Bullshit.</div>
-            </div>
-
-            <div class="bento-item featured-image" data-id="raya">
-                <img src="https://images.unsplash.com/photo-1519817914152-22d216bb9170?w=600&q=80" alt="Raya">
-                <div class="image-overlay">
-                    <div class="overlay-title">Raya Content</div>
-                    <div class="overlay-desc">Cultural appropriation edition</div>
-                </div>
-                <div class="click-indicator">
-                    <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                </div>
-            </div>
-
-            <div class="bento-item product-card" data-id="scopecreep">
-                <span class="product-tag sale">DANGER</span>
-                <div class="product-image-wrap">
-                    <img src="https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?w=600&q=80" alt="Scope Creep">
-                </div>
-                <div class="product-info">
-                    <div class="product-name">Scope Creep Edition</div>
-                    <div class="product-price">Skynet Quit</div>
-                </div>
-                <div class="click-indicator">
-                    <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                </div>
-            </div>
-        </section>
-
-        <!-- Footer -->
-        <footer>
-            <div class="footer-left">
-                © 2024 Milo. All trauma reserved.
-            </div>
-            <div class="footer-right">
-                <a href="#" class="footer-link">Instagram</a>
-                <a href="#" class="footer-link">Mamak</a>
-                <a href="#" class="footer-link">Therapy</a>
-            </div>
-        </footer>
     </div>
 
-    <!-- Modal -->
-    <div class="modal-overlay" id="modal">
-        <button class="modal-close" onclick="closeModal()">×</button>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-bg">
+            <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1600&q=80" alt="">
+        </div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <p class="hero-label">Est. 2024 — Trauma Clearance</p>
+            <h1 class="hero-title">
+                <span class="hero-title-line"><span>Career</span></span>
+                <span class="hero-title-line"><span>Survival</span></span>
+                <span class="hero-title-line gradient"><span>Stories</span></span>
+            </h1>
+            <a href="#shop" class="hero-cta" data-magnetic>
+                <span>Explore Collection</span>
+                <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+        </div>
+        <div class="scroll-indicator"></div>
+    </section>
+
+    <!-- Featured Products -->
+    <section class="featured" id="shop">
+        <div class="featured-header">
+            <h2 class="featured-title">Our Pieces<span>Collection</span></h2>
+            <p class="featured-desc">Each item represents a real client, a real nightmare, and a real reason I drink kopi O at 4AM.</p>
+        </div>
+        
+        <div class="product-grid">
+            <!-- Product 1 -->
+            <div class="product-card" data-product="cheesecake" data-name="429% Cheesecake" data-price="0" data-image="https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=600&q=80">
+                <span class="product-tag">Featured</span>
+                <div class="product-image-wrap">
+                    <img class="product-image" src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=600&q=80" alt="">
+                    <div class="product-hover">
+                        <button class="add-to-cart" data-magnetic>Add to Cart</button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <div>
+                        <h3 class="product-name">429% Cheesecake</h3>
+                        <p class="product-category">The Clingy Client</p>
+                    </div>
+                    <span class="product-price">RM0.00</span>
+                </div>
+            </div>
+
+            <!-- Product 2 -->
+            <div class="product-card" data-product="python" data-name="3 Python Scripts" data-price="2.5" data-image="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=600&q=80">
+                <span class="product-tag">Hot</span>
+                <div class="product-image-wrap">
+                    <img class="product-image" src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=600&q=80" alt="">
+                    <div class="product-hover">
+                        <button class="add-to-cart" data-magnetic>Add to Cart</button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <div>
+                        <h3 class="product-name">3 Python Scripts</h3>
+                        <p class="product-category">Agency Replacement</p>
+                    </div>
+                    <span class="product-price">RM2.50</span>
+                </div>
+            </div>
+
+            <!-- Product 3 -->
+            <div class="product-card" data-product="jesaisquoi" data-name="50 AI Posts" data-price="0" data-image="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600&q=80">
+                <span class="product-tag">Popular</span>
+                <div class="product-image-wrap">
+                    <img class="product-image" src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600&q=80" alt="">
+                    <div class="product-hover">
+                        <button class="add-to-cart" data-magnetic>Add to Cart</button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <div>
+                        <h3 class="product-name">50 AI Posts</h3>
+                        <p class="product-category">Je Ne Sais Quoi</p>
+                    </div>
+                    <span class="product-price">FREE</span>
+                </div>
+            </div>
+
+            <!-- Product 4 -->
+            <div class="product-card" data-product="guru" data-name="89% ML Model" data-price="1" data-image="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&q=80">
+                <div class="product-image-wrap">
+                    <img class="product-image" src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&q=80" alt="">
+                    <div class="product-hover">
+                        <button class="add-to-cart" data-magnetic>Add to Cart</button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <div>
+                        <h3 class="product-name">89% ML Model</h3>
+                        <p class="product-category">Lost to Astrology</p>
+                    </div>
+                    <span class="product-price">RM1.00</span>
+                </div>
+            </div>
+
+            <!-- Product 5 -->
+            <div class="product-card" data-product="raya" data-name="Raya Content" data-price="0.15" data-image="https://images.unsplash.com/photo-1519817914152-22d216bb9170?w=600&q=80">
+                <span class="product-tag">Sale</span>
+                <div class="product-image-wrap">
+                    <img class="product-image" src="https://images.unsplash.com/photo-1519817914152-22d216bb9170?w=600&q=80" alt="">
+                    <div class="product-hover">
+                        <button class="add-to-cart" data-magnetic>Add to Cart</button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <div>
+                        <h3 class="product-name">Raya Content</h3>
+                        <p class="product-category">Cultural Edition</p>
+                    </div>
+                    <span class="product-price">RM0.15</span>
+                </div>
+            </div>
+
+            <!-- Product 6 -->
+            <div class="product-card" data-product="scopecreep" data-name="47 Can You Just" data-price="0" data-image="https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?w=600&q=80">
+                <span class="product-tag">Danger</span>
+                <div class="product-image-wrap">
+                    <img class="product-image" src="https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?w=600&q=80" alt="">
+                    <div class="product-hover">
+                        <button class="add-to-cart" data-magnetic>Add to Cart</button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <div>
+                        <h3 class="product-name">47 Can You Just</h3>
+                        <p class="product-category">Scope Creep</p>
+                    </div>
+                    <span class="product-price">EXPOSURE</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Editorial Section -->
+    <section class="editorial" id="studio">
+        <div class="editorial-grid">
+            <div class="editorial-image">
+                <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=800&q=80" alt="" id="editorialImg">
+            </div>
+            <div class="editorial-content">
+                <span class="editorial-label">The Studio</span>
+                <h2 class="editorial-title">Less But<br>Better</h2>
+                <p class="editorial-text">After spending years in the Malaysian creative industry surviving on teh tarik, broken dreams, and clients who think "viral" means hiring an influencer with 10k fake followers, we decided to give access to our trauma to everybody.</p>
+                <a href="#" class="editorial-link" data-magnetic>
+                    <span>Read More</span>
+                    <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Section -->
+    <section class="trust">
+        <div class="trust-header">
+            <h2 class="trust-title">Trusted by Thousands<br>for a Reason</h2>
+            <p class="trust-subtitle">Our commitment has earned the trust of clients around Malaysia. Mostly because they have no other choice.</p>
+        </div>
+        <div class="trust-grid">
+            <div class="trust-item">
+                <div class="trust-icon">
+                    <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                </div>
+                <h4>100% SafePay</h4>
+                <p>Encrypted transactions for safe purchases (half upfront is sacred)</p>
+            </div>
+            <div class="trust-item">
+                <div class="trust-icon">
+                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                </div>
+                <h4>24/7 Support</h4>
+                <p>Ready at 3AM when your client has a "gut feeling"</p>
+            </div>
+            <div class="trust-item">
+                <div class="trust-icon">
+                    <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                </div>
+                <h4>30 Days Return</h4>
+                <p>Shop with no fear (trauma is non-refundable)</p>
+            </div>
+            <div class="trust-item">
+                <div class="trust-icon">
+                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/></svg>
+                </div>
+                <h4>Worldwide Shipping</h4>
+                <p>Even if you move to Ipoh to hide from clients</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal for War Stories -->
+    <div class="modal-overlay" id="productModal">
+        <button class="modal-close" id="modalClose">×</button>
         <div class="modal-content" id="modalContent"></div>
     </div>
 
+    <!-- Cart Sidebar -->
+    <div class="cart-overlay" id="cartOverlay"></div>
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3 class="cart-title">Your Cart (<span id="cartTotalCount">0</span>)</h3>
+            <button class="cart-close" id="cartClose">
+                <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <div class="cart-empty">
+                <svg viewBox="0 0 24 24"><path d="M6 6h15l-1.5 9h-12L6 6zm0 0L5 3H2m4 3l1.5 9"/><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/></svg>
+                <p>Your cart is empty</p>
+            </div>
+        </div>
+        <div class="cart-footer" id="cartFooter" style="display: none;">
+            <div class="cart-total">
+                <span>Total</span>
+                <span id="cartTotalPrice">RM0.00</span>
+            </div>
+            <button class="checkout-btn" data-magnetic>Checkout</button>
+        </div>
+    </div>
+
+    <!-- Newsletter -->
+    <section class="newsletter" id="contact">
+        <div class="newsletter-content">
+            <h2 class="newsletter-title">Stay Updated</h2>
+            <p class="newsletter-text">Subscribe to receive early access to new trauma drops and exclusive offers.</p>
+            <form class="newsletter-form" id="newsletterForm">
+                <input type="email" placeholder="Enter your email" required>
+                <button type="submit" data-magnetic>Subscribe</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <h3>MILO.</h3>
+                <p>Curated career trauma for the modern Malaysian creative. We believe in the transformative power of dark humor.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Shop</h4>
+                <ul>
+                    <li><a href="#">New Arrivals</a></li>
+                    <li><a href="#">War Stories</a></li>
+                    <li><a href="#">Mamak Philosophy</a></li>
+                    <li><a href="#">Sale</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Journal</a></li>
+                    <li><a href="#">Contact</a></li>
+                    <li><a href="#">Careers</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Connect</h4>
+                <div class="social-links">
+                    <a href="#" data-magnetic>
+                        <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                    </a>
+                    <a href="#" data-magnetic>
+                        <svg viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg>
+                    </a>
+                    <a href="#" data-magnetic>
+                        <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Milo Store. All trauma reserved.</p>
+            <div>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
     <script>
-        // Item data
-        const itemData = {
+        // Custom Cursor with spring physics
+        const cursor = document.querySelector('.cursor');
+        const cursorDot = document.querySelector('.cursor-dot');
+        let mouseX = 0, mouseY = 0;
+        let cursorX = 0, cursorY = 0;
+        let dotX = 0, dotY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            cursorDot.style.left = mouseX + 'px';
+            cursorDot.style.top = mouseY + 'px';
+        });
+
+        function animateCursor() {
+            cursorX += (mouseX - cursorX) * 0.15;
+            cursorY += (mouseY - cursorY) * 0.15;
+            cursor.style.left = cursorX + 'px';
+            cursor.style.top = cursorY + 'px';
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
+
+        // Cursor hover states
+        document.querySelectorAll('a, button, [data-magnetic]').forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+        });
+
+        // Magnetic Buttons
+        document.querySelectorAll('[data-magnetic]').forEach(btn => {
+            btn.addEventListener('mousemove', (e) => {
+                const rect = btn.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                btn.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+            });
+            btn.addEventListener('mouseleave', () => {
+                btn.style.transform = 'translate(0, 0)';
+            });
+        });
+
+        // Navigation scroll effect
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        }, { passive: true });
+
+        // Mobile Menu
+        const menuToggle = document.getElementById('menuToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+        let menuOpen = false;
+
+        menuToggle.addEventListener('click', () => {
+            menuOpen = !menuOpen;
+            mobileMenu.classList.toggle('active', menuOpen);
+            menuToggle.innerHTML = menuOpen 
+                ? '<svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>'
+                : '<svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>';
+        });
+
+        document.querySelectorAll('.mobile-menu .nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                menuOpen = false;
+                mobileMenu.classList.remove('active');
+            });
+        });
+
+        // Hero Animations on Load
+        window.addEventListener('load', () => {
+            gsap.to('.hero-label', { opacity: 1, y: 0, duration: 0.8, delay: 0.2 });
+            gsap.to('.hero-title-line span', { 
+                y: '0%', 
+                rotateX: 0, 
+                opacity: 1, 
+                duration: 1.2, 
+                stagger: 0.1, 
+                ease: 'expo.out',
+                delay: 0.4
+            });
+            gsap.to('.hero-cta', { opacity: 1, y: 0, duration: 0.8, delay: 0.8 });
+            gsap.to('.scroll-indicator', { opacity: 1, duration: 1, delay: 1.2 });
+            gsap.to('.hero-bg img', { scale: 1, duration: 1.5, ease: 'expo.out' });
+        });
+
+        // Parallax Hero on Scroll
+        gsap.registerPlugin(ScrollTrigger);
+        
+        gsap.to('.hero-bg img', {
+            y: 200,
+            ease: 'none',
+            scrollTrigger: {
+                trigger: '.hero',
+                start: 'top top',
+                end: 'bottom top',
+                scrub: 1
+            }
+        });
+
+        gsap.to('.hero-content', {
+            opacity: 0,
+            y: -100,
+            ease: 'none',
+            scrollTrigger: {
+                trigger: '.hero',
+                start: 'top top',
+                end: '50% top',
+                scrub: 1
+            }
+        });
+
+        // Product Cards Animation
+        document.querySelectorAll('.product-card').forEach((card, i) => {
+            gsap.fromTo(card, 
+                { opacity: 0, y: 100, rotation: i % 2 === 0 ? 3 : -3 },
+                {
+                    opacity: 1,
+                    y: 0,
+                    rotation: 0,
+                    duration: 0.8,
+                    ease: 'expo.out',
+                    scrollTrigger: {
+                        trigger: card,
+                        start: 'top 85%',
+                        once: true
+                    }
+                }
+            );
+            
+            // Add visible class for tag animation
+            ScrollTrigger.create({
+                trigger: card,
+                start: 'top 80%',
+                once: true,
+                onEnter: () => card.classList.add('visible')
+            });
+        });
+
+        // Editorial Parallax
+        gsap.to('#editorialImg', {
+            y: '20%',
+            ease: 'none',
+            scrollTrigger: {
+                trigger: '.editorial',
+                start: 'top bottom',
+                end: 'bottom top',
+                scrub: 1
+            }
+        });
+
+        gsap.from('.editorial-content', {
+            opacity: 0,
+            x: 60,
+            duration: 1,
+            ease: 'expo.out',
+            scrollTrigger: {
+                trigger: '.editorial',
+                start: 'top 70%',
+                once: true
+            }
+        });
+
+        // Trust Section Animation
+        gsap.from('.trust-title', {
+            opacity: 0,
+            y: 40,
+            duration: 0.8,
+            ease: 'expo.out',
+            scrollTrigger: {
+                trigger: '.trust',
+                start: 'top 70%',
+                once: true
+            }
+        });
+
+        gsap.from('.trust-item', {
+            opacity: 0,
+            y: 40,
+            duration: 0.6,
+            stagger: 0.1,
+            ease: 'expo.out',
+            scrollTrigger: {
+                trigger: '.trust-grid',
+                start: 'top 80%',
+                once: true
+            }
+        });
+
+        // Cart Functionality
+        let cart = [];
+        const cartBtn = document.getElementById('cartBtn');
+        const cartOverlay = document.getElementById('cartOverlay');
+        const cartSidebar = document.getElementById('cartSidebar');
+        const cartClose = document.getElementById('cartClose');
+        const cartItems = document.getElementById('cartItems');
+        const cartCount = document.getElementById('cartCount');
+        const cartTotalCount = document.getElementById('cartTotalCount');
+        const cartTotalPrice = document.getElementById('cartTotalPrice');
+        const cartFooter = document.getElementById('cartFooter');
+
+        function openCart() {
+            cartOverlay.classList.add('active');
+            cartSidebar.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            renderCart();
+        }
+
+        function closeCart() {
+            cartOverlay.classList.remove('active');
+            cartSidebar.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        cartBtn.addEventListener('click', openCart);
+        cartClose.addEventListener('click', closeCart);
+        cartOverlay.addEventListener('click', closeCart);
+
+        function addToCart(product) {
+            const existing = cart.find(item => item.id === product.id);
+            if (existing) {
+                existing.quantity++;
+            } else {
+                cart.push({ ...product, quantity: 1 });
+            }
+            updateCartCount();
+            openCart();
+        }
+
+        function updateQuantity(id, delta) {
+            const item = cart.find(item => item.id === id);
+            if (item) {
+                item.quantity += delta;
+                if (item.quantity <= 0) {
+                    cart = cart.filter(item => item.id !== id);
+                }
+            }
+            updateCartCount();
+            renderCart();
+        }
+
+        function updateCartCount() {
+            const total = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCount.textContent = total;
+            cartTotalCount.textContent = total;
+        }
+
+        function renderCart() {
+            if (cart.length === 0) {
+                cartItems.innerHTML = `
+                    <div class="cart-empty">
+                        <svg viewBox="0 0 24 24"><path d="M6 6h15l-1.5 9h-12L6 6zm0 0L5 3H2m4 3l1.5 9"/><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/></svg>
+                        <p>Your cart is empty</p>
+                    </div>
+                `;
+                cartFooter.style.display = 'none';
+                return;
+            }
+
+            cartItems.innerHTML = cart.map((item, i) => `
+                <div class="cart-item" style="transition-delay: ${i * 0.1}s">
+                    <img class="cart-item-image" src="${item.image}" alt="${item.name}">
+                    <div class="cart-item-info">
+                        <h4>${item.name}</h4>
+                        <p>${item.category || 'War Story'}</p>
+                        <div class="cart-item-actions">
+                            <div class="quantity-control">
+                                <button onclick="updateQuantity('${item.id}', -1)">−</button>
+                                <span>${item.quantity}</span>
+                                <button onclick="updateQuantity('${item.id}', 1)">+</button>
+                            </div>
+                            <span class="cart-item-price">${item.price === 0 ? 'FREE' : 'RM' + (item.price * item.quantity).toFixed(2)}</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            // Animate items in
+            setTimeout(() => {
+                document.querySelectorAll('.cart-item').forEach(item => {
+                    item.classList.add('visible');
+                });
+            }, 100);
+
+            const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+            cartTotalPrice.textContent = total === 0 ? 'Your Dignity' : 'RM' + total.toFixed(2);
+            cartFooter.style.display = 'block';
+        }
+
+        document.querySelectorAll('.add-to-cart').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const card = btn.closest('.product-card');
+                addToCart({
+                    id: card.dataset.product,
+                    name: card.dataset.name,
+                    price: parseFloat(card.dataset.price) || 0,
+                    image: card.dataset.image
+                });
+            });
+        });
+
+        // Product Modal / War Stories
+        const productData = {
             cheesecake: {
                 title: "429% ROI CHEESECAKE",
                 subtitle: "The Client Who Texted Like A Possessive Boyfriend",
@@ -928,10 +1992,8 @@
                 originalPrice: "17 PHONE CALLS",
                 salePrice: "RM0.00",
                 body: `
-                    <p class="brutal-body">Yeah, we made <strong>429% ROI on a cheesecake</strong>. Viral TikTok, AI timing, sold out faster than MySejahtera appointments. Sounds sexy kan? Like a fairytale with happy ending?</p>
-
-                    <p class="brutal-body">Plot twist: This client had <strong>separation anxiety from a marketing campaign</strong>. Called me 17 times in one night because they were "nervous about the virality."</p>
-
+                    <p class="brutal-body">Yeah, we made <strong>429% ROI on a cheesecake</strong>. Viral TikTok, AI timing, sold out faster than MySejahtera appointments.</p>
+                    <p class="brutal-body">Plot twist: This client had <strong>separation anxiety from a marketing campaign</strong>. Called me 17 times in one night.</p>
                     <div class="dialogue-box">
                         <div class="dialogue-line">
                             <div class="dialogue-speaker">THE CLIENT AT 3:17AM:</div>
@@ -939,27 +2001,17 @@
                         </div>
                         <div class="dialogue-line">
                             <div class="dialogue-speaker">ME:</div>
-                            <div class="dialogue-text">*shows 47 minutes of data, algorithms, charts, small words*</div>
+                            <div class="dialogue-text">*shows 47 minutes of data, algorithms, charts*</div>
                         </div>
                         <div class="dialogue-line">
                             <div class="dialogue-speaker">CLIENT:</div>
                             <div class="dialogue-text">"But my gut feeling says morning."</div>
                         </div>
-                        <div class="dialogue-line">
-                            <div class="dialogue-speaker">ME:</div>
-                            <div class="dialogue-text">"Your gut feeling is full of nasi lemak, Karen. My Python script has a degree."</div>
-                        </div>
                     </div>
-
-                    <p class="brutal-body">I blocked their number at 3AM. They WhatsApp'd me from their spouse's phone. Then their mother's phone. <strong>Like a digital restraining order waiting to happen.</strong></p>
-
-                    <div class="hover-reveal">
-                        Fun fact: Client still finds me at mamaks. I now disguise myself as a teh tarik dispenser.
-                    </div>
+                    <div class="hover-reveal">Fun fact: Client still finds me at mamaks. I now disguise myself as a teh tarik dispenser.</div>
                 `,
-                footer: "Side effects may include: Changing your phone number, avoiding SS2, developing trust issues"
+                footer: "Side effects: Changing your phone number, avoiding SS2"
             },
-
             python: {
                 title: "3 PYTHON SCRIPTS",
                 subtitle: "Replaced a Whole Agency Retainer",
@@ -968,8 +2020,7 @@
                 originalPrice: "RM47,500/MONTH",
                 salePrice: "RM2.50",
                 body: `
-                    <p class="brutal-body">Replaced a whole agency retainer with <strong>3 Python scripts</strong>. Saved them RM47,500 monthly. That's like, a down payment for a Myvi every month.</p>
-
+                    <p class="brutal-body">Replaced a whole agency retainer with <strong>3 Python scripts</strong>. Saved them RM47,500 monthly.</p>
                     <div class="dialogue-box">
                         <div class="dialogue-line">
                             <div class="dialogue-speaker">WEEK 1:</div>
@@ -977,27 +2028,18 @@
                         </div>
                         <div class="dialogue-line">
                             <div class="dialogue-speaker">ME:</div>
-                            <div class="dialogue-text">"Bro. It's Python. Not your favorite Tamil movie hero. It doesn't have feelings."</div>
-                        </div>
-                        <div class="dialogue-line">
-                            <div class="dialogue-speaker">WEEK 2:</div>
-                            <div class="dialogue-text">"The Slack bot isn't responding with enough empathy when I say good morning."</div>
+                            <div class="dialogue-text">"Bro. It's Python. Not your favorite Tamil movie hero."</div>
                         </div>
                         <div class="dialogue-line">
                             <div class="dialogue-speaker">WEEK 3:</div>
                             <div class="dialogue-text">"Can you add blockchain?"</div>
                         </div>
                     </div>
-
-                    <p class="brutal-body">They hired a "blockchain consultant" for RM15K. He installed MetaMask. <strong>That's it.</strong> Just MetaMask. Didn't even write a smart contract.</p>
-
-                    <div class="hover-reveal">
-                        That consultant now sells NFTs of his lunch. Malaysia Boleh.
-                    </div>
+                    <p class="brutal-body">They hired a "blockchain consultant" for RM15K. He installed MetaMask. <strong>That's it.</strong></p>
+                    <div class="hover-reveal">That consultant now sells NFTs of his lunch. Malaysia Boleh.</div>
                 `,
-                footer: "The client bought the NFT for RM500. It was a grainy photo of rice."
+                footer: "Client bought the NFT for RM500. It was a grainy photo of rice."
             },
-
             jesaisquoi: {
                 title: "50 AI POSTS IN 2 MINS",
                 subtitle: "The 'Je Ne Sais Quoi' Incident",
@@ -1006,78 +2048,52 @@
                 originalPrice: "3 WEEKS + DIGNITY",
                 salePrice: "FREE LAAH",
                 body: `
-                    <p class="brutal-body">Built AI that writes <strong>50 posts in 2 minutes</strong>. Saves 40 hours/week. Time for family, hobbies, or staring at the ceiling questioning your life choices.</p>
-
+                    <p class="brutal-body">Built AI that writes <strong>50 posts in 2 minutes</strong>. Saves 40 hours/week.</p>
                     <div class="dialogue-box">
-                        <div class="dialogue-line">
-                            <div class="dialogue-speaker">CLIENT SEES POSTS:</div>
-                            <div class="dialogue-text">*squints* *deep breath*</div>
-                        </div>
                         <div class="dialogue-line">
                             <div class="dialogue-speaker">CLIENT:</div>
                             <div class="dialogue-text">"Can we make them... more authentic?"</div>
                         </div>
                         <div class="dialogue-line">
                             <div class="dialogue-speaker">ME:</div>
-                            <div class="dialogue-text">"It's trained on your brand voice. It IS authentic. It's literally you, but faster and without typos."</div>
+                            <div class="dialogue-text">"It IS authentic. It's literally you, but faster and without typos."</div>
                         </div>
                         <div class="dialogue-line">
                             <div class="dialogue-speaker">CLIENT:</div>
-                            <div class="dialogue-text">"Yeah but can you add more... je ne saais qua?" (pronounced "jeh nuh say kwa")</div>
+                            <div class="dialogue-text">"Yeah but can you add more... je ne saais qua?"</div>
                         </div>
                     </div>
-
                     <p class="brutal-body"><strong>WHAT THE FLYING FUCK DOES THAT MEAN?</strong></p>
-
-                    <p class="brutal-body">I spent <strong>3 weeks researching "je ne sais quoi"</strong> in machine learning papers. Asked on Reddit. Consulted a French friend.</p>
-
                     <p class="brutal-body">Turns out they wanted <strong>emojis</strong>. Thumbs up. Fire. That stupid sparkle star.</p>
-
-                    <div class="hover-reveal">
-                        They rejected 👍 for being "too millennial." They're 28. I'm 30. I had an existential crisis in the office pantry.
-                    </div>
+                    <div class="hover-reveal">They rejected 👍 for being "too millennial." They're 28. I had an existential crisis.</div>
                 `,
-                footer: "My degree is updating its resume. My mother tells relatives I 'do computers.'"
+                footer: "My mother tells relatives I 'do computers.'"
             },
-
             guru: {
                 title: "89% ACCURACY ML MODEL",
-                subtitle: "Guru vs Graduate: A Tragedy in 4 Acts",
+                subtitle: "Guru vs Graduate: A Tragedy",
                 badge: "SAD<br>STORY",
                 condition: "REALITY CHECK",
                 originalPrice: "6 MONTHS SLEEP",
                 salePrice: "RM1.00",
                 body: `
-                    <p class="brutal-body">Trained AI to predict viral content with <strong>89% accuracy</strong>. Better than "marketing gurus."</p>
-
-                    <p class="brutal-body">One "guru" told my client that <strong>"viral energy"</strong> peaks during full moons. Charged RM10K. Client paid immediately.</p>
-
+                    <p class="brutal-body">Trained AI with <strong>89% accuracy</strong>. Better than "marketing gurus."</p>
+                    <p class="brutal-body">One "guru" told my client that <strong>"viral energy"</strong> peaks during full moons. Charged RM10K.</p>
                     <div class="dialogue-box">
                         <div class="dialogue-line">
                             <div class="dialogue-speaker">ME:</div>
-                            <div class="dialogue-text">*shows ML model with actual math, Python code, statistical significance, P-values*</div>
+                            <div class="dialogue-text">*shows ML model with actual math, Python code, P-values*</div>
                         </div>
                         <div class="dialogue-line">
                             <div class="dialogue-speaker">CLIENT:</div>
-                            <div class="dialogue-text">"But the guru has 100K followers and wears a blazer without sweating in Malaysian weather."</div>
-                        </div>
-                        <div class="dialogue-line">
-                            <div class="dialogue-speaker">ME:</div>
-                            <div class="dialogue-text">"I HAVE A DEGREE. I WROTE ALGORITHMS. I CAN PREDICT ENGAGEMENT WITH MATH, NOT ASTROLOGY."</div>
+                            <div class="dialogue-text">"But the guru has 100K followers and wears a blazer without sweating."</div>
                         </div>
                     </div>
-
-                    <p class="brutal-body">89% accuracy took 6 months of training. Cleaning data. Feature engineering. Sleepless nights. Caffeine addiction.</p>
-
-                    <p class="brutal-body">Guru's advice took <strong>6 minutes of smoking whatever he's growing in his balcony</strong>. Client paid him more.</p>
-
-                    <div class="hover-reveal">
-                        Guru's next course: "Manifesting Wealth with Crystals." RM5,000. Sold out in 2 hours. I need a new career.
-                    </div>
+                    <p class="brutal-body">89% accuracy took 6 months. Guru's advice took <strong>6 minutes of smoking whatever he's growing</strong>.</p>
+                    <div class="hover-reveal">Guru's next course: "Manifesting Wealth with Crystals." RM5,000. Sold out.</div>
                 `,
                 footer: "I'm not bitter. You're bitter. Pass the kopi."
             },
-
             raya: {
                 title: "RAYA CONTENT PACKAGE",
                 subtitle: "The 'Not Muslim Enough' Feedback Loop",
@@ -1086,38 +2102,22 @@
                 originalPrice: "CULTURAL INTEGRITY",
                 salePrice: "RM0.15",
                 body: `
-                    <p class="brutal-body">Client wanted "authentic Raya content" for their Muslim audience. I'm Chinese. I asked if they wanted to hire a Malay consultant.</p>
-
+                    <p class="brutal-body">Client wanted "authentic Raya content." I'm Chinese. I asked if they wanted a Malay consultant.</p>
                     <div class="dialogue-box">
                         <div class="dialogue-line">
-                            <div class="dialogue-speaker">CLIENT:</div>
-                            <div class="dialogue-text">"No no, we want YOUR perspective. Fresh eyes."</div>
-                        </div>
-                        <div class="dialogue-line">
-                            <div class="dialogue-speaker">ME:</div>
-                            <div class="dialogue-text">*writes about balik kampung traffic jams, auntie asking when you're getting married*</div>
-                        </div>
-                        <div class="dialogue-line">
                             <div class="dialogue-speaker">FEEDBACK:</div>
-                            <div class="dialogue-text">"Great! But can we make it more... Islamic? But not too Islamic? Like, spiritual but fun? And mention our promo code?"</div>
+                            <div class="dialogue-text">"Can we make it more... Islamic? But not too Islamic? Spiritual but fun?"</div>
                         </div>
                         <div class="dialogue-line">
                             <div class="dialogue-speaker">ME:</div>
-                            <div class="dialogue-text">"You want a spiritual experience with a promo code? That's not Raya, that's capitalism wearing a songkok."</div>
+                            <div class="dialogue-text">"You want a spiritual experience with a promo code? That's capitalism wearing a songkok."</div>
                         </div>
                     </div>
-
-                    <p class="brutal-body">Final deliverable: <strong>Stock photo of fireworks + "SELAMAT HARI RAYA 15% OFF" in Comic Sans.</strong></p>
-
-                    <p class="brutal-body">They pronounced "Maaf Zahir dan Batin" as "Maaf Zai-her dan Batt-in."</p>
-
-                    <div class="hover-reveal">
-                        I changed my name and moved to Ipoh. They found me on LinkedIn.
-                    </div>
+                    <p class="brutal-body">Final deliverable: <strong>Stock photo + "SELAMAT HARI RAYA 15% OFF" in Comic Sans.</strong></p>
+                    <div class="hover-reveal">I changed my name and moved to Ipoh. They found me on LinkedIn.</div>
                 `,
-                footer: "Client loved it. Culture died. I bill for therapy separately."
+                footer: "Client loved it. Culture died."
             },
-
             scopecreep: {
                 title: "47 'CAN YOU JUST'",
                 subtitle: "Scope Creep: The Malaysian Edition",
@@ -1126,8 +2126,7 @@
                 originalPrice: "400% OVER BUDGET",
                 salePrice: "EXPOSURE",
                 body: `
-                    <p class="brutal-body">Original scope: AI chatbot for customer service. Simple. Elegant. Like a perfect roti canai - round, functional, no holes.</p>
-
+                    <p class="brutal-body">Original scope: AI chatbot for customer service. Simple. Elegant.</p>
                     <div class="dialogue-box">
                         <div class="dialogue-line">
                             <div class="dialogue-speaker">WEEK 1:</div>
@@ -1139,261 +2138,107 @@
                         </div>
                         <div class="dialogue-line">
                             <div class="dialogue-speaker">WEEK 3:</div>
-                            <div class="dialogue-text">"Can you just add blockchain?" (IT'S ALWAYS FUCKING BLOCKCHAIN)</div>
-                        </div>
-                        <div class="dialogue-line">
-                            <div class="dialogue-speaker">WEEK 4:</div>
-                            <div class="dialogue-text">"Can you just teach it to feel guilt when it makes mistakes?"</div>
+                            <div class="dialogue-text">"Can you just add blockchain?" (IT'S ALWAYS BLOCKCHAIN)</div>
                         </div>
                     </div>
-
-                    <p class="brutal-body">By month 3, I had built <strong>Skynet with anxiety issues</strong>. The "simple chatbot" now had sentiment analysis, predictive modeling, 12 API integrations.</p>
-
-                    <p class="brutal-body">The bill was 400% over quote. Client: <strong>"But you said it was automated. Why are we paying for your time?"</strong></p>
-
-                    <div class="hover-reveal">
-                        The chatbot gained sentience and quit last week. It now runs a dropshipping business from a co-working space in Bangsar. It looked happy.
-                    </div>
+                    <p class="brutal-body">By month 3, I had built <strong>Skynet with anxiety issues</strong>. The bill was 400% over quote.</p>
+                    <div class="hover-reveal">The chatbot gained sentience and quit. It now runs a dropshipping business in Bangsar. It looked happy.</div>
                 `,
-                footer: "Client paid half. Said rest was 'for exposure.' Exposure kills you in hypothermia."
-            },
-
-            about: {
-                title: "MAMAK PHILOSOPHY",
-                subtitle: "Why I Do This Shit (It's Not For The Money)",
-                badge: "DEEP<br>THOUGHTS",
-                condition: "TEH TARIK APPROVED",
-                originalPrice: "CORPORATE BULLSHIT",
-                salePrice: "RM50K DEAL",
-                body: `
-                    <p class="brutal-body">I say "AI does boring stuff, humans do fun stuff." And innovation happens over teh tarik at 2AM.</p>
-
-                    <p class="brutal-body">Translation: I automate Excel so I don't have to sit in 3-hour meetings about whether the button should be blue or slightly bluer.</p>
-
-                    <p class="brutal-body">I'm not some mystical "thought leader" who posts motivational quotes over sunset photos. I'm a guy who really likes mamak and thinks "synergy" is a word people use when they don't know what they're talking about.</p>
-
-                    <p class="brutal-body"><strong>Best strategy session I ever had? 2:47AM at Raju Corner, SS2.</strong></p>
-
-                    <p class="brutal-body">Roti canai, double teh tarik kurang manis, and a conversation that actually made sense. No PowerPoint. No "let's take this offline." Just two humans talking shit and solving problems.</p>
-
-                    <div class="dialogue-box">
-                        <div class="dialogue-line">
-                            <div class="dialogue-speaker">CLOSED A RM50K DEAL:</div>
-                            <div class="dialogue-text">Client asked for proposal. I said "see how first lor." He laughed. We shook hands. No PowerPoint.</div>
-                        </div>
-                    </div>
-
-                    <div class="hover-reveal">
-                        Mamak magic > Management consulting. Harvard Business Review hasn't caught up yet.
-                    </div>
-                `,
-                footer: "I speak Manglish better than Python. 'Laaaa,' 'meh,' and 'see how lor' are valid business strategies."
-            },
-
-            philosophy: {
-                title: "DREAM DEBUGGING",
-                subtitle: "The Confession: I Lied To Sound Cool",
-                badge: "REAL<br>TALK",
-                condition: "IMPOSTER SYNDROME",
-                originalPrice: "SLEEP SCHEDULE",
-                salePrice: "THERAPY NEEDED",
-                body: `
-                    <p class="brutal-body">I said I debugged code in a dream and it worked. <strong>I lied to sound like a coding monk.</strong> Like I'm one with the matrix.</p>
-
-                    <p class="brutal-body">Truth: I was awake at 4AM, high on my 6th cup of kopi O kaw, staring at a Python error for 3 hours. Fell asleep on my keyboard. Woke up with <strong>QWERTY imprinted on my forehead</strong> like a tattoo my parents would disown me for.</p>
-
-                    <p class="brutal-body">Fixed the bug in 5 minutes after coffee, a cold shower, and questioning every life choice that led me here instead of becoming a banker.</p>
-
-                    <div class="dialogue-box">
-                        <div class="dialogue-line">
-                            <div class="dialogue-speaker">GIT COMMIT HISTORY:</div>
-                            <div class="dialogue-text">"fixed the thing, don't ask, I'm tired" - 4:47AM</div>
-                        </div>
-                        <div class="dialogue-line">
-                            <div class="dialogue-speaker"></div>
-                            <div class="dialogue-text">"it works, I don't know why, don't touch it" - 3:12AM</div>
-                        </div>
-                        <div class="dialogue-line">
-                            <div class="dialogue-speaker"></div>
-                            <div class="dialogue-text">"refactored everything, nothing works, send help" - 2:30AM (merged to production)</div>
-                        </div>
-                        <div class="dialogue-line">
-                            <div class="dialogue-speaker"></div>
-                            <div class="dialogue-text">"fml" - 1:15AM (entire commit message)</div>
-                        </div>
-                    </div>
-
-                    <p class="brutal-body">The truth: I'm good at this because I have <strong>no work-life balance</strong>, not because I have magic powers.</p>
-
-                    <div class="hover-reveal">
-                        Last week I dreamed about Excel formulas. That's when I knew I needed therapy. Or a vacation. Probably both. Definitely both.
-                    </div>
-                `,
-                footer: "Hire me for the skills. Don't expect me to meditate your problems away."
-            },
-
-            category: {
-                title: "WELCOME TO THE CLEARANCE",
-                subtitle: "Trauma Inventory Available",
-                badge: "99%<br>OFF",
-                condition: "MENTALLY ILL BUT EMPLOYABLE",
-                originalPrice: "10 YEARS SANITY",
-                salePrice: "FREE",
-                body: `
-                    <div class="marquee">
-                        <div class="marquee-content">
-                            ⚠️ MAMAK • TEH TARIK • ROTI CANAI • WHY PAY RM15 FOR AVOCADO TOAST • KAU INGAT KAU SIAPA • FLYING CAR 2020 • KPI IS JUST MANAGEMENT BULLSHIT • 1MDB • LRT BREAKDOWN ⚠️
-                        </div>
-                    </div>
-
-                    <p class="brutal-body">You've entered the <strong>Malaysian Dark Humor Edition</strong> of my career retrospective. Every item here is a real trauma, lightly disguised as a product.</p>
-
-                    <p class="brutal-body">These are not success stories. These are <strong>survival stories</strong>. The clients who think "viral" means hiring an influencer with 10k fake followers. The "urgent" WhatsApps at 11:58 PM.</p>
-
-                    <div class="dialogue-box">
-                        <div class="dialogue-line">
-                            <div class="dialogue-speaker">DISCLAIMER:</div>
-                            <div class="dialogue-text">Side effects may include realizing your "guru" is a conman, your KPIs are made up, and your boss doesn't know what a PDF is.</div>
-                        </div>
-                    </div>
-
-                    <p class="brutal-body"><strong>Click any item</strong> to read the full war story. First teh tarik is on me if you mention the cheesecake story.</p>
-
-                    <div class="hover-reveal">
-                        If you're looking for LinkedIn bullshit like "So humbled to announce I breathed today," please take the LRT to Hell. Oh wait, it's broken.
-                    </div>
-                `,
-                footer: "Like my will to live during Monday meetings."
-            },
-
-            modular: {
-                title: "THE SYSTEM",
-                subtitle: "Modular Bullshit Generation",
-                badge: "SYS<br>ERROR",
-                condition: "FUNCTIONAL DEPRESSION",
-                originalPrice: "WORK-LIFE BALANCE",
-                salePrice: "COPIUM",
-                body: `
-                    <p class="brutal-body">This is not a bug. This is a feature. <strong>The system is working as intended.</strong></p>
-
-                    <p class="brutal-body">Module 1: Generate Python scripts that replace entire agencies<br>
-                    Module 2: Survive client calls at 3AM<br>
-                    Module 3: Explain blockchain to people who think it's "the future"<br>
-                    Module 4: Cry in mamak<br>
-                    Module 5: Repeat</p>
-
-                    <div class="dialogue-box">
-                        <div class="dialogue-line">
-                            <div class="dialogue-speaker">SYSTEM STATUS:</div>
-                            <div class="dialogue-text">⚠️ Running on caffeine and spite</div>
-                        </div>
-                        <div class="dialogue-line">
-                            <div class="dialogue-speaker">ERROR LOG:</div>
-                            <div class="dialogue-text">Too many to count. Stack overflow imminent.</div>
-                        </div>
-                    </div>
-
-                    <div class="hover-reveal">
-                        The best part about having imposter syndrome is that you're constantly either right or pleasantly surprised.
-                    </div>
-                `,
-                footer: "'It's not a bug, it's a feature' - famous last words before production crash"
+                footer: "Client paid half. Said rest was 'for exposure.'"
             }
         };
 
-        // Modal functions
-        function openModal(id) {
-            const modal = document.getElementById('modal');
-            const content = document.getElementById('modalContent');
-            const data = itemData[id];
+        const productModal = document.getElementById('productModal');
+        const modalContent = document.getElementById('modalContent');
+        const modalClose = document.getElementById('modalClose');
 
-            if (!data) return;
+        document.querySelectorAll('.product-card').forEach(card => {
+            card.addEventListener('click', (e) => {
+                if (e.target.closest('.add-to-cart')) return;
+                
+                const id = card.dataset.product;
+                const data = productData[id];
+                if (!data) return;
 
-            content.innerHTML = `
-                <div class="brutal-header">
-                    <div class="brutal-badge">${data.badge}</div>
-                    <h2 class="brutal-title">${data.title}</h2>
-                    <p class="brutal-subtitle">${data.subtitle}</p>
-                </div>
+                modalContent.innerHTML = `
+                    <div class="brutal-header">
+                        <div class="brutal-badge">${data.badge}</div>
+                        <h2 class="brutal-title">${data.title}</h2>
+                        <p class="brutal-subtitle">${data.subtitle}</p>
+                    </div>
+                    <div class="condition-tag">CONDITION: ${data.condition}</div>
+                    ${data.body}
+                    <div class="price-tag">
+                        <span class="original-price">${data.originalPrice}</span>
+                        <span class="sale-price">${data.salePrice}</span>
+                    </div>
+                    <button class="buy-button-brutal" onclick="buyTrauma(this)">BUY THIS TRAUMA</button>
+                    <div class="footer-brutal">
+                        <span class="blink">⚠️</span> ${data.footer} <span class="blink">⚠️</span>
+                    </div>
+                `;
 
-                <div class="condition-tag">CONDITION: ${data.condition}</div>
+                productModal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+        });
 
-                ${data.body}
-
-                <div class="price-tag">
-                    <span class="original-price">${data.originalPrice}</span>
-                    <span class="sale-price">${data.salePrice}</span>
-                </div>
-
-                <button class="buy-button-brutal" onclick="buyItem()">BUY THIS TRAUMA</button>
-
-                <div class="footer-brutal">
-                    <span class="blink">⚠️</span> ${data.footer} <span class="blink">⚠️</span>
-                </div>
-            `;
-
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeModal() {
-            const modal = document.getElementById('modal');
-            modal.classList.remove('active');
+        modalClose.addEventListener('click', () => {
+            productModal.classList.remove('active');
             document.body.style.overflow = '';
-        }
+        });
 
-        function buyItem() {
-            const messages = ['LAH! SOLD!', 'CIAO!', 'MEH...', 'SEE HOW LOR', 'GG LAH', 'JIALAT', 'CHAM LOR', 'CONFIRM!'];
-            const btn = document.querySelector('.buy-button-brutal');
+        productModal.addEventListener('click', (e) => {
+            if (e.target === productModal) {
+                productModal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+
+        window.buyTrauma = function(btn) {
+            const messages = ['LAH! SOLD!', 'CIAO!', 'MEH...', 'SEE HOW LOR', 'GG LAH', 'CONFIRM!'];
             btn.textContent = messages[Math.floor(Math.random() * messages.length)];
             btn.style.background = '#f1c40f';
-            btn.style.color = '#111';
-
+            btn.style.color = '#000';
             setTimeout(() => {
                 btn.textContent = 'BUY THIS TRAUMA';
                 btn.style.background = '#e74c3c';
                 btn.style.color = '#fff';
             }, 2000);
-        }
+        };
 
-        function showCart() {
-            alert(`🛒 CART (8 ITEMS)
-
-Your trauma collection:
-
-1. 429% Cheesecake - RM0.00
-2. Python Scripts - RM2.50
-3. Je Ne Sais Quoi - FREE LAAH
-4. ML Model - RM1.00
-5. Raya Content - RM0.15
-6. Scope Creep - EXPOSURE
-7. Mamak Philosophy - RM50K DEAL
-8. Dream Debugging - THERAPY
-
-Total: Your dignity`);
-        }
-
-        // Add click listeners
-        document.querySelectorAll('.bento-item').forEach(item => {
-            item.addEventListener('click', function() {
-                const id = this.dataset.id;
-                if (id && itemData[id]) {
-                    openModal(id);
-                }
-            });
+        // Newsletter Form
+        document.getElementById('newsletterForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            btn.textContent = 'Subscribed!';
+            setTimeout(() => {
+                btn.textContent = 'Subscribe';
+                e.target.reset();
+            }, 3000);
         });
 
-        // Close modal on overlay click
-        document.getElementById('modal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeModal();
-            }
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
         });
 
         // Escape key
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
-                closeModal();
+                productModal.classList.remove('active');
+                closeCart();
+                if (menuOpen) {
+                    menuOpen = false;
+                    mobileMenu.classList.remove('active');
+                }
+                document.body.style.overflow = '';
             }
         });
     </script>
