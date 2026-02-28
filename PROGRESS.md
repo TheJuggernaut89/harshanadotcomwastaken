@@ -1,8 +1,8 @@
 # Portfolio Development Progress
 
 **Project:** Enhanced Portfolio with 3-Mode Structure  
-**Last Updated:** February 27, 2026 (End of Session)  
-**Status:** ✅ Production Ready - Brutal Mode Redesign Complete
+**Last Updated:** March 1, 2026  
+**Status:** ✅ JIALAT Mode Complete - Milo Template Integration
 
 ---
 
@@ -11,7 +11,7 @@
 A multi-mode portfolio website featuring a terminal-style boot sequence that routes users to three distinct experiences:
 1. **Professional Mode** - React-based marketing technologist portfolio
 2. **Creative Mode** - Horizontal scrolling Palmer template showcase
-3. **Brutal Mode** - E-commerce themed trauma clearance with Malaysian dark humor (REDESIGNED)
+3. **JIALAT Mode** - E-commerce themed trauma clearance with Malaysian dark humor (Milo Template + Renamed from MILO)
 
 ---
 
@@ -72,32 +72,33 @@ A multi-mode portfolio website featuring a terminal-style boot sequence that rou
 - [x] Lenis smooth scroll
 - [x] Lucide icons
 
-### 4. Brutal Mode (Trauma Clearance) - REDESIGNED ✅
+### 4. JIALAT Mode (Formerly Brutal Mode / Trauma Clearance) - COMPLETE ✅
 **Location:** `/brutal/` | **Live:** https://harshanajothiresume2026.netlify.app/brutal/
 
-#### Visual Redesign (Feb 27, 2026)
+#### Milo Template Integration (Feb 28, 2026)
+- [x] **Brand Rename:** MILO → JIALAT throughout
+- [x] **Custom Cursor:** Spring physics with mix-blend-mode difference
+- [x] **Magnetic Buttons:** 30px cursor pull radius with spring return
+- [x] **Stagger Text Animations:** Letter-by-letter 3D reveal (rotateX -90deg)
+- [x] **Parallax Effects:** Hero background + editorial section scroll parallax
+- [x] **Product Card Animations:**
+  - [x] Masonry grid with alternating vertical offsets
+  - [x] 3D rotation entrance (±3deg) with GSAP
+  - [x] Hover: Add to Cart reveal + image zoom (1.1x) + info shift
+- [x] **Cart Sidebar:**
+  - [x] Slides from right with spring animation
+  - [x] Backdrop blur overlay
+  - [x] Staggered item entrance
+  - [x] Quantity controls (+/-)
+  - [x] Real-time total calculation
+- [x] **Mobile Menu:** Circle clip-path reveal from top-right (150% radius)
+- [x] **War Stories Modal:** Full trauma content with brutal styling
+- [x] **Scroll Animations:** GSAP ScrollTrigger throughout
+
+#### Previous Redesign (Feb 27, 2026)
 - [x] **Real Images:** Replaced emoji placeholders with Unsplash photography
-  - [x] Cheesecake → Cake photo
-  - [x] Python → Code/matrix image
-  - [x] AI Posts → Laptop/workspace
-  - [x] ML Model → Analytics dashboard
-  - [x] Raya → Lantern/moon image
-  - [x] Scope Creep → Warning image
-- [x] **Grid Improvements:**
-  - [x] Gap: 2px → 12px (breathing room)
-  - [x] Row height: 350px → 280px (better proportions)
-  - [x] Background: white → #fafafa (softer)
-- [x] **Card Polish:**
-  - [x] Border radius: 0 → 12px (rounded corners)
-  - [x] Added subtle shadows `0 1px 3px rgba(0,0,0,0.04)`
-  - [x] Hover: lift + enhanced shadow
-  - [x] Image hover: smooth zoom (scale 1.05)
-- [x] **Typography:**
-  - [x] Better hierarchy
-  - [x] Consistent spacing
-  - [x] Darker text for readability
-- [x] **Removed:** Emoji placeholders, gradient backgrounds
-- [x] **Fixed:** All text visibility issues (explicit colors)
+- [x] **Grid Improvements:** 12px gaps, rounded corners (12px), subtle shadows
+- [x] **Typography:** Better hierarchy, darker text for readability
 
 #### Content & Features
 - [x] E-commerce themed layout
@@ -313,7 +314,21 @@ netlify deploy --prod --dir=dist
 
 ## 📈 Changelog
 
-### February 27, 2026 (Current Session)
+### March 1, 2026 (Current Session)
+- ✅ **JIALAT Mode Complete**
+  - Renamed from MILO to JIALAT throughout
+  - Milo template full integration with all animations
+  - Custom cursor with spring physics
+  - Magnetic buttons with 30px pull radius
+  - Stagger text animations (letter-by-letter)
+  - Parallax scroll effects
+  - Product card masonry grid with hover reveals
+  - Cart sidebar with quantity controls
+  - Circle clip-path mobile menu
+  - War stories modal with brutal content
+- ✅ Updated PROGRESS.md with complete changelog
+
+### February 27, 2026 (Earlier Session)
 - ✅ **Brutal Mode Visual Redesign Complete**
   - Added real Unsplash images (replaced emojis/gradients)
   - Increased grid gaps: 2px → 12px
@@ -344,15 +359,27 @@ netlify deploy --prod --dir=dist
 
 ---
 
-## 🎨 Brutal Mode Design Reference
+## 🎨 JIALAT Mode Design Reference
 
-**Current Design:**
-- Grid: 4 columns, 280px rows, 12px gaps
-- Cards: 12px border-radius, subtle shadows
-- Images: Unsplash (w=800&q=80)
-- Background: #fafafa
-- Text: #111 (titles), #555 (body), #999 (muted)
-- Accents: #e74c3c (red), #f1c40f (yellow)
+**Current Design (Milo Template):**
+- **Brand:** JIALAT. (formerly MILO)
+- **Layout:** Masonry product grid with alternating offsets
+- **Typography:** Bold oversized headlines (up to 140px), clean sans-serif body
+- **Animations:** 
+  - Spring physics easing: cubic-bezier(0.34, 1.56, 0.64, 1)
+  - Expo out easing: cubic-bezier(0.16, 1, 0.3, 1)
+  - Stagger letter reveals with 3D rotateX
+  - Parallax scroll layers
+- **Interactions:**
+  - Custom cursor with mix-blend-mode difference
+  - Magnetic buttons (30px pull radius)
+  - Product card hover: image zoom + Add to Cart reveal
+  - Cart sidebar with backdrop blur
+- **Color Palette:**
+  - Background: #fff (white)
+  - Text: #000 (black)
+  - Muted: #666, #999
+  - Accents: #e74c3c (red), #f1c40f (yellow)
 
 **Visual Comparison:**
 | Before | After |
@@ -366,6 +393,7 @@ netlify deploy --prod --dir=dist
 
 ---
 
-**Status:** ✅ Production Ready - All Modes Deployed  
-**Last Commit:** `1dac2ed` - Brutal Mode redesign  
+**Status:** ✅ Production Ready - JIALAT Mode Complete  
+**Last Commit:** `7c327eb` - Rename MILO to JIALAT throughout brutal mode  
+**Previous Commit:** `e8cd805` - Redesign Brutal Mode with Milo template  
 **Next Review:** As needed
