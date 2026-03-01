@@ -302,42 +302,182 @@
         }
         .magnetic-btn:hover { transform: scale(1.05); }
 
-        /* Skills Section */
-        .skills-section { padding: 6rem 2rem; background: var(--surface); }
-        .skills-grid {
-            display: grid; grid-template-columns: 1fr; gap: 1.5rem;
-            max-width: 1400px; margin: 0 auto;
+        /* ===== SKILLS & TOOLS SECTION - FIXED ===== */
+        .skills-section { 
+            padding: 6rem 2rem; 
+            background: var(--surface); 
+            min-height: 100vh;
         }
-        @media (min-width: 768px) { .skills-grid { grid-template-columns: repeat(2, 1fr); } }
-        @media (min-width: 1024px) { .skills-grid { grid-template-columns: repeat(3, 1fr); } }
+        .section-header { 
+            max-width: 1400px; 
+            margin: 0 auto 4rem; 
+            text-align: center; 
+        }
+        .section-label { 
+            font-size: 0.75rem; 
+            color: var(--accent); 
+            text-transform: uppercase; 
+            letter-spacing: 0.3em; 
+            margin-bottom: 1rem; 
+        }
+        .section-title { 
+            font-size: clamp(2rem, 5vw, 3.5rem); 
+            font-weight: 600; 
+            letter-spacing: -0.03em; 
+        }
+        
+        /* Skills Grid */
+        .skills-grid { 
+            display: grid; 
+            grid-template-columns: 1fr; 
+            gap: 1.5rem;
+            max-width: 1400px; 
+            margin: 0 auto;
+        }
+        @media (min-width: 768px) { 
+            .skills-grid { grid-template-columns: repeat(2, 1fr); } 
+        }
+        @media (min-width: 1024px) { 
+            .skills-grid { grid-template-columns: repeat(3, 1fr); } 
+        }
+        
         .skill-card {
-            background: var(--bg); border: 1px solid var(--border);
-            border-radius: 20px; padding: 2rem; transition: all 0.3s;
+            background: var(--bg); 
+            border: 1px solid var(--border); 
+            border-radius: 20px; 
+            padding: 2rem; 
+            transition: all 0.3s;
+            opacity: 1 !important; /* Ensure visibility */
+            transform: translateY(0) !important; /* Ensure visibility */
         }
-        .skill-card:hover { border-color: var(--accent); transform: translateY(-5px); }
-        .skill-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; }
-        .skill-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
-        .skill-icon.marketing { background: rgba(255, 61, 0, 0.1); }
-        .skill-icon.creative { background: rgba(138, 43, 226, 0.1); }
-        .skill-icon.technical { background: rgba(0, 255, 136, 0.1); }
-        .skill-icon.data { background: rgba(255, 170, 0, 0.1); }
-        .skill-icon.business { background: rgba(0, 150, 255, 0.1); }
-        .skill-icon.leadership { background: rgba(255, 0, 128, 0.1); }
-        .skill-title { font-size: 1.25rem; font-weight: 600; }
-        .skill-list { list-style: none; }
+        .skill-card:hover { 
+            border-color: var(--accent); 
+            transform: translateY(-5px) !important; 
+            box-shadow: 0 10px 40px rgba(255, 61, 0, 0.1);
+        }
+        .skill-header { 
+            display: flex; 
+            align-items: center; 
+            gap: 1rem; 
+            margin-bottom: 1.5rem; 
+        }
+        .skill-icon { 
+            width: 48px; 
+            height: 48px; 
+            border-radius: 12px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-size: 1.5rem; 
+        }
+        .skill-icon.marketing { background: rgba(255, 61, 0, 0.15); }
+        .skill-icon.technical { background: rgba(0, 255, 136, 0.15); }
+        .skill-icon.creative { background: rgba(138, 43, 226, 0.15); }
+        .skill-icon.data { background: rgba(255, 170, 0, 0.15); }
+        .skill-icon.business { background: rgba(0, 150, 255, 0.15); }
+        .skill-icon.leadership { background: rgba(255, 0, 128, 0.15); }
+        .skill-title { 
+            font-size: 1.25rem; 
+            font-weight: 600; 
+        }
+        .skill-list { 
+            list-style: none; 
+        }
         .skill-list li {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 0.75rem 0; border-bottom: 1px solid var(--border); font-size: 0.9rem;
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+            padding: 0.75rem 0; 
+            border-bottom: 1px solid var(--border);
+            font-size: 0.9rem;
         }
-        .skill-list li:last-child { border-bottom: none; }
-        .skill-name { color: var(--text); }
-        .skill-level { color: var(--text-secondary); font-size: 0.8rem; }
+        .skill-list li:last-child { 
+            border-bottom: none; 
+        }
+        .skill-name { 
+            color: var(--text); 
+        }
+        .skill-level { 
+            color: var(--text-secondary); 
+            font-size: 0.8rem;
+            background: var(--surface);
+            padding: 0.2rem 0.6rem;
+            border-radius: 100px;
+        }
+
+        /* Tools Section */
+        .tools-section {
+            padding: 6rem 2rem;
+            background: var(--bg);
+        }
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        @media (min-width: 768px) {
+            .tools-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+        @media (min-width: 1024px) {
+            .tools-grid { grid-template-columns: repeat(6, 1fr); }
+        }
+        .tool-category {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: all 0.3s;
+        }
+        .tool-category:hover {
+            border-color: var(--accent);
+            transform: translateY(-3px);
+        }
+        .tool-category-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .tool-category-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+        .tool-category-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .tool-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        .tool-tag {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            padding: 0.4rem 0.8rem;
+            border-radius: 100px;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            transition: all 0.2s;
+        }
+        .tool-tag:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
 
         /* Projects Section */
         .projects-section { padding: 6rem 2rem; background: var(--bg); }
-        .section-header { max-width: 1400px; margin: 0 auto 4rem; text-align: center; }
-        .section-label { font-size: 0.75rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.3em; margin-bottom: 1rem; }
-        .section-title { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 600; letter-spacing: -0.03em; }
         .projects-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; max-width: 1400px; margin: 0 auto; }
         @media (min-width: 768px) { .projects-grid { grid-template-columns: repeat(2, 1fr); } }
         .project-card {
@@ -356,20 +496,27 @@
             text-transform: uppercase; letter-spacing: 0.05em; border-radius: 100px;
         }
 
-        /* Experience Section - NEW MEDIA GALLERY STYLES */
+        /* Experience Section */
         .experience-section { padding: 6rem 2rem; background: var(--surface); }
         .experience-grid {
-            display: flex; flex-direction: column; gap: 3rem;
-            max-width: 1200px; margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
         }
         .job-card {
             background: var(--bg); border: 1px solid var(--border);
-            border-radius: 24px; padding: 2rem; transition: border-color 0.3s;
+            border-radius: 20px; padding: 2rem; transition: border-color 0.3s;
         }
         .job-card:hover { border-color: var(--accent); }
         .job-header {
-            display: flex; flex-wrap: wrap; justify-content: space-between;
-            align-items: flex-start; gap: 0.5rem; margin-bottom: 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
         }
         .job-title { font-size: 1.5rem; font-weight: 600; }
         .job-meta { font-size: 0.85rem; color: var(--text-secondary); }
@@ -399,9 +546,7 @@
 
         /* Auto-playing Video Slider */
         .video-slider-container { position: relative; border-radius: 16px; overflow: hidden; background: var(--bg); }
-        .video-slider {
-            display: flex; transition: transform 0.5s ease;
-        }
+        .video-slider { display: flex; transition: transform 0.5s ease; }
         .video-slide {
             flex: 0 0 100%; position: relative;
         }
@@ -414,17 +559,6 @@
             padding: 1.5rem; background: linear-gradient(transparent, rgba(0,0,0,0.9));
             font-size: 0.9rem; color: var(--text);
         }
-        .video-controls {
-            position: absolute; bottom: 1rem; right: 1rem;
-            display: flex; gap: 0.5rem;
-        }
-        .video-control-btn {
-            width: 40px; height: 40px; border-radius: 50%;
-            background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
-            color: var(--text); cursor: pointer; display: flex; align-items: center; justify-content: center;
-            transition: all 0.3s;
-        }
-        .video-control-btn:hover { background: var(--accent); border-color: var(--accent); }
         .video-dots {
             position: absolute; bottom: 1rem; left: 50%; transform: translateX(-50%);
             display: flex; gap: 0.5rem;
@@ -503,7 +637,7 @@
             .split-left, .split-right { padding: 6rem 4rem; }
             .stat-num-large { font-size: 5rem; }
             .split-title { font-size: 2.5rem; }
-            .projects-section, .skills-section, .experience-section { padding: 8rem 4rem; }
+            .projects-section, .skills-section, .tools-section, .experience-section { padding: 8rem 4rem; }
         }
         @media (min-width: 1024px) { .split-section { grid-template-columns: 1fr 1fr; } }
         @media (max-width: 767px) {
@@ -516,6 +650,7 @@
             .hero-roles { flex-direction: column; }
             .video-slide video, .video-slide img { height: 250px; }
             .image-gallery { grid-template-columns: repeat(2, 1fr); }
+            .tools-grid { grid-template-columns: repeat(2, 1fr); }
         }
     </style>
 </head>
@@ -567,8 +702,8 @@
                 <span>|</span>
                 <span>Kuala Lumpur, Malaysia</span>
             </div>
-            <a href="#projects" class="hero-cta magnetic">
-                View My Work
+            <a href="#skills" class="hero-cta magnetic">
+                View Skills & Tools
                 <i data-lucide="arrow-down" style="width: 18px; height: 18px;"></i>
             </a>
         </div>
@@ -673,7 +808,7 @@
             <div class="stat-list">
                 <div class="stat-item">
                     <span class="stat-num-large">429<span>%</span></span>
-                    <span class="stat-label-large">Facebook Growth</span>
+                    <span class="stat-label-large">Facebook Growth (12K→63K)</span>
                 </div>
                 <div class="stat-item">
                     <span class="stat-num-large">178<span>%</span></span>
@@ -694,104 +829,227 @@
             <div class="capability-list">
                 <div class="capability-item">
                     <h4>Visual Design</h4>
-                    <p>Adobe Photoshop, Illustrator, InDesign. Brand identity, social media graphics, print design.</p>
+                    <p>Adobe Photoshop, Illustrator, InDesign. Brand identity, social media graphics, print design, and marketing collateral.</p>
                 </div>
                 <div class="capability-item">
                     <h4>Video Production</h4>
-                    <p>Adobe Premiere Pro, After Effects. Short-form content, motion graphics, color grading.</p>
+                    <p>Adobe Premiere Pro, After Effects. Short-form content, motion graphics, color grading, and platform-optimized formats.</p>
                 </div>
                 <div class="capability-item">
                     <h4>Marketing Strategy</h4>
-                    <p>Content strategy, campaign planning, brand storytelling, data-driven creative decisions.</p>
+                    <p>Content strategy, campaign planning, brand storytelling, and data-driven creative decisions that drive engagement.</p>
                 </div>
                 <div class="capability-item">
                     <h4>Workflow Optimization</h4>
-                    <p>Design systems, automation workflows, and scalable processes that maintain quality.</p>
+                    <p>Design systems, automation workflows, and scalable processes that maintain quality while increasing output.</p>
                 </div>
             </div>
             <a href="mailto:jothiharshana188@gmail.com" class="magnetic-btn">Get in Touch</a>
         </div>
     </section>
 
-
-    <!-- Skills Section -->
+    <!-- SKILLS SECTION - Based on Professional Version -->
     <section class="skills-section" id="skills">
         <div class="section-header">
             <p class="section-label">Expertise</p>
-            <h2 class="section-title">Skills & Tools</h2>
+            <h2 class="section-title">Skills & Competencies</h2>
         </div>
         <div class="skills-grid">
+            <!-- Marketing -->
             <div class="skill-card">
                 <div class="skill-header">
                     <div class="skill-icon marketing">📢</div>
-                    <h3 class="skill-title">Marketing & Growth</h3>
+                    <h3 class="skill-title">Marketing</h3>
                 </div>
                 <ul class="skill-list">
-                    <li><span class="skill-name">Meta Business Suite</span><span class="skill-level">Expert</span></li>
-                    <li><span class="skill-name">Instagram Strategy</span><span class="skill-level">Expert</span></li>
-                    <li><span class="skill-name">TikTok Marketing</span><span class="skill-level">Advanced</span></li>
-                    <li><span class="skill-name">Content Strategy</span><span class="skill-level">Expert</span></li>
+                    <li><span class="skill-name">Social Media Strategy</span><span class="skill-level">Expert</span></li>
+                    <li><span class="skill-name">Conversion Optimization</span><span class="skill-level">Expert</span></li>
+                    <li><span class="skill-name">Google Analytics 4</span><span class="skill-level">Advanced</span></li>
+                    <li><span class="skill-name">Marketing Automation</span><span class="skill-level">Expert</span></li>
+                    <li><span class="skill-name">Campaign Attribution</span><span class="skill-level">Advanced</span></li>
+                    <li><span class="skill-name">Multi-platform Management</span><span class="skill-level">Expert</span></li>
                 </ul>
             </div>
+            
+            <!-- Technical -->
             <div class="skill-card">
                 <div class="skill-header">
-                    <div class="skill-icon creative">🎨</div>
-                    <h3 class="skill-title">Creative & Design</h3>
-                </div>
-                <ul class="skill-list">
-                    <li><span class="skill-name">Adobe Photoshop</span><span class="skill-level">Expert</span></li>
-                    <li><span class="skill-name">Adobe Illustrator</span><span class="skill-level">Expert</span></li>
-                    <li><span class="skill-name">Adobe Premiere</span><span class="skill-level">Advanced</span></li>
-                    <li><span class="skill-name">After Effects</span><span class="skill-level">Advanced</span></li>
-                </ul>
-            </div>
-            <div class="skill-card">
-                <div class="skill-header">
-                    <div class="skill-icon technical">💻</div>
+                    <div class="skill-icon technical">⚙️</div>
                     <h3 class="skill-title">Technical</h3>
                 </div>
                 <ul class="skill-list">
-                    <li><span class="skill-name">Workflow Automation</span><span class="skill-level">Advanced</span></li>
+                    <li><span class="skill-name">n8n Automation</span><span class="skill-level">Expert</span></li>
                     <li><span class="skill-name">API Integration</span><span class="skill-level">Advanced</span></li>
-                    <li><span class="skill-name">React / JavaScript</span><span class="skill-level">Intermediate</span></li>
+                    <li><span class="skill-name">Website Development</span><span class="skill-level">Advanced</span></li>
+                    <li><span class="skill-name">Google Cloud IDE</span><span class="skill-level">Advanced</span></li>
                     <li><span class="skill-name">System Architecture</span><span class="skill-level">Advanced</span></li>
+                    <li><span class="skill-name">Revenue Attribution Setup</span><span class="skill-level">Expert</span></li>
                 </ul>
             </div>
+            
+            <!-- Creative -->
+            <div class="skill-card">
+                <div class="skill-header">
+                    <div class="skill-icon creative">🎨</div>
+                    <h3 class="skill-title">Creative</h3>
+                </div>
+                <ul class="skill-list">
+                    <li><span class="skill-name">Video Editing (Premiere)</span><span class="skill-level">Expert</span></li>
+                    <li><span class="skill-name">Graphic Design (PS/AI)</span><span class="skill-level">Expert</span></li>
+                    <li><span class="skill-name">Content Strategy</span><span class="skill-level">Expert</span></li>
+                    <li><span class="skill-name">Brand Storytelling</span><span class="skill-level">Advanced</span></li>
+                    <li><span class="skill-name">Visual Communication</span><span class="skill-level">Expert</span></li>
+                    <li><span class="skill-name">Motion Graphics (AE)</span><span class="skill-level">Advanced</span></li>
+                </ul>
+            </div>
+            
+            <!-- Data -->
             <div class="skill-card">
                 <div class="skill-header">
                     <div class="skill-icon data">📊</div>
-                    <h3 class="skill-title">Analytics & Data</h3>
+                    <h3 class="skill-title">Data & Analytics</h3>
                 </div>
                 <ul class="skill-list">
                     <li><span class="skill-name">Google Analytics 4</span><span class="skill-level">Expert</span></li>
                     <li><span class="skill-name">Looker Studio</span><span class="skill-level">Advanced</span></li>
                     <li><span class="skill-name">A/B Testing</span><span class="skill-level">Advanced</span></li>
                     <li><span class="skill-name">Data Visualization</span><span class="skill-level">Advanced</span></li>
+                    <li><span class="skill-name">Facebook Pixel</span><span class="skill-level">Expert</span></li>
+                    <li><span class="skill-name">UTM Tracking</span><span class="skill-level">Expert</span></li>
                 </ul>
             </div>
+            
+            <!-- Business -->
             <div class="skill-card">
                 <div class="skill-header">
                     <div class="skill-icon business">💼</div>
                     <h3 class="skill-title">Business</h3>
                 </div>
                 <ul class="skill-list">
-                    <li><span class="skill-name">Entrepreneurship</span><span class="skill-level">3 Ventures</span></li>
-                    <li><span class="skill-name">Client Management</span><span class="skill-level">Expert</span></li>
+                    <li><span class="skill-name">Entrepreneurship (3 ventures)</span><span class="skill-level">Expert</span></li>
+                    <li><span class="skill-name">Sales & Client Management</span><span class="skill-level">Expert</span></li>
                     <li><span class="skill-name">Revenue Optimization</span><span class="skill-level">Advanced</span></li>
+                    <li><span class="skill-name">Leadership & Team Building</span><span class="skill-level">Advanced</span></li>
                     <li><span class="skill-name">Strategic Planning</span><span class="skill-level">Advanced</span></li>
+                    <li><span class="skill-name">P&L Management</span><span class="skill-level">Advanced</span></li>
                 </ul>
             </div>
+            
+            <!-- AI & Automation -->
             <div class="skill-card">
                 <div class="skill-header">
-                    <div class="skill-icon leadership">⭐</div>
-                    <h3 class="skill-title">Strategy & Leadership</h3>
+                    <div class="skill-icon leadership">🤖</div>
+                    <h3 class="skill-title">AI & Automation</h3>
                 </div>
                 <ul class="skill-list">
-                    <li><span class="skill-name">Project Management</span><span class="skill-level">Expert</span></li>
-                    <li><span class="skill-name">Team Leadership</span><span class="skill-level">Advanced</span></li>
-                    <li><span class="skill-name">Crisis Management</span><span class="skill-level">Expert</span></li>
-                    <li><span class="skill-name">Brand Development</span><span class="skill-level">Expert</span></li>
+                    <li><span class="skill-name">Prompt Engineering</span><span class="skill-level">Expert</span></li>
+                    <li><span class="skill-name">AI Workflow Design</span><span class="skill-level">Expert</span></li>
+                    <li><span class="skill-name">Claude/GPT Integration</span><span class="skill-level">Advanced</span></li>
+                    <li><span class="skill-name">Chatbot Development</span><span class="skill-level">Advanced</span></li>
+                    <li><span class="skill-name">Multi-agent Systems</span><span class="skill-level">Advanced</span></li>
+                    <li><span class="skill-name">AI Content Generation</span><span class="skill-level">Expert</span></li>
                 </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- TOOLS SECTION - Based on Professional Version -->
+    <section class="tools-section" id="tools">
+        <div class="section-header">
+            <p class="section-label">Tech Stack</p>
+            <h2 class="section-title">Tools & Platforms</h2>
+        </div>
+        <div class="tools-grid">
+            <!-- Automation -->
+            <div class="tool-category">
+                <div class="tool-category-header">
+                    <div class="tool-category-icon" style="background: rgba(255, 61, 0, 0.15);">⚡</div>
+                    <span class="tool-category-title">Automation</span>
+                </div>
+                <div class="tool-list">
+                    <span class="tool-tag">n8n</span>
+                    <span class="tool-tag">Zapier</span>
+                    <span class="tool-tag">Make.com</span>
+                    <span class="tool-tag">APIs</span>
+                    <span class="tool-tag">Webhooks</span>
+                </div>
+            </div>
+            
+            <!-- AI -->
+            <div class="tool-category">
+                <div class="tool-category-header">
+                    <div class="tool-category-icon" style="background: rgba(138, 43, 226, 0.15);">🧠</div>
+                    <span class="tool-category-title">AI</span>
+                </div>
+                <div class="tool-list">
+                    <span class="tool-tag">Claude</span>
+                    <span class="tool-tag">ChatGPT</span>
+                    <span class="tool-tag">Midjourney</span>
+                    <span class="tool-tag">DALL-E</span>
+                    <span class="tool-tag">Stable Diffusion</span>
+                </div>
+            </div>
+            
+            <!-- Analytics -->
+            <div class="tool-category">
+                <div class="tool-category-header">
+                    <div class="tool-category-icon" style="background: rgba(0, 255, 136, 0.15);">📈</div>
+                    <span class="tool-category-title">Analytics</span>
+                </div>
+                <div class="tool-list">
+                    <span class="tool-tag">Google Analytics 4</span>
+                    <span class="tool-tag">Facebook Pixel</span>
+                    <span class="tool-tag">Google Tag Manager</span>
+                    <span class="tool-tag">Data Studio</span>
+                    <span class="tool-tag">Looker Studio</span>
+                </div>
+            </div>
+            
+            <!-- Design -->
+            <div class="tool-category">
+                <div class="tool-category-header">
+                    <div class="tool-category-icon" style="background: rgba(255, 170, 0, 0.15);">🎨</div>
+                    <span class="tool-category-title">Design</span>
+                </div>
+                <div class="tool-list">
+                    <span class="tool-tag">Adobe Premiere</span>
+                    <span class="tool-tag">Photoshop</span>
+                    <span class="tool-tag">After Effects</span>
+                    <span class="tool-tag">Illustrator</span>
+                    <span class="tool-tag">Figma</span>
+                    <span class="tool-tag">Canva</span>
+                </div>
+            </div>
+            
+            <!-- Platforms -->
+            <div class="tool-category">
+                <div class="tool-category-header">
+                    <div class="tool-category-icon" style="background: rgba(0, 150, 255, 0.15);">📱</div>
+                    <span class="tool-category-title">Platforms</span>
+                </div>
+                <div class="tool-list">
+                    <span class="tool-tag">Meta Business Suite</span>
+                    <span class="tool-tag">TikTok</span>
+                    <span class="tool-tag">LinkedIn</span>
+                    <span class="tool-tag">XiaoHongShu</span>
+                    <span class="tool-tag">Buffer</span>
+                </div>
+            </div>
+            
+            <!-- Development -->
+            <div class="tool-category">
+                <div class="tool-category-header">
+                    <div class="tool-category-icon" style="background: rgba(255, 0, 128, 0.15);">💻</div>
+                    <span class="tool-category-title">Development</span>
+                </div>
+                <div class="tool-list">
+                    <span class="tool-tag">React</span>
+                    <span class="tool-tag">JavaScript</span>
+                    <span class="tool-tag">HTML/CSS</span>
+                    <span class="tool-tag">Google Cloud</span>
+                    <span class="tool-tag">Git</span>
+                    <span class="tool-tag">Node.js</span>
+                </div>
             </div>
         </div>
     </section>
@@ -1355,28 +1613,33 @@
             y: 30, opacity: 0, duration: 0.8, stagger: 0.15, ease: 'power2.out'
         });
 
-        // Skills animation
+        // Skills animation - FIXED with immediate visibility
         gsap.from('.skill-card', {
-            scrollTrigger: { trigger: '.skills-section', start: 'top 70%', toggleActions: 'play none none reverse' },
-            y: 50, opacity: 0, duration: 0.8, stagger: 0.1, ease: 'power2.out'
+            scrollTrigger: { trigger: '.skills-section', start: 'top 80%', toggleActions: 'play none none reverse' },
+            y: 30, opacity: 0.5, duration: 0.6, stagger: 0.08, ease: 'power2.out'
+        });
+
+        // Tools animation
+        gsap.from('.tool-category', {
+            scrollTrigger: { trigger: '.tools-section', start: 'top 80%', toggleActions: 'play none none reverse' },
+            y: 30, opacity: 0, duration: 0.6, stagger: 0.08, ease: 'power2.out'
         });
 
         // Projects animation
         gsap.from('.project-card', {
-            scrollTrigger: { trigger: '.projects-section', start: 'top 70%', toggleActions: 'play none none reverse' },
-            y: 50, opacity: 0, duration: 0.8, stagger: 0.1, ease: 'power2.out'
+            scrollTrigger: { trigger: '.projects-section', start: 'top 80%', toggleActions: 'play none none reverse' },
+            y: 30, opacity: 0, duration: 0.6, stagger: 0.08, ease: 'power2.out'
         });
 
         // Job cards animation
         gsap.from('.job-card', {
-            scrollTrigger: { trigger: '.experience-section', start: 'top 70%', toggleActions: 'play none none reverse' },
-            y: 50, opacity: 0, duration: 0.8, stagger: 0.15, ease: 'power2.out'
+            scrollTrigger: { trigger: '.experience-section', start: 'top 80%', toggleActions: 'play none none reverse' },
+            y: 30, opacity: 0, duration: 0.6, stagger: 0.1, ease: 'power2.out'
         });
 
         // ===== VIDEO SLIDER FUNCTIONALITY =====
         const sliders = {};
         
-        // Initialize all video sliders
         document.querySelectorAll('[data-slider]').forEach(sliderContainer => {
             const sliderId = sliderContainer.dataset.slider;
             const slider = sliderContainer.querySelector('.video-slider');
@@ -1387,7 +1650,6 @@
             
             sliders[sliderId] = { slider, slides, dots, currentSlide };
             
-            // Auto-advance every 4 seconds
             function nextSlide() {
                 currentSlide = (currentSlide + 1) % slides.length;
                 goToSlide(currentSlide);
@@ -1397,14 +1659,12 @@
                 currentSlide = index;
                 slider.style.transform = `translateX(-${index * 100}%)`;
                 
-                // Update dots
                 if (dots) {
                     dots.querySelectorAll('.video-dot').forEach((dot, i) => {
                         dot.classList.toggle('active', i === index);
                     });
                 }
                 
-                // Pause all videos, play current
                 slides.forEach((slide, i) => {
                     const video = slide.querySelector('video');
                     if (video) {
@@ -1417,10 +1677,8 @@
                 });
             }
             
-            // Start auto-play
             interval = setInterval(nextSlide, 4000);
             
-            // Dot click handlers
             if (dots) {
                 dots.querySelectorAll('.video-dot').forEach((dot, index) => {
                     dot.addEventListener('click', () => {
@@ -1431,7 +1689,6 @@
                 });
             }
             
-            // Store goToSlide for external use
             sliders[sliderId].goToSlide = goToSlide;
         });
 
@@ -1441,11 +1698,9 @@
                 const company = tab.dataset.company;
                 const tabType = tab.dataset.tab;
                 
-                // Update active tab
                 document.querySelectorAll(`.media-tab[data-company="${company}"]`).forEach(t => t.classList.remove('active'));
                 tab.classList.add('active');
                 
-                // Show/hide content
                 const videosContainer = document.querySelector(`[data-slider="${company}-videos"]`);
                 const imagesContainer = document.querySelector(`[data-gallery="${company}-images"]`);
                 
@@ -1485,19 +1740,16 @@
             lightboxVideo.src = '';
         }
         
-        // Gallery item clicks
         document.querySelectorAll('.gallery-item').forEach(item => {
             item.addEventListener('click', () => {
                 openLightbox(item.dataset.src, false);
             });
         });
         
-        // Close lightbox on background click
         lightbox.addEventListener('click', (e) => {
             if (e.target === lightbox) closeLightbox();
         });
         
-        // Keyboard close
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') closeLightbox();
         });
