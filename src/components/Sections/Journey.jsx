@@ -3,11 +3,18 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { content } from '../../data/content';
 import { upsideDownContent } from '../../data/content-upsidedown';
 import { useTruthMode } from '../../context/TruthModeContext';
-import { Briefcase, Calendar, ChevronDown, MapPin, Lightbulb, Unlock, Lock, ExternalLink, Image as ImageIcon } from 'lucide-react';
+import { useMode } from '../../context/ThemeContext';
+import MediaDashboard from '../UI/MediaDashboard';
+import { 
+    Briefcase, Calendar, ChevronDown, MapPin, Lightbulb, 
+    Unlock, Lock, ExternalLink, Image as ImageIcon, Play,
+    Video, FolderOpen
+} from 'lucide-react';
 
 const Journey = () => {
     const [expandedIndex, setExpandedIndex] = useState(0);
     const { isTruthMode } = useTruthMode();
+    const { isBrutal } = useMode();
 
     const toggleExpand = (index) => {
         setExpandedIndex(expandedIndex === index ? null : index);
@@ -34,7 +41,11 @@ const Journey = () => {
                     viewport={{ once: true }}
                     className="text-center mb-10"
                 >
-                    <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 text-primary text-xs sm:text-sm font-bold mb-4">
+                    <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs sm:text-sm font-bold mb-4 ${
+                        isTruthMode 
+                            ? 'bg-green-500/10 text-green-500' 
+                            : 'bg-primary/10 text-primary'
+                    }`}>
                         {isTruthMode ? <Unlock size={14} /> : <Lock size={14} />}
                         {isTruthMode ? 'Truth Mode' : 'Career Journey'}
                     </div>
@@ -44,17 +55,19 @@ const Journey = () => {
                     <p className="text-gray-600 dark:text-gray-400 max-w-xl mx-auto text-sm sm:text-base">
                         {isTruthMode 
                             ? "What LinkedIn doesn't tell you 😄" 
-                            : "From security to marketing — an unusual path"}
+                            : "From security to marketing — an unusual path with video stories"}
                     </p>
                 </motion.div>
 
                 {/* Timeline */}
-                <div className="max-w-3xl mx-auto space-y-3">
+                <div className="max-w-4xl mx-auto space-y-4">
                     {content.experience.map((item, index) => {
                         const truthData = getTruthData(item.company);
                         const showTruthContent = isTruthMode && truthData;
                         const isExpanded = expandedIndex === index;
                         const hasGallery = item.workplaceGallery && item.workplaceGallery.length > 0;
+                        const hasVideos = item.videoGallery && item.videoGallery.length > 0;
+                        const hasMedia = hasGallery || hasVideos;
 
                         return (
                             <motion.div
@@ -101,7 +114,7 @@ const Journey = () => {
                                     )}
                                     
                                     <div className="flex-1 min-w-0">
-                                        {/* Role - Fixed: No truncate, allow wrap */}
+                                        {/* Role */}
                                         <h3 className="font-bold text-base sm:text-lg leading-tight mb-1 break-words">
                                             {showTruthContent ? truthData.jobTitle?.reveal : item.role}
                                         </h3>
@@ -115,13 +128,21 @@ const Journey = () => {
                                         </div>
                                     </div>
                                     
-                                    {/* Gallery indicator */}
-                                    {hasGallery && (
-                                        <div className="hidden sm:flex items-center gap-1 text-xs text-gray-400 mr-2">
-                                            <ImageIcon size={12} />
-                                            <span>{item.workplaceGallery.length}</span>
-                                        </div>
-                                    )}
+                                    {/* Media indicators */}
+                                    <div className="hidden sm:flex items-center gap-3 mr-2">
+                                        {hasVideos && (
+                                            <div className="flex items-center gap-1 text-xs text-pink-500 bg-pink-500/10 px-2 py-1 rounded-full">
+                                                <Video size={12} />
+                                                <span>{item.videoGallery.length}</span>
+                                            </div>
+                                        )}
+                                        {hasGallery && (
+                                            <div className="flex items-center gap-1 text-xs text-cyan-500 bg-cyan-500/10 px-2 py-1 rounded-full">
+                                                <ImageIcon size={12} />
+                                                <span>{item.workplaceGallery.length}</span>
+                                            </div>
+                                        )}
+                                    </div>
                                     
                                     <ChevronDown 
                                         size={20} 
@@ -140,25 +161,15 @@ const Journey = () => {
                                             className="overflow-hidden"
                                         >
                                             <div className="px-4 sm:px-5 pb-5 pt-0">
-                                                {/* Gallery Images */}
-                                                {hasGallery && (
-                                                    <div className="mb-4">
-                                                        <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2 flex items-center gap-2">
-                                                            <ImageIcon size={12} />
-                                                            Gallery
-                                                        </p>
-                                                        <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
-                                                            {item.workplaceGallery.slice(0, 4).map((img, idx) => (
-                                                                <div key={idx} className="aspect-square rounded-lg overflow-hidden bg-gray-100">
-                                                                    <img 
-                                                                        src={img.url} 
-                                                                        alt={img.caption || `Work ${idx + 1}`}
-                                                                        className="w-full h-full object-cover hover:scale-110 transition-transform"
-                                                                        loading="lazy"
-                                                                    />
-                                                                </div>
-                                                            ))}
-                                                        </div>
+                                                {/* Media Dashboard - Videos & Images */}
+                                                {hasMedia && (
+                                                    <div className="mb-6">
+                                                        <MediaDashboard
+                                                            workplaceGallery={item.workplaceGallery || []}
+                                                            videoGallery={item.videoGallery || []}
+                                                            companyColor={item.companyColor || '#E63946'}
+                                                            isTruthMode={isTruthMode}
+                                                        />
                                                     </div>
                                                 )}
 
@@ -168,12 +179,14 @@ const Journey = () => {
                                                 </p>
 
                                                 {/* Location */}
-                                                <div className="flex items-center gap-2 text-xs text-gray-500 mb-4">
-                                                    <MapPin size={12} />
-                                                    {item.location}
-                                                </div>
+                                                {item.location && (
+                                                    <div className="flex items-center gap-2 text-xs text-gray-500 mb-4">
+                                                        <MapPin size={12} />
+                                                        {item.location}
+                                                    </div>
+                                                )}
 
-                                                {/* Key Achievements - Simplified */}
+                                                {/* Key Achievements */}
                                                 {item.achievements && item.achievements.length > 0 && (
                                                     <div className="mb-4">
                                                         <h4 className={`text-xs font-bold uppercase tracking-wider mb-2 ${
@@ -191,6 +204,46 @@ const Journey = () => {
                                                                     </li>
                                                                 );
                                                             })}
+                                                        </ul>
+                                                    </div>
+                                                )}
+
+                                                {/* Technical Stack */}
+                                                {item.technicalStack && (
+                                                    <div className="mb-4">
+                                                        <h4 className={`text-xs font-bold uppercase tracking-wider mb-2 ${
+                                                            isTruthMode ? 'text-green-600' : 'text-primary'
+                                                        }`}>
+                                                            Tech Stack
+                                                        </h4>
+                                                        <div className="flex flex-wrap gap-2">
+                                                            {item.technicalStack.map((tech, idx) => (
+                                                                <span 
+                                                                    key={idx}
+                                                                    className="px-2 py-1 text-xs rounded-md bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-400"
+                                                                >
+                                                                    {tech}
+                                                                </span>
+                                                            ))}
+                                                        </div>
+                                                    </div>
+                                                )}
+
+                                                {/* Learnings */}
+                                                {item.learnings && item.learnings.length > 0 && (
+                                                    <div className="mb-4">
+                                                        <h4 className={`text-xs font-bold uppercase tracking-wider mb-2 ${
+                                                            isTruthMode ? 'text-green-600' : 'text-primary'
+                                                        }`}>
+                                                            Key Learnings
+                                                        </h4>
+                                                        <ul className="space-y-1.5">
+                                                            {item.learnings.slice(0, 2).map((learning, idx) => (
+                                                                <li key={idx} className="flex gap-2 text-sm text-gray-600 dark:text-gray-400">
+                                                                    <span className={isTruthMode ? 'text-green-500' : 'text-primary'}>→</span>
+                                                                    <span className="break-words">{learning}</span>
+                                                                </li>
+                                                            ))}
                                                         </ul>
                                                     </div>
                                                 )}
@@ -225,10 +278,59 @@ const Journey = () => {
                         className="mt-8 text-center"
                     >
                         <p className="text-xs sm:text-sm text-gray-500">
-                            💡 <span className="font-bold">Pro tip:</span> Ask the AI about "truth mode"
+                            💡 <span className="font-bold">Pro tip:</span> Ask the AI about &quot;truth mode&quot;
                         </p>
                     </motion.div>
                 )}
+
+                {/* Media Summary */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className="mt-12 p-6 rounded-2xl bg-gradient-to-r from-primary/5 via-pink-500/5 to-cyan-500/5 border border-primary/10"
+                >
+                    <div className="flex flex-wrap items-center justify-center gap-6">
+                        <div className="flex items-center gap-3">
+                            <div className="w-12 h-12 rounded-xl bg-pink-500/10 flex items-center justify-center">
+                                <Video size={24} className="text-pink-500" />
+                            </div>
+                            <div>
+                                <p className="text-2xl font-bold text-gray-900 dark:text-white">
+                                    {content.experience.reduce((acc, item) => acc + (item.videoGallery?.length || 0), 0)}
+                                </p>
+                                <p className="text-xs text-gray-500 uppercase tracking-wider">Video Stories</p>
+                            </div>
+                        </div>
+                        <div className="w-px h-12 bg-gray-200 dark:bg-white/10" />
+                        <div className="flex items-center gap-3">
+                            <div className="w-12 h-12 rounded-xl bg-cyan-500/10 flex items-center justify-center">
+                                <ImageIcon size={24} className="text-cyan-500" />
+                            </div>
+                            <div>
+                                <p className="text-2xl font-bold text-gray-900 dark:text-white">
+                                    {content.experience.reduce((acc, item) => acc + (item.workplaceGallery?.length || 0), 0)}
+                                </p>
+                                <p className="text-xs text-gray-500 uppercase tracking-wider">Gallery Images</p>
+                            </div>
+                        </div>
+                        <div className="w-px h-12 bg-gray-200 dark:bg-white/10" />
+                        <div className="flex items-center gap-3">
+                            <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
+                                <FolderOpen size={24} className="text-primary" />
+                            </div>
+                            <div>
+                                <p className="text-2xl font-bold text-gray-900 dark:text-white">
+                                    {content.experience.filter(item => 
+                                        (item.videoGallery?.length || 0) > 0 || 
+                                        (item.workplaceGallery?.length || 0) > 0
+                                    ).length}
+                                </p>
+                                <p className="text-xs text-gray-500 uppercase tracking-wider">Companies</p>
+                            </div>
+                        </div>
+                    </div>
+                </motion.div>
             </div>
         </section>
     );

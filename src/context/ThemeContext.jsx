@@ -2,8 +2,22 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 
 const ModeContext = createContext();
 
-// Mode cycle: light ↔ dark (2-mode system)
-const MODE_CYCLE = ['light', 'dark'];
+// Three-mode system: creative ↔ pro ↔ brutal
+const MODE_CYCLE = ['creative', 'pro', 'brutal'];
+
+// Mode display names
+const MODE_NAMES = {
+    creative: '🎨 Creative Mode',
+    pro: '💼 Pro Mode',
+    brutal: '⚡ Brutal Mode'
+};
+
+// Mode descriptions
+const MODE_DESCRIPTIONS = {
+    creative: 'Mission Control Grid Navigation',
+    pro: 'Command Bar Navigation',
+    brutal: 'Smart Dock Navigation'
+};
 
 export const ModeProvider = ({ children }) => {
     const [currentMode, setCurrentMode] = useState(() => {
@@ -19,8 +33,8 @@ export const ModeProvider = ({ children }) => {
             }
         }
 
-        // Default to dark mode
-        return 'dark';
+        // Default to pro mode
+        return 'pro';
     });
 
     const [showToast, setShowToast] = useState(false);
@@ -32,12 +46,14 @@ export const ModeProvider = ({ children }) => {
 
         // Remove all mode classes
         root.removeAttribute('data-mode');
-        root.classList.remove('dark');
+        root.classList.remove('dark', 'creative', 'pro', 'brutal');
 
         // Apply current mode
         root.setAttribute('data-mode', currentMode);
+        root.classList.add(currentMode);
 
-        if (currentMode === 'dark') {
+        // Dark mode is default for pro and brutal
+        if (currentMode === 'pro' || currentMode === 'brutal') {
             root.classList.add('dark');
         }
 
@@ -54,12 +70,7 @@ export const ModeProvider = ({ children }) => {
             const nextMode = MODE_CYCLE[nextIndex];
 
             // Show toast for mode change
-            const messages = {
-                light: '☀️ Light Mode - Warm Authority',
-                dark: '🌙 Dark Mode - Industrial Luxury'
-            };
-
-            displayToast(messages[nextMode]);
+            displayToast(`${MODE_NAMES[nextMode]} - ${MODE_DESCRIPTIONS[nextMode]}`);
 
             return nextMode;
         });
@@ -69,6 +80,7 @@ export const ModeProvider = ({ children }) => {
     const setMode = (mode) => {
         if (MODE_CYCLE.includes(mode)) {
             setCurrentMode(mode);
+            displayToast(`${MODE_NAMES[mode]} - ${MODE_DESCRIPTIONS[mode]}`);
         }
     };
 
@@ -79,35 +91,46 @@ export const ModeProvider = ({ children }) => {
         setTimeout(() => setShowToast(false), 3000);
     };
 
-    // Secret activation: Type "mamak" for dark mode
+    // Secret activation codes
     useEffect(() => {
         let typedKeys = '';
         const handleKeyPress = (e) => {
             typedKeys += e.key.toLowerCase();
-            if (typedKeys.includes('mamak')) {
-                if (currentMode !== 'dark') {
-                    setCurrentMode('dark');
-                    displayToast('🎊 Secret activated! Welcome to the Dark Side! 🔥');
-                }
+            
+            // Secret codes
+            if (typedKeys.includes('creative')) {
+                setMode('creative');
+                typedKeys = '';
+            } else if (typedKeys.includes('pro')) {
+                setMode('pro');
+                typedKeys = '';
+            } else if (typedKeys.includes('brutal')) {
+                setMode('brutal');
                 typedKeys = '';
             }
-            if (typedKeys.length > 10) {
-                typedKeys = '';
+            
+            // Keep last 20 chars
+            if (typedKeys.length > 20) {
+                typedKeys = typedKeys.slice(-20);
             }
         };
 
         window.addEventListener('keypress', handleKeyPress);
         return () => window.removeEventListener('keypress', handleKeyPress);
-    }, [currentMode]);
+    }, []);
 
     const value = {
         mode: currentMode,
-        isLight: currentMode === 'light',
-        isDark: currentMode === 'dark',
+        isCreative: currentMode === 'creative',
+        isPro: currentMode === 'pro',
+        isBrutal: currentMode === 'brutal',
+        isDark: currentMode === 'pro' || currentMode === 'brutal',
         cycleMode,
         setMode,
+        MODE_NAMES,
+        MODE_DESCRIPTIONS,
         // Legacy support
-        isDarkMode: currentMode === 'dark',
+        isDarkMode: currentMode === 'pro' || currentMode === 'brutal',
         toggleTheme: cycleMode
     };
 
@@ -118,8 +141,13 @@ export const ModeProvider = ({ children }) => {
             {/* Toast notification */}
             {showToast && (
                 <div className="fixed bottom-8 right-8 z-[10000] animate-slide-up">
-                    <div className="mode-toast px-6 py-4 rounded-lg shadow-2xl max-w-md backdrop-blur-md">
-                        <p className="text-sm font-medium">{toastMessage}</p>
+                    <div className={`
+                        px-6 py-4 rounded-lg shadow-2xl max-w-md backdrop-blur-md border-2
+                        ${currentMode === 'creative' ? 'bg-gradient-to-r from-pink-500/20 to-purple-500/20 border-pink-500/50' : ''}
+                        ${currentMode === 'pro' ? 'bg-navy-dark/90 border-primary/50' : ''}
+                        ${currentMode === 'brutal' ? 'bg-black/90 border-[#39ff14]/50' : ''}
+                    `}>
+                        <p className="text-sm font-medium text-white">{toastMessage}</p>
                     </div>
                 </div>
             )}

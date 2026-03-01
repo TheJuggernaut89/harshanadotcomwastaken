@@ -3,7 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#0a0a0a" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
@@ -21,7 +24,87 @@
   <!-- Google Fonts: Poppins (Light Mode) + Space Grotesk (Dark Mode) + Inter (Body) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800;900&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800;900&family=Space+Grotesk:wght@600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* Safe area insets for mobile */
+    :root {
+      --sat: env(safe-area-inset-top);
+      --sar: env(safe-area-inset-right);
+      --sab: env(safe-area-inset-bottom);
+      --sal: env(safe-area-inset-left);
+    }
+
+    /* Height utilities for safe areas */
+    .h-safe-area-inset-top { height: var(--sat); }
+    .h-safe-area-inset-bottom { height: var(--sab); }
+    .pb-safe { padding-bottom: var(--sab); }
+
+    /* Mode-specific variables */
+    :root[data-mode="creative"] {
+      --nav-accent: #ec4899;
+      --nav-glow: rgba(236, 72, 153, 0.5);
+    }
+
+    :root[data-mode="pro"] {
+      --nav-accent: #E63946;
+      --nav-glow: rgba(230, 57, 70, 0.5);
+    }
+
+    :root[data-mode="brutal"] {
+      --nav-accent: #39ff14;
+      --nav-glow: rgba(57, 255, 20, 0.5);
+    }
+
+    /* Smooth scroll behavior */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* Prevent text selection on UI elements */
+    .no-select {
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    /* Touch manipulation for mobile */
+    .touch-manipulation {
+      touch-action: manipulation;
+    }
+
+    /* Hide scrollbar but keep functionality */
+    .hide-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    .hide-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* Animation keyframes */
+    @keyframes slide-up {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-slide-up {
+      animation: slide-up 0.3s ease-out;
+    }
+
+    /* Mode toast styles */
+    .mode-toast {
+      background: rgba(10, 10, 10, 0.95);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: white;
+    }
+  </style>
 </head>
 <body>
   <div id="root"></div>
