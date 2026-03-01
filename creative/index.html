@@ -207,53 +207,93 @@
             100% { transform: translateX(-50%); }
         }
 
-        /* Horizontal Scroll Section - Fixed height */
-        .horizontal-section { position: relative; height: 300vh; }
-        .horizontal-container {
+        /* ===== ARTWORK SHOWCASE HORIZONTAL SCROLL - FIXED ===== */
+        .artwork-section { 
+            position: relative; 
+            height: 400vh; /* Sufficient scroll distance */
+        }
+        .artwork-container {
             position: sticky; top: 0; height: 100vh; overflow: hidden;
             display: flex; align-items: center;
         }
-        .horizontal-track { display: flex; gap: 2rem; padding: 0 2rem; will-change: transform; }
-
-        /* Cards */
-        .claim-card {
-            flex-shrink: 0; width: 80vw; max-width: 500px; background: var(--surface);
-            border: 1px solid var(--border); border-radius: 24px; padding: 2.5rem;
-            position: relative; overflow: hidden;
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s, box-shadow 0.3s;
+        .artwork-track { 
+            display: flex; 
+            gap: 3rem; 
+            padding: 0 4rem; 
+            will-change: transform;
         }
-        .claim-card:hover {
-            transform: translateY(-5px); border-color: rgba(255, 61, 0, 0.4);
-            box-shadow: 0 0 40px rgba(255, 61, 0, 0.1);
+        
+        /* Artwork Cards */
+        .artwork-card {
+            flex-shrink: 0;
+            width: 70vw;
+            max-width: 800px;
+            height: 70vh;
+            max-height: 600px;
+            border-radius: 24px;
+            overflow: hidden;
+            position: relative;
+            border: 1px solid var(--border);
+            transition: transform 0.4s, border-color 0.3s;
         }
-        .claim-num { font-size: 5rem; font-weight: 700; color: var(--border); position: absolute; top: 1.5rem; right: 2rem; line-height: 1; z-index: 2; opacity: 0.5; }
-        .claim-icon { font-size: 2.5rem; margin-bottom: 1.5rem; position: relative; z-index: 2; }
-        .claim-badge {
-            display: inline-block; padding: 0.4rem 1rem; border-radius: 4px;
-            font-size: 0.7rem; font-weight: 600; text-transform: uppercase;
-            letter-spacing: 0.05em; margin-bottom: 1.25rem; border: 1px solid;
-            position: relative; z-index: 2;
+        .artwork-card:hover {
+            transform: scale(1.02);
+            border-color: var(--accent);
         }
-        .badge-real { background: rgba(0, 255, 136, 0.08); color: var(--real); border-color: rgba(0, 255, 136, 0.3); }
-        .badge-maybe { background: rgba(255, 170, 0, 0.08); color: var(--maybe); border-color: rgba(255, 170, 0, 0.3); }
-        .claim-card h3 { font-size: 1.75rem; font-weight: 600; margin-bottom: 0.75rem; line-height: 1.2; position: relative; z-index: 2; letter-spacing: -0.02em; }
-        .claim-card p { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6; position: relative; z-index: 2; }
-
-        /* Video Card */
-        .video-card {
-            flex-shrink: 0; width: 80vw; max-width: 600px; background: var(--surface);
-            border: 1px solid var(--border); border-radius: 24px; overflow: hidden; position: relative;
+        .artwork-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s;
         }
-        .video-card video {
-            width: 100%; height: 300px; object-fit: cover;
-            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+        .artwork-card:hover img {
+            transform: scale(1.05);
         }
-        .video-card-content { padding: 2rem; }
-        .video-card h3 { font-size: 1.5rem; font-weight: 600; margin-bottom: 0.5rem; }
-        .video-card p { color: var(--text-secondary); font-size: 0.9rem; }
-        .video-fallback {
-            width: 100%; height: 300px; background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
-            display: flex; align-items: center; justify-content: center; color: var(--text-secondary);
+        .artwork-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 2rem;
+            background: linear-gradient(transparent, rgba(0,0,0,0.9));
+        }
+        .artwork-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .artwork-desc {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        
+        /* Creativity Info Cards */
+        .creativity-card {
+            flex-shrink: 0;
+            width: 400px;
+            max-width: 90vw;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 2.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .creativity-card h3 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+        .creativity-card p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+        .creativity-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
         }
 
         /* Parallax Quote Section */
@@ -302,11 +342,10 @@
         }
         .magnetic-btn:hover { transform: scale(1.05); }
 
-        /* ===== SKILLS & TOOLS SECTION - FIXED ===== */
+        /* ===== SKILLS SECTION ===== */
         .skills-section { 
             padding: 6rem 2rem; 
             background: var(--surface); 
-            min-height: 100vh;
         }
         .section-header { 
             max-width: 1400px; 
@@ -325,8 +364,6 @@
             font-weight: 600; 
             letter-spacing: -0.03em; 
         }
-        
-        /* Skills Grid */
         .skills-grid { 
             display: grid; 
             grid-template-columns: 1fr; 
@@ -340,20 +377,22 @@
         @media (min-width: 1024px) { 
             .skills-grid { grid-template-columns: repeat(3, 1fr); } 
         }
-        
         .skill-card {
             background: var(--bg); 
             border: 1px solid var(--border); 
             border-radius: 20px; 
             padding: 2rem; 
             transition: all 0.3s;
-            opacity: 1 !important; /* Ensure visibility */
-            transform: translateY(0) !important; /* Ensure visibility */
         }
         .skill-card:hover { 
             border-color: var(--accent); 
-            transform: translateY(-5px) !important; 
+            transform: translateY(-5px);
             box-shadow: 0 10px 40px rgba(255, 61, 0, 0.1);
+        }
+        /* Ensure skills visibility */
+        .skills-section .skill-card {
+            opacity: 1 !important;
+            transform: none !important;
         }
         .skill-header { 
             display: flex; 
@@ -376,13 +415,8 @@
         .skill-icon.data { background: rgba(255, 170, 0, 0.15); }
         .skill-icon.business { background: rgba(0, 150, 255, 0.15); }
         .skill-icon.leadership { background: rgba(255, 0, 128, 0.15); }
-        .skill-title { 
-            font-size: 1.25rem; 
-            font-weight: 600; 
-        }
-        .skill-list { 
-            list-style: none; 
-        }
+        .skill-title { font-size: 1.25rem; font-weight: 600; }
+        .skill-list { list-style: none; }
         .skill-list li {
             display: flex; 
             justify-content: space-between; 
@@ -391,12 +425,8 @@
             border-bottom: 1px solid var(--border);
             font-size: 0.9rem;
         }
-        .skill-list li:last-child { 
-            border-bottom: none; 
-        }
-        .skill-name { 
-            color: var(--text); 
-        }
+        .skill-list li:last-child { border-bottom: none; }
+        .skill-name { color: var(--text); }
         .skill-level { 
             color: var(--text-secondary); 
             font-size: 0.8rem;
@@ -405,7 +435,7 @@
             border-radius: 100px;
         }
 
-        /* Tools Section */
+        /* ===== TOOLS SECTION - FIXED ===== */
         .tools-section {
             padding: 6rem 2rem;
             background: var(--bg);
@@ -433,6 +463,11 @@
         .tool-category:hover {
             border-color: var(--accent);
             transform: translateY(-3px);
+        }
+        /* Ensure tools visibility */
+        .tools-section .tool-category {
+            opacity: 1 !important;
+            transform: none !important;
         }
         .tool-category-header {
             display: flex;
@@ -480,6 +515,7 @@
         .projects-section { padding: 6rem 2rem; background: var(--bg); }
         .projects-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; max-width: 1400px; margin: 0 auto; }
         @media (min-width: 768px) { .projects-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (min-width: 1024px) { .projects-grid { grid-template-columns: repeat(3, 1fr); } }
         .project-card {
             background: var(--surface); border: 1px solid var(--border); border-radius: 20px;
             overflow: hidden; transition: transform 0.4s, border-color 0.3s;
@@ -544,12 +580,10 @@
             padding: 0.2rem 0.5rem; border-radius: 100px; font-size: 0.75rem; font-weight: 600;
         }
 
-        /* Auto-playing Video Slider */
+        /* Video Slider */
         .video-slider-container { position: relative; border-radius: 16px; overflow: hidden; background: var(--bg); }
         .video-slider { display: flex; transition: transform 0.5s ease; }
-        .video-slide {
-            flex: 0 0 100%; position: relative;
-        }
+        .video-slide { flex: 0 0 100%; position: relative; }
         .video-slide video, .video-slide img {
             width: 100%; height: 400px; object-fit: cover; display: block;
             background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
@@ -569,7 +603,7 @@
         }
         .video-dot.active { background: var(--accent); width: 24px; border-radius: 4px; }
 
-        /* Image Gallery Grid */
+        /* Image Gallery */
         .image-gallery {
             display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
             gap: 1rem;
@@ -633,13 +667,16 @@
         }
         @media (min-width: 768px) {
             .hero { padding: 8rem 4rem; }
-            .claim-card { width: 500px; padding: 3rem; }
+            .artwork-card { width: 60vw; height: 65vh; }
             .split-left, .split-right { padding: 6rem 4rem; }
             .stat-num-large { font-size: 5rem; }
             .split-title { font-size: 2.5rem; }
             .projects-section, .skills-section, .tools-section, .experience-section { padding: 8rem 4rem; }
         }
-        @media (min-width: 1024px) { .split-section { grid-template-columns: 1fr 1fr; } }
+        @media (min-width: 1024px) { 
+            .split-section { grid-template-columns: 1fr 1fr; }
+            .artwork-card { width: 50vw; }
+        }
         @media (max-width: 767px) {
             .nav-links { display: none; }
             .mobile-nav { display: block; }
@@ -651,6 +688,8 @@
             .video-slide video, .video-slide img { height: 250px; }
             .image-gallery { grid-template-columns: repeat(2, 1fr); }
             .tools-grid { grid-template-columns: repeat(2, 1fr); }
+            .artwork-card { width: 85vw; height: 50vh; }
+            .creativity-card { width: 85vw; }
         }
     </style>
 </head>
@@ -702,8 +741,8 @@
                 <span>|</span>
                 <span>Kuala Lumpur, Malaysia</span>
             </div>
-            <a href="#skills" class="hero-cta magnetic">
-                View Skills & Tools
+            <a href="#artwork" class="hero-cta magnetic">
+                View My Work
                 <i data-lucide="arrow-down" style="width: 18px; height: 18px;"></i>
             </a>
         </div>
@@ -732,61 +771,112 @@
         </div>
     </div>
 
-    <section class="horizontal-section" id="claims">
-        <div class="horizontal-container">
-            <div class="horizontal-track">
-                <div class="claim-card" data-spotlight>
-                    <div class="claim-num">01</div>
-                    <div class="claim-icon">🍰</div>
-                    <span class="claim-badge badge-real">2M+ Impressions</span>
-                    <h3>Viral Cheesecake Campaign</h3>
-                    <p>AI-assisted campaign for F&B brand using architectural visualization of Malaysia's 14 states. Strategic timing + automated distribution. Sold out in 48 hours, 429% follower growth.</p>
+    <!-- ===== ARTWORK SHOWCASE HORIZONTAL SCROLL ===== -->
+    <section class="artwork-section" id="artwork">
+        <div class="artwork-container">
+            <div class="artwork-track">
+                <!-- Creativity Intro Card -->
+                <div class="creativity-card">
+                    <div class="creativity-icon">🎨</div>
+                    <h3>Creative Showcase</h3>
+                    <p>A selection of my visual work across marketing campaigns, brand design, video production, and digital content. Each piece represents a blend of strategic thinking and creative execution.</p>
                 </div>
-                <div class="claim-card" data-spotlight>
-                    <div class="claim-num">02</div>
-                    <div class="claim-icon">🎨</div>
-                    <span class="claim-badge badge-real">Adobe Certified</span>
-                    <h3>Visual Content at Scale</h3>
-                    <p>Created 200+ branded assets monthly using design systems and automation. Maintained brand consistency across Facebook, Instagram, TikTok, and LinkedIn while reducing production time by 40%.</p>
-                </div>
-                <div class="claim-card" data-spotlight>
-                    <div class="claim-num">03</div>
-                    <div class="claim-icon">🎬</div>
-                    <span class="claim-badge badge-real">Video Excellence</span>
-                    <h3>Short-Form Video Content</h3>
-                    <p>Produced viral video content using Adobe Premiere and After Effects. 2M+ impressions on campaign content. Expert in motion graphics, color grading, and platform-optimized formats.</p>
-                </div>
-                <div class="claim-card" data-spotlight>
-                    <div class="claim-num">04</div>
-                    <div class="claim-icon">💰</div>
-                    <span class="claim-badge badge-real">RM570K Saved</span>
-                    <h3>Agency Replacement</h3>
-                    <p>Replaced RM50K/month agency retainer with in-house creative and workflow optimization. Built systems for tracking creative performance directly to revenue.</p>
-                </div>
-                <div class="claim-card" data-spotlight>
-                    <div class="claim-num">05</div>
-                    <div class="claim-icon">⚡</div>
-                    <span class="claim-badge badge-maybe">Workflow Automation</span>
-                    <h3>Efficiency Through Systems</h3>
-                    <p>Built automation workflows for content distribution, scheduling, and analytics. Freed up 40% of creative time for strategic work and high-impact design projects.</p>
-                </div>
-                <div class="video-card">
-                    <video autoplay muted loop playsinline poster="../images/journey/cream-of-creams/images/cream-1.png">
-                        <source src="../images/journey/cream-of-creams/videos/Cream-video1.mp4" type="video/mp4">
-                    </video>
-                    <div class="video-card-content">
-                        <h3>Cream of Creams</h3>
-                        <p>Behind the scenes of viral content creation.</p>
+
+                <!-- Artwork 1: Malaysian Marketing Platform -->
+                <div class="artwork-card">
+                    <img src="../Visionary/Malaysian%20Marketing%20Platform.png" alt="Malaysian Marketing Platform">
+                    <div class="artwork-overlay">
+                        <h4 class="artwork-title">Malaysian Marketing Platform</h4>
+                        <p class="artwork-desc">System architecture visualization for hyper-localized marketing tools</p>
                     </div>
                 </div>
-                <div class="video-card">
-                    <video autoplay muted loop playsinline poster="../images/journey/junglewalla/thumbnails/Jungle-thumbnail1.png">
-                        <source src="../images/journey/junglewalla/videos/Jungle-video1.mp4" type="video/mp4">
-                    </video>
-                    <div class="video-card-content">
-                        <h3>JungleWalla Desaru</h3>
-                        <p>Eco-tourism marketing combining nature expertise with creative execution.</p>
+
+                <!-- Artwork 2: Revenue Dashboard -->
+                <div class="artwork-card">
+                    <img src="../Visionary/Revenue%20Attribution%20Dashboard.png" alt="Revenue Attribution Dashboard">
+                    <div class="artwork-overlay">
+                        <h4 class="artwork-title">Revenue Attribution Dashboard</h4>
+                        <p class="artwork-desc">Analytics interface design connecting creative to revenue</p>
                     </div>
+                </div>
+
+                <!-- Artwork 3: Viral Cheesecake -->
+                <div class="artwork-card">
+                    <img src="../Visionary/Viral%20Cheesecake%20Campaign.png" alt="Viral Cheesecake Campaign">
+                    <div class="artwork-overlay">
+                        <h4 class="artwork-title">Viral Cheesecake Campaign</h4>
+                        <p class="artwork-desc">AI-assisted architectural visualization - 2M+ impressions</p>
+                    </div>
+                </div>
+
+                <!-- Artwork 4: Cream of Creams Content -->
+                <div class="artwork-card">
+                    <img src="../images/journey/cream-of-creams/images/cream-1.png" alt="Cream of Creams Social Content">
+                    <div class="artwork-overlay">
+                        <h4 class="artwork-title">Cream of Creams Social Content</h4>
+                        <p class="artwork-desc">Branded content creation and campaign visuals</p>
+                    </div>
+                </div>
+
+                <!-- Artwork 5: CNY Campaign -->
+                <div class="artwork-card">
+                    <img src="../images/journey/cream-of-creams/images/cream-3.png" alt="CNY Campaign 2025">
+                    <div class="artwork-overlay">
+                        <h4 class="artwork-title">CNY Campaign 2025</h4>
+                        <p class="artwork-desc">Festival marketing creative and brand storytelling</p>
+                    </div>
+                </div>
+
+                <!-- Artwork 6: JungleWalla -->
+                <div class="artwork-card">
+                    <img src="../images/journey/junglewalla/images/Jungle-image1.jpg" alt="JungleWalla Eco-Tourism">
+                    <div class="artwork-overlay">
+                        <h4 class="artwork-title">JungleWalla Eco-Tourism</h4>
+                        <p class="artwork-desc">Nature photography and conservation marketing</p>
+                    </div>
+                </div>
+
+                <!-- Artwork 7: Resort Grounds -->
+                <div class="artwork-card">
+                    <img src="../images/journey/junglewalla/images/Jungle-image3.jpg" alt="Resort Visual Content">
+                    <div class="artwork-overlay">
+                        <h4 class="artwork-title">Resort Visual Content</h4>
+                        <p class="artwork-desc">Hospitality marketing and experience design</p>
+                    </div>
+                </div>
+
+                <!-- Artwork 8: Legal Transcription -->
+                <div class="artwork-card">
+                    <img src="../Visionary/Legal%20Transcription%20Software.png" alt="Legal Transcription System">
+                    <div class="artwork-overlay">
+                        <h4 class="artwork-title">Legal Transcription System</h4>
+                        <p class="artwork-desc">Product design and workflow visualization</p>
+                    </div>
+                </div>
+
+                <!-- Artwork 9: Spotify Recipe -->
+                <div class="artwork-card">
+                    <img src="../Visionary/Spotify%20Recipe%20Songs.png" alt="Spotify Recipe Songs">
+                    <div class="artwork-overlay">
+                        <h4 class="artwork-title">Spotify Recipe Songs</h4>
+                        <p class="artwork-desc">Creative strategy concept - synesthetic marketing</p>
+                    </div>
+                </div>
+
+                <!-- Artwork 10: Medical App -->
+                <div class="artwork-card">
+                    <img src="../Visionary/Medical%20Patient%20Advocate.svg" alt="Medical Patient Advocate">
+                    <div class="artwork-overlay">
+                        <h4 class="artwork-title">Medical Patient Advocate</h4>
+                        <p class="artwork-desc">Healthcare app UI/UX design concept</p>
+                    </div>
+                </div>
+
+                <!-- Creativity Outro Card -->
+                <div class="creativity-card">
+                    <div class="creativity-icon">✨</div>
+                    <h3>Let's Create Together</h3>
+                    <p>Every project starts with understanding your vision. I combine strategic marketing thinking with creative execution to deliver results that matter.</p>
                 </div>
             </div>
         </div>
@@ -848,7 +938,7 @@
         </div>
     </section>
 
-    <!-- SKILLS SECTION - Based on Professional Version -->
+    <!-- SKILLS SECTION -->
     <section class="skills-section" id="skills">
         <div class="section-header">
             <p class="section-label">Expertise</p>
@@ -953,7 +1043,7 @@
         </div>
     </section>
 
-    <!-- TOOLS SECTION - Based on Professional Version -->
+    <!-- TOOLS SECTION -->
     <section class="tools-section" id="tools">
         <div class="section-header">
             <p class="section-label">Tech Stack</p>
@@ -1118,7 +1208,7 @@
         </div>
     </section>
 
-    <!-- Experience Section with Media Galleries -->
+    <!-- Experience Section -->
     <section class="experience-section" id="experience">
         <div class="section-header">
             <p class="section-label">Career Path</p>
@@ -1126,7 +1216,7 @@
         </div>
         <div class="experience-grid">
             
-            <!-- Cream of Creams - With Media Gallery -->
+            <!-- Cream of Creams -->
             <div class="job-card" data-company="cream">
                 <div class="job-header">
                     <h3 class="job-title">Marketing Technologist</h3>
@@ -1140,7 +1230,6 @@
                     <li>Built revenue attribution tracking connecting creative work to RM450+ per-post sales</li>
                 </ul>
                 
-                <!-- Media Gallery -->
                 <div class="media-gallery">
                     <div class="media-tabs">
                         <button class="media-tab active" data-tab="videos" data-company="cream">
@@ -1153,7 +1242,6 @@
                         </button>
                     </div>
                     
-                    <!-- Video Slider -->
                     <div class="video-slider-container" data-slider="cream-videos">
                         <div class="video-slider">
                             <div class="video-slide" data-index="0">
@@ -1196,7 +1284,6 @@
                         </div>
                     </div>
                     
-                    <!-- Image Gallery (hidden by default) -->
                     <div class="image-gallery" data-gallery="cream-images" style="display: none;">
                         <div class="gallery-item" data-src="../images/journey/cream-of-creams/images/cream-1.png">
                             <img src="../images/journey/cream-of-creams/images/cream-1.png" alt="Social Media Content" loading="lazy">
@@ -1217,7 +1304,7 @@
                 </div>
             </div>
 
-            <!-- JungleWalla - With Media Gallery -->
+            <!-- JungleWalla -->
             <div class="job-card" data-company="jungle">
                 <div class="job-header">
                     <h3 class="job-title">Naturalist / Marketing Communications</h3>
@@ -1231,7 +1318,6 @@
                     <li>Built media partnerships and represented resort at travel trade shows</li>
                 </ul>
                 
-                <!-- Media Gallery -->
                 <div class="media-gallery">
                     <div class="media-tabs">
                         <button class="media-tab active" data-tab="videos" data-company="jungle">
@@ -1244,7 +1330,6 @@
                         </button>
                     </div>
                     
-                    <!-- Video Slider -->
                     <div class="video-slider-container" data-slider="jungle-videos">
                         <div class="video-slider">
                             <div class="video-slide" data-index="0">
@@ -1308,7 +1393,6 @@
                         </div>
                     </div>
                     
-                    <!-- Image Gallery (hidden by default) -->
                     <div class="image-gallery" data-gallery="jungle-images" style="display: none;">
                         <div class="gallery-item" data-src="../images/journey/junglewalla/images/Jungle-image1.jpg">
                             <img src="../images/journey/junglewalla/images/Jungle-image1.jpg" alt="Guided Nature Tour" loading="lazy">
@@ -1345,93 +1429,6 @@
                     <li>Grew combined client follower base 100K+ through visual content strategy</li>
                     <li>Achieved 8.5% average engagement rate (3x industry benchmark)</li>
                 </ul>
-            </div>
-
-            <!-- Pserv -->
-            <div class="job-card" data-company="pserv">
-                <div class="job-header">
-                    <h3 class="job-title">Senior Customer Service Officer</h3>
-                    <span class="job-meta">2021 – 2023 | Full-time</span>
-                </div>
-                <p class="job-company">Pserv Singapore Botanical Gardens</p>
-                <ul class="job-achievements">
-                    <li>95%+ customer satisfaction ratings; trained 12+ team members</li>
-                    <li>Managed high-traffic digital communications during major events (10K+ daily visitors)</li>
-                    <li>Developed crisis management and cultural sensitivity protocols</li>
-                </ul>
-                
-                <!-- Media Gallery -->
-                <div class="media-gallery">
-                    <div class="media-tabs">
-                        <button class="media-tab active" data-tab="videos" data-company="pserv">
-                            <i data-lucide="video" style="width: 16px; height: 16px;"></i>
-                            Videos <span class="count">5</span>
-                        </button>
-                        <button class="media-tab" data-tab="images" data-company="pserv">
-                            <i data-lucide="image" style="width: 16px; height: 16px;"></i>
-                            Images <span class="count">4</span>
-                        </button>
-                    </div>
-                    
-                    <!-- Video Slider -->
-                    <div class="video-slider-container" data-slider="pserv-videos">
-                        <div class="video-slider">
-                            <div class="video-slide" data-index="0">
-                                <video autoplay muted loop playsinline poster="../images/journey/pserv-singapore/thumbnails/Customer-thumbnail1.jpeg">
-                                    <source src="../images/journey/pserv-singapore/videos/Customer-video1.mp4" type="video/mp4">
-                                </video>
-                                <div class="video-slide-caption">Customer Service Excellence</div>
-                            </div>
-                            <div class="video-slide" data-index="1">
-                                <video autoplay muted loop playsinline poster="../images/journey/pserv-singapore/images/Customer-image1.jpeg">
-                                    <source src="../images/journey/pserv-singapore/videos/Customer-video2.mp4" type="video/mp4">
-                                </video>
-                                <div class="video-slide-caption">Visitor Experience</div>
-                            </div>
-                            <div class="video-slide" data-index="2">
-                                <video autoplay muted loop playsinline poster="../images/journey/pserv-singapore/images/Customer-image2.jpeg">
-                                    <source src="../images/journey/pserv-singapore/videos/Customer-video3.mp4" type="video/mp4">
-                                </video>
-                                <div class="video-slide-caption">Gardens Tour</div>
-                            </div>
-                            <div class="video-slide" data-index="3">
-                                <video autoplay muted loop playsinline poster="../images/journey/pserv-singapore/images/Customer-image3.jpeg">
-                                    <source src="../images/journey/pserv-singapore/videos/Customer-video4.mp4" type="video/mp4">
-                                </video>
-                                <div class="video-slide-caption">Team Operations</div>
-                            </div>
-                            <div class="video-slide" data-index="4">
-                                <video autoplay muted loop playsinline poster="../images/journey/pserv-singapore/images/Customer-image4.jpeg">
-                                    <source src="../images/journey/pserv-singapore/videos/Customer-video5.mp4" type="video/mp4">
-                                </video>
-                                <div class="video-slide-caption">Daily Activities</div>
-                            </div>
-                        </div>
-                        <div class="video-dots" data-dots="pserv-videos">
-                            <span class="video-dot active" data-slide="0"></span>
-                            <span class="video-dot" data-slide="1"></span>
-                            <span class="video-dot" data-slide="2"></span>
-                            <span class="video-dot" data-slide="3"></span>
-                            <span class="video-dot" data-slide="4"></span>
-                        </div>
-                    </div>
-                    
-                    <!-- Image Gallery (hidden by default) -->
-                    <div class="image-gallery" data-gallery="pserv-images" style="display: none;">
-                        <div class="gallery-item" data-src="../images/journey/pserv-singapore/images/Customer-image1.jpeg">
-                            <img src="../images/journey/pserv-singapore/images/Customer-image1.jpeg" alt="Gardens Main Entrance" loading="lazy">
-                        </div>
-                        <div class="gallery-item" data-src="../images/journey/pserv-singapore/images/Customer-image2.jpeg">
-                            <img src="../images/journey/pserv-singapore/images/Customer-image2.jpeg" alt="Visitor Assistance Desk" loading="lazy">
-                        </div>
-                        <div class="gallery-item" data-src="../images/journey/pserv-singapore/images/Customer-image3.jpeg">
-                            <img src="../images/journey/pserv-singapore/images/Customer-image3.jpeg" alt="Orchid Garden Area" loading="lazy">
-                        </div>
-                        <div class="gallery-item" data-src="../images/journey/pserv-singapore/images/Customer-image4.jpeg">
-                            <img src="../images/journey/pserv-singapore/images/Customer-image4.jpeg" alt="Team Briefing Session" loading="lazy">
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </section>
@@ -1534,17 +1531,6 @@
             });
         });
 
-        // Spotlight Effect
-        document.querySelectorAll('[data-spotlight]').forEach(card => {
-            card.addEventListener('mousemove', (e) => {
-                const rect = card.getBoundingClientRect();
-                const x = ((e.clientX - rect.left) / rect.width) * 100;
-                const y = ((e.clientY - rect.top) / rect.height) * 100;
-                card.style.setProperty('--mouse-x', `${x}%`);
-                card.style.setProperty('--mouse-y', `${y}%`);
-            });
-        });
-
         // GSAP Animations
         gsap.registerPlugin(ScrollTrigger);
 
@@ -1564,23 +1550,31 @@
             y: 300, opacity: 0.3
         });
 
-        // Horizontal Scroll - Fixed
-        const horizontalSection = document.querySelector('.horizontal-section');
-        const track = document.querySelector('.horizontal-track');
+        // ===== ARTWORK HORIZONTAL SCROLL - FIXED =====
+        const artworkSection = document.querySelector('.artwork-section');
+        const artworkTrack = document.querySelector('.artwork-track');
         
-        if (horizontalSection && track) {
-            const scrollWidth = track.scrollWidth - window.innerWidth + 100;
-            gsap.to(track, {
-                x: -scrollWidth,
+        if (artworkSection && artworkTrack) {
+            // Calculate total scroll width
+            const totalWidth = artworkTrack.scrollWidth;
+            const viewportWidth = window.innerWidth;
+            const scrollDistance = totalWidth - viewportWidth + 200; // Add padding
+            
+            gsap.to(artworkTrack, {
+                x: -scrollDistance,
                 ease: 'none',
                 scrollTrigger: {
-                    trigger: horizontalSection,
+                    trigger: artworkSection,
                     start: 'top top',
-                    end: () => `+=${scrollWidth}`,
+                    end: () => `+=${scrollDistance * 1.5}`, // Proportional scroll distance
                     pin: true,
                     scrub: 1,
                     invalidateOnRefresh: true,
-                    anticipatePin: 1
+                    anticipatePin: 1,
+                    onLeave: () => {
+                        // Ensure clean exit
+                        gsap.set(artworkTrack, { x: -scrollDistance });
+                    }
                 }
             });
         }
@@ -1613,10 +1607,10 @@
             y: 30, opacity: 0, duration: 0.8, stagger: 0.15, ease: 'power2.out'
         });
 
-        // Skills animation - FIXED with immediate visibility
+        // Skills animation
         gsap.from('.skill-card', {
             scrollTrigger: { trigger: '.skills-section', start: 'top 80%', toggleActions: 'play none none reverse' },
-            y: 30, opacity: 0.5, duration: 0.6, stagger: 0.08, ease: 'power2.out'
+            y: 30, opacity: 0, duration: 0.6, stagger: 0.1, ease: 'power2.out'
         });
 
         // Tools animation
