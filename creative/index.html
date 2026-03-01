@@ -6,44 +6,28 @@
     <title>Harshana | Creative Technologist — Marketing & Design</title>
     <meta name="description" content="Marketing Technologist combining creative design, technical skills, and strategic marketing. Adobe-certified designer, video editor, and systems builder.">
     
-    <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="../public/vite.svg">
-    
-    <!-- Open Graph / Social Meta Tags -->
+    <link rel="icon" type="image/svg+xml" href="../vite.svg">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://harshana.me/creative/">
     <meta property="og:title" content="Harshana | Creative Technologist — Marketing & Design">
     <meta property="og:description" content="Marketing Technologist combining creative design, technical skills, and strategic marketing. Adobe-certified designer, video editor.">
-    <meta property="og:image" content="https://harshana.me/public/images/profile-waterfall.jpg">
-    
-    <!-- Twitter Card -->
+    <meta property="og:image" content="https://harshana.me/images/profile-waterfall.jpg">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://harshana.me/creative/">
     <meta name="twitter:title" content="Harshana | Creative Technologist">
     <meta name="twitter:description" content="Marketing Technologist combining creative design and strategic marketing.">
-    <meta name="twitter:image" content="https://harshana.me/public/images/profile-waterfall.jpg">
-    
-    <!-- Canonical URL -->
+    <meta name="twitter:image" content="https://harshana.me/images/profile-waterfall.jpg">
     <link rel="canonical" href="https://harshana.me/creative/">
     
-    <!-- GSAP -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    
-    <!-- Lenis Smooth Scroll -->
     <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
-    
-    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
         
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
             --bg: #050505;
@@ -56,21 +40,11 @@
             --border: #1a1a1a;
             --real: #00ff88;
             --maybe: #ffaa00;
-            --mouse-x: 50%;
-            --mouse-y: 50%;
         }
 
-        html {
-            scroll-behavior: auto;
-        }
-
-        html.lenis, html.lenis body {
-            height: auto;
-        }
-
-        .lenis.lenis-smooth {
-            scroll-behavior: auto !important;
-        }
+        html { scroll-behavior: auto; }
+        html.lenis, html.lenis body { height: auto; }
+        .lenis.lenis-smooth { scroll-behavior: auto !important; }
 
         body {
             font-family: 'Space Grotesk', -apple-system, sans-serif;
@@ -93,7 +67,6 @@
             transition: transform 0.15s ease-out, background 0.15s;
             mix-blend-mode: difference;
         }
-
         .cursor.hover {
             transform: scale(2.5);
             background: var(--text);
@@ -103,10 +76,7 @@
         body::before {
             content: '';
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
             opacity: 0.03;
             pointer-events: none;
@@ -116,9 +86,7 @@
         /* Navigation */
         .nav {
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
+            top: 0; left: 0; right: 0;
             padding: 1.5rem 2rem;
             display: flex;
             justify-content: space-between;
@@ -126,1147 +94,457 @@
             z-index: 100;
             mix-blend-mode: difference;
         }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            letter-spacing: -0.03em;
-            color: var(--text);
-            text-decoration: none;
-        }
-
-        .logo span {
-            color: var(--accent);
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-        }
-
+        .logo { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.03em; color: var(--text); text-decoration: none; }
+        .logo span { color: var(--accent); }
+        .nav-links { display: flex; gap: 2rem; }
         .nav-link {
-            color: var(--text);
-            text-decoration: none;
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            position: relative;
-            padding: 0.5rem 0;
-            transition: color 0.3s;
+            color: var(--text); text-decoration: none; font-size: 0.85rem;
+            text-transform: uppercase; letter-spacing: 0.1em;
+            position: relative; padding: 0.5rem 0; transition: color 0.3s;
         }
-
         .nav-link::before {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 1px;
-            background: var(--accent);
-            transition: width 0.3s ease;
+            content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 1px;
+            background: var(--accent); transition: width 0.3s ease;
         }
-
-        .nav-link:hover::before,
-        .nav-link.active::before {
-            width: 100%;
-        }
-
-        .nav-link.active {
-            color: var(--accent);
-        }
+        .nav-link:hover::before, .nav-link.active::before { width: 100%; }
+        .nav-link.active { color: var(--accent); }
 
         /* Mobile Bottom Nav */
         .mobile-nav {
-            display: none;
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: rgba(5, 5, 5, 0.95);
-            backdrop-filter: blur(20px);
-            border-top: 1px solid var(--border);
-            padding: 1rem;
-            z-index: 100;
+            display: none; position: fixed; bottom: 0; left: 0; right: 0;
+            background: rgba(5, 5, 5, 0.95); backdrop-filter: blur(20px);
+            border-top: 1px solid var(--border); padding: 1rem; z-index: 100;
         }
-
-        .mobile-nav-links {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-        }
-
+        .mobile-nav-links { display: flex; justify-content: space-around; align-items: center; }
         .mobile-nav-link {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.25rem;
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 0.65rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            transition: color 0.3s;
+            display: flex; flex-direction: column; align-items: center; gap: 0.25rem;
+            color: var(--text-secondary); text-decoration: none; font-size: 0.65rem;
+            text-transform: uppercase; letter-spacing: 0.05em; transition: color 0.3s;
         }
-
-        .mobile-nav-link.active {
-            color: var(--accent);
-        }
+        .mobile-nav-link.active { color: var(--accent); }
 
         /* Hero Section */
         .hero {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            padding: 6rem 1.5rem;
-            position: relative;
-            overflow: hidden;
+            min-height: 100vh; display: flex; flex-direction: column;
+            justify-content: center; padding: 6rem 1.5rem;
+            position: relative; overflow: hidden;
         }
-
         .hero-bg-text {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 25vw;
-            font-weight: 700;
-            color: transparent;
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            font-size: 25vw; font-weight: 700; color: transparent;
             -webkit-text-stroke: 1px rgba(255, 255, 255, 0.08);
-            white-space: nowrap;
-            pointer-events: none;
-            z-index: 0;
-            user-select: none;
+            white-space: nowrap; pointer-events: none; z-index: 0; user-select: none;
         }
-
-        .hero-content {
-            position: relative;
-            z-index: 1;
-            max-width: 1400px;
-            margin: 0 auto;
-            width: 100%;
-        }
-
+        .hero-content { position: relative; z-index: 1; max-width: 1400px; margin: 0 auto; width: 100%; }
         .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 1rem;
-            background: rgba(0, 255, 136, 0.1);
-            border: 1px solid rgba(0, 255, 136, 0.3);
-            border-radius: 100px;
-            font-size: 0.75rem;
-            color: var(--real);
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-bottom: 2rem;
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            padding: 0.5rem 1rem; background: rgba(0, 255, 136, 0.1);
+            border: 1px solid rgba(0, 255, 136, 0.3); border-radius: 100px;
+            font-size: 0.75rem; color: var(--real); text-transform: uppercase;
+            letter-spacing: 0.1em; margin-bottom: 2rem;
         }
-
         .hero-badge::before {
-            content: '';
-            width: 8px;
-            height: 8px;
-            background: var(--real);
-            border-radius: 50%;
-            animation: pulse 2s infinite;
+            content: ''; width: 8px; height: 8px; background: var(--real);
+            border-radius: 50%; animation: pulse 2s infinite;
         }
-
         @keyframes pulse {
             0%, 100% { opacity: 1; transform: scale(1); }
             50% { opacity: 0.5; transform: scale(1.2); }
         }
-
         .hero-title {
-            font-size: clamp(3rem, 10vw, 7rem);
-            font-weight: 500;
-            line-height: 0.95;
-            letter-spacing: -0.05em;
-            margin-bottom: 2rem;
-            overflow: hidden;
+            font-size: clamp(3rem, 10vw, 7rem); font-weight: 500;
+            line-height: 0.95; letter-spacing: -0.05em; margin-bottom: 2rem; overflow: hidden;
         }
-
-        .hero-title .line {
-            display: block;
-            transform: translateY(100%);
-            opacity: 0;
-        }
-
+        .hero-title .line { display: block; transform: translateY(100%); opacity: 0; }
         .hero-subtitle {
-            font-size: 1.1rem;
-            color: var(--text-secondary);
-            max-width: 700px;
-            margin-bottom: 2rem;
-            line-height: 1.6;
+            font-size: 1.1rem; color: var(--text-secondary); max-width: 700px;
+            margin-bottom: 2rem; line-height: 1.6;
         }
-
-        .hero-roles {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            margin-bottom: 3rem;
-        }
-
+        .hero-roles { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 3rem; }
         .role-tag {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 0.75rem 1.25rem;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 100px;
-            font-size: 0.85rem;
+            display: flex; align-items: center; gap: 0.75rem;
+            padding: 0.75rem 1.25rem; background: var(--surface);
+            border: 1px solid var(--border); border-radius: 100px; font-size: 0.85rem;
         }
-
-        .role-tag i {
-            color: var(--accent);
-            width: 18px;
-            height: 18px;
-        }
-
+        .role-tag i { color: var(--accent); width: 18px; height: 18px; }
         .hero-contact {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1.5rem;
-            margin-bottom: 3rem;
-            font-size: 0.85rem;
-            color: var(--text-secondary);
+            display: flex; flex-wrap: wrap; gap: 1.5rem; margin-bottom: 3rem;
+            font-size: 0.85rem; color: var(--text-secondary);
         }
-
-        .hero-contact a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .hero-contact a:hover {
-            color: var(--accent);
-        }
-
+        .hero-contact a { color: var(--text-secondary); text-decoration: none; transition: color 0.3s; }
+        .hero-contact a:hover { color: var(--accent); }
         .hero-cta {
-            display: inline-flex;
-            align-items: center;
-            gap: 1rem;
-            color: var(--text);
-            text-decoration: none;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            border: 1px solid var(--border);
-            padding: 1.2rem 2.5rem;
-            border-radius: 100px;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s;
-            cursor: none;
+            display: inline-flex; align-items: center; gap: 1rem; color: var(--text);
+            text-decoration: none; font-size: 0.9rem; text-transform: uppercase;
+            letter-spacing: 0.1em; border: 1px solid var(--border);
+            padding: 1.2rem 2.5rem; border-radius: 100px;
+            position: relative; overflow: hidden; transition: all 0.3s; cursor: none;
         }
-
         .hero-cta::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--accent);
-            transform: translateY(100%);
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            z-index: -1;
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--accent); transform: translateY(100%);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); z-index: -1;
         }
+        .hero-cta:hover::before { transform: translateY(0); }
+        .hero-cta:hover { border-color: var(--accent); }
 
-        .hero-cta:hover::before {
-            transform: translateY(0);
-        }
-
-        .hero-cta:hover {
-            border-color: var(--accent);
-        }
-
-        /* FIXED Diagonal Text Band - Infinite Scroll */
-        .text-band-wrapper {
-            overflow: hidden;
-            padding: 3rem 0;
-            margin: 2rem 0;
-        }
-
+        /* Text Band */
+        .text-band-wrapper { overflow: hidden; padding: 3rem 0; margin: 2rem 0; }
         .text-band {
-            background: var(--accent);
-            color: var(--bg);
-            padding: 1.25rem 0;
-            transform: rotate(-2deg) scale(1.05);
-            width: 110%;
-            margin-left: -5%;
+            background: var(--accent); color: var(--bg); padding: 1.25rem 0;
+            transform: rotate(-2deg) scale(1.05); width: 110%; margin-left: -5%;
         }
-
-        .text-band-content {
-            display: flex;
-            width: max-content;
-            animation: scrollText 30s linear infinite;
-        }
-
-        .text-band-content:hover {
-            animation-play-state: paused;
-        }
-
+        .text-band-content { display: flex; width: max-content; animation: scrollText 30s linear infinite; }
+        .text-band-content:hover { animation-play-state: paused; }
         .text-band-item {
-            font-size: 1.25rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            padding: 0 3rem;
-            display: flex;
-            align-items: center;
-            gap: 3rem;
-            white-space: nowrap;
+            font-size: 1.25rem; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 0.05em; padding: 0 3rem; display: flex; align-items: center;
+            gap: 3rem; white-space: nowrap;
         }
-
-        .text-band-item::after {
-            content: '◆';
-            opacity: 0.5;
-        }
-
+        .text-band-item::after { content: '◆'; opacity: 0.5; }
         @keyframes scrollText {
             0% { transform: translateX(0); }
             100% { transform: translateX(-50%); }
         }
 
-        /* Horizontal Scroll Section */
-        .horizontal-section {
-            position: relative;
-            height: 350vh;
-        }
-
+        /* Horizontal Scroll Section - Fixed height */
+        .horizontal-section { position: relative; height: 300vh; }
         .horizontal-container {
-            position: sticky;
-            top: 0;
-            height: 100vh;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
+            position: sticky; top: 0; height: 100vh; overflow: hidden;
+            display: flex; align-items: center;
         }
+        .horizontal-track { display: flex; gap: 2rem; padding: 0 2rem; will-change: transform; }
 
-        .horizontal-track {
-            display: flex;
-            gap: 2rem;
-            padding: 0 2rem;
-            will-change: transform;
-        }
-
-        /* Spotlight Cards */
+        /* Cards */
         .claim-card {
-            flex-shrink: 0;
-            width: 80vw;
-            max-width: 500px;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 24px;
-            padding: 2.5rem;
-            position: relative;
-            overflow: hidden;
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
-                        border-color 0.3s,
-                        box-shadow 0.3s;
+            flex-shrink: 0; width: 80vw; max-width: 500px; background: var(--surface);
+            border: 1px solid var(--border); border-radius: 24px; padding: 2.5rem;
+            position: relative; overflow: hidden;
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s, box-shadow 0.3s;
         }
-
-        .claim-card::before {
-            content: '';
-            position: absolute;
-            top: var(--mouse-y, 50%);
-            left: var(--mouse-x, 50%);
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(
-                circle,
-                rgba(255, 61, 0, 0.15) 0%,
-                rgba(255, 61, 0, 0.05) 40%,
-                transparent 70%
-            );
-            transform: translate(-50%, -50%);
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity 0.3s;
-            z-index: 1;
-        }
-
-        .claim-card::after {
-            content: '';
-            position: absolute;
-            top: var(--mouse-y, 50%);
-            left: var(--mouse-x, 50%);
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(
-                circle,
-                rgba(255, 255, 255, 0.06) 0%,
-                transparent 60%
-            );
-            transform: translate(-50%, -50%);
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity 0.3s;
-            z-index: 1;
-        }
-
-        .claim-card:hover::before,
-        .claim-card:hover::after {
-            opacity: 1;
-        }
-
         .claim-card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(255, 61, 0, 0.4);
+            transform: translateY(-5px); border-color: rgba(255, 61, 0, 0.4);
             box-shadow: 0 0 40px rgba(255, 61, 0, 0.1);
         }
-
-        .claim-num {
-            font-size: 5rem;
-            font-weight: 700;
-            color: var(--border);
-            position: absolute;
-            top: 1.5rem;
-            right: 2rem;
-            line-height: 1;
-            z-index: 2;
-            opacity: 0.5;
-        }
-
-        .claim-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1.5rem;
-            position: relative;
-            z-index: 2;
-        }
-
+        .claim-num { font-size: 5rem; font-weight: 700; color: var(--border); position: absolute; top: 1.5rem; right: 2rem; line-height: 1; z-index: 2; opacity: 0.5; }
+        .claim-icon { font-size: 2.5rem; margin-bottom: 1.5rem; position: relative; z-index: 2; }
         .claim-badge {
-            display: inline-block;
-            padding: 0.4rem 1rem;
-            border-radius: 4px;
-            font-size: 0.7rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: 1.25rem;
-            border: 1px solid;
-            position: relative;
-            z-index: 2;
+            display: inline-block; padding: 0.4rem 1rem; border-radius: 4px;
+            font-size: 0.7rem; font-weight: 600; text-transform: uppercase;
+            letter-spacing: 0.05em; margin-bottom: 1.25rem; border: 1px solid;
+            position: relative; z-index: 2;
         }
-
-        .badge-real {
-            background: rgba(0, 255, 136, 0.08);
-            color: var(--real);
-            border-color: rgba(0, 255, 136, 0.3);
-        }
-
-        .badge-maybe {
-            background: rgba(255, 170, 0, 0.08);
-            color: var(--maybe);
-            border-color: rgba(255, 170, 0, 0.3);
-        }
-
-        .claim-card h3 {
-            font-size: 1.75rem;
-            font-weight: 600;
-            margin-bottom: 0.75rem;
-            line-height: 1.2;
-            position: relative;
-            z-index: 2;
-            letter-spacing: -0.02em;
-        }
-
-        .claim-card p {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-            line-height: 1.6;
-            position: relative;
-            z-index: 2;
-        }
+        .badge-real { background: rgba(0, 255, 136, 0.08); color: var(--real); border-color: rgba(0, 255, 136, 0.3); }
+        .badge-maybe { background: rgba(255, 170, 0, 0.08); color: var(--maybe); border-color: rgba(255, 170, 0, 0.3); }
+        .claim-card h3 { font-size: 1.75rem; font-weight: 600; margin-bottom: 0.75rem; line-height: 1.2; position: relative; z-index: 2; letter-spacing: -0.02em; }
+        .claim-card p { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6; position: relative; z-index: 2; }
 
         /* Video Card */
         .video-card {
-            flex-shrink: 0;
-            width: 80vw;
-            max-width: 600px;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 24px;
-            overflow: hidden;
-            position: relative;
+            flex-shrink: 0; width: 80vw; max-width: 600px; background: var(--surface);
+            border: 1px solid var(--border); border-radius: 24px; overflow: hidden; position: relative;
         }
-
         .video-card video {
-            width: 100%;
-            height: 300px;
-            object-fit: cover;
+            width: 100%; height: 300px; object-fit: cover;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
         }
-
-        .video-card-content {
-            padding: 2rem;
-        }
-
-        .video-card h3 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-
-        .video-card p {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
+        .video-card-content { padding: 2rem; }
+        .video-card h3 { font-size: 1.5rem; font-weight: 600; margin-bottom: 0.5rem; }
+        .video-card p { color: var(--text-secondary); font-size: 0.9rem; }
+        .video-fallback {
+            width: 100%; height: 300px; background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            display: flex; align-items: center; justify-content: center; color: var(--text-secondary);
         }
 
         /* Parallax Quote Section */
-        .parallax-section {
-            height: 80vh;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
+        .parallax-section { height: 80vh; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
         .parallax-bg {
-            position: absolute;
-            top: -30%;
-            left: -20%;
-            width: 140%;
-            height: 160%;
+            position: absolute; top: -30%; left: -20%; width: 140%; height: 160%;
             background: 
                 radial-gradient(circle at 20% 30%, rgba(255, 61, 0, 0.15) 0%, transparent 50%),
                 radial-gradient(circle at 80% 70%, rgba(102, 126, 234, 0.1) 0%, transparent 50%);
-            filter: blur(80px);
-            z-index: 0;
+            filter: blur(80px); z-index: 0;
         }
-
-        .parallax-content {
-            position: relative;
-            z-index: 1;
-            text-align: center;
-            padding: 2rem;
-            max-width: 900px;
-        }
-
-        .parallax-text {
-            font-size: clamp(2rem, 6vw, 4rem);
-            font-weight: 500;
-            line-height: 1.2;
-            letter-spacing: -0.03em;
-        }
-
-        .parallax-text span {
-            color: var(--accent);
-            display: block;
-            margin-top: 0.5rem;
-        }
+        .parallax-content { position: relative; z-index: 1; text-align: center; padding: 2rem; max-width: 900px; }
+        .parallax-text { font-size: clamp(2rem, 6vw, 4rem); font-weight: 500; line-height: 1.2; letter-spacing: -0.03em; }
+        .parallax-text span { color: var(--accent); display: block; margin-top: 0.5rem; }
 
         /* Split Section */
-        .split-section {
-            display: grid;
-            grid-template-columns: 1fr;
-            min-height: 100vh;
-        }
-
-        .split-left {
-            background: var(--surface);
-            padding: 4rem 2rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .split-right {
-            background: var(--bg);
-            padding: 4rem 2rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-        }
-
+        .split-section { display: grid; grid-template-columns: 1fr; min-height: 100vh; }
+        .split-left { background: var(--surface); padding: 4rem 2rem; display: flex; flex-direction: column; justify-content: center; }
+        .split-right { background: var(--bg); padding: 4rem 2rem; display: flex; flex-direction: column; justify-content: center; position: relative; overflow: hidden; }
         .split-right::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at 30% 50%, rgba(255, 61, 0, 0.08), transparent 50%);
-            pointer-events: none;
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(circle at 30% 50%, rgba(255, 61, 0, 0.08), transparent 50%); pointer-events: none;
         }
-
-        .split-title {
-            font-size: 2rem;
-            font-weight: 600;
-            margin-bottom: 3rem;
-            letter-spacing: -0.02em;
-        }
-
-        .stat-list {
-            display: flex;
-            flex-direction: column;
-            gap: 2.5rem;
-        }
-
-        .stat-item {
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 2rem;
-        }
-
-        .stat-num-large {
-            font-size: 4rem;
-            font-weight: 300;
-            color: var(--text);
-            display: block;
-            margin-bottom: 0.5rem;
-            line-height: 1;
-            letter-spacing: -0.04em;
-        }
-
-        .stat-num-large span {
-            color: var(--accent);
-            font-size: 2.5rem;
-            font-weight: 500;
-        }
-
-        .stat-label-large {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-        }
-
-        .capability-list {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-            position: relative;
-            z-index: 1;
-        }
-
+        .split-title { font-size: 2rem; font-weight: 600; margin-bottom: 3rem; letter-spacing: -0.02em; }
+        .stat-list { display: flex; flex-direction: column; gap: 2.5rem; }
+        .stat-item { border-bottom: 1px solid var(--border); padding-bottom: 2rem; }
+        .stat-num-large { font-size: 4rem; font-weight: 300; color: var(--text); display: block; margin-bottom: 0.5rem; line-height: 1; letter-spacing: -0.04em; }
+        .stat-num-large span { color: var(--accent); font-size: 2.5rem; font-weight: 500; }
+        .stat-label-large { font-size: 0.85rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.1em; }
+        .capability-list { display: flex; flex-direction: column; gap: 1.5rem; position: relative; z-index: 1; }
         .capability-item {
-            padding: 1.5rem;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            transition: border-color 0.3s;
+            padding: 1.5rem; background: var(--surface); border: 1px solid var(--border);
+            border-radius: 12px; transition: border-color 0.3s;
         }
-
-        .capability-item:hover {
-            border-color: var(--accent);
-        }
-
-        .capability-item h4 {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: var(--text);
-        }
-
-        .capability-item p {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-            line-height: 1.5;
-        }
-
+        .capability-item:hover { border-color: var(--accent); }
+        .capability-item h4 { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--text); }
+        .capability-item p { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.5; }
         .magnetic-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 1.25rem 2.5rem;
-            background: var(--accent);
-            color: var(--bg);
-            text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            border-radius: 100px;
-            position: relative;
+            display: inline-flex; align-items: center; justify-content: center;
+            padding: 1.25rem 2.5rem; background: var(--accent); color: var(--bg);
+            text-decoration: none; font-size: 0.9rem; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 0.05em;
+            border-radius: 100px; position: relative;
             transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            margin-top: 2rem;
-            border: none;
-            cursor: none;
-            align-self: flex-start;
+            margin-top: 2rem; border: none; cursor: none; align-self: flex-start;
         }
+        .magnetic-btn:hover { transform: scale(1.05); }
 
-        .magnetic-btn:hover {
-            transform: scale(1.05);
-        }
-
-        /* Skills Section - NEW */
-        .skills-section {
-            padding: 6rem 2rem;
-            background: var(--surface);
-        }
-
+        /* Skills Section */
+        .skills-section { padding: 6rem 2rem; background: var(--surface); }
         .skills-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1.5rem;
-            max-width: 1400px;
-            margin: 0 auto;
+            display: grid; grid-template-columns: 1fr; gap: 1.5rem;
+            max-width: 1400px; margin: 0 auto;
         }
-
-        @media (min-width: 768px) {
-            .skills-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (min-width: 1024px) {
-            .skills-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-        }
-
+        @media (min-width: 768px) { .skills-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (min-width: 1024px) { .skills-grid { grid-template-columns: repeat(3, 1fr); } }
         .skill-card {
-            background: var(--bg);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 2rem;
-            transition: all 0.3s;
+            background: var(--bg); border: 1px solid var(--border);
+            border-radius: 20px; padding: 2rem; transition: all 0.3s;
         }
-
-        .skill-card:hover {
-            border-color: var(--accent);
-            transform: translateY(-5px);
-        }
-
-        .skill-header {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .skill-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-        }
-
+        .skill-card:hover { border-color: var(--accent); transform: translateY(-5px); }
+        .skill-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; }
+        .skill-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
         .skill-icon.marketing { background: rgba(255, 61, 0, 0.1); }
-        .skill-icon.technical { background: rgba(0, 255, 136, 0.1); }
         .skill-icon.creative { background: rgba(138, 43, 226, 0.1); }
+        .skill-icon.technical { background: rgba(0, 255, 136, 0.1); }
         .skill-icon.data { background: rgba(255, 170, 0, 0.1); }
         .skill-icon.business { background: rgba(0, 150, 255, 0.1); }
         .skill-icon.leadership { background: rgba(255, 0, 128, 0.1); }
-
-        .skill-title {
-            font-size: 1.25rem;
-            font-weight: 600;
-        }
-
-        .skill-list {
-            list-style: none;
-        }
-
+        .skill-title { font-size: 1.25rem; font-weight: 600; }
+        .skill-list { list-style: none; }
         .skill-list li {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0.75rem 0;
-            border-bottom: 1px solid var(--border);
-            font-size: 0.9rem;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0.75rem 0; border-bottom: 1px solid var(--border); font-size: 0.9rem;
         }
-
-        .skill-list li:last-child {
-            border-bottom: none;
-        }
-
-        .skill-name {
-            color: var(--text);
-        }
-
-        .skill-level {
-            color: var(--text-secondary);
-            font-size: 0.8rem;
-        }
+        .skill-list li:last-child { border-bottom: none; }
+        .skill-name { color: var(--text); }
+        .skill-level { color: var(--text-secondary); font-size: 0.8rem; }
 
         /* Projects Section */
-        .projects-section {
-            padding: 6rem 2rem;
-            background: var(--bg);
-        }
-
-        .section-header {
-            max-width: 1400px;
-            margin: 0 auto 4rem;
-            text-align: center;
-        }
-
-        .section-label {
-            font-size: 0.75rem;
-            color: var(--accent);
-            text-transform: uppercase;
-            letter-spacing: 0.3em;
-            margin-bottom: 1rem;
-        }
-
-        .section-title {
-            font-size: clamp(2rem, 5vw, 3.5rem);
-            font-weight: 600;
-            letter-spacing: -0.03em;
-        }
-
-        .projects-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 2rem;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        @media (min-width: 768px) {
-            .projects-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
+        .projects-section { padding: 6rem 2rem; background: var(--bg); }
+        .section-header { max-width: 1400px; margin: 0 auto 4rem; text-align: center; }
+        .section-label { font-size: 0.75rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.3em; margin-bottom: 1rem; }
+        .section-title { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 600; letter-spacing: -0.03em; }
+        .projects-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; max-width: 1400px; margin: 0 auto; }
+        @media (min-width: 768px) { .projects-grid { grid-template-columns: repeat(2, 1fr); } }
         .project-card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            overflow: hidden;
-            transition: transform 0.4s, border-color 0.3s;
+            background: var(--surface); border: 1px solid var(--border); border-radius: 20px;
+            overflow: hidden; transition: transform 0.4s, border-color 0.3s;
         }
-
-        .project-card:hover {
-            transform: translateY(-8px);
-            border-color: var(--accent);
-        }
-
-        .project-image {
-            width: 100%;
-            height: 220px;
-            object-fit: cover;
-            background: var(--bg);
-        }
-
-        .project-content {
-            padding: 1.5rem;
-        }
-
-        .project-category {
-            font-size: 0.7rem;
-            color: var(--accent);
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-bottom: 0.5rem;
-        }
-
-        .project-title {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin-bottom: 0.75rem;
-            letter-spacing: -0.02em;
-        }
-
-        .project-desc {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-            line-height: 1.5;
-        }
-
+        .project-card:hover { transform: translateY(-8px); border-color: var(--accent); }
+        .project-image { width: 100%; height: 220px; object-fit: cover; background: var(--bg); }
+        .project-content { padding: 1.5rem; }
+        .project-category { font-size: 0.7rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5rem; }
+        .project-title { font-size: 1.25rem; font-weight: 600; margin-bottom: 0.75rem; letter-spacing: -0.02em; }
+        .project-desc { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.5; }
         .project-status {
-            display: inline-block;
-            margin-top: 1rem;
-            padding: 0.3rem 0.8rem;
-            background: rgba(0, 255, 136, 0.1);
-            color: var(--real);
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            border-radius: 100px;
+            display: inline-block; margin-top: 1rem; padding: 0.3rem 0.8rem;
+            background: rgba(0, 255, 136, 0.1); color: var(--real); font-size: 0.7rem;
+            text-transform: uppercase; letter-spacing: 0.05em; border-radius: 100px;
         }
 
-        /* Experience Section */
-        .experience-section {
-            padding: 6rem 2rem;
-            background: var(--surface);
-        }
-
+        /* Experience Section - NEW MEDIA GALLERY STYLES */
+        .experience-section { padding: 6rem 2rem; background: var(--surface); }
         .experience-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
-            max-width: 1000px;
-            margin: 0 auto;
+            display: flex; flex-direction: column; gap: 3rem;
+            max-width: 1200px; margin: 0 auto;
         }
-
         .job-card {
-            background: var(--bg);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 2rem;
-            transition: border-color 0.3s;
+            background: var(--bg); border: 1px solid var(--border);
+            border-radius: 24px; padding: 2rem; transition: border-color 0.3s;
         }
-
-        .job-card:hover {
-            border-color: var(--accent);
-        }
-
+        .job-card:hover { border-color: var(--accent); }
         .job-header {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            align-items: flex-start;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
+            display: flex; flex-wrap: wrap; justify-content: space-between;
+            align-items: flex-start; gap: 0.5rem; margin-bottom: 1rem;
         }
-
-        .job-title {
-            font-size: 1.25rem;
-            font-weight: 600;
-        }
-
-        .job-meta {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-        }
-
-        .job-company {
-            font-size: 0.9rem;
-            color: var(--accent);
-            margin-bottom: 1rem;
-        }
-
-        .job-achievements {
-            list-style: none;
-        }
-
+        .job-title { font-size: 1.5rem; font-weight: 600; }
+        .job-meta { font-size: 0.85rem; color: var(--text-secondary); }
+        .job-company { font-size: 1rem; color: var(--accent); margin-bottom: 1rem; }
+        .job-achievements { list-style: none; margin-bottom: 2rem; }
         .job-achievements li {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-            padding: 0.4rem 0;
-            padding-left: 1.2rem;
-            position: relative;
-            line-height: 1.5;
+            font-size: 0.9rem; color: var(--text-secondary);
+            padding: 0.4rem 0; padding-left: 1.2rem; position: relative; line-height: 1.5;
+        }
+        .job-achievements li::before { content: '→'; position: absolute; left: 0; color: var(--accent); }
+
+        /* Media Gallery */
+        .media-gallery { margin-top: 1.5rem; }
+        .media-tabs { display: flex; gap: 1rem; margin-bottom: 1rem; }
+        .media-tab {
+            display: flex; align-items: center; gap: 0.5rem;
+            padding: 0.75rem 1.25rem; background: var(--surface);
+            border: 1px solid var(--border); border-radius: 100px;
+            color: var(--text-secondary); font-size: 0.85rem; cursor: pointer;
+            transition: all 0.3s;
+        }
+        .media-tab:hover, .media-tab.active { border-color: var(--accent); color: var(--text); }
+        .media-tab .count { 
+            background: var(--accent); color: var(--bg); 
+            padding: 0.2rem 0.5rem; border-radius: 100px; font-size: 0.75rem; font-weight: 600;
         }
 
-        .job-achievements li::before {
-            content: '→';
-            position: absolute;
-            left: 0;
-            color: var(--accent);
+        /* Auto-playing Video Slider */
+        .video-slider-container { position: relative; border-radius: 16px; overflow: hidden; background: var(--bg); }
+        .video-slider {
+            display: flex; transition: transform 0.5s ease;
+        }
+        .video-slide {
+            flex: 0 0 100%; position: relative;
+        }
+        .video-slide video, .video-slide img {
+            width: 100%; height: 400px; object-fit: cover; display: block;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+        }
+        .video-slide-caption {
+            position: absolute; bottom: 0; left: 0; right: 0;
+            padding: 1.5rem; background: linear-gradient(transparent, rgba(0,0,0,0.9));
+            font-size: 0.9rem; color: var(--text);
+        }
+        .video-controls {
+            position: absolute; bottom: 1rem; right: 1rem;
+            display: flex; gap: 0.5rem;
+        }
+        .video-control-btn {
+            width: 40px; height: 40px; border-radius: 50%;
+            background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+            color: var(--text); cursor: pointer; display: flex; align-items: center; justify-content: center;
+            transition: all 0.3s;
+        }
+        .video-control-btn:hover { background: var(--accent); border-color: var(--accent); }
+        .video-dots {
+            position: absolute; bottom: 1rem; left: 50%; transform: translateX(-50%);
+            display: flex; gap: 0.5rem;
+        }
+        .video-dot {
+            width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.3);
+            cursor: pointer; transition: all 0.3s;
+        }
+        .video-dot.active { background: var(--accent); width: 24px; border-radius: 4px; }
+
+        /* Image Gallery Grid */
+        .image-gallery {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+        .gallery-item {
+            aspect-ratio: 1; border-radius: 12px; overflow: hidden;
+            border: 1px solid var(--border); cursor: pointer; position: relative;
+        }
+        .gallery-item img {
+            width: 100%; height: 100%; object-fit: cover;
+            transition: transform 0.3s;
+        }
+        .gallery-item:hover img { transform: scale(1.1); }
+        .gallery-item::after {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(transparent 50%, rgba(0,0,0,0.7));
+            opacity: 0; transition: opacity 0.3s;
+        }
+        .gallery-item:hover::after { opacity: 1; }
+
+        /* Lightbox */
+        .lightbox {
+            position: fixed; inset: 0; z-index: 1000;
+            background: rgba(0,0,0,0.95); display: none;
+            align-items: center; justify-content: center;
+        }
+        .lightbox.active { display: flex; }
+        .lightbox-content {
+            max-width: 90vw; max-height: 90vh;
+            position: relative;
+        }
+        .lightbox-content img, .lightbox-content video {
+            max-width: 100%; max-height: 90vh; border-radius: 8px;
+        }
+        .lightbox-close {
+            position: absolute; top: -40px; right: 0;
+            background: none; border: none; color: var(--text);
+            font-size: 2rem; cursor: pointer;
         }
 
         /* Footer */
-        .footer {
-            padding: 6rem 2rem;
-            text-align: center;
-            border-top: 1px solid var(--border);
-            background: var(--bg);
-        }
-
-        .footer-text {
-            font-size: clamp(1.5rem, 4vw, 3rem);
-            font-weight: 400;
-            margin-bottom: 2rem;
-            line-height: 1.3;
-            letter-spacing: -0.02em;
-        }
-
-        .footer-text a {
-            color: var(--accent);
-            text-decoration: none;
-            position: relative;
-            display: inline-block;
-        }
-
-        .footer-text a::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--accent);
-            transition: width 0.3s ease;
-        }
-
-        .footer-text a:hover::after {
-            width: 100%;
-        }
-
-        .footer-tagline {
-            font-size: 1rem;
-            color: var(--text-secondary);
-            margin-bottom: 2rem;
-            font-style: italic;
-        }
-
-        .footer-socials {
-            display: flex;
-            justify-content: center;
-            gap: 2.5rem;
-            margin-top: 3rem;
-            flex-wrap: wrap;
-        }
-
+        .footer { padding: 6rem 2rem; text-align: center; border-top: 1px solid var(--border); background: var(--bg); }
+        .footer-text { font-size: clamp(1.5rem, 4vw, 3rem); font-weight: 400; margin-bottom: 2rem; line-height: 1.3; letter-spacing: -0.02em; }
+        .footer-text a { color: var(--accent); text-decoration: none; position: relative; display: inline-block; }
+        .footer-text a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: var(--accent); transition: width 0.3s ease; }
+        .footer-text a:hover::after { width: 100%; }
+        .footer-tagline { font-size: 1rem; color: var(--text-secondary); margin-bottom: 2rem; font-style: italic; }
+        .footer-socials { display: flex; justify-content: center; gap: 2.5rem; margin-top: 3rem; flex-wrap: wrap; }
         .footer-social {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            transition: color 0.3s;
-            cursor: none;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+            color: var(--text-secondary); text-decoration: none; font-size: 0.85rem;
+            text-transform: uppercase; letter-spacing: 0.1em; transition: color 0.3s;
+            cursor: none; display: flex; align-items: center; gap: 0.5rem;
         }
-
-        .footer-social:hover {
-            color: var(--accent);
-        }
-
-        /* Image Fallback Styles */
-        .project-image {
-            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
-            position: relative;
-        }
-
-        .project-image::before {
-            content: 'Loading...';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: var(--text-secondary);
-            font-size: 0.85rem;
-            z-index: 0;
-        }
-
-        .project-image[src] {
-            position: relative;
-            z-index: 1;
-        }
-
-        /* Video Poster/Fallback */
-        video {
-            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
-        }
+        .footer-social:hover { color: var(--accent); }
 
         /* Responsive */
         @media (pointer: coarse) {
-            .cursor {
-                display: none !important;
-            }
-            body {
-                cursor: auto;
-            }
-            .hero-cta,
-            .magnetic-btn,
-            .footer-social,
-            .nav-link {
-                cursor: pointer;
-            }
+            .cursor { display: none !important; }
+            body { cursor: auto; }
+            .hero-cta, .magnetic-btn, .footer-social, .nav-link { cursor: pointer; }
         }
-
         @media (min-width: 768px) {
-            .hero {
-                padding: 8rem 4rem;
-            }
-
-            .claim-card {
-                width: 500px;
-                padding: 3rem;
-            }
-
-            .split-left, .split-right {
-                padding: 6rem 4rem;
-            }
-
-            .stat-num-large {
-                font-size: 5rem;
-            }
-
-            .split-title {
-                font-size: 2.5rem;
-            }
-
-            .projects-section,
-            .skills-section,
-            .experience-section {
-                padding: 8rem 4rem;
-            }
+            .hero { padding: 8rem 4rem; }
+            .claim-card { width: 500px; padding: 3rem; }
+            .split-left, .split-right { padding: 6rem 4rem; }
+            .stat-num-large { font-size: 5rem; }
+            .split-title { font-size: 2.5rem; }
+            .projects-section, .skills-section, .experience-section { padding: 8rem 4rem; }
         }
-
-        @media (min-width: 1024px) {
-            .split-section {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-
+        @media (min-width: 1024px) { .split-section { grid-template-columns: 1fr 1fr; } }
         @media (max-width: 767px) {
-            .nav-links {
-                display: none;
-            }
-
-            .mobile-nav {
-                display: block;
-            }
-
-            .hero-title {
-                font-size: clamp(2.5rem, 14vw, 4rem);
-            }
-
-            .text-band-item {
-                font-size: 1rem;
-                padding: 0 1.5rem;
-                gap: 1.5rem;
-            }
-
-            .parallax-text {
-                font-size: clamp(1.5rem, 8vw, 2.5rem);
-            }
-
-            .footer {
-                padding-bottom: 8rem;
-            }
-
-            .hero-roles {
-                flex-direction: column;
-            }
+            .nav-links { display: none; }
+            .mobile-nav { display: block; }
+            .hero-title { font-size: clamp(2.5rem, 14vw, 4rem); }
+            .text-band-item { font-size: 1rem; padding: 0 1.5rem; gap: 1.5rem; }
+            .parallax-text { font-size: clamp(1.5rem, 8vw, 2.5rem); }
+            .footer { padding-bottom: 8rem; }
+            .hero-roles { flex-direction: column; }
+            .video-slide video, .video-slide img { height: 250px; }
+            .image-gallery { grid-template-columns: repeat(2, 1fr); }
         }
     </style>
 </head>
 <body>
-    <!-- Custom Cursor -->
     <div class="cursor"></div>
 
-    <!-- Navigation -->
     <nav class="nav">
-        <a href="../index.html" class="logo magnetic">harshana<span>.</span></a>
+        <a href="../" class="logo magnetic">harshana<span>.</span></a>
         <div class="nav-links">
-            <a href="../index.html" class="nav-link magnetic">Pro</a>
-            <a href="index.html" class="nav-link magnetic active">Creative</a>
-            <a href="../brutal/index.html" class="nav-link magnetic">Brutal</a>
+            <a href="../" class="nav-link magnetic">Pro</a>
+            <a href="./" class="nav-link magnetic active">Creative</a>
+            <a href="../brutal/" class="nav-link magnetic">Brutal</a>
         </div>
     </nav>
 
-    <!-- Mobile Bottom Navigation -->
     <nav class="mobile-nav">
         <div class="mobile-nav-links">
-            <a href="../index.html" class="mobile-nav-link">
-                <i data-lucide="briefcase"></i>
-                <span>Pro</span>
+            <a href="../" class="mobile-nav-link">
+                <i data-lucide="briefcase"></i><span>Pro</span>
             </a>
-            <a href="index.html" class="mobile-nav-link active">
-                <i data-lucide="sparkles"></i>
-                <span>Creative</span>
+            <a href="./" class="mobile-nav-link active">
+                <i data-lucide="sparkles"></i><span>Creative</span>
             </a>
-            <a href="../brutal/index.html" class="mobile-nav-link">
-                <i data-lucide="zap"></i>
-                <span>Brutal</span>
+            <a href="../brutal/" class="mobile-nav-link">
+                <i data-lucide="zap"></i><span>Brutal</span>
             </a>
         </div>
     </nav>
 
-    <!-- Hero Section -->
     <section class="hero" id="hero">
         <div class="hero-bg-text">CREATIVE</div>
         <div class="hero-content">
@@ -1280,18 +558,9 @@
                 I bridge the gap between marketing strategy, creative design, and technical execution. Adobe-certified graphic designer, video editor, and marketing technologist with 6+ years building systems that drive revenue.
             </p>
             <div class="hero-roles">
-                <div class="role-tag">
-                    <i data-lucide="palette"></i>
-                    <span>Adobe Certified Designer</span>
-                </div>
-                <div class="role-tag">
-                    <i data-lucide="video"></i>
-                    <span>Video Editor</span>
-                </div>
-                <div class="role-tag">
-                    <i data-lucide="trending-up"></i>
-                    <span>Marketing Strategist</span>
-                </div>
+                <div class="role-tag"><i data-lucide="palette"></i><span>Adobe Certified Designer</span></div>
+                <div class="role-tag"><i data-lucide="video"></i><span>Video Editor</span></div>
+                <div class="role-tag"><i data-lucide="trending-up"></i><span>Marketing Strategist</span></div>
             </div>
             <div class="hero-contact">
                 <a href="mailto:jothiharshana188@gmail.com">jothiharshana188@gmail.com</a>
@@ -1305,11 +574,9 @@
         </div>
     </section>
 
-    <!-- FIXED Diagonal Text Band - Infinite Loop -->
     <div class="text-band-wrapper">
         <div class="text-band">
             <div class="text-band-content">
-                <!-- First set -->
                 <span class="text-band-item">Adobe Creative Suite</span>
                 <span class="text-band-item">Video Editing</span>
                 <span class="text-band-item">Visual Content</span>
@@ -1318,7 +585,6 @@
                 <span class="text-band-item">Social Media</span>
                 <span class="text-band-item">Motion Graphics</span>
                 <span class="text-band-item">UI/UX Design</span>
-                <!-- Duplicate for seamless loop -->
                 <span class="text-band-item">Adobe Creative Suite</span>
                 <span class="text-band-item">Video Editing</span>
                 <span class="text-band-item">Visual Content</span>
@@ -1331,20 +597,16 @@
         </div>
     </div>
 
-    <!-- Horizontal Scroll Claims Section -->
     <section class="horizontal-section" id="claims">
         <div class="horizontal-container">
             <div class="horizontal-track">
-                <!-- Card 1: Viral Campaign -->
                 <div class="claim-card" data-spotlight>
                     <div class="claim-num">01</div>
                     <div class="claim-icon">🍰</div>
                     <span class="claim-badge badge-real">2M+ Impressions</span>
                     <h3>Viral Cheesecake Campaign</h3>
-                    <p>AI-assisted campaign for F&B brand using architectural visualization of Malaysia's 14 states. Strategic timing + automated distribution. Sold out in 48 hours, 429% follower growth (12K→63K).</p>
+                    <p>AI-assisted campaign for F&B brand using architectural visualization of Malaysia's 14 states. Strategic timing + automated distribution. Sold out in 48 hours, 429% follower growth.</p>
                 </div>
-
-                <!-- Card 2: Design Work -->
                 <div class="claim-card" data-spotlight>
                     <div class="claim-num">02</div>
                     <div class="claim-icon">🎨</div>
@@ -1352,8 +614,6 @@
                     <h3>Visual Content at Scale</h3>
                     <p>Created 200+ branded assets monthly using design systems and automation. Maintained brand consistency across Facebook, Instagram, TikTok, and LinkedIn while reducing production time by 40%.</p>
                 </div>
-
-                <!-- Card 3: Video Production -->
                 <div class="claim-card" data-spotlight>
                     <div class="claim-num">03</div>
                     <div class="claim-icon">🎬</div>
@@ -1361,8 +621,6 @@
                     <h3>Short-Form Video Content</h3>
                     <p>Produced viral video content using Adobe Premiere and After Effects. 2M+ impressions on campaign content. Expert in motion graphics, color grading, and platform-optimized formats.</p>
                 </div>
-
-                <!-- Card 4: Cost Reduction -->
                 <div class="claim-card" data-spotlight>
                     <div class="claim-num">04</div>
                     <div class="claim-icon">💰</div>
@@ -1370,8 +628,6 @@
                     <h3>Agency Replacement</h3>
                     <p>Replaced RM50K/month agency retainer with in-house creative and workflow optimization. Built systems for tracking creative performance directly to revenue.</p>
                 </div>
-
-                <!-- Card 5: Systems -->
                 <div class="claim-card" data-spotlight>
                     <div class="claim-num">05</div>
                     <div class="claim-icon">⚡</div>
@@ -1379,33 +635,18 @@
                     <h3>Efficiency Through Systems</h3>
                     <p>Built automation workflows for content distribution, scheduling, and analytics. Freed up 40% of creative time for strategic work and high-impact design projects.</p>
                 </div>
-
-                <!-- Card 6: Creative Philosophy -->
-                <div class="claim-card" data-spotlight>
-                    <div class="claim-num">06</div>
-                    <div class="claim-icon">☕</div>
-                    <span class="claim-badge badge-maybe">The Mamak Method</span>
-                    <h3>Lokal-First Creative</h3>
-                    <p>Creating content that speaks fluent "Manglish" and understands Malaysian cultural nuances. From Kopitiam Oracle trend prediction to Rojak-style content that resonates.</p>
-                </div>
-
-                <!-- Video Card 1 -->
                 <div class="video-card">
-                    <video autoplay muted loop playsinline poster="../public/images/journey/cream-of-creams/images/cream-1.png">
-                        <source src="../public/images/journey/cream-of-creams/videos/Cream-video1.mp4" type="video/mp4">
-                        <p style="padding: 2rem; text-align: center; color: var(--text-secondary);">Your browser doesn't support HTML5 video.</p>
+                    <video autoplay muted loop playsinline poster="../images/journey/cream-of-creams/images/cream-1.png">
+                        <source src="../images/journey/cream-of-creams/videos/Cream-video1.mp4" type="video/mp4">
                     </video>
                     <div class="video-card-content">
                         <h3>Cream of Creams</h3>
-                        <p>Behind the scenes of viral content creation and marketing campaign execution.</p>
+                        <p>Behind the scenes of viral content creation.</p>
                     </div>
                 </div>
-
-                <!-- Video Card 2 -->
                 <div class="video-card">
-                    <video autoplay muted loop playsinline poster="../public/images/journey/junglewalla/thumbnails/Jungle-thumbnail1.png">
-                        <source src="../public/images/journey/junglewalla/videos/Jungle-video1.mp4" type="video/mp4">
-                        <p style="padding: 2rem; text-align: center; color: var(--text-secondary);">Your browser doesn't support HTML5 video.</p>
+                    <video autoplay muted loop playsinline poster="../images/journey/junglewalla/thumbnails/Jungle-thumbnail1.png">
+                        <source src="../images/journey/junglewalla/videos/Jungle-video1.mp4" type="video/mp4">
                     </video>
                     <div class="video-card-content">
                         <h3>JungleWalla Desaru</h3>
@@ -1416,7 +657,6 @@
         </div>
     </section>
 
-    <!-- Parallax Quote Section -->
     <section class="parallax-section" id="quote">
         <div class="parallax-bg"></div>
         <div class="parallax-content">
@@ -1427,14 +667,13 @@
         </div>
     </section>
 
-    <!-- Split Stats & Capabilities Section -->
     <section class="split-section" id="stats">
         <div class="split-left">
             <h2 class="split-title">Results</h2>
             <div class="stat-list">
                 <div class="stat-item">
                     <span class="stat-num-large">429<span>%</span></span>
-                    <span class="stat-label-large">Facebook Growth (12K→63K)</span>
+                    <span class="stat-label-large">Facebook Growth</span>
                 </div>
                 <div class="stat-item">
                     <span class="stat-num-large">178<span>%</span></span>
@@ -1455,26 +694,27 @@
             <div class="capability-list">
                 <div class="capability-item">
                     <h4>Visual Design</h4>
-                    <p>Adobe Photoshop, Illustrator, InDesign. Brand identity, social media graphics, print design, and marketing collateral.</p>
+                    <p>Adobe Photoshop, Illustrator, InDesign. Brand identity, social media graphics, print design.</p>
                 </div>
                 <div class="capability-item">
                     <h4>Video Production</h4>
-                    <p>Adobe Premiere Pro, After Effects. Short-form content, motion graphics, color grading, and platform-optimized formats.</p>
+                    <p>Adobe Premiere Pro, After Effects. Short-form content, motion graphics, color grading.</p>
                 </div>
                 <div class="capability-item">
                     <h4>Marketing Strategy</h4>
-                    <p>Content strategy, campaign planning, brand storytelling, and data-driven creative decisions that drive engagement.</p>
+                    <p>Content strategy, campaign planning, brand storytelling, data-driven creative decisions.</p>
                 </div>
                 <div class="capability-item">
                     <h4>Workflow Optimization</h4>
-                    <p>Design systems, automation workflows, and scalable processes that maintain quality while increasing output.</p>
+                    <p>Design systems, automation workflows, and scalable processes that maintain quality.</p>
                 </div>
             </div>
             <a href="mailto:jothiharshana188@gmail.com" class="magnetic-btn">Get in Touch</a>
         </div>
     </section>
 
-    <!-- Skills Section - NEW -->
+
+    <!-- Skills Section -->
     <section class="skills-section" id="skills">
         <div class="section-header">
             <p class="section-label">Expertise</p>
@@ -1556,7 +796,7 @@
         </div>
     </section>
 
-    <!-- Selected Projects Section -->
+    <!-- Projects Section -->
     <section class="projects-section" id="projects">
         <div class="section-header">
             <p class="section-label">Selected Work</p>
@@ -1564,7 +804,7 @@
         </div>
         <div class="projects-grid">
             <div class="project-card">
-                <img src="../public/Visionary/Malaysian%20Marketing%20Platform.png" alt="Malaysian Marketing Platform" class="project-image" loading="lazy">
+                <img src="../Visionary/Malaysian%20Marketing%20Platform.png" alt="Malaysian Marketing Platform" class="project-image" loading="lazy">
                 <div class="project-content">
                     <p class="project-category">System Architecture</p>
                     <h3 class="project-title">Malaysian Marketing Platform</h3>
@@ -1573,7 +813,7 @@
                 </div>
             </div>
             <div class="project-card">
-                <img src="../public/Visionary/Revenue%20Attribution%20Dashboard.png" alt="Revenue Attribution" class="project-image" loading="lazy">
+                <img src="../Visionary/Revenue%20Attribution%20Dashboard.png" alt="Revenue Attribution" class="project-image" loading="lazy">
                 <div class="project-content">
                     <p class="project-category">Analytics</p>
                     <h3 class="project-title">Revenue Attribution Dashboard</h3>
@@ -1582,7 +822,7 @@
                 </div>
             </div>
             <div class="project-card">
-                <img src="../public/Visionary/Viral%20Cheesecake%20Campaign.png" alt="Viral Cheesecake Campaign" class="project-image" loading="lazy">
+                <img src="../Visionary/Viral%20Cheesecake%20Campaign.png" alt="Viral Cheesecake Campaign" class="project-image" loading="lazy">
                 <div class="project-content">
                     <p class="project-category">Marketing Campaign</p>
                     <h3 class="project-title">Viral Cheesecake Campaign</h3>
@@ -1591,7 +831,7 @@
                 </div>
             </div>
             <div class="project-card">
-                <img src="../public/Visionary/Legal%20Transcription%20Software.png" alt="Legal Transcription Software" class="project-image" loading="lazy">
+                <img src="../Visionary/Legal%20Transcription%20Software.png" alt="Legal Transcription Software" class="project-image" loading="lazy">
                 <div class="project-content">
                     <p class="project-category">Automation</p>
                     <h3 class="project-title">Legal Transcription System</h3>
@@ -1600,7 +840,7 @@
                 </div>
             </div>
             <div class="project-card">
-                <img src="../public/Visionary/Spotify%20Recipe%20Songs.png" alt="Spotify Recipe Songs" class="project-image" loading="lazy">
+                <img src="../Visionary/Spotify%20Recipe%20Songs.png" alt="Spotify Recipe Songs" class="project-image" loading="lazy">
                 <div class="project-content">
                     <p class="project-category">Creative Strategy</p>
                     <h3 class="project-title">Spotify Recipe Songs</h3>
@@ -1609,7 +849,7 @@
                 </div>
             </div>
             <div class="project-card">
-                <img src="../public/Visionary/Medical%20Patient%20Advocate.svg" alt="Medical Patient Advocate" class="project-image" loading="lazy">
+                <img src="../Visionary/Medical%20Patient%20Advocate.svg" alt="Medical Patient Advocate" class="project-image" loading="lazy">
                 <div class="project-content">
                     <p class="project-category">Healthcare Design</p>
                     <h3 class="project-title">Medical Patient Advocate</h3>
@@ -1620,28 +860,107 @@
         </div>
     </section>
 
-    <!-- Experience Section -->
+    <!-- Experience Section with Media Galleries -->
     <section class="experience-section" id="experience">
         <div class="section-header">
             <p class="section-label">Career Path</p>
-            <h2 class="section-title">Experience</h2>
+            <h2 class="section-title">Experience with Video & Photo Stories</h2>
         </div>
         <div class="experience-grid">
-            <div class="job-card">
+            
+            <!-- Cream of Creams - With Media Gallery -->
+            <div class="job-card" data-company="cream">
                 <div class="job-header">
                     <h3 class="job-title">Marketing Technologist</h3>
                     <span class="job-meta">Jan 2024 – Present | Full-time</span>
                 </div>
                 <p class="job-company">Cream of Creams Sdn Bhd</p>
                 <ul class="job-achievements">
-                    <li>Delivered 429% Facebook growth (12K→63K) and 178% Instagram growth through strategic content systems</li>
+                    <li>Delivered 429% Facebook growth and 178% Instagram growth through strategic content systems</li>
                     <li>Created 200+ branded visual assets monthly while maintaining design system consistency</li>
                     <li>Produced viral video content generating 2M+ impressions (Adobe Premiere, After Effects)</li>
                     <li>Built revenue attribution tracking connecting creative work to RM450+ per-post sales</li>
-                    <li>Replaced external agency with in-house creative solution, saving RM10-45K annually</li>
                 </ul>
+                
+                <!-- Media Gallery -->
+                <div class="media-gallery">
+                    <div class="media-tabs">
+                        <button class="media-tab active" data-tab="videos" data-company="cream">
+                            <i data-lucide="video" style="width: 16px; height: 16px;"></i>
+                            Videos <span class="count">5</span>
+                        </button>
+                        <button class="media-tab" data-tab="images" data-company="cream">
+                            <i data-lucide="image" style="width: 16px; height: 16px;"></i>
+                            Images <span class="count">5</span>
+                        </button>
+                    </div>
+                    
+                    <!-- Video Slider -->
+                    <div class="video-slider-container" data-slider="cream-videos">
+                        <div class="video-slider">
+                            <div class="video-slide" data-index="0">
+                                <video autoplay muted loop playsinline poster="../images/journey/cream-of-creams/images/cream-1.png">
+                                    <source src="../images/journey/cream-of-creams/videos/Cream-video1.mp4" type="video/mp4">
+                                </video>
+                                <div class="video-slide-caption">Behind the Scenes - Content Creation</div>
+                            </div>
+                            <div class="video-slide" data-index="1">
+                                <video autoplay muted loop playsinline poster="../images/journey/cream-of-creams/images/cream-2.png">
+                                    <source src="../images/journey/cream-of-creams/videos/Cream-video2.mp4" type="video/mp4">
+                                </video>
+                                <div class="video-slide-caption">Product Showcase - Campaign Shoot</div>
+                            </div>
+                            <div class="video-slide" data-index="2">
+                                <video autoplay muted loop playsinline poster="../images/journey/cream-of-creams/images/cream-3.png">
+                                    <source src="../images/journey/cream-of-creams/videos/Cream-video3.mp4" type="video/mp4">
+                                </video>
+                                <div class="video-slide-caption">CNY Campaign 2025 - Behind the Scenes</div>
+                            </div>
+                            <div class="video-slide" data-index="3">
+                                <video autoplay muted loop playsinline poster="../images/journey/cream-of-creams/images/cream-4.png">
+                                    <source src="../images/journey/cream-of-creams/videos/Cream-video4.mp4" type="video/mp4">
+                                </video>
+                                <div class="video-slide-caption">Festival Marketing - Setup</div>
+                            </div>
+                            <div class="video-slide" data-index="4">
+                                <video autoplay muted loop playsinline poster="../images/journey/cream-of-creams/images/cream-5.png">
+                                    <source src="../images/journey/cream-of-creams/videos/Cream-video5.mp4" type="video/mp4">
+                                </video>
+                                <div class="video-slide-caption">Viral Content Production</div>
+                            </div>
+                        </div>
+                        <div class="video-dots" data-dots="cream-videos">
+                            <span class="video-dot active" data-slide="0"></span>
+                            <span class="video-dot" data-slide="1"></span>
+                            <span class="video-dot" data-slide="2"></span>
+                            <span class="video-dot" data-slide="3"></span>
+                            <span class="video-dot" data-slide="4"></span>
+                        </div>
+                    </div>
+                    
+                    <!-- Image Gallery (hidden by default) -->
+                    <div class="image-gallery" data-gallery="cream-images" style="display: none;">
+                        <div class="gallery-item" data-src="../images/journey/cream-of-creams/images/cream-1.png">
+                            <img src="../images/journey/cream-of-creams/images/cream-1.png" alt="Social Media Content" loading="lazy">
+                        </div>
+                        <div class="gallery-item" data-src="../images/journey/cream-of-creams/images/cream-2.png">
+                            <img src="../images/journey/cream-of-creams/images/cream-2.png" alt="Product Campaign" loading="lazy">
+                        </div>
+                        <div class="gallery-item" data-src="../images/journey/cream-of-creams/images/cream-3.png">
+                            <img src="../images/journey/cream-of-creams/images/cream-3.png" alt="CNY Campaign" loading="lazy">
+                        </div>
+                        <div class="gallery-item" data-src="../images/journey/cream-of-creams/images/cream-4.png">
+                            <img src="../images/journey/cream-of-creams/images/cream-4.png" alt="Festival Marketing" loading="lazy">
+                        </div>
+                        <div class="gallery-item" data-src="../images/journey/cream-of-creams/images/cream-5.png">
+                            <img src="../images/journey/cream-of-creams/images/cream-5.png" alt="Content Creation" loading="lazy">
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="job-card">
+
+            <!-- JungleWalla - With Media Gallery -->
+            <div class="job-card" data-company="jungle">
                 <div class="job-header">
                     <h3 class="job-title">Naturalist / Marketing Communications</h3>
                     <span class="job-meta">Jun 2023 – Dec 2024 | Contract</span>
@@ -1653,7 +972,109 @@
                     <li>Created content bridging conservation education with sales conversion</li>
                     <li>Built media partnerships and represented resort at travel trade shows</li>
                 </ul>
+                
+                <!-- Media Gallery -->
+                <div class="media-gallery">
+                    <div class="media-tabs">
+                        <button class="media-tab active" data-tab="videos" data-company="jungle">
+                            <i data-lucide="video" style="width: 16px; height: 16px;"></i>
+                            Videos <span class="count">8</span>
+                        </button>
+                        <button class="media-tab" data-tab="images" data-company="jungle">
+                            <i data-lucide="image" style="width: 16px; height: 16px;"></i>
+                            Images <span class="count">6</span>
+                        </button>
+                    </div>
+                    
+                    <!-- Video Slider -->
+                    <div class="video-slider-container" data-slider="jungle-videos">
+                        <div class="video-slider">
+                            <div class="video-slide" data-index="0">
+                                <video autoplay muted loop playsinline poster="../images/journey/junglewalla/thumbnails/Jungle-thumbnail1.png">
+                                    <source src="../images/journey/junglewalla/videos/Jungle-video1.mp4" type="video/mp4">
+                                </video>
+                                <div class="video-slide-caption">Resort Virtual Tour</div>
+                            </div>
+                            <div class="video-slide" data-index="1">
+                                <video autoplay muted loop playsinline poster="../images/journey/junglewalla/images/Jungle-image1.jpg">
+                                    <source src="../images/journey/junglewalla/videos/Jungle-video2.mp4" type="video/mp4">
+                                </video>
+                                <div class="video-slide-caption">Nature Walk Experience</div>
+                            </div>
+                            <div class="video-slide" data-index="2">
+                                <video autoplay muted loop playsinline poster="../images/journey/junglewalla/images/Jungle-image2.jpg">
+                                    <source src="../images/journey/junglewalla/videos/Jungle-video3.mp4" type="video/mp4">
+                                </video>
+                                <div class="video-slide-caption">Wildlife Encounters</div>
+                            </div>
+                            <div class="video-slide" data-index="3">
+                                <video autoplay muted loop playsinline poster="../images/journey/junglewalla/images/Jungle-image3.jpg">
+                                    <source src="../images/journey/junglewalla/videos/Jungle-video4.mp4" type="video/mp4">
+                                </video>
+                                <div class="video-slide-caption">Guest Activities</div>
+                            </div>
+                            <div class="video-slide" data-index="4">
+                                <video autoplay muted loop playsinline poster="../images/journey/junglewalla/images/Jungle-image4.jpg">
+                                    <source src="../images/journey/junglewalla/videos/Jungle-video5.mp4" type="video/mp4">
+                                </video>
+                                <div class="video-slide-caption">Conservation Efforts</div>
+                            </div>
+                            <div class="video-slide" data-index="5">
+                                <video autoplay muted loop playsinline poster="../images/journey/junglewalla/images/Jungle-image5.jpg">
+                                    <source src="../images/journey/junglewalla/videos/Jungle-video6.mp4" type="video/mp4">
+                                </video>
+                                <div class="video-slide-caption">Educational Programs</div>
+                            </div>
+                            <div class="video-slide" data-index="6">
+                                <video autoplay muted loop playsinline poster="../images/journey/junglewalla/images/Jungle-image6.jpg">
+                                    <source src="../images/journey/junglewalla/videos/Jungle-video7.mp4" type="video/mp4">
+                                </video>
+                                <div class="video-slide-caption">Resort Facilities</div>
+                            </div>
+                            <div class="video-slide" data-index="7">
+                                <video autoplay muted loop playsinline poster="../images/journey/junglewalla/thumbnails/Jungle-thumbnail1.png">
+                                    <source src="../images/journey/junglewalla/videos/Jungle-video8.mp4" type="video/mp4">
+                                </video>
+                                <div class="video-slide-caption">Team Building Events</div>
+                            </div>
+                        </div>
+                        <div class="video-dots" data-dots="jungle-videos">
+                            <span class="video-dot active" data-slide="0"></span>
+                            <span class="video-dot" data-slide="1"></span>
+                            <span class="video-dot" data-slide="2"></span>
+                            <span class="video-dot" data-slide="3"></span>
+                            <span class="video-dot" data-slide="4"></span>
+                            <span class="video-dot" data-slide="5"></span>
+                            <span class="video-dot" data-slide="6"></span>
+                            <span class="video-dot" data-slide="7"></span>
+                        </div>
+                    </div>
+                    
+                    <!-- Image Gallery (hidden by default) -->
+                    <div class="image-gallery" data-gallery="jungle-images" style="display: none;">
+                        <div class="gallery-item" data-src="../images/journey/junglewalla/images/Jungle-image1.jpg">
+                            <img src="../images/journey/junglewalla/images/Jungle-image1.jpg" alt="Guided Nature Tour" loading="lazy">
+                        </div>
+                        <div class="gallery-item" data-src="../images/journey/junglewalla/images/Jungle-image2.jpg">
+                            <img src="../images/journey/junglewalla/images/Jungle-image2.jpg" alt="Wildlife Spotting" loading="lazy">
+                        </div>
+                        <div class="gallery-item" data-src="../images/journey/junglewalla/images/Jungle-image3.jpg">
+                            <img src="../images/journey/junglewalla/images/Jungle-image3.jpg" alt="Resort Grounds" loading="lazy">
+                        </div>
+                        <div class="gallery-item" data-src="../images/journey/junglewalla/images/Jungle-image4.jpg">
+                            <img src="../images/journey/junglewalla/images/Jungle-image4.jpg" alt="Guest Experience" loading="lazy">
+                        </div>
+                        <div class="gallery-item" data-src="../images/journey/junglewalla/images/Jungle-image5.jpg">
+                            <img src="../images/journey/junglewalla/images/Jungle-image5.jpg" alt="Rainforest Trail" loading="lazy">
+                        </div>
+                        <div class="gallery-item" data-src="../images/journey/junglewalla/images/Jungle-image6.jpg">
+                            <img src="../images/journey/junglewalla/images/Jungle-image6.jpg" alt="Conservation Area" loading="lazy">
+                        </div>
+                    </div>
+                </div>
             </div>
+
+            <!-- Freelance -->
             <div class="job-card">
                 <div class="job-header">
                     <h3 class="job-title">Founder / Creative Consultant</h3>
@@ -1667,7 +1088,9 @@
                     <li>Achieved 8.5% average engagement rate (3x industry benchmark)</li>
                 </ul>
             </div>
-            <div class="job-card">
+
+            <!-- Pserv -->
+            <div class="job-card" data-company="pserv">
                 <div class="job-header">
                     <h3 class="job-title">Senior Customer Service Officer</h3>
                     <span class="job-meta">2021 – 2023 | Full-time</span>
@@ -1678,9 +1101,91 @@
                     <li>Managed high-traffic digital communications during major events (10K+ daily visitors)</li>
                     <li>Developed crisis management and cultural sensitivity protocols</li>
                 </ul>
+                
+                <!-- Media Gallery -->
+                <div class="media-gallery">
+                    <div class="media-tabs">
+                        <button class="media-tab active" data-tab="videos" data-company="pserv">
+                            <i data-lucide="video" style="width: 16px; height: 16px;"></i>
+                            Videos <span class="count">5</span>
+                        </button>
+                        <button class="media-tab" data-tab="images" data-company="pserv">
+                            <i data-lucide="image" style="width: 16px; height: 16px;"></i>
+                            Images <span class="count">4</span>
+                        </button>
+                    </div>
+                    
+                    <!-- Video Slider -->
+                    <div class="video-slider-container" data-slider="pserv-videos">
+                        <div class="video-slider">
+                            <div class="video-slide" data-index="0">
+                                <video autoplay muted loop playsinline poster="../images/journey/pserv-singapore/thumbnails/Customer-thumbnail1.jpeg">
+                                    <source src="../images/journey/pserv-singapore/videos/Customer-video1.mp4" type="video/mp4">
+                                </video>
+                                <div class="video-slide-caption">Customer Service Excellence</div>
+                            </div>
+                            <div class="video-slide" data-index="1">
+                                <video autoplay muted loop playsinline poster="../images/journey/pserv-singapore/images/Customer-image1.jpeg">
+                                    <source src="../images/journey/pserv-singapore/videos/Customer-video2.mp4" type="video/mp4">
+                                </video>
+                                <div class="video-slide-caption">Visitor Experience</div>
+                            </div>
+                            <div class="video-slide" data-index="2">
+                                <video autoplay muted loop playsinline poster="../images/journey/pserv-singapore/images/Customer-image2.jpeg">
+                                    <source src="../images/journey/pserv-singapore/videos/Customer-video3.mp4" type="video/mp4">
+                                </video>
+                                <div class="video-slide-caption">Gardens Tour</div>
+                            </div>
+                            <div class="video-slide" data-index="3">
+                                <video autoplay muted loop playsinline poster="../images/journey/pserv-singapore/images/Customer-image3.jpeg">
+                                    <source src="../images/journey/pserv-singapore/videos/Customer-video4.mp4" type="video/mp4">
+                                </video>
+                                <div class="video-slide-caption">Team Operations</div>
+                            </div>
+                            <div class="video-slide" data-index="4">
+                                <video autoplay muted loop playsinline poster="../images/journey/pserv-singapore/images/Customer-image4.jpeg">
+                                    <source src="../images/journey/pserv-singapore/videos/Customer-video5.mp4" type="video/mp4">
+                                </video>
+                                <div class="video-slide-caption">Daily Activities</div>
+                            </div>
+                        </div>
+                        <div class="video-dots" data-dots="pserv-videos">
+                            <span class="video-dot active" data-slide="0"></span>
+                            <span class="video-dot" data-slide="1"></span>
+                            <span class="video-dot" data-slide="2"></span>
+                            <span class="video-dot" data-slide="3"></span>
+                            <span class="video-dot" data-slide="4"></span>
+                        </div>
+                    </div>
+                    
+                    <!-- Image Gallery (hidden by default) -->
+                    <div class="image-gallery" data-gallery="pserv-images" style="display: none;">
+                        <div class="gallery-item" data-src="../images/journey/pserv-singapore/images/Customer-image1.jpeg">
+                            <img src="../images/journey/pserv-singapore/images/Customer-image1.jpeg" alt="Gardens Main Entrance" loading="lazy">
+                        </div>
+                        <div class="gallery-item" data-src="../images/journey/pserv-singapore/images/Customer-image2.jpeg">
+                            <img src="../images/journey/pserv-singapore/images/Customer-image2.jpeg" alt="Visitor Assistance Desk" loading="lazy">
+                        </div>
+                        <div class="gallery-item" data-src="../images/journey/pserv-singapore/images/Customer-image3.jpeg">
+                            <img src="../images/journey/pserv-singapore/images/Customer-image3.jpeg" alt="Orchid Garden Area" loading="lazy">
+                        </div>
+                        <div class="gallery-item" data-src="../images/journey/pserv-singapore/images/Customer-image4.jpeg">
+                            <img src="../images/journey/pserv-singapore/images/Customer-image4.jpeg" alt="Team Briefing Session" loading="lazy">
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <div class="lightbox-content">
+            <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+            <img id="lightbox-img" src="" alt="">
+            <video id="lightbox-video" controls style="display: none;"></video>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer class="footer" id="contact">
@@ -1691,20 +1196,16 @@
         <p class="footer-tagline">Marketing strategy meets creative execution.</p>
         <div class="footer-socials">
             <a href="mailto:jothiharshana188@gmail.com" class="footer-social magnetic">
-                <i data-lucide="mail"></i>
-                Email
+                <i data-lucide="mail"></i>Email
             </a>
             <a href="https://linkedin.com/in/harshanajothi" target="_blank" rel="noopener" class="footer-social magnetic">
-                <i data-lucide="linkedin"></i>
-                LinkedIn
+                <i data-lucide="linkedin"></i>LinkedIn
             </a>
             <a href="https://github.com/harshanajothi" target="_blank" rel="noopener" class="footer-social magnetic">
-                <i data-lucide="github"></i>
-                GitHub
+                <i data-lucide="github"></i>GitHub
             </a>
             <a href="https://tiktok.com/@solosync_studios" target="_blank" rel="noopener" class="footer-social magnetic">
-                <i data-lucide="music"></i>
-                TikTok
+                <i data-lucide="music"></i>TikTok
             </a>
         </div>
     </footer>
@@ -1731,7 +1232,6 @@
         }
         requestAnimationFrame(raf);
 
-        // Connect Lenis to GSAP ScrollTrigger
         gsap.ticker.add((time) => {
             lenis.raf(time * 1000);
         });
@@ -1741,7 +1241,6 @@
         const cursor = document.querySelector('.cursor');
         let mouseX = 0, mouseY = 0;
         let cursorX = 0, cursorY = 0;
-
         const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
 
         if (!isTouchDevice) {
@@ -1772,13 +1271,12 @@
                 const y = e.clientY - rect.top - rect.height / 2;
                 el.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
             });
-
             el.addEventListener('mouseleave', () => {
                 el.style.transform = 'translate(0, 0)';
             });
         });
 
-        // Spotlight Effect for Cards
+        // Spotlight Effect
         document.querySelectorAll('[data-spotlight]').forEach(card => {
             card.addEventListener('mousemove', (e) => {
                 const rect = card.getBoundingClientRect();
@@ -1794,73 +1292,26 @@
 
         // Hero animations
         gsap.to('.hero-title .line', {
-            y: 0,
-            opacity: 1,
-            duration: 1.2,
-            stagger: 0.15,
-            ease: 'power4.out',
-            delay: 0.3
+            y: 0, opacity: 1, duration: 1.2, stagger: 0.15, ease: 'power4.out', delay: 0.3
         });
+        gsap.from('.hero-badge', { opacity: 0, y: 20, duration: 0.8, ease: 'power2.out', delay: 0.1 });
+        gsap.from('.hero-subtitle', { opacity: 0, y: 30, duration: 0.8, ease: 'power2.out', delay: 0.6 });
+        gsap.from('.hero-roles', { opacity: 0, y: 30, duration: 0.8, ease: 'power2.out', delay: 0.7 });
+        gsap.from('.hero-contact', { opacity: 0, y: 30, duration: 0.8, ease: 'power2.out', delay: 0.8 });
+        gsap.from('.hero-cta', { opacity: 0, y: 30, duration: 0.8, ease: 'power2.out', delay: 0.9 });
 
-        gsap.from('.hero-badge', {
-            opacity: 0,
-            y: 20,
-            duration: 0.8,
-            ease: 'power2.out',
-            delay: 0.1
-        });
-
-        gsap.from('.hero-subtitle', {
-            opacity: 0,
-            y: 30,
-            duration: 0.8,
-            ease: 'power2.out',
-            delay: 0.6
-        });
-
-        gsap.from('.hero-roles', {
-            opacity: 0,
-            y: 30,
-            duration: 0.8,
-            ease: 'power2.out',
-            delay: 0.7
-        });
-
-        gsap.from('.hero-contact', {
-            opacity: 0,
-            y: 30,
-            duration: 0.8,
-            ease: 'power2.out',
-            delay: 0.8
-        });
-
-        gsap.from('.hero-cta', {
-            opacity: 0,
-            y: 30,
-            duration: 0.8,
-            ease: 'power2.out',
-            delay: 0.9
-        });
-
-        // Parallax hero background text
+        // Parallax hero background
         gsap.to('.hero-bg-text', {
-            scrollTrigger: {
-                trigger: '.hero',
-                start: 'top top',
-                end: 'bottom top',
-                scrub: 1
-            },
-            y: 300,
-            opacity: 0.3
+            scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 1 },
+            y: 300, opacity: 0.3
         });
 
-        // Horizontal Scroll
+        // Horizontal Scroll - Fixed
         const horizontalSection = document.querySelector('.horizontal-section');
         const track = document.querySelector('.horizontal-track');
         
         if (horizontalSection && track) {
             const scrollWidth = track.scrollWidth - window.innerWidth + 100;
-
             gsap.to(track, {
                 x: -scrollWidth,
                 ease: 'none',
@@ -1876,160 +1327,183 @@
             });
         }
 
-        // Parallax quote section
+        // Parallax quote
         gsap.to('.parallax-bg', {
-            scrollTrigger: {
-                trigger: '.parallax-section',
-                start: 'top bottom',
-                end: 'bottom top',
-                scrub: 1
-            },
+            scrollTrigger: { trigger: '.parallax-section', start: 'top bottom', end: 'bottom top', scrub: 1 },
             y: -150
         });
-
         gsap.from('.parallax-text', {
-            scrollTrigger: {
-                trigger: '.parallax-section',
-                start: 'top 80%',
-                toggleActions: 'play none none reverse'
-            },
-            y: 50,
-            opacity: 0,
-            duration: 1,
-            ease: 'power2.out'
+            scrollTrigger: { trigger: '.parallax-section', start: 'top 80%', toggleActions: 'play none none reverse' },
+            y: 50, opacity: 0, duration: 1, ease: 'power2.out'
         });
 
-        // Split section animations
+        // Split section
         gsap.from('.split-left', {
-            scrollTrigger: {
-                trigger: '.split-section',
-                start: 'top 80%',
-                toggleActions: 'play none none reverse'
-            },
-            x: -50,
-            opacity: 0,
-            duration: 1,
-            ease: 'power2.out'
+            scrollTrigger: { trigger: '.split-section', start: 'top 80%', toggleActions: 'play none none reverse' },
+            x: -50, opacity: 0, duration: 1, ease: 'power2.out'
         });
-
         gsap.from('.split-right', {
-            scrollTrigger: {
-                trigger: '.split-section',
-                start: 'top 80%',
-                toggleActions: 'play none none reverse'
-            },
-            x: 50,
-            opacity: 0,
-            duration: 1,
-            delay: 0.2,
-            ease: 'power2.out'
+            scrollTrigger: { trigger: '.split-section', start: 'top 80%', toggleActions: 'play none none reverse' },
+            x: 50, opacity: 0, duration: 1, delay: 0.2, ease: 'power2.out'
         });
-
-        // Stat items stagger
         gsap.from('.stat-item', {
-            scrollTrigger: {
-                trigger: '.split-left',
-                start: 'top 70%',
-                toggleActions: 'play none none reverse'
-            },
-            y: 30,
-            opacity: 0,
-            duration: 0.8,
-            stagger: 0.15,
-            ease: 'power2.out'
+            scrollTrigger: { trigger: '.split-left', start: 'top 70%', toggleActions: 'play none none reverse' },
+            y: 30, opacity: 0, duration: 0.8, stagger: 0.15, ease: 'power2.out'
         });
-
-        // Capability items stagger
         gsap.from('.capability-item', {
-            scrollTrigger: {
-                trigger: '.split-right',
-                start: 'top 70%',
-                toggleActions: 'play none none reverse'
-            },
-            y: 30,
-            opacity: 0,
-            duration: 0.8,
-            stagger: 0.15,
-            ease: 'power2.out'
+            scrollTrigger: { trigger: '.split-right', start: 'top 70%', toggleActions: 'play none none reverse' },
+            y: 30, opacity: 0, duration: 0.8, stagger: 0.15, ease: 'power2.out'
         });
 
         // Skills animation
         gsap.from('.skill-card', {
-            scrollTrigger: {
-                trigger: '.skills-section',
-                start: 'top 70%',
-                toggleActions: 'play none none reverse'
-            },
-            y: 50,
-            opacity: 0,
-            duration: 0.8,
-            stagger: 0.1,
-            ease: 'power2.out'
+            scrollTrigger: { trigger: '.skills-section', start: 'top 70%', toggleActions: 'play none none reverse' },
+            y: 50, opacity: 0, duration: 0.8, stagger: 0.1, ease: 'power2.out'
         });
 
         // Projects animation
         gsap.from('.project-card', {
-            scrollTrigger: {
-                trigger: '.projects-section',
-                start: 'top 70%',
-                toggleActions: 'play none none reverse'
-            },
-            y: 50,
-            opacity: 0,
-            duration: 0.8,
-            stagger: 0.1,
-            ease: 'power2.out'
+            scrollTrigger: { trigger: '.projects-section', start: 'top 70%', toggleActions: 'play none none reverse' },
+            y: 50, opacity: 0, duration: 0.8, stagger: 0.1, ease: 'power2.out'
         });
 
         // Job cards animation
         gsap.from('.job-card', {
-            scrollTrigger: {
-                trigger: '.experience-section',
-                start: 'top 70%',
-                toggleActions: 'play none none reverse'
-            },
-            y: 50,
-            opacity: 0,
-            duration: 0.8,
-            stagger: 0.15,
-            ease: 'power2.out'
+            scrollTrigger: { trigger: '.experience-section', start: 'top 70%', toggleActions: 'play none none reverse' },
+            y: 50, opacity: 0, duration: 0.8, stagger: 0.15, ease: 'power2.out'
         });
 
-        // Footer animation
-        gsap.from('.footer-text', {
-            scrollTrigger: {
-                trigger: '.footer',
-                start: 'top 80%',
-                toggleActions: 'play none none reverse'
-            },
-            y: 40,
-            opacity: 0,
-            duration: 1,
-            ease: 'power2.out'
+        // ===== VIDEO SLIDER FUNCTIONALITY =====
+        const sliders = {};
+        
+        // Initialize all video sliders
+        document.querySelectorAll('[data-slider]').forEach(sliderContainer => {
+            const sliderId = sliderContainer.dataset.slider;
+            const slider = sliderContainer.querySelector('.video-slider');
+            const dots = document.querySelector(`[data-dots="${sliderId}"]`);
+            const slides = slider.querySelectorAll('.video-slide');
+            let currentSlide = 0;
+            let interval;
+            
+            sliders[sliderId] = { slider, slides, dots, currentSlide };
+            
+            // Auto-advance every 4 seconds
+            function nextSlide() {
+                currentSlide = (currentSlide + 1) % slides.length;
+                goToSlide(currentSlide);
+            }
+            
+            function goToSlide(index) {
+                currentSlide = index;
+                slider.style.transform = `translateX(-${index * 100}%)`;
+                
+                // Update dots
+                if (dots) {
+                    dots.querySelectorAll('.video-dot').forEach((dot, i) => {
+                        dot.classList.toggle('active', i === index);
+                    });
+                }
+                
+                // Pause all videos, play current
+                slides.forEach((slide, i) => {
+                    const video = slide.querySelector('video');
+                    if (video) {
+                        if (i === index) {
+                            video.play();
+                        } else {
+                            video.pause();
+                        }
+                    }
+                });
+            }
+            
+            // Start auto-play
+            interval = setInterval(nextSlide, 4000);
+            
+            // Dot click handlers
+            if (dots) {
+                dots.querySelectorAll('.video-dot').forEach((dot, index) => {
+                    dot.addEventListener('click', () => {
+                        clearInterval(interval);
+                        goToSlide(index);
+                        interval = setInterval(nextSlide, 4000);
+                    });
+                });
+            }
+            
+            // Store goToSlide for external use
+            sliders[sliderId].goToSlide = goToSlide;
         });
 
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', (e) => {
-                e.preventDefault();
-                const target = document.querySelector(anchor.getAttribute('href'));
-                if (target) {
-                    lenis.scrollTo(target);
+        // ===== MEDIA TAB SWITCHING =====
+        document.querySelectorAll('.media-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                const company = tab.dataset.company;
+                const tabType = tab.dataset.tab;
+                
+                // Update active tab
+                document.querySelectorAll(`.media-tab[data-company="${company}"]`).forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                // Show/hide content
+                const videosContainer = document.querySelector(`[data-slider="${company}-videos"]`);
+                const imagesContainer = document.querySelector(`[data-gallery="${company}-images"]`);
+                
+                if (tabType === 'videos') {
+                    if (videosContainer) videosContainer.style.display = 'block';
+                    if (imagesContainer) imagesContainer.style.display = 'none';
+                } else {
+                    if (videosContainer) videosContainer.style.display = 'none';
+                    if (imagesContainer) imagesContainer.style.display = 'grid';
                 }
             });
         });
 
-        // Refresh ScrollTrigger on resize
-        let resizeTimer;
-        window.addEventListener('resize', () => {
-            clearTimeout(resizeTimer);
-            resizeTimer = setTimeout(() => {
-                ScrollTrigger.refresh();
-            }, 250);
+        // ===== LIGHTBOX =====
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const lightboxVideo = document.getElementById('lightbox-video');
+        
+        function openLightbox(src, isVideo = false) {
+            lightbox.classList.add('active');
+            if (isVideo) {
+                lightboxImg.style.display = 'none';
+                lightboxVideo.style.display = 'block';
+                lightboxVideo.src = src;
+                lightboxVideo.play();
+            } else {
+                lightboxVideo.style.display = 'none';
+                lightboxVideo.pause();
+                lightboxImg.style.display = 'block';
+                lightboxImg.src = src;
+            }
+        }
+        
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+            lightboxVideo.pause();
+            lightboxVideo.src = '';
+        }
+        
+        // Gallery item clicks
+        document.querySelectorAll('.gallery-item').forEach(item => {
+            item.addEventListener('click', () => {
+                openLightbox(item.dataset.src, false);
+            });
+        });
+        
+        // Close lightbox on background click
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) closeLightbox();
+        });
+        
+        // Keyboard close
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeLightbox();
         });
 
-        // Initial refresh after fonts load
-        document.fonts.ready.then(() => {
+        // Refresh ScrollTrigger on load
+        window.addEventListener('load', () => {
             ScrollTrigger.refresh();
         });
     </script>
