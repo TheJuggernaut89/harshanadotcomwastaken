@@ -1115,6 +1115,255 @@
             background: rgba(139, 0, 0, 0.1);
         }
 
+        /* THERAPY BILL MODAL STYLES */
+        .therapy-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(10, 10, 10, 0.98);
+            backdrop-filter: blur(20px);
+            z-index: 300;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.5s var(--ease-out-expo);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .therapy-modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .therapy-modal {
+            background: var(--surface);
+            border: 2px solid var(--blood-red);
+            border-radius: 24px;
+            max-width: 600px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            transform: scale(0.9) translateY(50px);
+            transition: all 0.5s var(--ease-out-expo);
+            box-shadow: 
+                0 0 100px rgba(139, 0, 0, 0.3),
+                inset 0 0 60px rgba(139, 0, 0, 0.05);
+        }
+
+        .therapy-modal-overlay.active .therapy-modal {
+            transform: scale(1) translateY(0);
+        }
+
+        .therapy-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 48px;
+            height: 48px;
+            background: transparent;
+            border: 2px solid var(--toxic-green);
+            border-radius: 50%;
+            color: var(--toxic-green);
+            font-size: 28px;
+            cursor: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            z-index: 10;
+        }
+
+        .therapy-close:hover {
+            background: var(--blood-red);
+            border-color: var(--blood-red);
+            color: #fff;
+            transform: rotate(90deg);
+        }
+
+        .therapy-header {
+            text-align: center;
+            padding: 40px 40px 20px;
+            border-bottom: 1px solid rgba(139, 0, 0, 0.3);
+        }
+
+        .therapy-icon {
+            font-size: 64px;
+            margin-bottom: 16px;
+            animation: pulse 2s infinite;
+        }
+
+        .therapy-title {
+            font-size: 32px;
+            font-weight: 900;
+            letter-spacing: 4px;
+            color: var(--blood-red);
+            text-shadow: 0 0 30px rgba(139, 0, 0, 0.5);
+        }
+
+        .therapy-content {
+            padding: 40px;
+            text-align: center;
+        }
+
+        .therapy-quote {
+            font-size: 24px;
+            font-style: italic;
+            color: var(--text);
+            margin-bottom: 32px;
+            line-height: 1.4;
+        }
+
+        .therapy-quote strong {
+            color: var(--blood-red);
+            font-weight: 800;
+        }
+
+        .therapy-text {
+            font-size: 17px;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+            line-height: 1.5;
+        }
+
+        .therapy-divider {
+            margin: 32px 0;
+            text-align: center;
+        }
+
+        .therapy-divider span {
+            color: var(--blood-red);
+            font-size: 20px;
+            letter-spacing: 20px;
+            text-shadow: 0 0 20px rgba(139, 0, 0, 0.8);
+        }
+
+        .therapy-question {
+            font-size: 20px;
+            color: var(--toxic-green);
+            margin-bottom: 16px;
+            font-weight: 600;
+        }
+
+        .therapy-question strong {
+            color: var(--toxic-green);
+            text-shadow: 0 0 20px rgba(57, 255, 20, 0.3);
+        }
+
+        .therapy-answer {
+            font-size: 18px;
+            color: var(--text);
+            font-weight: 500;
+            line-height: 1.6;
+        }
+
+        .therapy-actions {
+            padding: 0 40px 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .therapy-btn {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 24px;
+            border-radius: 16px;
+            text-decoration: none;
+            transition: all 0.3s;
+            cursor: none;
+        }
+
+        .therapy-btn-primary {
+            background: var(--toxic-green);
+            color: #0a0a0a;
+            border: 2px solid var(--toxic-green);
+            box-shadow: 0 0 40px rgba(57, 255, 20, 0.2);
+        }
+
+        .therapy-btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 40px rgba(57, 255, 20, 0.4);
+        }
+
+        .therapy-btn-secondary {
+            background: transparent;
+            color: var(--text);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .therapy-btn-secondary:hover {
+            border-color: var(--blood-red);
+            background: rgba(139, 0, 0, 0.1);
+            transform: translateY(-3px);
+        }
+
+        .therapy-btn-icon {
+            font-size: 32px;
+            flex-shrink: 0;
+        }
+
+        .therapy-btn-text {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .therapy-btn-label {
+            font-size: 18px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .therapy-btn-sublabel {
+            font-size: 13px;
+            opacity: 0.8;
+            line-height: 1.4;
+        }
+
+        .therapy-footer {
+            padding: 0 40px 40px;
+            text-align: center;
+        }
+
+        .therapy-disclaimer {
+            font-size: 12px;
+            color: var(--text-secondary);
+            font-style: italic;
+            padding: 16px;
+            border-top: 1px solid rgba(139, 0, 0, 0.2);
+        }
+
+        @media (max-width: 640px) {
+            .therapy-modal {
+                margin: 10px;
+            }
+            
+            .therapy-header,
+            .therapy-content,
+            .therapy-actions,
+            .therapy-footer {
+                padding: 24px;
+            }
+            
+            .therapy-title {
+                font-size: 24px;
+            }
+            
+            .therapy-quote {
+                font-size: 20px;
+            }
+            
+            .therapy-btn {
+                flex-direction: column;
+                text-align: center;
+                padding: 20px;
+            }
+        }
+
         .blink {
             animation: blink 1s step-end infinite;
         }
@@ -2047,7 +2296,61 @@
                 <span>Total</span>
                 <span id="cartTotalPrice">RM0.00</span>
             </div>
-            <button class="checkout-btn" data-magnetic>Checkout</button>
+            <button class="checkout-btn" id="checkoutBtn" data-magnetic>Checkout</button>
+        </div>
+    </div>
+
+    <!-- THERAPY BILL MODAL -->
+    <div class="therapy-modal-overlay" id="therapyModal">
+        <div class="therapy-modal">
+            <button class="therapy-close" id="therapyClose">×</button>
+            
+            <div class="therapy-header">
+                <div class="therapy-icon">⚠️</div>
+                <h2 class="therapy-title">TRANSACTION DENIED</h2>
+            </div>
+            
+            <div class="therapy-content">
+                <p class="therapy-quote">"You think you can <strong>BUY</strong> trauma?"</p>
+                
+                <p class="therapy-text">You can't put a price on psychological damage.</p>
+                <p class="therapy-text">You can't add PTSD to a cart.</p>
+                <p class="therapy-text">You can't checkout with childhood trauma.</p>
+                
+                <div class="therapy-divider">
+                    <span>◆ ◆ ◆</span>
+                </div>
+                
+                <p class="therapy-question">But you know what you <strong>CAN</strong> do?</p>
+                
+                <p class="therapy-answer">You can hire the person who survived all this and lived to tell the story.</p>
+            </div>
+            
+            <div class="therapy-actions">
+                <a href="mailto:jothiharshana188@gmail.com?subject=I%20Want%20To%20Hire%20You%20(After%20The%20Therapy%20Bill)" class="therapy-btn therapy-btn-primary" data-magnetic>
+                    <span class="therapy-btn-icon">💼</span>
+                    <div class="therapy-btn-text">
+                        <span class="therapy-btn-label">Book a Consultation</span>
+                        <span class="therapy-btn-sublabel">If you liked these war stories, imagine what I could do for YOUR brand</span>
+                    </div>
+                </a>
+                
+                <a href="https://www.buymeacoffee.com/harshana" target="_blank" rel="noopener" class="therapy-btn therapy-btn-secondary" data-magnetic>
+                    <span class="therapy-btn-icon">🍵</span>
+                    <div class="therapy-btn-text">
+                        <span class="therapy-btn-label">Buy Me Teh Tarik</span>
+                        <span class="therapy-btn-sublabel">Support my therapy fund. Every RM5 buys 10 minutes of not thinking about Desaru.</span>
+                    </div>
+                </a>
+            </div>
+            
+            <div class="therapy-footer">
+                <p class="therapy-disclaimer">
+                    <span class="blink">⚠️</span> 
+                    This receipt is not valid for tax purposes, insurance claims, or therapy reimbursements. 
+                    <span class="blink">⚠️</span>
+                </p>
+            </div>
         </div>
     </div>
 
@@ -3025,6 +3328,46 @@
             }, 2000);
         };
 
+        // THERAPY BILL MODAL FUNCTIONALITY
+        const therapyModal = document.getElementById('therapyModal');
+        const therapyClose = document.getElementById('therapyClose');
+        const checkoutBtn = document.getElementById('checkoutBtn');
+
+        function openTherapyModal() {
+            therapyModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            // Close cart if open
+            closeCart();
+        }
+
+        function closeTherapyModal() {
+            therapyModal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        checkoutBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            openTherapyModal();
+        });
+
+        therapyClose.addEventListener('click', closeTherapyModal);
+
+        therapyModal.addEventListener('click', (e) => {
+            if (e.target === therapyModal) {
+                closeTherapyModal();
+            }
+        });
+
+        // Update escape key handler to also close therapy modal
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                if (therapyModal.classList.contains('active')) {
+                    closeTherapyModal();
+                }
+            }
+        });
+
         // Newsletter Form
         document.getElementById('newsletterForm').addEventListener('submit', (e) => {
             e.preventDefault();
@@ -3047,16 +3390,30 @@
             });
         });
 
-        // Escape key
+        // Comprehensive Escape key handler
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
-                productModal.classList.remove('active');
-                closeCart();
+                // Close therapy modal if open (highest priority)
+                if (therapyModal.classList.contains('active')) {
+                    closeTherapyModal();
+                    return;
+                }
+                // Close product modal if open
+                if (productModal.classList.contains('active')) {
+                    productModal.classList.remove('active');
+                    document.body.style.overflow = '';
+                    return;
+                }
+                // Close cart if open
+                if (cartSidebar.classList.contains('active')) {
+                    closeCart();
+                    return;
+                }
+                // Close mobile menu if open
                 if (menuOpen) {
                     menuOpen = false;
                     mobileMenu.classList.remove('active');
                 }
-                document.body.style.overflow = '';
             }
         });
     </script>
