@@ -3,8 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <title>Harshana Jothi | Creative Technologist</title>
-    <meta name="description" content="Marketing meets machine. AI-powered marketing technologist building systems that drive revenue.">
+    <title>Harshana | Creative Technologist — Marketing & Design</title>
+    <meta name="description" content="Marketing Technologist combining creative design, technical skills, and strategic marketing. Adobe-certified designer, video editor, and systems builder.">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="../public/vite.svg">
+    
+    <!-- Open Graph / Social Meta Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://harshana.me/creative/">
+    <meta property="og:title" content="Harshana | Creative Technologist — Marketing & Design">
+    <meta property="og:description" content="Marketing Technologist combining creative design, technical skills, and strategic marketing. Adobe-certified designer, video editor.">
+    <meta property="og:image" content="https://harshana.me/public/images/profile-waterfall.jpg">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://harshana.me/creative/">
+    <meta name="twitter:title" content="Harshana | Creative Technologist">
+    <meta name="twitter:description" content="Marketing Technologist combining creative design and strategic marketing.">
+    <meta name="twitter:image" content="https://harshana.me/public/images/profile-waterfall.jpg">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://harshana.me/creative/">
     
     <!-- GSAP -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
@@ -256,9 +276,9 @@
         }
 
         .hero-title {
-            font-size: clamp(3rem, 12vw, 8rem);
+            font-size: clamp(3rem, 10vw, 7rem);
             font-weight: 500;
-            line-height: 0.9;
+            line-height: 0.95;
             letter-spacing: -0.05em;
             margin-bottom: 2rem;
             overflow: hidden;
@@ -273,9 +293,52 @@
         .hero-subtitle {
             font-size: 1.1rem;
             color: var(--text-secondary);
-            max-width: 600px;
-            margin-bottom: 3rem;
+            max-width: 700px;
+            margin-bottom: 2rem;
             line-height: 1.6;
+        }
+
+        .hero-roles {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .role-tag {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1.25rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            font-size: 0.85rem;
+        }
+
+        .role-tag i {
+            color: var(--accent);
+            width: 18px;
+            height: 18px;
+        }
+
+        .hero-contact {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .hero-contact a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .hero-contact a:hover {
+            color: var(--accent);
         }
 
         .hero-cta {
@@ -317,7 +380,7 @@
             border-color: var(--accent);
         }
 
-        /* Diagonal Text Band */
+        /* FIXED Diagonal Text Band - Infinite Scroll */
         .text-band-wrapper {
             overflow: hidden;
             padding: 3rem 0;
@@ -335,8 +398,12 @@
 
         .text-band-content {
             display: flex;
-            width: fit-content;
-            animation: scrollText 25s linear infinite;
+            width: max-content;
+            animation: scrollText 30s linear infinite;
+        }
+
+        .text-band-content:hover {
+            animation-play-state: paused;
         }
 
         .text-band-item {
@@ -344,15 +411,15 @@
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.05em;
-            padding: 0 2rem;
+            padding: 0 3rem;
             display: flex;
             align-items: center;
-            gap: 2rem;
+            gap: 3rem;
             white-space: nowrap;
         }
 
         .text-band-item::after {
-            content: '•';
+            content: '◆';
             opacity: 0.5;
         }
 
@@ -364,7 +431,7 @@
         /* Horizontal Scroll Section */
         .horizontal-section {
             position: relative;
-            height: 500vh;
+            height: 350vh;
         }
 
         .horizontal-container {
@@ -724,10 +791,104 @@
             transform: scale(1.05);
         }
 
+        /* Skills Section - NEW */
+        .skills-section {
+            padding: 6rem 2rem;
+            background: var(--surface);
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        @media (min-width: 768px) {
+            .skills-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .skills-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .skill-card {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.3s;
+        }
+
+        .skill-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-5px);
+        }
+
+        .skill-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .skill-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .skill-icon.marketing { background: rgba(255, 61, 0, 0.1); }
+        .skill-icon.technical { background: rgba(0, 255, 136, 0.1); }
+        .skill-icon.creative { background: rgba(138, 43, 226, 0.1); }
+        .skill-icon.data { background: rgba(255, 170, 0, 0.1); }
+        .skill-icon.business { background: rgba(0, 150, 255, 0.1); }
+        .skill-icon.leadership { background: rgba(255, 0, 128, 0.1); }
+
+        .skill-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        .skill-list {
+            list-style: none;
+        }
+
+        .skill-list li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.9rem;
+        }
+
+        .skill-list li:last-child {
+            border-bottom: none;
+        }
+
+        .skill-name {
+            color: var(--text);
+        }
+
+        .skill-level {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+        }
+
         /* Projects Section */
         .projects-section {
             padding: 6rem 2rem;
-            background: var(--surface);
+            background: var(--bg);
         }
 
         .section-header {
@@ -764,14 +925,8 @@
             }
         }
 
-        @media (min-width: 1024px) {
-            .projects-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-        }
-
         .project-card {
-            background: var(--bg);
+            background: var(--surface);
             border: 1px solid var(--border);
             border-radius: 20px;
             overflow: hidden;
@@ -787,7 +942,7 @@
             width: 100%;
             height: 220px;
             object-fit: cover;
-            background: var(--surface-light);
+            background: var(--bg);
         }
 
         .project-content {
@@ -815,200 +970,87 @@
             line-height: 1.5;
         }
 
-        /* AI Workforce Section */
-        .ai-workforce-section {
-            padding: 6rem 2rem;
-            background: var(--bg);
-        }
-
-        .ai-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 2rem;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        @media (min-width: 768px) {
-            .ai-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-        }
-
-        .ai-card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 2rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .ai-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--accent), transparent);
-        }
-
-        .ai-status {
+        .project-status {
             display: inline-block;
+            margin-top: 1rem;
             padding: 0.3rem 0.8rem;
             background: rgba(0, 255, 136, 0.1);
             color: var(--real);
-            border-radius: 100px;
             font-size: 0.7rem;
             text-transform: uppercase;
             letter-spacing: 0.05em;
+            border-radius: 100px;
+        }
+
+        /* Experience Section */
+        .experience-section {
+            padding: 6rem 2rem;
+            background: var(--surface);
+        }
+
+        .experience-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .job-card {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: border-color 0.3s;
+        }
+
+        .job-card:hover {
+            border-color: var(--accent);
+        }
+
+        .job-header {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 0.5rem;
             margin-bottom: 1rem;
         }
 
-        .ai-status.dev {
-            background: rgba(255, 170, 0, 0.1);
-            color: var(--maybe);
-        }
-
-        .ai-card h3 {
-            font-size: 1.5rem;
+        .job-title {
+            font-size: 1.25rem;
             font-weight: 600;
-            margin-bottom: 0.5rem;
         }
 
-        .ai-role {
+        .job-meta {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .job-company {
             font-size: 0.9rem;
             color: var(--accent);
             margin-bottom: 1rem;
         }
 
-        .ai-desc {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-            line-height: 1.5;
-            margin-bottom: 1.5rem;
-        }
-
-        .ai-features {
+        .job-achievements {
             list-style: none;
         }
 
-        .ai-features li {
-            font-size: 0.85rem;
+        .job-achievements li {
+            font-size: 0.9rem;
             color: var(--text-secondary);
             padding: 0.4rem 0;
             padding-left: 1.2rem;
             position: relative;
+            line-height: 1.5;
         }
 
-        .ai-features li::before {
+        .job-achievements li::before {
             content: '→';
             position: absolute;
             left: 0;
             color: var(--accent);
-        }
-
-        /* Journey Section */
-        .journey-section {
-            padding: 6rem 2rem;
-            background: var(--surface);
-        }
-
-        .timeline {
-            max-width: 1000px;
-            margin: 0 auto;
-            position: relative;
-        }
-
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: 1px;
-            background: var(--border);
-        }
-
-        @media (min-width: 768px) {
-            .timeline::before {
-                left: 50%;
-            }
-        }
-
-        .timeline-item {
-            position: relative;
-            padding-left: 2rem;
-            padding-bottom: 3rem;
-        }
-
-        @media (min-width: 768px) {
-            .timeline-item {
-                padding-left: 0;
-                width: 50%;
-            }
-            .timeline-item:nth-child(odd) {
-                margin-left: 0;
-                padding-right: 3rem;
-                text-align: right;
-            }
-            .timeline-item:nth-child(even) {
-                margin-left: 50%;
-                padding-left: 3rem;
-            }
-        }
-
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -4px;
-            top: 0.5rem;
-            width: 9px;
-            height: 9px;
-            background: var(--accent);
-            border-radius: 50%;
-        }
-
-        @media (min-width: 768px) {
-            .timeline-item:nth-child(odd)::before {
-                left: auto;
-                right: -4px;
-            }
-            .timeline-item:nth-child(even)::before {
-                left: -4px;
-            }
-        }
-
-        .timeline-period {
-            font-size: 0.8rem;
-            color: var(--accent);
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-bottom: 0.5rem;
-        }
-
-        .timeline-role {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin-bottom: 0.25rem;
-        }
-
-        .timeline-company {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-            margin-bottom: 1rem;
-        }
-
-        .timeline-achievements {
-            list-style: none;
-        }
-
-        .timeline-achievements li {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            padding: 0.3rem 0;
-            line-height: 1.5;
         }
 
         /* Footer */
@@ -1049,6 +1091,13 @@
             width: 100%;
         }
 
+        .footer-tagline {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-style: italic;
+        }
+
         .footer-socials {
             display: flex;
             justify-content: center;
@@ -1072,6 +1121,33 @@
 
         .footer-social:hover {
             color: var(--accent);
+        }
+
+        /* Image Fallback Styles */
+        .project-image {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            position: relative;
+        }
+
+        .project-image::before {
+            content: 'Loading...';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            z-index: 0;
+        }
+
+        .project-image[src] {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Video Poster/Fallback */
+        video {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
         }
 
         /* Responsive */
@@ -1113,8 +1189,8 @@
             }
 
             .projects-section,
-            .ai-workforce-section,
-            .journey-section {
+            .skills-section,
+            .experience-section {
                 padding: 8rem 4rem;
             }
         }
@@ -1141,6 +1217,7 @@
             .text-band-item {
                 font-size: 1rem;
                 padding: 0 1.5rem;
+                gap: 1.5rem;
             }
 
             .parallax-text {
@@ -1151,8 +1228,8 @@
                 padding-bottom: 8rem;
             }
 
-            .timeline-item {
-                padding-left: 1.5rem;
+            .hero-roles {
+                flex-direction: column;
             }
         }
     </style>
@@ -1193,36 +1270,63 @@
     <section class="hero" id="hero">
         <div class="hero-bg-text">CREATIVE</div>
         <div class="hero-content">
-            <div class="hero-badge">Available for projects</div>
+            <div class="hero-badge">Available for Full-time / Hybrid</div>
             <h1 class="hero-title">
                 <span class="line">Marketing</span>
                 <span class="line">Meets</span>
-                <span class="line">Machine.</span>
+                <span class="line">Design.</span>
             </h1>
             <p class="hero-subtitle">
-                I build marketing systems that drive measurable revenue using automation, AI, and analytics. Full-stack AI specialist: from sales agents to graphic designers to business development tools.
+                I bridge the gap between marketing strategy, creative design, and technical execution. Adobe-certified graphic designer, video editor, and marketing technologist with 6+ years building systems that drive revenue.
             </p>
-            <a href="#claims" class="hero-cta magnetic">
-                Explore Work
+            <div class="hero-roles">
+                <div class="role-tag">
+                    <i data-lucide="palette"></i>
+                    <span>Adobe Certified Designer</span>
+                </div>
+                <div class="role-tag">
+                    <i data-lucide="video"></i>
+                    <span>Video Editor</span>
+                </div>
+                <div class="role-tag">
+                    <i data-lucide="trending-up"></i>
+                    <span>Marketing Strategist</span>
+                </div>
+            </div>
+            <div class="hero-contact">
+                <a href="mailto:jothiharshana188@gmail.com">jothiharshana188@gmail.com</a>
+                <span>|</span>
+                <span>Kuala Lumpur, Malaysia</span>
+            </div>
+            <a href="#projects" class="hero-cta magnetic">
+                View My Work
                 <i data-lucide="arrow-down" style="width: 18px; height: 18px;"></i>
             </a>
         </div>
     </section>
 
-    <!-- Diagonal Text Band -->
+    <!-- FIXED Diagonal Text Band - Infinite Loop -->
     <div class="text-band-wrapper">
         <div class="text-band">
             <div class="text-band-content">
-                <span class="text-band-item">AI Automation</span>
-                <span class="text-band-item">Viral Prediction</span>
-                <span class="text-band-item">Python</span>
-                <span class="text-band-item">GPT-4</span>
-                <span class="text-band-item">Teh Tarik Powered</span>
-                <span class="text-band-item">n8n Workflows</span>
-                <span class="text-band-item">429% Growth</span>
-                <span class="text-band-item">Revenue Systems</span>
-                <span class="text-band-item">AI Automation</span>
-                <span class="text-band-item">Viral Prediction</span>
+                <!-- First set -->
+                <span class="text-band-item">Adobe Creative Suite</span>
+                <span class="text-band-item">Video Editing</span>
+                <span class="text-band-item">Visual Content</span>
+                <span class="text-band-item">Brand Strategy</span>
+                <span class="text-band-item">Marketing Design</span>
+                <span class="text-band-item">Social Media</span>
+                <span class="text-band-item">Motion Graphics</span>
+                <span class="text-band-item">UI/UX Design</span>
+                <!-- Duplicate for seamless loop -->
+                <span class="text-band-item">Adobe Creative Suite</span>
+                <span class="text-band-item">Video Editing</span>
+                <span class="text-band-item">Visual Content</span>
+                <span class="text-band-item">Brand Strategy</span>
+                <span class="text-band-item">Marketing Design</span>
+                <span class="text-band-item">Social Media</span>
+                <span class="text-band-item">Motion Graphics</span>
+                <span class="text-band-item">UI/UX Design</span>
             </div>
         </div>
     </div>
@@ -1231,79 +1335,81 @@
     <section class="horizontal-section" id="claims">
         <div class="horizontal-container">
             <div class="horizontal-track">
-                <!-- Card 1: AI Content Generation -->
+                <!-- Card 1: Viral Campaign -->
                 <div class="claim-card" data-spotlight>
                     <div class="claim-num">01</div>
-                    <div class="claim-icon">⚡</div>
-                    <span class="claim-badge badge-real">Real — 40 Hours Saved</span>
-                    <h3>50 Posts in 2 Minutes</h3>
-                    <p>Built an AI content generator using GPT-4 and Canva API. Creates 50 platform-optimized social media posts in 2 minutes. What used to take 40 hours now happens before your teh tarik gets cold.</p>
+                    <div class="claim-icon">🍰</div>
+                    <span class="claim-badge badge-real">2M+ Impressions</span>
+                    <h3>Viral Cheesecake Campaign</h3>
+                    <p>AI-assisted campaign for F&B brand using architectural visualization of Malaysia's 14 states. Strategic timing + automated distribution. Sold out in 48 hours, 429% follower growth (12K→63K).</p>
                 </div>
 
-                <!-- Card 2: Viral Campaign -->
+                <!-- Card 2: Design Work -->
                 <div class="claim-card" data-spotlight>
                     <div class="claim-num">02</div>
-                    <div class="claim-icon">🍰</div>
-                    <span class="claim-badge badge-real">Real — 2M+ Impressions</span>
-                    <h3>429% ROI Cheesecake</h3>
-                    <p>Viral TikTok campaign for a cheesecake brand using AI-powered timing optimization. Visualized cakes as architectural marvels representing Malaysia's 14 states. Sold out in 48 hours.</p>
+                    <div class="claim-icon">🎨</div>
+                    <span class="claim-badge badge-real">Adobe Certified</span>
+                    <h3>Visual Content at Scale</h3>
+                    <p>Created 200+ branded assets monthly using design systems and automation. Maintained brand consistency across Facebook, Instagram, TikTok, and LinkedIn while reducing production time by 40%.</p>
                 </div>
 
-                <!-- Card 3: Cost Reduction -->
+                <!-- Card 3: Video Production -->
                 <div class="claim-card" data-spotlight>
                     <div class="claim-num">03</div>
-                    <div class="claim-icon">💰</div>
-                    <span class="claim-badge badge-real">Real — RM47.5K Saved</span>
-                    <h3>95% Cost Reduction</h3>
-                    <p>Replaced a RM50K/month agency retainer with automated Python workflows and AI tools. New cost: RM2.5K/month. Client used the savings to buy a Myvi. True story.</p>
+                    <div class="claim-icon">🎬</div>
+                    <span class="claim-badge badge-real">Video Excellence</span>
+                    <h3>Short-Form Video Content</h3>
+                    <p>Produced viral video content using Adobe Premiere and After Effects. 2M+ impressions on campaign content. Expert in motion graphics, color grading, and platform-optimized formats.</p>
                 </div>
 
-                <!-- Card 4: ML Prediction -->
+                <!-- Card 4: Cost Reduction -->
                 <div class="claim-card" data-spotlight>
                     <div class="claim-num">04</div>
-                    <div class="claim-icon">🎯</div>
-                    <span class="claim-badge badge-real">Real — ML Model</span>
-                    <h3>89% Viral Accuracy</h3>
-                    <p>Machine learning model trained on 2 years of content performance data. Predicts viral potential before you hit publish. Outperforms marketing "experts" who charge 10x more.</p>
+                    <div class="claim-icon">💰</div>
+                    <span class="claim-badge badge-real">RM570K Saved</span>
+                    <h3>Agency Replacement</h3>
+                    <p>Replaced RM50K/month agency retainer with in-house creative and workflow optimization. Built systems for tracking creative performance directly to revenue.</p>
                 </div>
 
-                <!-- Card 5: Personality -->
+                <!-- Card 5: Systems -->
                 <div class="claim-card" data-spotlight>
                     <div class="claim-num">05</div>
-                    <div class="claim-icon">🐍</div>
-                    <span class="claim-badge badge-maybe">Maybe — Probably Not</span>
-                    <h3>Python & Sarcasm</h3>
-                    <p>Speaks fluent Python and sarcastic JavaScript. But honestly? Speaks Manglish better than both combined. "Bro, this code got error lah" is a valid debugging technique.</p>
+                    <div class="claim-icon">⚡</div>
+                    <span class="claim-badge badge-maybe">Workflow Automation</span>
+                    <h3>Efficiency Through Systems</h3>
+                    <p>Built automation workflows for content distribution, scheduling, and analytics. Freed up 40% of creative time for strategic work and high-impact design projects.</p>
                 </div>
 
-                <!-- Card 6: Philosophy -->
+                <!-- Card 6: Creative Philosophy -->
                 <div class="claim-card" data-spotlight>
                     <div class="claim-num">06</div>
                     <div class="claim-icon">☕</div>
-                    <span class="claim-badge badge-maybe">Maybe — Teh Tarik Essential</span>
-                    <h3>Meetings vs Email</h3>
-                    <p>Philosophy: If it can be an email, make it an email. But if it involves mamak and teh tarik, that's a meeting worth having. Some conversations need the ambience of a 24-hour kopitiam.</p>
+                    <span class="claim-badge badge-maybe">The Mamak Method</span>
+                    <h3>Lokal-First Creative</h3>
+                    <p>Creating content that speaks fluent "Manglish" and understands Malaysian cultural nuances. From Kopitiam Oracle trend prediction to Rojak-style content that resonates.</p>
                 </div>
 
                 <!-- Video Card 1 -->
                 <div class="video-card">
-                    <video autoplay muted loop playsinline>
-                        <source src="../images/journey/cream-of-creams/videos/Cream-video1.mp4" type="video/mp4">
+                    <video autoplay muted loop playsinline poster="../public/images/journey/cream-of-creams/images/cream-1.png">
+                        <source src="../public/images/journey/cream-of-creams/videos/Cream-video1.mp4" type="video/mp4">
+                        <p style="padding: 2rem; text-align: center; color: var(--text-secondary);">Your browser doesn't support HTML5 video.</p>
                     </video>
                     <div class="video-card-content">
                         <h3>Cream of Creams</h3>
-                        <p>Behind the scenes of viral content creation and AI-powered marketing systems.</p>
+                        <p>Behind the scenes of viral content creation and marketing campaign execution.</p>
                     </div>
                 </div>
 
                 <!-- Video Card 2 -->
                 <div class="video-card">
-                    <video autoplay muted loop playsinline>
-                        <source src="../images/journey/junglewalla/videos/Jungle-video1.mp4" type="video/mp4">
+                    <video autoplay muted loop playsinline poster="../public/images/journey/junglewalla/thumbnails/Jungle-thumbnail1.png">
+                        <source src="../public/images/journey/junglewalla/videos/Jungle-video1.mp4" type="video/mp4">
+                        <p style="padding: 2rem; text-align: center; color: var(--text-secondary);">Your browser doesn't support HTML5 video.</p>
                     </video>
                     <div class="video-card-content">
                         <h3>JungleWalla Desaru</h3>
-                        <p>Eco-tourism marketing combining nature expertise with technical execution.</p>
+                        <p>Eco-tourism marketing combining nature expertise with creative execution.</p>
                     </div>
                 </div>
             </div>
@@ -1315,32 +1421,32 @@
         <div class="parallax-bg"></div>
         <div class="parallax-content">
             <p class="parallax-text">
-                AI does the boring stuff.<br>
-                <span>Humans do the mamak stuff.</span>
+                Good design is obvious.<br>
+                <span>Great design is transparent.</span>
             </p>
         </div>
     </section>
 
-    <!-- Split Stats Section -->
+    <!-- Split Stats & Capabilities Section -->
     <section class="split-section" id="stats">
         <div class="split-left">
-            <h2 class="split-title">The Numbers</h2>
+            <h2 class="split-title">Results</h2>
             <div class="stat-list">
                 <div class="stat-item">
                     <span class="stat-num-large">429<span>%</span></span>
-                    <span class="stat-label-large">Facebook Growth in 12 Months</span>
+                    <span class="stat-label-large">Facebook Growth (12K→63K)</span>
                 </div>
                 <div class="stat-item">
                     <span class="stat-num-large">178<span>%</span></span>
                     <span class="stat-label-large">Instagram Growth</span>
                 </div>
                 <div class="stat-item">
-                    <span class="stat-num-large">95<span>%</span></span>
-                    <span class="stat-label-large">Cost Reduction Achieved</span>
-                </div>
-                <div class="stat-item">
                     <span class="stat-num-large">2M<span>+</span></span>
                     <span class="stat-label-large">Impressions Generated</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-num-large">200<span>+</span></span>
+                    <span class="stat-label-large">Assets/Month Capability</span>
                 </div>
             </div>
         </div>
@@ -1348,176 +1454,229 @@
             <h2 class="split-title">Capabilities</h2>
             <div class="capability-list">
                 <div class="capability-item">
-                    <h4>AI & Automation</h4>
-                    <p>Custom GPT-4 integrations, n8n workflows, predictive analytics using Python and machine learning. Building systems that work while you sleep.</p>
+                    <h4>Visual Design</h4>
+                    <p>Adobe Photoshop, Illustrator, InDesign. Brand identity, social media graphics, print design, and marketing collateral.</p>
                 </div>
                 <div class="capability-item">
-                    <h4>Viral Prediction</h4>
-                    <p>ML models forecasting content performance with 89% accuracy. Data beats vibes every single time. Stop guessing, start knowing.</p>
+                    <h4>Video Production</h4>
+                    <p>Adobe Premiere Pro, After Effects. Short-form content, motion graphics, color grading, and platform-optimized formats.</p>
                 </div>
                 <div class="capability-item">
-                    <h4>Revenue Attribution</h4>
-                    <p>Custom dashboards tracking social media → website → leads → sales → revenue. Know exactly which post generated RM 450 in sales.</p>
+                    <h4>Marketing Strategy</h4>
+                    <p>Content strategy, campaign planning, brand storytelling, and data-driven creative decisions that drive engagement.</p>
                 </div>
                 <div class="capability-item">
-                    <h4>Development</h4>
-                    <p>Python, JavaScript, React, API integrations, bot development. The technical foundation that makes marketing actually scalable.</p>
+                    <h4>Workflow Optimization</h4>
+                    <p>Design systems, automation workflows, and scalable processes that maintain quality while increasing output.</p>
                 </div>
             </div>
             <a href="mailto:jothiharshana188@gmail.com" class="magnetic-btn">Get in Touch</a>
         </div>
     </section>
 
-    <!-- Projects Section -->
+    <!-- Skills Section - NEW -->
+    <section class="skills-section" id="skills">
+        <div class="section-header">
+            <p class="section-label">Expertise</p>
+            <h2 class="section-title">Skills & Tools</h2>
+        </div>
+        <div class="skills-grid">
+            <div class="skill-card">
+                <div class="skill-header">
+                    <div class="skill-icon marketing">📢</div>
+                    <h3 class="skill-title">Marketing & Growth</h3>
+                </div>
+                <ul class="skill-list">
+                    <li><span class="skill-name">Meta Business Suite</span><span class="skill-level">Expert</span></li>
+                    <li><span class="skill-name">Instagram Strategy</span><span class="skill-level">Expert</span></li>
+                    <li><span class="skill-name">TikTok Marketing</span><span class="skill-level">Advanced</span></li>
+                    <li><span class="skill-name">Content Strategy</span><span class="skill-level">Expert</span></li>
+                </ul>
+            </div>
+            <div class="skill-card">
+                <div class="skill-header">
+                    <div class="skill-icon creative">🎨</div>
+                    <h3 class="skill-title">Creative & Design</h3>
+                </div>
+                <ul class="skill-list">
+                    <li><span class="skill-name">Adobe Photoshop</span><span class="skill-level">Expert</span></li>
+                    <li><span class="skill-name">Adobe Illustrator</span><span class="skill-level">Expert</span></li>
+                    <li><span class="skill-name">Adobe Premiere</span><span class="skill-level">Advanced</span></li>
+                    <li><span class="skill-name">After Effects</span><span class="skill-level">Advanced</span></li>
+                </ul>
+            </div>
+            <div class="skill-card">
+                <div class="skill-header">
+                    <div class="skill-icon technical">💻</div>
+                    <h3 class="skill-title">Technical</h3>
+                </div>
+                <ul class="skill-list">
+                    <li><span class="skill-name">Workflow Automation</span><span class="skill-level">Advanced</span></li>
+                    <li><span class="skill-name">API Integration</span><span class="skill-level">Advanced</span></li>
+                    <li><span class="skill-name">React / JavaScript</span><span class="skill-level">Intermediate</span></li>
+                    <li><span class="skill-name">System Architecture</span><span class="skill-level">Advanced</span></li>
+                </ul>
+            </div>
+            <div class="skill-card">
+                <div class="skill-header">
+                    <div class="skill-icon data">📊</div>
+                    <h3 class="skill-title">Analytics & Data</h3>
+                </div>
+                <ul class="skill-list">
+                    <li><span class="skill-name">Google Analytics 4</span><span class="skill-level">Expert</span></li>
+                    <li><span class="skill-name">Looker Studio</span><span class="skill-level">Advanced</span></li>
+                    <li><span class="skill-name">A/B Testing</span><span class="skill-level">Advanced</span></li>
+                    <li><span class="skill-name">Data Visualization</span><span class="skill-level">Advanced</span></li>
+                </ul>
+            </div>
+            <div class="skill-card">
+                <div class="skill-header">
+                    <div class="skill-icon business">💼</div>
+                    <h3 class="skill-title">Business</h3>
+                </div>
+                <ul class="skill-list">
+                    <li><span class="skill-name">Entrepreneurship</span><span class="skill-level">3 Ventures</span></li>
+                    <li><span class="skill-name">Client Management</span><span class="skill-level">Expert</span></li>
+                    <li><span class="skill-name">Revenue Optimization</span><span class="skill-level">Advanced</span></li>
+                    <li><span class="skill-name">Strategic Planning</span><span class="skill-level">Advanced</span></li>
+                </ul>
+            </div>
+            <div class="skill-card">
+                <div class="skill-header">
+                    <div class="skill-icon leadership">⭐</div>
+                    <h3 class="skill-title">Strategy & Leadership</h3>
+                </div>
+                <ul class="skill-list">
+                    <li><span class="skill-name">Project Management</span><span class="skill-level">Expert</span></li>
+                    <li><span class="skill-name">Team Leadership</span><span class="skill-level">Advanced</span></li>
+                    <li><span class="skill-name">Crisis Management</span><span class="skill-level">Expert</span></li>
+                    <li><span class="skill-name">Brand Development</span><span class="skill-level">Expert</span></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Selected Projects Section -->
     <section class="projects-section" id="projects">
         <div class="section-header">
             <p class="section-label">Selected Work</p>
-            <h2 class="section-title">Systems & Campaigns</h2>
+            <h2 class="section-title">Visionary Projects</h2>
         </div>
         <div class="projects-grid">
             <div class="project-card">
-                <img src="../Visionary/Malaysian%20Marketing%20Platform.png" alt="Malaysian Marketing Platform" class="project-image">
+                <img src="../public/Visionary/Malaysian%20Marketing%20Platform.png" alt="Malaysian Marketing Platform" class="project-image" loading="lazy">
                 <div class="project-content">
                     <p class="project-category">System Architecture</p>
                     <h3 class="project-title">Malaysian Marketing Platform</h3>
-                    <p class="project-desc">A suite of 6 AI tools designed for local market penetration. Includes 'Kopitiam Oracle' for trend prediction and 'Mamak Copy' for localized copywriting.</p>
+                    <p class="project-desc">A suite of tools designed for local market penetration. Hyper-localized content systems that speak fluent "Manglish" and understand Malaysian cultural nuances.</p>
+                    <span class="project-status">Operational & Scaling</span>
                 </div>
             </div>
             <div class="project-card">
-                <img src="../Visionary/Revenue%20Attribution%20Dashboard.png" alt="Revenue Attribution" class="project-image">
+                <img src="../public/Visionary/Revenue%20Attribution%20Dashboard.png" alt="Revenue Attribution" class="project-image" loading="lazy">
                 <div class="project-content">
                     <p class="project-category">Analytics</p>
                     <h3 class="project-title">Revenue Attribution Dashboard</h3>
-                    <p class="project-desc">Custom-built tracking system connecting social media engagement directly to revenue. Know exactly which post made money.</p>
+                    <p class="project-desc">Custom-built tracking system connecting creative work directly to revenue. Know exactly which design, video, or campaign generated sales.</p>
+                    <span class="project-status">Building at Cream of Creams</span>
                 </div>
             </div>
             <div class="project-card">
-                <img src="../Visionary/Viral%20Cheesecake%20Campaign.png" alt="Viral Cheesecake" class="project-image">
+                <img src="../public/Visionary/Viral%20Cheesecake%20Campaign.png" alt="Viral Cheesecake Campaign" class="project-image" loading="lazy">
                 <div class="project-content">
-                    <p class="project-category">Marketing Strategy</p>
+                    <p class="project-category">Marketing Campaign</p>
                     <h3 class="project-title">Viral Cheesecake Campaign</h3>
-                    <p class="project-desc">AI-generated visuals and automated distribution. 2M+ impressions, 429% follower growth, sold out in 48 hours.</p>
+                    <p class="project-desc">AI-assisted visuals and strategic distribution. 2M+ impressions, 429% follower growth, sold out in 48 hours. Visualized cakes as architectural marvels.</p>
+                    <span class="project-status">Viral Success</span>
                 </div>
             </div>
             <div class="project-card">
-                <img src="../Visionary/Legal%20Transcription%20Software.png" alt="Legal Transcription" class="project-image">
+                <img src="../public/Visionary/Legal%20Transcription%20Software.png" alt="Legal Transcription Software" class="project-image" loading="lazy">
                 <div class="project-content">
                     <p class="project-category">Automation</p>
                     <h3 class="project-title">Legal Transcription System</h3>
-                    <p class="project-desc">End-to-end automated workflow transforming raw audio to verified legal transcripts. Cash flow positive business.</p>
+                    <p class="project-desc">End-to-end automated workflow transforming raw audio to verified legal transcripts. Cash flow positive business with passive revenue model.</p>
+                    <span class="project-status">Active Business</span>
                 </div>
             </div>
             <div class="project-card">
-                <img src="../Visionary/Medical%20Patient%20Advocate.svg" alt="Medical App" class="project-image">
-                <div class="project-content">
-                    <p class="project-category">Healthcare AI</p>
-                    <h3 class="project-title">Medical Patient Advocate</h3>
-                    <p class="project-desc">AI-powered app helping patients prepare for doctor visits. FDA API integrated, symptom analysis, treatment explanations.</p>
-                </div>
-            </div>
-            <div class="project-card">
-                <img src="../Visionary/Spotify%20Recipe%20Songs.png" alt="Spotify Recipes" class="project-image">
+                <img src="../public/Visionary/Spotify%20Recipe%20Songs.png" alt="Spotify Recipe Songs" class="project-image" loading="lazy">
                 <div class="project-content">
                     <p class="project-category">Creative Strategy</p>
                     <h3 class="project-title">Spotify Recipe Songs</h3>
-                    <p class="project-desc">Synesthetic marketing concept pairing recipes with curated Spotify playlists. Multi-sensory brand experience.</p>
+                    <p class="project-desc">Synesthetic marketing concept pairing recipes with curated Spotify playlists. Multi-sensory brand experience connecting taste and sound.</p>
+                    <span class="project-status">Concept</span>
+                </div>
+            </div>
+            <div class="project-card">
+                <img src="../public/Visionary/Medical%20Patient%20Advocate.svg" alt="Medical Patient Advocate" class="project-image" loading="lazy">
+                <div class="project-content">
+                    <p class="project-category">Healthcare Design</p>
+                    <h3 class="project-title">Medical Patient Advocate</h3>
+                    <p class="project-desc">Healthcare app design helping patients prepare for doctor visits. Focus on UX, accessibility, and clear information architecture.</p>
+                    <span class="project-status">In Development</span>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- AI Workforce Section -->
-    <section class="ai-workforce-section" id="ai-workforce">
-        <div class="section-header">
-            <p class="section-label">My AI Team</p>
-            <h2 class="section-title">Digital Workforce</h2>
-        </div>
-        <div class="ai-grid">
-            <div class="ai-card">
-                <span class="ai-status">Operational</span>
-                <h3>AI Sales Agent</h3>
-                <p class="ai-role">Lead Qualification Specialist</p>
-                <p class="ai-desc">24/7 automated lead qualification with intelligent CRM integration. Never misses an inquiry.</p>
-                <ul class="ai-features">
-                    <li>24/7 Lead Qualification</li>
-                    <li>Instant Response Protocol</li>
-                    <li>CRM Auto-Entry</li>
-                    <li>Lead Scoring & Enrichment</li>
-                </ul>
-            </div>
-            <div class="ai-card">
-                <span class="ai-status">Operational</span>
-                <h3>AI Graphic Designer</h3>
-                <p class="ai-role">Visual Content Generator</p>
-                <p class="ai-desc">Brand-consistent visual generation at scale for marketing campaigns. 200+ posts/month capability.</p>
-                <ul class="ai-features">
-                    <li>Brand-Consistent Visuals</li>
-                    <li>High-Speed Generation</li>
-                    <li>Multi-Format Adaptation</li>
-                    <li>A/B Testing Variations</li>
-                </ul>
-            </div>
-            <div class="ai-card">
-                <span class="ai-status dev">In Development</span>
-                <h3>AI Business Development</h3>
-                <p class="ai-role">Market Intelligence Analyst</p>
-                <p class="ai-desc">Continuous market monitoring with opportunity identification. Your always-on competitive analyst.</p>
-                <ul class="ai-features">
-                    <li>Market Trend Analysis</li>
-                    <li>Competitor Monitoring</li>
-                    <li>Opportunity Spotting</li>
-                    <li>Risk/Opportunity Scoring</li>
-                </ul>
-            </div>
-        </div>
-    </section>
-
-    <!-- Journey Section -->
-    <section class="journey-section" id="journey">
+    <!-- Experience Section -->
+    <section class="experience-section" id="experience">
         <div class="section-header">
             <p class="section-label">Career Path</p>
-            <h2 class="section-title">The Journey</h2>
+            <h2 class="section-title">Experience</h2>
         </div>
-        <div class="timeline">
-            <div class="timeline-item">
-                <p class="timeline-period">2024 - Present</p>
-                <h3 class="timeline-role">Marketing Technologist</h3>
-                <p class="timeline-company">Cream of Creams Sdn Bhd</p>
-                <ul class="timeline-achievements">
-                    <li>🚀 429% Facebook growth, 178% Instagram growth</li>
-                    <li>💰 RM 10-45K annual savings vs external agency</li>
-                    <li>🤖 Built 6 AI tools for multi-platform management</li>
-                    <li>🔥 2M+ impressions on viral campaigns</li>
+        <div class="experience-grid">
+            <div class="job-card">
+                <div class="job-header">
+                    <h3 class="job-title">Marketing Technologist</h3>
+                    <span class="job-meta">Jan 2024 – Present | Full-time</span>
+                </div>
+                <p class="job-company">Cream of Creams Sdn Bhd</p>
+                <ul class="job-achievements">
+                    <li>Delivered 429% Facebook growth (12K→63K) and 178% Instagram growth through strategic content systems</li>
+                    <li>Created 200+ branded visual assets monthly while maintaining design system consistency</li>
+                    <li>Produced viral video content generating 2M+ impressions (Adobe Premiere, After Effects)</li>
+                    <li>Built revenue attribution tracking connecting creative work to RM450+ per-post sales</li>
+                    <li>Replaced external agency with in-house creative solution, saving RM10-45K annually</li>
                 </ul>
             </div>
-            <div class="timeline-item">
-                <p class="timeline-period">2023 - 2024</p>
-                <h3 class="timeline-role">Naturalist / Marketing Communications</h3>
-                <p class="timeline-company">JungleWalla Desaru</p>
-                <ul class="timeline-achievements">
-                    <li>30% booking increase through multi-channel campaigns</li>
-                    <li>Automated lead nurturing for corporate bookings</li>
-                    <li>Bridged eco-tourism education with sales conversion</li>
+            <div class="job-card">
+                <div class="job-header">
+                    <h3 class="job-title">Naturalist / Marketing Communications</h3>
+                    <span class="job-meta">Jun 2023 – Dec 2024 | Contract</span>
+                </div>
+                <p class="job-company">JungleWalla Desaru</p>
+                <ul class="job-achievements">
+                    <li>30% booking increase through multi-channel creative campaigns</li>
+                    <li>Developed visual storytelling strategy for eco-tourism experiences</li>
+                    <li>Created content bridging conservation education with sales conversion</li>
+                    <li>Built media partnerships and represented resort at travel trade shows</li>
                 </ul>
             </div>
-            <div class="timeline-item">
-                <p class="timeline-period">2018 - Present</p>
-                <h3 class="timeline-role">Founder / Technical Marketing Consultant</h3>
-                <p class="timeline-company">Freelance & Business Ventures</p>
-                <ul class="timeline-achievements">
-                    <li>Built legal transcription business with passive revenue</li>
-                    <li>100K+ combined follower base across client accounts</li>
-                    <li>8.5% average engagement rate (3x industry benchmark)</li>
+            <div class="job-card">
+                <div class="job-header">
+                    <h3 class="job-title">Founder / Creative Consultant</h3>
+                    <span class="job-meta">2018 – 2023 | Part-time/Project-based</span>
+                </div>
+                <p class="job-company">Freelance & Business Ventures</p>
+                <ul class="job-achievements">
+                    <li>Built legal transcription business with automated workflows (cash-flow positive)</li>
+                    <li>Managed creative for 5-10 concurrent clients across hospitality, F&B, and services</li>
+                    <li>Grew combined client follower base 100K+ through visual content strategy</li>
+                    <li>Achieved 8.5% average engagement rate (3x industry benchmark)</li>
                 </ul>
             </div>
-            <div class="timeline-item">
-                <p class="timeline-period">2021 - 2023</p>
-                <h3 class="timeline-role">Senior Customer Service Officer</h3>
-                <p class="timeline-company">Pserv Singapore Botanical Gardens</p>
-                <ul class="timeline-achievements">
-                    <li>95%+ customer satisfaction ratings consistently</li>
-                    <li>Trained new team members in service excellence</li>
-                    <li>Managed high-traffic periods during major events</li>
+            <div class="job-card">
+                <div class="job-header">
+                    <h3 class="job-title">Senior Customer Service Officer</h3>
+                    <span class="job-meta">2021 – 2023 | Full-time</span>
+                </div>
+                <p class="job-company">Pserv Singapore Botanical Gardens</p>
+                <ul class="job-achievements">
+                    <li>95%+ customer satisfaction ratings; trained 12+ team members</li>
+                    <li>Managed high-traffic digital communications during major events (10K+ daily visitors)</li>
+                    <li>Developed crisis management and cultural sensitivity protocols</li>
                 </ul>
             </div>
         </div>
@@ -1526,9 +1685,10 @@
     <!-- Footer -->
     <footer class="footer" id="contact">
         <p class="footer-text">
-            Let's build something<br>
-            or grab <a href="mailto:jothiharshana188@gmail.com">teh tarik</a>
+            Let's create something<br>
+            <a href="mailto:jothiharshana188@gmail.com">beautiful</a>
         </p>
+        <p class="footer-tagline">Marketing strategy meets creative execution.</p>
         <div class="footer-socials">
             <a href="mailto:jothiharshana188@gmail.com" class="footer-social magnetic">
                 <i data-lucide="mail"></i>
@@ -1655,6 +1815,22 @@
             y: 30,
             duration: 0.8,
             ease: 'power2.out',
+            delay: 0.6
+        });
+
+        gsap.from('.hero-roles', {
+            opacity: 0,
+            y: 30,
+            duration: 0.8,
+            ease: 'power2.out',
+            delay: 0.7
+        });
+
+        gsap.from('.hero-contact', {
+            opacity: 0,
+            y: 30,
+            duration: 0.8,
+            ease: 'power2.out',
             delay: 0.8
         });
 
@@ -1663,7 +1839,7 @@
             y: 30,
             duration: 0.8,
             ease: 'power2.out',
-            delay: 1
+            delay: 0.9
         });
 
         // Parallax hero background text
@@ -1699,23 +1875,6 @@
                 }
             });
         }
-
-        // Text band speed on scroll
-        const textBandContent = document.querySelector('.text-band-content');
-        let baseSpeed = 25;
-
-        ScrollTrigger.create({
-            trigger: '.text-band-wrapper',
-            start: 'top bottom',
-            end: 'bottom top',
-            onUpdate: (self) => {
-                const velocity = Math.abs(self.getVelocity() / 1000);
-                const newDuration = Math.max(8, baseSpeed - velocity);
-                if (textBandContent) {
-                    textBandContent.style.animationDuration = `${newDuration}s`;
-                }
-            }
-        });
 
         // Parallax quote section
         gsap.to('.parallax-bg', {
@@ -1794,6 +1953,20 @@
             ease: 'power2.out'
         });
 
+        // Skills animation
+        gsap.from('.skill-card', {
+            scrollTrigger: {
+                trigger: '.skills-section',
+                start: 'top 70%',
+                toggleActions: 'play none none reverse'
+            },
+            y: 50,
+            opacity: 0,
+            duration: 0.8,
+            stagger: 0.1,
+            ease: 'power2.out'
+        });
+
         // Projects animation
         gsap.from('.project-card', {
             scrollTrigger: {
@@ -1808,10 +1981,10 @@
             ease: 'power2.out'
         });
 
-        // AI cards animation
-        gsap.from('.ai-card', {
+        // Job cards animation
+        gsap.from('.job-card', {
             scrollTrigger: {
-                trigger: '.ai-workforce-section',
+                trigger: '.experience-section',
                 start: 'top 70%',
                 toggleActions: 'play none none reverse'
             },
@@ -1819,20 +1992,6 @@
             opacity: 0,
             duration: 0.8,
             stagger: 0.15,
-            ease: 'power2.out'
-        });
-
-        // Timeline animation
-        gsap.from('.timeline-item', {
-            scrollTrigger: {
-                trigger: '.journey-section',
-                start: 'top 70%',
-                toggleActions: 'play none none reverse'
-            },
-            x: -30,
-            opacity: 0,
-            duration: 0.8,
-            stagger: 0.2,
             ease: 'power2.out'
         });
 
