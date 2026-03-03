@@ -2,25 +2,26 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-    <meta name="theme-color" content="#0a0a0a">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>MILO. - Trauma Clearance Sale</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MILO - Trauma Clearance Sale</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Londrina+Solid:wght@300;400;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Creepster&family=Nosifer&display=swap');
-
         :root {
-            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
-            --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
-            --blood-red: #8B0000;
-            --dark-blood: #4a0404;
-            --toxic-green: #39ff14;
-            --haunted-purple: #4a0080;
-            --electric-pink: #ff006e;
-            --acid-yellow: #ccff00;
+            /* ZOOOM EXACT COLORS */
+            --lime: #E1F532;
+            --lime-rgb: 225, 245, 50;
+            --dark-brown: #211509;
+            --cream: #F6EDE4;
+            --cream-dark: #EDE4DB;
+            --orange: #FF6316;
+            --pink: #FFADE6;
+            --purple: #5541BA;
+            
+            /* ZOOOM EXACT FONTS */
+            --font-display: 'Londrina Solid', cursive;
+            --font-body: 'Inter', sans-serif;
         }
 
         * {
@@ -34,18 +35,15 @@
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: #0a0a0a;
-            color: #fff;
+            font-family: var(--font-body);
+            background: var(--cream);
+            color: var(--dark-brown);
             line-height: 1.5;
-            -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
         }
 
-        /* ===== ZOOOM STYLE - EXPLOSIVE HERO ===== */
-        
-        /* Navigation */
-        nav {
+        /* ===== NAVIGATION - EXACT ZOOOM STYLE ===== */
+        .nav {
             position: fixed;
             top: 0;
             left: 0;
@@ -56,249 +54,184 @@
             justify-content: space-between;
             align-items: center;
             background: transparent;
-            transition: all 0.4s var(--ease-out-expo);
-        }
-
-        nav.scrolled {
-            background: rgba(10, 10, 10, 0.95);
-            backdrop-filter: blur(20px);
-            padding: 16px 48px;
         }
 
         .nav-logo {
-            font-size: 32px;
+            font-family: var(--font-display);
+            font-size: 42px;
             font-weight: 900;
-            letter-spacing: -2px;
-            color: var(--toxic-green);
+            color: var(--dark-brown);
             text-decoration: none;
-            text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
         .nav-links {
             display: flex;
-            gap: 40px;
+            gap: 32px;
+            align-items: center;
         }
 
         .nav-link {
-            font-size: 14px;
-            font-weight: 600;
+            font-family: var(--font-display);
+            font-size: 24px;
+            font-weight: 400;
+            color: var(--dark-brown);
+            text-decoration: none;
             text-transform: uppercase;
             letter-spacing: 1px;
-            color: #fff;
-            text-decoration: none;
-            position: relative;
-            transition: color 0.3s;
+            transition: opacity 0.3s;
         }
 
         .nav-link:hover {
-            color: var(--toxic-green);
+            opacity: 0.6;
         }
 
         .nav-cart {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: var(--toxic-green);
-            color: #000;
-            padding: 12px 24px;
-            font-size: 14px;
-            font-weight: 700;
+            font-family: var(--font-display);
+            font-size: 24px;
+            font-weight: 400;
+            color: var(--dark-brown);
+            background: var(--lime);
+            padding: 12px 32px;
+            border-radius: 50px;
+            text-decoration: none;
             text-transform: uppercase;
-            border: none;
+            border: 3px solid var(--dark-brown);
+            box-shadow: 4px 4px 0 var(--dark-brown);
+            transition: all 0.2s;
             cursor: pointer;
-            transition: transform 0.3s var(--ease-spring);
         }
 
         .nav-cart:hover {
-            transform: scale(1.05);
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0 var(--dark-brown);
         }
 
-        /* ===== HERO SECTION - EXPLOSIVE ZOOOM STYLE ===== */
+        /* ===== HERO - EXACT ZOOOM STYLE ===== */
         .hero {
             min-height: 100vh;
             display: flex;
             align-items: center;
-            padding: 120px 48px 80px;
+            justify-content: center;
             position: relative;
+            padding: 120px 48px 80px;
+            background: var(--cream);
             overflow: hidden;
-            background: 
-                radial-gradient(ellipse at 20% 50%, rgba(57, 255, 20, 0.15) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 80%, rgba(139, 0, 0, 0.2) 0%, transparent 40%),
-                linear-gradient(180deg, #0a0a0a 0%, #1a0a0a 100%);
         }
 
-        .hero-grid {
-            max-width: 1400px;
-            margin: 0 auto;
+        .hero-container {
+            position: relative;
             width: 100%;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 80px;
+            max-width: 1200px;
+            display: flex;
+            flex-direction: column;
             align-items: center;
+            text-align: center;
+        }
+
+        .hero-image {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-bottom: -60px;
+            z-index: 2;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(-2deg); }
+            50% { transform: translateY(-30px) rotate(2deg); }
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: auto;
+            filter: drop-shadow(0 40px 80px rgba(33, 21, 9, 0.3));
         }
 
         .hero-content {
             position: relative;
-            z-index: 2;
+            z-index: 3;
+            margin-top: -20px;
         }
 
-        .hero-tag {
-            display: inline-block;
-            background: var(--blood-red);
-            color: #fff;
-            padding: 8px 20px;
-            font-size: 12px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 32px;
-            transform: rotate(-3deg);
-            animation: pulse-glow 2s infinite;
-        }
-
-        @keyframes pulse-glow {
-            0%, 100% { box-shadow: 0 0 20px rgba(139, 0, 0, 0.5); }
-            50% { box-shadow: 0 0 40px rgba(139, 0, 0, 0.8); }
-        }
-
-        .hero-title {
-            font-size: clamp(48px, 6vw, 80px);
+        .hero-logo {
+            font-family: var(--font-display);
+            font-size: clamp(80px, 15vw, 180px);
             font-weight: 900;
-            line-height: 1.05;
-            letter-spacing: -3px;
+            color: var(--lime);
+            text-shadow: 
+                6px 6px 0 var(--dark-brown),
+                -2px -2px 0 var(--pink),
+                2px -2px 0 var(--orange);
+            letter-spacing: 8px;
+            line-height: 1;
             margin-bottom: 24px;
-            text-transform: uppercase;
+            animation: wobble 4s ease-in-out infinite;
         }
 
-        .hero-title span {
+        @keyframes wobble {
+            0%, 100% { transform: rotate(-2deg) scale(1); }
+            50% { transform: rotate(2deg) scale(1.02); }
+        }
+
+        .hero-tagline {
+            font-family: var(--font-display);
+            font-size: clamp(32px, 5vw, 56px);
+            font-weight: 400;
+            color: var(--dark-brown);
+            line-height: 1.2;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .hero-tagline span {
             display: block;
         }
 
-        .hero-title .line-1 {
-            color: var(--toxic-green);
-            text-shadow: 0 0 40px rgba(57, 255, 20, 0.5);
-        }
-
-        .hero-title .line-2 {
-            color: #fff;
-        }
-
-        .hero-title .line-3 {
-            color: var(--blood-red);
-            text-shadow: 0 0 40px rgba(139, 0, 0, 0.5);
-        }
-
-        .hero-desc {
-            font-size: 20px;
-            line-height: 1.6;
-            color: rgba(255,255,255,0.7);
-            max-width: 480px;
-            margin-bottom: 40px;
-        }
-
-        .hero-cta {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            background: var(--toxic-green);
-            color: #000;
-            padding: 20px 40px;
-            font-size: 16px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            text-decoration: none;
-            border: none;
-            cursor: pointer;
-            transition: all 0.4s var(--ease-spring);
-            box-shadow: 0 0 40px rgba(57, 255, 20, 0.4);
-        }
-
-        .hero-cta:hover {
-            transform: translateY(-4px) scale(1.02);
-            box-shadow: 0 10px 60px rgba(57, 255, 20, 0.6);
-        }
-
-        .hero-cta svg {
-            width: 20px;
-            height: 20px;
-            transition: transform 0.3s;
-        }
-
-        .hero-cta:hover svg {
-            transform: translateX(4px);
-        }
-
-        .hero-visual {
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .hero-image-container {
-            position: relative;
-            width: 100%;
-            max-width: 600px;
-            aspect-ratio: 4/5;
-            border-radius: 40px;
-            overflow: hidden;
-            border: 2px solid rgba(57, 255, 20, 0.3);
-            box-shadow: 
-                0 0 80px rgba(57, 255, 20, 0.2),
-                0 0 160px rgba(139, 0, 0, 0.1);
-            animation: float-image 6s ease-in-out infinite;
-        }
-
-        @keyframes float-image {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(2deg); }
-        }
-
-        .hero-image-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            filter: contrast(1.1) saturate(1.2);
-        }
-
-        .hero-badges {
+        /* Floating decorations */
+        .hero-deco {
             position: absolute;
-            top: -20px;
-            right: -20px;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
+            border-radius: 50%;
+            animation: pulse 3s ease-in-out infinite;
         }
 
-        .hero-badge {
-            background: #fff;
-            color: #000;
-            padding: 16px 24px;
-            font-size: 14px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border-radius: 12px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-            animation: badge-bounce 3s ease-in-out infinite;
+        .hero-deco-1 {
+            width: 120px;
+            height: 120px;
+            background: var(--pink);
+            top: 15%;
+            left: 10%;
+            animation-delay: 0s;
         }
 
-        .hero-badge.red {
-            background: var(--blood-red);
-            color: #fff;
-            animation-delay: 0.5s;
+        .hero-deco-2 {
+            width: 80px;
+            height: 80px;
+            background: var(--lime);
+            top: 25%;
+            right: 15%;
+            animation-delay: 1s;
         }
 
-        @keyframes badge-bounce {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-10px) rotate(-3deg); }
+        .hero-deco-3 {
+            width: 60px;
+            height: 60px;
+            background: var(--orange);
+            bottom: 20%;
+            left: 20%;
+            animation-delay: 2s;
         }
 
-        /* ===== FEATURES SECTION ===== */
-        .features {
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.2); opacity: 1; }
+        }
+
+        /* ===== PRODUCTS SECTION - EXACT ZOOOM STYLE ===== */
+        .products {
             padding: 120px 48px;
-            background: #0a0a0a;
+            background: var(--cream);
             position: relative;
         }
 
@@ -307,24 +240,27 @@
             margin-bottom: 80px;
         }
 
-        .section-tag {
-            font-size: 12px;
-            font-weight: 800;
+        .section-label {
+            font-family: var(--font-display);
+            font-size: 20px;
+            font-weight: 400;
+            color: var(--dark-brown);
             text-transform: uppercase;
             letter-spacing: 3px;
-            color: var(--toxic-green);
-            margin-bottom: 16px;
+            margin-bottom: 24px;
         }
 
         .section-title {
-            font-size: clamp(40px, 5vw, 64px);
+            font-family: var(--font-display);
+            font-size: clamp(40px, 6vw, 72px);
             font-weight: 900;
-            letter-spacing: -2px;
+            color: var(--dark-brown);
             line-height: 1.1;
-            text-transform: uppercase;
+            max-width: 800px;
+            margin: 0 auto;
         }
 
-        .features-grid {
+        .products-grid {
             max-width: 1200px;
             margin: 0 auto;
             display: grid;
@@ -332,156 +268,57 @@
             gap: 32px;
         }
 
-        .feature-card {
-            background: linear-gradient(135deg, rgba(57, 255, 20, 0.05) 0%, rgba(139, 0, 0, 0.05) 100%);
-            border: 1px solid rgba(57, 255, 20, 0.1);
-            border-radius: 24px;
-            padding: 48px 32px;
-            text-align: center;
-            transition: all 0.4s var(--ease-out-expo);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--toxic-green), var(--blood-red));
-            transform: scaleX(0);
-            transition: transform 0.4s var(--ease-out-expo);
-        }
-
-        .feature-card:hover {
-            transform: translateY(-10px);
-            border-color: rgba(57, 255, 20, 0.3);
-            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
-        }
-
-        .feature-card:hover::before {
-            transform: scaleX(1);
-        }
-
-        .feature-icon {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 24px;
-            background: linear-gradient(135deg, var(--toxic-green), var(--blood-red));
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 36px;
-            box-shadow: 0 10px 40px rgba(57, 255, 20, 0.3);
-        }
-
-        .feature-title {
-            font-size: 20px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 12px;
-            color: #fff;
-        }
-
-        .feature-desc {
-            font-size: 15px;
-            line-height: 1.6;
-            color: rgba(255,255,255,0.6);
-        }
-
-        /* ===== PRODUCTS SECTION ===== */
-        .products {
-            padding: 120px 48px;
-            background: linear-gradient(180deg, #0a0a0a 0%, #111 100%);
-            position: relative;
-        }
-
-        .products-grid {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 32px;
-        }
-
         .product-card {
-            background: #151515;
+            background: var(--cream-dark);
             border-radius: 32px;
-            overflow: hidden;
-            transition: all 0.5s var(--ease-out-expo);
-            border: 1px solid rgba(255,255,255,0.05);
-            position: relative;
+            padding: 32px;
+            border: 4px solid var(--dark-brown);
+            box-shadow: 8px 8px 0 var(--dark-brown);
+            transition: all 0.3s;
+            cursor: pointer;
         }
 
         .product-card:hover {
-            transform: translateY(-16px) scale(1.02);
-            box-shadow: 0 40px 80px rgba(0,0,0,0.5);
-            border-color: rgba(57, 255, 20, 0.3);
+            transform: translate(4px, 4px);
+            box-shadow: 4px 4px 0 var(--dark-brown);
         }
 
-        .product-image-wrap {
-            position: relative;
-            aspect-ratio: 4/5;
+        .product-image {
+            width: 100%;
+            aspect-ratio: 1;
+            border-radius: 20px;
             overflow: hidden;
+            margin-bottom: 24px;
+            border: 3px solid var(--dark-brown);
         }
 
-        .product-image-wrap img {
+        .product-image img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.6s var(--ease-out-expo);
+            transition: transform 0.5s;
         }
 
-        .product-card:hover .product-image-wrap img {
+        .product-card:hover .product-image img {
             transform: scale(1.1);
         }
 
-        .product-tag {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            background: var(--toxic-green);
-            color: #000;
-            padding: 8px 16px;
-            font-size: 11px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border-radius: 8px;
-            z-index: 2;
-        }
-
-        .product-tag.featured {
-            background: var(--blood-red);
-            color: #fff;
-        }
-
-        .product-tag.hot {
-            background: var(--electric-pink);
-            color: #fff;
-        }
-
-        .product-info {
-            padding: 32px;
-        }
-
         .product-name {
-            font-size: 24px;
-            font-weight: 800;
+            font-family: var(--font-display);
+            font-size: 28px;
+            font-weight: 900;
+            color: var(--dark-brown);
             margin-bottom: 8px;
-            color: #fff;
             text-transform: uppercase;
-            letter-spacing: -0.5px;
         }
 
-        .product-category {
-            font-size: 14px;
-            color: rgba(255,255,255,0.5);
+        .product-desc {
+            font-family: var(--font-body);
+            font-size: 15px;
+            color: var(--dark-brown);
+            opacity: 0.7;
             margin-bottom: 20px;
+            line-height: 1.5;
         }
 
         .product-footer {
@@ -491,37 +328,99 @@
         }
 
         .product-price {
-            font-size: 28px;
+            font-family: var(--font-display);
+            font-size: 32px;
             font-weight: 900;
-            color: var(--toxic-green);
+            color: var(--orange);
         }
 
         .product-btn {
-            background: transparent;
-            border: 2px solid var(--toxic-green);
-            color: var(--toxic-green);
-            padding: 12px 24px;
-            font-size: 12px;
-            font-weight: 800;
+            font-family: var(--font-display);
+            font-size: 18px;
+            font-weight: 400;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            padding: 12px 24px;
+            background: var(--lime);
+            color: var(--dark-brown);
+            border: 3px solid var(--dark-brown);
+            border-radius: 50px;
             cursor: pointer;
-            transition: all 0.3s;
+            box-shadow: 3px 3px 0 var(--dark-brown);
+            transition: all 0.2s;
         }
 
         .product-btn:hover {
-            background: var(--toxic-green);
-            color: #000;
+            transform: translate(2px, 2px);
+            box-shadow: 1px 1px 0 var(--dark-brown);
         }
 
-        /* ===== BENEFITS SECTION ===== */
+        /* ===== BENEFITS SECTION - EXACT ZOOOM STYLE ===== */
         .benefits {
             padding: 120px 48px;
-            background: #0a0a0a;
+            background: var(--pink);
             position: relative;
+            overflow: hidden;
+        }
+
+        .benefits-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .benefits-title {
+            font-family: var(--font-display);
+            font-size: clamp(40px, 6vw, 72px);
+            font-weight: 900;
+            color: var(--dark-brown);
+            line-height: 1.1;
         }
 
         .benefits-grid {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+        }
+
+        .benefit-card {
+            background: var(--cream);
+            border-radius: 32px;
+            padding: 48px 32px;
+            text-align: center;
+            border: 4px solid var(--dark-brown);
+            box-shadow: 8px 8px 0 var(--dark-brown);
+        }
+
+        .benefit-icon {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 24px;
+            background: var(--lime);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            border: 4px solid var(--dark-brown);
+        }
+
+        .benefit-title {
+            font-family: var(--font-display);
+            font-size: 32px;
+            font-weight: 900;
+            color: var(--dark-brown);
+            text-transform: uppercase;
+            line-height: 1.2;
+        }
+
+        /* ===== INGREDIENTS SECTION ===== */
+        .ingredients {
+            padding: 120px 48px;
+            background: var(--cream);
+        }
+
+        .ingredients-grid {
             max-width: 1200px;
             margin: 0 auto;
             display: grid;
@@ -530,192 +429,113 @@
             align-items: center;
         }
 
-        .benefits-content {
+        .ingredients-content {
             display: flex;
             flex-direction: column;
-            gap: 40px;
-        }
-
-        .benefit-item {
-            display: flex;
-            gap: 24px;
-            align-items: flex-start;
-        }
-
-        .benefit-number {
-            font-size: 48px;
-            font-weight: 900;
-            color: var(--toxic-green);
-            line-height: 1;
-            opacity: 0.5;
-        }
-
-        .benefit-text h3 {
-            font-size: 20px;
-            font-weight: 800;
-            text-transform: uppercase;
-            margin-bottom: 8px;
-            color: #fff;
-        }
-
-        .benefit-text p {
-            font-size: 15px;
-            color: rgba(255,255,255,0.6);
-            line-height: 1.6;
-        }
-
-        .benefits-image {
-            position: relative;
-            aspect-ratio: 1;
-            border-radius: 40px;
-            overflow: hidden;
-            border: 2px solid rgba(57, 255, 20, 0.2);
-        }
-
-        .benefits-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        /* ===== TESTIMONIALS SECTION ===== */
-        .testimonials {
-            padding: 120px 48px;
-            background: linear-gradient(180deg, #111 0%, #0a0a0a 100%);
-        }
-
-        .testimonials-grid {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
             gap: 32px;
         }
 
-        .testimonial-card {
-            background: linear-gradient(135deg, rgba(57, 255, 20, 0.03) 0%, rgba(139, 0, 0, 0.03) 100%);
-            border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 24px;
-            padding: 40px;
-            position: relative;
-        }
-
-        .testimonial-card::before {
-            content: '"';
-            position: absolute;
-            top: 20px;
-            left: 30px;
-            font-size: 120px;
+        .ingredients-title {
+            font-family: var(--font-display);
+            font-size: clamp(36px, 5vw, 56px);
             font-weight: 900;
-            color: rgba(57, 255, 20, 0.1);
-            line-height: 1;
+            color: var(--dark-brown);
+            line-height: 1.1;
         }
 
-        .testimonial-text {
+        .ingredients-text {
+            font-family: var(--font-body);
             font-size: 18px;
+            color: var(--dark-brown);
+            opacity: 0.8;
             line-height: 1.7;
-            color: rgba(255,255,255,0.8);
-            margin-bottom: 32px;
-            position: relative;
-            z-index: 1;
         }
 
-        .testimonial-author {
+        .ingredients-list {
             display: flex;
-            align-items: center;
+            flex-wrap: wrap;
             gap: 16px;
         }
 
-        .testimonial-avatar {
-            width: 56px;
-            height: 56px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--toxic-green), var(--blood-red));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            font-weight: 800;
-            color: #000;
+        .ingredient-tag {
+            font-family: var(--font-display);
+            font-size: 20px;
+            font-weight: 400;
+            text-transform: uppercase;
+            padding: 12px 24px;
+            background: var(--lime);
+            color: var(--dark-brown);
+            border: 3px solid var(--dark-brown);
+            border-radius: 50px;
         }
 
-        .testimonial-info h4 {
-            font-size: 16px;
-            font-weight: 700;
-            color: #fff;
-            margin-bottom: 4px;
+        .ingredients-image {
+            border-radius: 40px;
+            overflow: hidden;
+            border: 4px solid var(--dark-brown);
+            box-shadow: 12px 12px 0 var(--dark-brown);
         }
 
-        .testimonial-info p {
-            font-size: 13px;
-            color: rgba(255,255,255,0.5);
+        .ingredients-image img {
+            width: 100%;
+            height: auto;
+            display: block;
         }
 
         /* ===== CTA SECTION ===== */
         .cta {
             padding: 160px 48px;
-            background: 
-                radial-gradient(ellipse at 50% 50%, rgba(57, 255, 20, 0.1) 0%, transparent 70%),
-                #0a0a0a;
+            background: var(--lime);
             text-align: center;
             position: relative;
             overflow: hidden;
         }
 
         .cta-title {
-            font-size: clamp(48px, 7vw, 80px);
+            font-family: var(--font-display);
+            font-size: clamp(48px, 8vw, 96px);
             font-weight: 900;
-            letter-spacing: -3px;
+            color: var(--dark-brown);
             line-height: 1.1;
             margin-bottom: 32px;
-            text-transform: uppercase;
         }
 
-        .cta-title span {
-            display: block;
-        }
-
-        .cta-title .highlight {
-            color: var(--toxic-green);
-            text-shadow: 0 0 60px rgba(57, 255, 20, 0.5);
-        }
-
-        .cta-desc {
+        .cta-text {
+            font-family: var(--font-body);
             font-size: 20px;
-            color: rgba(255,255,255,0.6);
+            color: var(--dark-brown);
+            opacity: 0.8;
             max-width: 600px;
             margin: 0 auto 48px;
             line-height: 1.6;
         }
 
         .cta-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 16px;
-            background: var(--toxic-green);
-            color: #000;
-            padding: 24px 48px;
-            font-size: 18px;
-            font-weight: 800;
+            display: inline-block;
+            font-family: var(--font-display);
+            font-size: 28px;
+            font-weight: 900;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            padding: 24px 64px;
+            background: var(--dark-brown);
+            color: var(--cream);
+            border: 4px solid var(--dark-brown);
+            border-radius: 60px;
             text-decoration: none;
-            border: none;
-            cursor: pointer;
-            transition: all 0.4s var(--ease-spring);
-            box-shadow: 0 0 60px rgba(57, 255, 20, 0.5);
+            box-shadow: 8px 8px 0 var(--pink);
+            transition: all 0.3s;
         }
 
         .cta-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 80px rgba(57, 255, 20, 0.8);
+            transform: translate(4px, 4px);
+            box-shadow: 4px 4px 0 var(--pink);
         }
 
         /* ===== FOOTER ===== */
-        footer {
+        .footer {
             padding: 80px 48px 40px;
-            background: #050505;
-            border-top: 1px solid rgba(255,255,255,0.05);
+            background: var(--dark-brown);
+            color: var(--cream);
         }
 
         .footer-grid {
@@ -728,111 +548,108 @@
         }
 
         .footer-brand {
-            font-size: 32px;
+            font-family: var(--font-display);
+            font-size: 48px;
             font-weight: 900;
-            color: var(--toxic-green);
+            color: var(--lime);
             margin-bottom: 16px;
-            text-transform: uppercase;
         }
 
-        .footer-desc {
-            font-size: 15px;
-            color: rgba(255,255,255,0.5);
+        .footer-text {
+            font-family: var(--font-body);
+            font-size: 16px;
+            color: var(--cream);
+            opacity: 0.7;
             line-height: 1.6;
-            max-width: 300px;
         }
 
         .footer-title {
-            font-size: 14px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: #fff;
+            font-family: var(--font-display);
+            font-size: 24px;
+            font-weight: 900;
+            color: var(--cream);
             margin-bottom: 24px;
+            text-transform: uppercase;
         }
 
         .footer-links {
             list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
         }
 
         .footer-links a {
-            font-size: 15px;
-            color: rgba(255,255,255,0.5);
+            font-family: var(--font-body);
+            font-size: 16px;
+            color: var(--cream);
+            opacity: 0.7;
             text-decoration: none;
-            transition: color 0.3s;
+            transition: opacity 0.3s;
         }
 
         .footer-links a:hover {
-            color: var(--toxic-green);
+            opacity: 1;
+            color: var(--lime);
         }
 
         .footer-bottom {
             max-width: 1200px;
             margin: 0 auto;
             padding-top: 40px;
-            border-top: 1px solid rgba(255,255,255,0.05);
+            border-top: 2px solid rgba(246, 237, 228, 0.2);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 13px;
-            color: rgba(255,255,255,0.4);
+            font-family: var(--font-body);
+            font-size: 14px;
+            color: var(--cream);
+            opacity: 0.5;
         }
 
         /* ===== RESPONSIVE ===== */
         @media (max-width: 1024px) {
-            .hero-grid {
-                grid-template-columns: 1fr;
-                gap: 60px;
-            }
-
-            .hero-visual {
-                order: -1;
-            }
-
-            .features-grid,
-            .products-grid {
+            .products-grid,
+            .benefits-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
 
-            .benefits-grid {
+            .ingredients-grid {
                 grid-template-columns: 1fr;
             }
 
             .footer-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
-        }
-
-        @media (max-width: 768px) {
-            nav {
-                padding: 16px 24px;
-            }
 
             .nav-links {
                 display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav {
+                padding: 16px 24px;
             }
 
             .hero {
                 padding: 100px 24px 60px;
             }
 
-            .features,
             .products,
             .benefits,
-            .testimonials {
+            .ingredients,
+            .cta {
                 padding: 80px 24px;
             }
 
-            .features-grid,
             .products-grid,
-            .testimonials-grid {
+            .benefits-grid {
                 grid-template-columns: 1fr;
             }
 
-            .hero-badges {
+            .hero-deco {
                 display: none;
             }
 
@@ -848,7 +665,7 @@
             }
         }
 
-        /* ===== ANIMATIONS ===== */
+        /* Scroll animations */
         .reveal {
             opacity: 0;
             transform: translateY(40px);
@@ -857,73 +674,32 @@
 </head>
 <body>
     <!-- Navigation -->
-    <nav id="navbar">
+    <nav class="nav">
         <a href="#" class="nav-logo">MILO.</a>
         <div class="nav-links">
-            <a href="#features" class="nav-link">Features</a>
             <a href="#products" class="nav-link">Products</a>
             <a href="#benefits" class="nav-link">Benefits</a>
-            <a href="#testimonials" class="nav-link">Stories</a>
+            <a href="#ingredients" class="nav-link">About</a>
         </div>
-        <button class="nav-cart" onclick="showCart()">
-            <span>Cart</span>
-            <span id="cart-count">(0)</span>
-        </button>
+        <button class="nav-cart" onclick="showCart()">Cart (0)</button>
     </nav>
 
     <!-- Hero Section -->
     <section class="hero">
-        <div class="hero-grid">
+        <div class="hero-deco hero-deco-1"></div>
+        <div class="hero-deco hero-deco-2"></div>
+        <div class="hero-deco hero-deco-3"></div>
+        
+        <div class="hero-container">
+            <div class="hero-image">
+                <img src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800&q=80" alt="Chaos">
+            </div>
             <div class="hero-content">
-                <div class="hero-tag">🔥 Trauma Clearance Sale</div>
-                <h1 class="hero-title">
-                    <span class="line-1">The Energy of</span>
-                    <span class="line-2">Chaos in Every</span>
-                    <span class="line-3">Campaign</span>
-                </h1>
-                <p class="hero-desc">
-                    Professional Button Pusher based in Kuala Lumpur. 6+ years of surviving client "visions" and turning nightmares into ROI.
+                <h1 class="hero-logo">MILO.</h1>
+                <p class="hero-tagline">
+                    <span>The energy of chaos</span>
+                    <span>in every campaign</span>
                 </p>
-                <a href="#products" class="hero-cta">
-                    <span>Witness The Chaos</span>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
-                        <path d="M5 12h14M12 5l7 7-7 7"/>
-                    </svg>
-                </a>
-            </div>
-            <div class="hero-visual">
-                <div class="hero-image-container">
-                    <img src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800&q=80" alt="Chaos Campaign">
-                </div>
-                <div class="hero-badges">
-                    <div class="hero-badge">429% Growth</div>
-                    <div class="hero-badge red">Real Trauma</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Features Section -->
-    <section class="features" id="features">
-        <div class="section-header reveal">
-            <p class="section-tag">What You Get</p>
-            <h2 class="section-title">Why Clients Fear<br>& Respect Me</h2>
-        </div>
-        <div class="features-grid">
-            <div class="feature-card reveal">
-                <div class="feature-icon">💀</div>
-                <h3 class="feature-title">Trauma-Tested</h3>
-                <p class="feature-desc">Every strategy tested on real clients with impossible demands. If it survives them, it'll survive anything.</p>
-            </div>
-            <div class="feature-card reveal">
-                <div class="feature-icon">⚡</div>
-                <h3 class="feature-title">Chaos Energy</h3>
-                <p class="feature-desc">429% growth doesn't come from playing safe. It comes from calculated risks that make competitors cry.</p>
-            </div>
-            <div class="feature-card reveal">
-                <div class="feature-icon">🎯</div>
-                <h3 class="feature-title">No Bullshit</h3>
-                <p class="feature-desc">I speak plain English (and Manglish). No buzzwords, no fluff, just results that make CFOs smile.</p>
             </div>
         </div>
     </section>
@@ -931,102 +707,80 @@
     <!-- Products Section -->
     <section class="products" id="products">
         <div class="section-header reveal">
-            <p class="section-tag">Popular Products</p>
-            <h2 class="section-title">War Stories<br>Collection</h2>
+            <p class="section-label">Popular Products</p>
+            <h2 class="section-title">Trauma stories that built a career</h2>
         </div>
+        
         <div class="products-grid">
-            <!-- Product 1 -->
-            <div class="product-card reveal" onclick="openProduct('cheesecake')">
-                <div class="product-image-wrap">
-                    <span class="product-tag featured">Featured</span>
+            <div class="product-card reveal" onclick="addToCart('17-night')">
+                <div class="product-image">
                     <img src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=600&q=80" alt="17-Night Caller">
                 </div>
-                <div class="product-info">
-                    <h3 class="product-name">The 17-Night Caller</h3>
-                    <p class="product-category">Separation Anxiety from a Marketing Campaign</p>
-                    <div class="product-footer">
-                        <span class="product-price">RM0.00</span>
-                        <button class="product-btn">Add to Cart</button>
-                    </div>
+                <h3 class="product-name">The 17-Night Caller</h3>
+                <p class="product-desc">Client called 17 nights in a row. Growth: 429%. Sanity: questionable.</p>
+                <div class="product-footer">
+                    <span class="product-price">RM0</span>
+                    <button class="product-btn">Add</button>
                 </div>
             </div>
 
-            <!-- Product 2 -->
-            <div class="product-card reveal" onclick="openProduct('python')">
-                <div class="product-image-wrap">
-                    <span class="product-tag hot">Hot</span>
-                    <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=600&q=80" alt="Python Scripts">
+            <div class="product-card reveal" onclick="addToCart('metamask')">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=600&q=80" alt="MetaMask">
                 </div>
-                <div class="product-info">
-                    <h3 class="product-name">The RM47,500 Lie</h3>
-                    <p class="product-category">Blockchain Consultant Installed MetaMask</p>
-                    <div class="product-footer">
-                        <span class="product-price">RM2.50</span>
-                        <button class="product-btn">Add to Cart</button>
-                    </div>
+                <h3 class="product-name">The RM47,500 Lie</h3>
+                <p class="product-desc">Blockchain guru installed MetaMask. Charged a year's salary.</p>
+                <div class="product-footer">
+                    <span class="product-price">RM2.50</span>
+                    <button class="product-btn">Add</button>
                 </div>
             </div>
 
-            <!-- Product 3 -->
-            <div class="product-card reveal" onclick="openProduct('jesaisquoi')">
-                <div class="product-image-wrap">
-                    <span class="product-tag">Popular</span>
-                    <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600&q=80" alt="Je Ne Sais Quoi">
+            <div class="product-card reveal" onclick="addToCart('emojis')">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600&q=80" alt="Emojis">
                 </div>
-                <div class="product-info">
-                    <h3 class="product-name">Je Ne Sais WHAT?!</h3>
-                    <p class="product-category">Client Wanted Authentic Emojis for 3 Weeks</p>
-                    <div class="product-footer">
-                        <span class="product-price">FREE</span>
-                        <button class="product-btn">Add to Cart</button>
-                    </div>
+                <h3 class="product-name">Je Ne Sais WHAT?!</h3>
+                <p class="product-desc">Three weeks choosing "authentic" emojis. The horror.</p>
+                <div class="product-footer">
+                    <span class="product-price">FREE</span>
+                    <button class="product-btn">Add</button>
                 </div>
             </div>
 
-            <!-- Product 4 -->
-            <div class="product-card reveal" onclick="openProduct('guru')">
-                <div class="product-image-wrap">
-                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&q=80" alt="Guru vs Graduate">
+            <div class="product-card reveal" onclick="addToCart('guru')">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&q=80" alt="Guru">
                 </div>
-                <div class="product-info">
-                    <h3 class="product-name">Guru vs Graduate</h3>
-                    <p class="product-category">Viral Energy Peaks During Full Moons - RM10K</p>
-                    <div class="product-footer">
-                        <span class="product-price">RM1.00</span>
-                        <button class="product-btn">Add to Cart</button>
-                    </div>
+                <h3 class="product-name">Guru vs Graduate</h3>
+                <p class="product-desc">"Viral energy peaks at full moon." She won. I cried.</p>
+                <div class="product-footer">
+                    <span class="product-price">RM1</span>
+                    <button class="product-btn">Add</button>
                 </div>
             </div>
 
-            <!-- Product 5 -->
-            <div class="product-card reveal" onclick="openProduct('raya')">
-                <div class="product-image-wrap">
-                    <span class="product-tag">Sale</span>
-                    <img src="https://images.unsplash.com/photo-1519817914152-22d216bb9170?w=600&q=80" alt="Raya Content">
+            <div class="product-card reveal" onclick="addToCart('raya')">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1519817914152-22d216bb9170?w=600&q=80" alt="Raya">
                 </div>
-                <div class="product-info">
-                    <h3 class="product-name">Comic Sans Raya</h3>
-                    <p class="product-category">More Islamic But Not Too Islamic</p>
-                    <div class="product-footer">
-                        <span class="product-price">RM0.15</span>
-                        <button class="product-btn">Add to Cart</button>
-                    </div>
+                <h3 class="product-name">Comic Sans Raya</h3>
+                <p class="product-desc">"More Islamic but not too Islamic." With Comic Sans.</p>
+                <div class="product-footer">
+                    <span class="product-price">RM0.15</span>
+                    <button class="product-btn">Add</button>
                 </div>
             </div>
 
-            <!-- Product 6 -->
-            <div class="product-card reveal" onclick="openProduct('scopecreep')">
-                <div class="product-image-wrap">
-                    <span class="product-tag featured">Danger</span>
-                    <img src="https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?w=600&q=80" alt="Scope Creep">
+            <div class="product-card reveal" onclick="addToCart('skynet')">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?w=600&q=80" alt="Skynet">
                 </div>
-                <div class="product-info">
-                    <h3 class="product-name">Skynet With Anxiety</h3>
-                    <p class="product-category">AI Chatbot Needs Therapy Now</p>
-                    <div class="product-footer">
-                        <span class="product-price">RM0.00</span>
-                        <button class="product-btn">Add to Cart</button>
-                    </div>
+                <h3 class="product-name">Skynet Anxiety</h3>
+                <p class="product-desc">AI needed therapy. So did I after building it.</p>
+                <div class="product-footer">
+                    <span class="product-price">RM0</span>
+                    <button class="product-btn">Add</button>
                 </div>
             </div>
         </div>
@@ -1034,135 +788,77 @@
 
     <!-- Benefits Section -->
     <section class="benefits" id="benefits">
+        <div class="benefits-header reveal">
+            <h2 class="benefits-title">The incredible benefits<br>of my chaos</h2>
+        </div>
+        
         <div class="benefits-grid">
-            <div class="benefits-content">
-                <div class="section-header reveal" style="text-align: left; margin-bottom: 60px;">
-                    <p class="section-tag">The Recipe</p>
-                    <h2 class="section-title">What Goes Into<br>Every Campaign</h2>
-                </div>
-                
-                <div class="benefit-item reveal">
-                    <div class="benefit-number">01</div>
-                    <div class="benefit-text">
-                        <h3>Strategic Chaos</h3>
-                        <p>Every campaign starts with understanding what makes your competitors uncomfortable. Then we do exactly that.</p>
-                    </div>
-                </div>
-
-                <div class="benefit-item reveal">
-                    <div class="benefit-number">02</div>
-                    <div class="benefit-text">
-                        <h3>Technical Muscle</h3>
-                        <p>n8n automation, API integrations, custom code. I don't just write captions; I build systems that scale.</p>
-                    </div>
-                </div>
-
-                <div class="benefit-item reveal">
-                    <div class="benefit-number">03</div>
-                    <div class="benefit-text">
-                        <h3>Malaysian Flavor</h3>
-                        <p>Copy that sounds like your best friend (lah). Cultural nuances that international agencies miss completely.</p>
-                    </div>
-                </div>
+            <div class="benefit-card reveal">
+                <div class="benefit-icon">💀</div>
+                <h3 class="benefit-title">Improved<br>Digestion</h3>
             </div>
-
-            <div class="benefits-image reveal">
-                <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&q=80" alt="Campaign Strategy">
+            <div class="benefit-card reveal">
+                <div class="benefit-icon">⚡</div>
+                <h3 class="benefit-title">Immunity<br>Boosting</h3>
+            </div>
+            <div class="benefit-card reveal">
+                <div class="benefit-icon">🧠</div>
+                <h3 class="benefit-title">Natural<br>Source of<br>Trauma</h3>
             </div>
         </div>
     </section>
 
-    <!-- Testimonials Section -->
-    <section class="testimonials" id="testimonials">
-        <div class="section-header reveal">
-            <p class="section-tag">What People Say</p>
-            <h2 class="section-title">Client Horror<br>Stories</h2>
-        </div>
-        <div class="testimonials-grid">
-            <div class="testimonial-card reveal">
-                <p class="testimonial-text">
-                    Harshana built an AI system that replaced 3 agency staff. The efficiency was incredible. The unemployment guilt was real.
+    <!-- Ingredients Section -->
+    <section class="ingredients" id="ingredients">
+        <div class="ingredients-grid">
+            <div class="ingredients-content reveal">
+                <h2 class="ingredients-title">Only natural ingredients</h2>
+                <p class="ingredients-text">
+                    Every campaign is brewed with 100% organic chaos, ethically sourced client nightmares, 
+                    and a dash of Malaysian humor. No artificial buzzwords. No fake gurus. Just pure, 
+                    unfiltered marketing that actually works.
                 </p>
-                <div class="testimonial-author">
-                    <div class="testimonial-avatar">CC</div>
-                    <div class="testimonial-info">
-                        <h4>Cream of Creams</h4>
-                        <p>429% Growth Achieved</p>
-                    </div>
+                <div class="ingredients-list">
+                    <span class="ingredient-tag">Strategic Chaos</span>
+                    <span class="ingredient-tag">N8N Automation</span>
+                    <span class="ingredient-tag">Copy-Paste</span>
+                    <span class="ingredient-tag">Kopi O</span>
+                    <span class="ingredient-tag">Lah</span>
                 </div>
             </div>
-
-            <div class="testimonial-card reveal">
-                <p class="testimonial-text">
-                    He asked for my budget once. I laughed. He laughed harder. Then he delivered a system worth 10x what I could afford.
-                </p>
-                <div class="testimonial-author">
-                    <div class="testimonial-avatar">??</div>
-                    <div class="testimonial-info">
-                        <h4>Anonymous Client</h4>
-                        <p>Still Processing the Trauma</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="testimonial-card reveal">
-                <p class="testimonial-text">
-                    Our 'blockchain consultant' charged RM47,500 to install MetaMask. Harshana built actual automation for RM2.50. The math is insulting.
-                </p>
-                <div class="testimonial-author">
-                    <div class="testimonial-avatar">LT</div>
-                    <div class="testimonial-info">
-                        <h4>Legal Tech Startup</h4>
-                        <p>ROI: 19,000%</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="testimonial-card reveal">
-                <p class="testimonial-text">
-                    He made our Raya campaign go viral by embracing the chaos. 2M impressions. Zero ad spend. Just pure, unfiltered Malaysian energy.
-                </p>
-                <div class="testimonial-author">
-                    <div class="testimonial-avatar">SS</div>
-                    <div class="testimonial-info">
-                        <h4>Social Media Team</h4>
-                        <p>Still Riding the High</p>
-                    </div>
-                </div>
+            <div class="ingredients-image reveal">
+                <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&q=80" alt="Ingredients">
             </div>
         </div>
     </section>
 
     <!-- CTA Section -->
     <section class="cta">
-        <h2 class="cta-title reveal">
-            <span>Ready to Take</span>
-            <span class="highlight">The Next Step?</span>
-        </h2>
-        <p class="cta-desc reveal">
-            Have an impossible deadline? An unrealistic KPI? A 'simple' request that requires a PhD? Let's shape it into something that actually works.
+        <h2 class="cta-title reveal">Try the entire<br>MILO line!</h2>
+        <p class="cta-text reveal">
+            Want to experience the variety of flavors and benefits of professional chaos? 
+            My trauma collection is the perfect choice for those who want to familiarize 
+            themselves with the MILO range.
         </p>
-        <a href="mailto:jothiharshana188@gmail.com" class="cta-btn reveal">
-            Start The Chaos
-        </a>
+        <a href="mailto:jothiharshana188@gmail.com" class="cta-btn reveal">Start The Chaos</a>
     </section>
 
     <!-- Footer -->
-    <footer>
+    <footer class="footer">
         <div class="footer-grid">
             <div>
                 <div class="footer-brand">MILO.</div>
-                <p class="footer-desc">
-                    Professional Button Pusher based in Kuala Lumpur. Turning client nightmares into ROI since 2018.
+                <p class="footer-text">
+                    Professional Button Pusher based in Kuala Lumpur. 
+                    Brewing chaos since 2018.
                 </p>
             </div>
             <div>
-                <h4 class="footer-title">Navigation</h4>
+                <h4 class="footer-title">Navigate</h4>
                 <ul class="footer-links">
-                    <li><a href="#features">Features</a></li>
                     <li><a href="#products">Products</a></li>
                     <li><a href="#benefits">Benefits</a></li>
-                    <li><a href="#testimonials">Stories</a></li>
+                    <li><a href="#ingredients">About</a></li>
                 </ul>
             </div>
             <div>
@@ -1176,88 +872,54 @@
             <div>
                 <h4 class="footer-title">Location</h4>
                 <ul class="footer-links">
-                    <li>Kuala Lumpur, Malaysia</li>
-                    <li>Available Worldwide</li>
+                    <li>Kuala Lumpur</li>
+                    <li>Malaysia</li>
                     <li>Will Work For Coffee</li>
                 </ul>
             </div>
         </div>
         <div class="footer-bottom">
             <p>&copy; 2024 MILO. All traumas reserved.</p>
-            <p>Professional Button Pusher | Marketing Technologist</p>
+            <p>Made with chaos & kopi O</p>
         </div>
     </footer>
 
-    <!-- Product Modal -->
-    <div id="productModal" class="modal" style="display: none;">
-        <!-- Modal content will be injected by JS -->
-    </div>
-
     <script>
-        // Navbar scroll effect
-        const navbar = document.getElementById('navbar');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
+        // Cart functionality
+        let cartCount = 0;
+        
+        function addToCart(product) {
+            cartCount++;
+            document.querySelector('.nav-cart').textContent = `Cart (${cartCount})`;
+            
+            // Button feedback
+            const btn = event.target;
+            const originalText = btn.textContent;
+            btn.textContent = 'Added!';
+            btn.style.background = 'var(--pink)';
+            
+            setTimeout(() => {
+                btn.textContent = originalText;
+                btn.style.background = 'var(--lime)';
+            }, 1000);
+        }
+        
+        function showCart() {
+            if (cartCount === 0) {
+                alert('Your cart is empty! Add some trauma first.');
             } else {
-                navbar.classList.remove('scrolled');
+                alert(`Cart (${cartCount} items)\n\nPrice: Your sanity`);
             }
-        }, { passive: true });
+        }
 
-        // GSAP Animations
+        // GSAP Scroll Animations
         gsap.registerPlugin(ScrollTrigger);
 
-        // Hero animations
-        gsap.from('.hero-tag', {
-            opacity: 0,
-            y: 30,
-            duration: 0.8,
-            delay: 0.2,
-            ease: 'power3.out'
-        });
-
-        gsap.from('.hero-title span', {
-            opacity: 0,
-            y: 60,
-            duration: 1,
-            stagger: 0.15,
-            delay: 0.4,
-            ease: 'power3.out'
-        });
-
-        gsap.from('.hero-desc', {
-            opacity: 0,
-            y: 30,
-            duration: 0.8,
-            delay: 0.8,
-            ease: 'power3.out'
-        });
-
-        gsap.from('.hero-cta', {
-            opacity: 0,
-            y: 30,
-            duration: 0.8,
-            delay: 1,
-            ease: 'power3.out'
-        });
-
-        gsap.from('.hero-image-container', {
-            opacity: 0,
-            scale: 0.8,
-            duration: 1.2,
-            delay: 0.4,
-            ease: 'power3.out'
-        });
-
-        // Scroll reveal animations
+        // Reveal animations
         const reveals = document.querySelectorAll('.reveal');
-        
-        reveals.forEach((element, index) => {
+        reveals.forEach((element) => {
             gsap.fromTo(element, 
-                {
-                    opacity: 0,
-                    y: 40
-                },
+                { opacity: 0, y: 60 },
                 {
                     opacity: 1,
                     y: 0,
@@ -1272,67 +934,16 @@
             );
         });
 
-        // Cart functionality
-        let cart = [];
-        
-        function showCart() {
-            if (cart.length === 0) {
-                alert('Your cart is empty! Add some trauma first.');
-            } else {
-                alert(`Cart (${cart.length} items):\n${cart.map(item => `- ${item}`).join('\n')}\n\nTotal: Priceless`);
+        // Hero parallax
+        gsap.to('.hero-image', {
+            y: 100,
+            ease: 'none',
+            scrollTrigger: {
+                trigger: '.hero',
+                start: 'top top',
+                end: 'bottom top',
+                scrub: 1
             }
-        }
-
-        function openProduct(id) {
-            const products = {
-                cheesecake: {
-                    name: 'The 17-Night Caller',
-                    price: 'RM0.00',
-                    desc: 'Separation anxiety from a marketing campaign. Client called 17 nights in a row at 11 PM. Growth: 429%. Sanity: Debatable.'
-                },
-                python: {
-                    name: 'The RM47,500 Lie',
-                    price: 'RM2.50',
-                    desc: 'Blockchain consultant installed MetaMask and charged RM47,500. I built automation for RM2.50. The math is insulting.'
-                },
-                jesaisquoi: {
-                    name: 'Je Ne Sais WHAT?!',
-                    price: 'FREE',
-                    desc: 'Client wanted "authentic" emojis for 3 weeks. Three. Whole. Weeks. For emojis.'
-                },
-                guru: {
-                    name: 'Guru vs Graduate',
-                    price: 'RM1.00',
-                    desc: '"Viral energy peaks during full moons" - RM10K course. I have a degree. She has "moon intuition." I lost.'
-                },
-                raya: {
-                    name: 'Comic Sans Raya',
-                    price: 'RM0.15',
-                    desc: '"Make it more Islamic but not too Islamic." Client wanted Comic Sans for Raya. In 2024.'
-                },
-                scopecreep: {
-                    name: 'Skynet With Anxiety',
-                    price: 'RM0.00',
-                    desc: 'AI chatbot that escalated to me. The AI needed therapy. I also need therapy now.'
-                }
-            };
-            
-            const product = products[id];
-            if (product) {
-                cart.push(product.name);
-                document.getElementById('cart-count').textContent = `(${cart.length})`;
-                alert(`Added to cart: ${product.name}\n\n${product.desc}`);
-            }
-        }
-
-        // Add to cart buttons
-        document.querySelectorAll('.product-btn').forEach((btn, index) => {
-            btn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                const productCards = document.querySelectorAll('.product-card');
-                const productId = ['cheesecake', 'python', 'jesaisquoi', 'guru', 'raya', 'scopecreep'][index];
-                openProduct(productId);
-            });
         });
     </script>
 </body>
