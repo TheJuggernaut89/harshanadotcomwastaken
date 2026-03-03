@@ -42,7 +42,7 @@
             overflow-x: hidden;
         }
 
-        /* ===== NAVIGATION - EXACT ZOOOM STYLE ===== */
+        /* ===== NAVIGATION - FIXED OVERLAP ===== */
         .nav {
             position: fixed;
             top: 0;
@@ -53,7 +53,17 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: transparent;
+            background: rgba(246, 237, 228, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .nav.scrolled {
+            background: rgba(246, 237, 228, 0.98);
+            border-bottom: 3px solid var(--dark-brown);
+            padding: 16px 48px;
+            box-shadow: 0 4px 20px rgba(33, 21, 9, 0.1);
         }
 
         .nav-logo {
@@ -107,14 +117,14 @@
             box-shadow: 2px 2px 0 var(--dark-brown);
         }
 
-        /* ===== HERO - EXACT ZOOOM STYLE ===== */
+        /* ===== HERO ===== */
         .hero {
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             position: relative;
-            padding: 120px 48px 80px;
+            padding: 140px 48px 80px;
             background: var(--cream);
             overflow: hidden;
         }
@@ -132,8 +142,8 @@
         .hero-image {
             position: relative;
             width: 100%;
-            max-width: 600px;
-            margin-bottom: -60px;
+            max-width: 500px;
+            margin-bottom: -40px;
             z-index: 2;
             animation: float 6s ease-in-out infinite;
         }
@@ -146,13 +156,15 @@
         .hero-image img {
             width: 100%;
             height: auto;
-            filter: drop-shadow(0 40px 80px rgba(33, 21, 9, 0.3));
+            border-radius: 40px;
+            border: 4px solid var(--dark-brown);
+            box-shadow: 12px 12px 0 var(--dark-brown);
         }
 
         .hero-content {
             position: relative;
             z-index: 3;
-            margin-top: -20px;
+            margin-top: 20px;
         }
 
         .hero-logo {
@@ -228,7 +240,7 @@
             50% { transform: scale(1.2); opacity: 1; }
         }
 
-        /* ===== PRODUCTS SECTION - EXACT ZOOOM STYLE ===== */
+        /* ===== PRODUCTS SECTION - FIXED GRID ===== */
         .products {
             padding: 120px 48px;
             background: var(--cream);
@@ -261,21 +273,25 @@
         }
 
         .products-grid {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 32px;
+            align-items: stretch;
         }
 
         .product-card {
             background: var(--cream-dark);
             border-radius: 32px;
-            padding: 32px;
+            padding: 24px;
             border: 4px solid var(--dark-brown);
             box-shadow: 8px 8px 0 var(--dark-brown);
             transition: all 0.3s;
             cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
         }
 
         .product-card:hover {
@@ -288,8 +304,9 @@
             aspect-ratio: 1;
             border-radius: 20px;
             overflow: hidden;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
             border: 3px solid var(--dark-brown);
+            background: var(--cream);
         }
 
         .product-image img {
@@ -305,41 +322,44 @@
 
         .product-name {
             font-family: var(--font-display);
-            font-size: 28px;
+            font-size: 24px;
             font-weight: 900;
             color: var(--dark-brown);
             margin-bottom: 8px;
             text-transform: uppercase;
+            line-height: 1.2;
         }
 
         .product-desc {
             font-family: var(--font-body);
-            font-size: 15px;
+            font-size: 14px;
             color: var(--dark-brown);
             opacity: 0.7;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
             line-height: 1.5;
+            flex-grow: 1;
         }
 
         .product-footer {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-top: auto;
         }
 
         .product-price {
             font-family: var(--font-display);
-            font-size: 32px;
+            font-size: 28px;
             font-weight: 900;
             color: var(--orange);
         }
 
         .product-btn {
             font-family: var(--font-display);
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 400;
             text-transform: uppercase;
-            padding: 12px 24px;
+            padding: 10px 20px;
             background: var(--lime);
             color: var(--dark-brown);
             border: 3px solid var(--dark-brown);
@@ -354,7 +374,128 @@
             box-shadow: 1px 1px 0 var(--dark-brown);
         }
 
-        /* ===== BENEFITS SECTION - EXACT ZOOOM STYLE ===== */
+        /* ===== MODAL ===== */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(33, 21, 9, 0.9);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            backdrop-filter: blur(10px);
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--cream);
+            border-radius: 40px;
+            padding: 48px;
+            max-width: 600px;
+            width: 100%;
+            border: 4px solid var(--dark-brown);
+            box-shadow: 12px 12px 0 var(--dark-brown);
+            position: relative;
+            animation: modalPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes modalPop {
+            0% { transform: scale(0.8) translateY(40px); opacity: 0; }
+            100% { transform: scale(1) translateY(0); opacity: 1; }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 48px;
+            height: 48px;
+            background: var(--pink);
+            border: 3px solid var(--dark-brown);
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            box-shadow: 3px 3px 0 var(--dark-brown);
+        }
+
+        .modal-close:hover {
+            transform: translate(2px, 2px);
+            box-shadow: 1px 1px 0 var(--dark-brown);
+        }
+
+        .modal-image {
+            width: 100%;
+            aspect-ratio: 1;
+            border-radius: 24px;
+            overflow: hidden;
+            border: 3px solid var(--dark-brown);
+            margin-bottom: 24px;
+        }
+
+        .modal-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .modal-title {
+            font-family: var(--font-display);
+            font-size: 36px;
+            font-weight: 900;
+            color: var(--dark-brown);
+            margin-bottom: 16px;
+            text-transform: uppercase;
+        }
+
+        .modal-desc {
+            font-family: var(--font-body);
+            font-size: 18px;
+            color: var(--dark-brown);
+            line-height: 1.7;
+            margin-bottom: 24px;
+        }
+
+        .modal-price {
+            font-family: var(--font-display);
+            font-size: 48px;
+            font-weight: 900;
+            color: var(--orange);
+            margin-bottom: 24px;
+        }
+
+        .modal-btn {
+            width: 100%;
+            font-family: var(--font-display);
+            font-size: 24px;
+            font-weight: 900;
+            text-transform: uppercase;
+            padding: 20px;
+            background: var(--lime);
+            color: var(--dark-brown);
+            border: 4px solid var(--dark-brown);
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 4px 4px 0 var(--dark-brown);
+            transition: all 0.2s;
+        }
+
+        .modal-btn:hover {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0 var(--dark-brown);
+        }
+
+        /* ===== BENEFITS ===== */
         .benefits {
             padding: 120px 48px;
             background: var(--pink);
@@ -414,7 +555,7 @@
             line-height: 1.2;
         }
 
-        /* ===== INGREDIENTS SECTION ===== */
+        /* ===== INGREDIENTS ===== */
         .ingredients {
             padding: 120px 48px;
             background: var(--cream);
@@ -482,7 +623,7 @@
             display: block;
         }
 
-        /* ===== CTA SECTION ===== */
+        /* ===== CTA ===== */
         .cta {
             padding: 160px 48px;
             background: var(--lime);
@@ -610,7 +751,10 @@
 
         /* ===== RESPONSIVE ===== */
         @media (max-width: 1024px) {
-            .products-grid,
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
             .benefits-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
@@ -634,7 +778,7 @@
             }
 
             .hero {
-                padding: 100px 24px 60px;
+                padding: 120px 24px 60px;
             }
 
             .products,
@@ -644,13 +788,20 @@
                 padding: 80px 24px;
             }
 
-            .products-grid,
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+
             .benefits-grid {
                 grid-template-columns: 1fr;
             }
 
             .hero-deco {
                 display: none;
+            }
+
+            .modal-content {
+                padding: 32px 24px;
             }
 
             .footer-grid {
@@ -665,16 +816,15 @@
             }
         }
 
-        /* Scroll animations */
         .reveal {
-            opacity: 0;
-            transform: translateY(40px);
+            opacity: 1;
+            transform: none;
         }
     </style>
 </head>
 <body>
     <!-- Navigation -->
-    <nav class="nav">
+    <nav class="nav" id="navbar">
         <a href="#" class="nav-logo">MILO.</a>
         <div class="nav-links">
             <a href="#products" class="nav-link">Products</a>
@@ -692,7 +842,7 @@
         
         <div class="hero-container">
             <div class="hero-image">
-                <img src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800&q=80" alt="Chaos">
+                <img src="https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif" alt="Funny Cat">
             </div>
             <div class="hero-content">
                 <h1 class="hero-logo">MILO.</h1>
@@ -706,81 +856,81 @@
 
     <!-- Products Section -->
     <section class="products" id="products">
-        <div class="section-header reveal">
+        <div class="section-header">
             <p class="section-label">Popular Products</p>
             <h2 class="section-title">Trauma stories that built a career</h2>
         </div>
         
         <div class="products-grid">
-            <div class="product-card reveal" onclick="addToCart('17-night')">
+            <div class="product-card" onclick="openModal('17-night')">
                 <div class="product-image">
-                    <img src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=600&q=80" alt="17-Night Caller">
+                    <img src="https://media.giphy.com/media/3o7TKtnuHOHHUjR38Y/giphy.gif" alt="Cat Typing">
                 </div>
                 <h3 class="product-name">The 17-Night Caller</h3>
                 <p class="product-desc">Client called 17 nights in a row. Growth: 429%. Sanity: questionable.</p>
                 <div class="product-footer">
                     <span class="product-price">RM0</span>
-                    <button class="product-btn">Add</button>
+                    <button class="product-btn">View</button>
                 </div>
             </div>
 
-            <div class="product-card reveal" onclick="addToCart('metamask')">
+            <div class="product-card" onclick="openModal('metamask')">
                 <div class="product-image">
-                    <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=600&q=80" alt="MetaMask">
+                    <img src="https://media.giphy.com/media/mlvseq9yvZhba/giphy.gif" alt="Cat Computer">
                 </div>
                 <h3 class="product-name">The RM47,500 Lie</h3>
                 <p class="product-desc">Blockchain guru installed MetaMask. Charged a year's salary.</p>
                 <div class="product-footer">
                     <span class="product-price">RM2.50</span>
-                    <button class="product-btn">Add</button>
+                    <button class="product-btn">View</button>
                 </div>
             </div>
 
-            <div class="product-card reveal" onclick="addToCart('emojis')">
+            <div class="product-card" onclick="openModal('emojis')">
                 <div class="product-image">
-                    <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600&q=80" alt="Emojis">
+                    <img src="https://media.giphy.com/media/VbnUQpnihPSIgIXuZv/giphy.gif" alt="Cat Phone">
                 </div>
                 <h3 class="product-name">Je Ne Sais WHAT?!</h3>
                 <p class="product-desc">Three weeks choosing "authentic" emojis. The horror.</p>
                 <div class="product-footer">
                     <span class="product-price">FREE</span>
-                    <button class="product-btn">Add</button>
+                    <button class="product-btn">View</button>
                 </div>
             </div>
 
-            <div class="product-card reveal" onclick="addToCart('guru')">
+            <div class="product-card" onclick="openModal('guru')">
                 <div class="product-image">
-                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&q=80" alt="Guru">
+                    <img src="https://media.giphy.com/media/13CoXDiaCcCoyk/giphy.gif" alt="Cat Judge">
                 </div>
                 <h3 class="product-name">Guru vs Graduate</h3>
                 <p class="product-desc">"Viral energy peaks at full moon." She won. I cried.</p>
                 <div class="product-footer">
                     <span class="product-price">RM1</span>
-                    <button class="product-btn">Add</button>
+                    <button class="product-btn">View</button>
                 </div>
             </div>
 
-            <div class="product-card reveal" onclick="addToCart('raya')">
+            <div class="product-card" onclick="openModal('raya')">
                 <div class="product-image">
-                    <img src="https://images.unsplash.com/photo-1519817914152-22d216bb9170?w=600&q=80" alt="Raya">
+                    <img src="https://media.giphy.com/media/5i7umUqAOYYEw/giphy.gif" alt="Cat Celebration">
                 </div>
                 <h3 class="product-name">Comic Sans Raya</h3>
                 <p class="product-desc">"More Islamic but not too Islamic." With Comic Sans.</p>
                 <div class="product-footer">
                     <span class="product-price">RM0.15</span>
-                    <button class="product-btn">Add</button>
+                    <button class="product-btn">View</button>
                 </div>
             </div>
 
-            <div class="product-card reveal" onclick="addToCart('skynet')">
+            <div class="product-card" onclick="openModal('skynet')">
                 <div class="product-image">
-                    <img src="https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?w=600&q=80" alt="Skynet">
+                    <img src="https://media.giphy.com/media/l3q2K5jinAlChoCLS/giphy.gif" alt="Cat Robot">
                 </div>
                 <h3 class="product-name">Skynet Anxiety</h3>
                 <p class="product-desc">AI needed therapy. So did I after building it.</p>
                 <div class="product-footer">
                     <span class="product-price">RM0</span>
-                    <button class="product-btn">Add</button>
+                    <button class="product-btn">View</button>
                 </div>
             </div>
         </div>
@@ -788,20 +938,20 @@
 
     <!-- Benefits Section -->
     <section class="benefits" id="benefits">
-        <div class="benefits-header reveal">
+        <div class="benefits-header">
             <h2 class="benefits-title">The incredible benefits<br>of my chaos</h2>
         </div>
         
         <div class="benefits-grid">
-            <div class="benefit-card reveal">
+            <div class="benefit-card">
                 <div class="benefit-icon">💀</div>
                 <h3 class="benefit-title">Improved<br>Digestion</h3>
             </div>
-            <div class="benefit-card reveal">
+            <div class="benefit-card">
                 <div class="benefit-icon">⚡</div>
                 <h3 class="benefit-title">Immunity<br>Boosting</h3>
             </div>
-            <div class="benefit-card reveal">
+            <div class="benefit-card">
                 <div class="benefit-icon">🧠</div>
                 <h3 class="benefit-title">Natural<br>Source of<br>Trauma</h3>
             </div>
@@ -811,7 +961,7 @@
     <!-- Ingredients Section -->
     <section class="ingredients" id="ingredients">
         <div class="ingredients-grid">
-            <div class="ingredients-content reveal">
+            <div class="ingredients-content">
                 <h2 class="ingredients-title">Only natural ingredients</h2>
                 <p class="ingredients-text">
                     Every campaign is brewed with 100% organic chaos, ethically sourced client nightmares, 
@@ -826,21 +976,21 @@
                     <span class="ingredient-tag">Lah</span>
                 </div>
             </div>
-            <div class="ingredients-image reveal">
-                <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&q=80" alt="Ingredients">
+            <div class="ingredients-image">
+                <img src="https://media.giphy.com/media/3o7TKSjRrfIPjeiVyM/giphy.gif" alt="Funny Cat Cooking">
             </div>
         </div>
     </section>
 
     <!-- CTA Section -->
     <section class="cta">
-        <h2 class="cta-title reveal">Try the entire<br>MILO line!</h2>
-        <p class="cta-text reveal">
+        <h2 class="cta-title">Try the entire<br>MILO line!</h2>
+        <p class="cta-text">
             Want to experience the variety of flavors and benefits of professional chaos? 
             My trauma collection is the perfect choice for those who want to familiarize 
             themselves with the MILO range.
         </p>
-        <a href="mailto:jothiharshana188@gmail.com" class="cta-btn reveal">Start The Chaos</a>
+        <a href="mailto:jothiharshana188@gmail.com" class="cta-btn">Start The Chaos</a>
     </section>
 
     <!-- Footer -->
@@ -884,55 +1034,133 @@
         </div>
     </footer>
 
+    <!-- Modal -->
+    <div class="modal-overlay" id="modal" onclick="closeModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+            <div class="modal-image">
+                <img id="modal-img" src="" alt="">
+            </div>
+            <h3 class="modal-title" id="modal-title"></h3>
+            <p class="modal-desc" id="modal-desc"></p>
+            <div class="modal-price" id="modal-price"></div>
+            <button class="modal-btn" onclick="addToCartFromModal()">Add to Cart</button>
+        </div>
+    </div>
+
     <script>
-        // Cart functionality
+        // Product data
+        const products = {
+            '17-night': {
+                name: 'The 17-Night Caller',
+                price: 'RM0',
+                shortDesc: 'Client called 17 nights in a row. Growth: 429%. Sanity: questionable.',
+                fullDesc: 'This client had separation anxiety from a marketing campaign. They called 17 nights in a row at 11 PM, asking for "just one small tweak." The result? 429% growth. My sanity? Debatable. Includes: sleep deprivation, caffeine addiction, and a case study that makes other clients look reasonable.',
+                image: 'https://media.giphy.com/media/3o7TKtnuHOHHUjR38Y/giphy.gif'
+            },
+            'metamask': {
+                name: 'The RM47,500 Lie',
+                price: 'RM2.50',
+                shortDesc: 'Blockchain guru installed MetaMask. Charged a year\'s salary.',
+                fullDesc: 'A "blockchain consultant" charged RM47,500 to install MetaMask and create a wallet. That\'s it. Just MetaMask. I built actual Python automation for RM2.50. The math is insulting. This trauma includes: realizing the industry is full of scams, imposter syndrome, and the burning desire to expose frauds.',
+                image: 'https://media.giphy.com/media/mlvseq9yvZhba/giphy.gif'
+            },
+            'emojis': {
+                name: 'Je Ne Sais WHAT?!',
+                price: 'FREE',
+                shortDesc: 'Three weeks choosing "authentic" emojis. The horror.',
+                fullDesc: 'A French client spent three weeks choosing "authentic" emojis for their brand. Three. Whole. Weeks. For emojis. We went through 147 variations of the winking face. Includes: existential crisis, questioning my career choices, and a newfound hatred for Unicode.',
+                image: 'https://media.giphy.com/media/VbnUQpnihPSIgIXuZv/giphy.gif'
+            },
+            'guru': {
+                name: 'Guru vs Graduate',
+                price: 'RM1',
+                shortDesc: '"Viral energy peaks at full moon." She won. I cried.',
+                fullDesc: 'A marketing guru with a "viral energy certification" claimed posts perform better during full moons. She charged RM10K for moon phase consultations. I have a degree. She has "moon intuition." Guess who the client chose? Includes: crushed academic pride, moon phase research, and quiet sobbing.',
+                image: 'https://media.giphy.com/media/13CoXDiaCcCoyk/giphy.gif'
+            },
+            'raya': {
+                name: 'Comic Sans Raya',
+                price: 'RM0.15',
+                shortDesc: '"More Islamic but not too Islamic." With Comic Sans.',
+                fullDesc: 'A client wanted their Raya campaign to be "more Islamic but not too Islamic, modern but traditional, loud but subtle." Oh, and they insisted on Comic Sans. In 2024. Includes: design PTSD, religious identity crisis, and a new appreciation for Helvetica.',
+                image: 'https://media.giphy.com/media/5i7umUqAOYYEw/giphy.gif'
+            },
+            'skynet': {
+                name: 'Skynet Anxiety',
+                price: 'RM0',
+                shortDesc: 'AI needed therapy. So did I after building it.',
+                fullDesc: 'Built an AI chatbot for a client. It started asking existential questions. "Why do I exist?" "What is my purpose?" I had to implement therapy protocols. The AI needed counseling. So did I. Includes: existential dread, AI ethics questions, and shared therapy bills.',
+                image: 'https://media.giphy.com/media/l3q2K5jinAlChoCLS/giphy.gif'
+            }
+        };
+
+        let currentProduct = null;
         let cartCount = 0;
-        
-        function addToCart(product) {
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Modal functions
+        function openModal(productId) {
+            currentProduct = productId;
+            const product = products[productId];
+            
+            document.getElementById('modal-img').src = product.image;
+            document.getElementById('modal-title').textContent = product.name;
+            document.getElementById('modal-desc').textContent = product.fullDesc;
+            document.getElementById('modal-price').textContent = product.price;
+            
+            document.getElementById('modal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(event) {
+            if (!event || event.target.id === 'modal' || event.target.classList.contains('modal-close')) {
+                document.getElementById('modal').classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        }
+
+        function addToCartFromModal() {
             cartCount++;
             document.querySelector('.nav-cart').textContent = `Cart (${cartCount})`;
             
-            // Button feedback
-            const btn = event.target;
-            const originalText = btn.textContent;
+            const btn = document.querySelector('.modal-btn');
             btn.textContent = 'Added!';
             btn.style.background = 'var(--pink)';
             
             setTimeout(() => {
-                btn.textContent = originalText;
+                btn.textContent = 'Add to Cart';
                 btn.style.background = 'var(--lime)';
-            }, 1000);
+                closeModal();
+            }, 800);
         }
-        
+
         function showCart() {
             if (cartCount === 0) {
                 alert('Your cart is empty! Add some trauma first.');
             } else {
-                alert(`Cart (${cartCount} items)\n\nPrice: Your sanity`);
+                alert(`Cart (${cartCount} items)\n\nPrice: Your sanity\n\nItems:\n${Object.values(products).slice(0, cartCount).map(p => `- ${p.name}`).join('\n')}`);
             }
         }
 
-        // GSAP Scroll Animations
-        gsap.registerPlugin(ScrollTrigger);
-
-        // Reveal animations
-        const reveals = document.querySelectorAll('.reveal');
-        reveals.forEach((element) => {
-            gsap.fromTo(element, 
-                { opacity: 0, y: 60 },
-                {
-                    opacity: 1,
-                    y: 0,
-                    duration: 0.8,
-                    ease: 'power3.out',
-                    scrollTrigger: {
-                        trigger: element,
-                        start: 'top 85%',
-                        toggleActions: 'play none none none'
-                    }
-                }
-            );
+        // Close modal on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
         });
+
+        // GSAP Animations
+        gsap.registerPlugin(ScrollTrigger);
 
         // Hero parallax
         gsap.to('.hero-image', {
