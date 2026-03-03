@@ -12,8 +12,8 @@ const Hero = () => {
     return (
         <section
             id="hero"
-            className="relative min-h-[100dvh] flex items-center overflow-hidden"
-            style={{ paddingTop: '-40px' }}
+            className="relative min-h-[70dvh] flex items-center overflow-hidden pt-16 md:pt-0 pb-16 md:pb-0"
+            style={{ paddingTop: '-20px' }}
         >
             {/* Parallax Background Glows */}
             <motion.div
@@ -44,10 +44,10 @@ const Hero = () => {
 
                     <motion.h1
                         variants={fadeInUp}
-                        className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold mb-6 leading-[1.1] sm:leading-tight"
+                        className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-4 leading-[1.1] sm:leading-tight"
                     >
-                        <span className="text-primary">Marketing</span>{' '}
-                        <span className="hero-gradient-title inline-block">Technologist</span>
+                        <span className="text-primary">Professional</span>{' '}
+                        <span className="hero-gradient-title inline-block">Button Pusher</span>
                     </motion.h1>
 
                     <motion.p
@@ -67,8 +67,8 @@ const Hero = () => {
                                 <Code size={20} className="text-primary" />
                             </div>
                             <div>
-                                <p className="text-xs text-gray-500 uppercase tracking-wider">Developer</p>
-                                <p className="text-sm font-semibold">Automation & APIs</p>
+                                <p className="text-xs text-gray-500 uppercase tracking-wider">Professional Googler</p>
+                                <p className="text-sm font-semibold">Copy-Paste Engineer</p>
                             </div>
                         </div>
                         <div className="flex items-center gap-3 glass-card px-4 py-3 rounded-xl border border-primary/10">
@@ -76,8 +76,8 @@ const Hero = () => {
                                 <TrendingUp size={20} className="text-primary" />
                             </div>
                             <div>
-                                <p className="text-xs text-gray-500 uppercase tracking-wider">Marketer</p>
-                                <p className="text-sm font-semibold">Growth Strategy</p>
+                                <p className="text-xs text-gray-500 uppercase tracking-wider">Professional Meme Dealer</p>
+                                <p className="text-sm font-semibold">Viral Content Pusher</p>
                             </div>
                         </div>
                         <div className="flex items-center gap-3 glass-card px-4 py-3 rounded-xl border border-primary/10">
@@ -85,8 +85,8 @@ const Hero = () => {
                                 <Palette size={20} className="text-primary" />
                             </div>
                             <div>
-                                <p className="text-xs text-gray-500 uppercase tracking-wider">Designer</p>
-                                <p className="text-sm font-semibold">Visual Content</p>
+                                <p className="text-xs text-gray-500 uppercase tracking-wider">Pixel Perfectionist</p>
+                                <p className="text-sm font-semibold">Button Color Specialist</p>
                             </div>
                         </div>
                     </motion.div>
@@ -106,10 +106,10 @@ const Hero = () => {
 
                     <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row gap-3 sm:gap-4">
                         <a href="#projects" className="btn-primary flex items-center justify-center gap-2 text-center">
-                            View My Work <ArrowRight size={20} />
+                            See The Damage <ArrowRight size={20} />
                         </a>
                         <a href="#contact" className="btn-outline flex items-center justify-center gap-2 text-center">
-                            Let's Talk Strategy <MessageCircle size={20} />
+                            Hire Me Before Your Competitor Does <MessageCircle size={20} />
                         </a>
                     </motion.div>
                 </motion.div>

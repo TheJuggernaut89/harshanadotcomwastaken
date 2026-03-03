@@ -7,7 +7,7 @@ export const content = {
             "Growth Engineer"
         ],
         heroTitle: "Hi, I'm Harshana Jothi",
-        tagline: "I build marketing systems that drive measurable revenue using automation, AI, and analytics. Full-stack AI specialist: from sales agents to graphic designers to business development tools. Most marketers can't code. Most developers don't understand marketing. I bridge that gap.",
+        tagline: "Warning: I may cause extreme cases of revenue growth, automated workflows that actually work, and competitors asking 'how did they do that?' Side effects include 429% traffic spikes and CFOs finally smiling at marketing reports. Yes, I code AND market. Crazy, I know.",
         bio: "Marketing Technologist combining technical skills (n8n, APIs, coding) with marketing expertise (social media, conversion, attribution) and creative execution (Adobe-certified design, video editing). I don't just run campaigns. I build the systems that make them scalable and revenue-focused.",
         currentRoles: [
             "Marketing Technologist",
@@ -39,7 +39,7 @@ export const content = {
             }
         ],
         location: "Damansara Perdana, Malaysia",
-        status: "Available for Full-time / Hybrid",
+        status: "Currently accepting challenges & free coffee",
         email: "jothiharshana188@gmail.com",
         whatsapp: "+60 11 2964 9143",
         quote: "Building revenue systems, not just running campaigns."
