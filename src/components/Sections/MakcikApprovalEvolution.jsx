@@ -543,50 +543,24 @@ const MakcikApprovalEvolution = () => {
                     </div>
                 </div>
 
-                {/* Bottom: Before/After */}
-                <div className="grid md:grid-cols-2 gap-6 mt-8 max-w-4xl mx-auto">
-                    <div className="bg-red-500/10 rounded-xl p-6 border border-red-500/20">
-                        <h4 className="font-bold text-red-400 mb-3">Before: Manual Checks</h4>
-                        <ul className="space-y-2 text-sm text-gray-400">
-                            <li className="flex items-start gap-2">
-                                <AlertTriangle size={14} className="text-red-400 mt-0.5 flex-shrink-0" />
-                                230 manual halal checklist items
-                            </li>
-                            <li className="flex items-start gap-2">
-                                <AlertTriangle size={14} className="text-red-400 mt-0.5 flex-shrink-0" />
-                                Reactive legal (after problem occurs)
-                            </li>
-                            <li className="flex items-start gap-2">
-                                <AlertTriangle size={14} className="text-red-400 mt-0.5 flex-shrink-0" />
-                                Static cultural rules (easily outdated)
-                            </li>
-                            <li className="flex items-start gap-2">
-                                <AlertTriangle size={14} className="text-red-400 mt-0.5 flex-shrink-0" />
-                                3-5 day processing time
-                            </li>
-                        </ul>
-                    </div>
-                    <div className="bg-green-500/10 rounded-xl p-6 border border-green-500/20">
-                        <h4 className="font-bold text-green-400 mb-3">After: Autonomous AI</h4>
-                        <ul className="space-y-2 text-sm text-gray-400">
-                            <li className="flex items-start gap-2">
-                                <CheckCircle size={14} className="text-green-400 mt-0.5 flex-shrink-0" />
-                                99.8% blockchain tamper detection
-                            </li>
-                            <li className="flex items-start gap-2">
-                                <CheckCircle size={14} className="text-green-400 mt-0.5 flex-shrink-0" />
-                                14-day predictive legal early warning
-                            </li>
-                            <li className="flex items-start gap-2">
-                                <CheckCircle size={14} className="text-green-400 mt-0.5 flex-shrink-0" />
-                                Real-time 4-ethnicity sentiment monitoring
-                            </li>
-                            <li className="flex items-start gap-2">
-                                <CheckCircle size={14} className="text-green-400 mt-0.5 flex-shrink-0" />
-                                70% routine approvals automated
-                            </li>
-                        </ul>
-                    </div>
+                {/* Stage Indicators */}
+                <div className="flex flex-wrap justify-center gap-4 mt-8">
+                    {approvalStages.map((s, idx) => (
+                        <motion.div
+                            key={idx}
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ delay: idx * 0.1 }}
+                            className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm ${
+                                idx <= currentStage 
+                                    ? 'bg-green-500/20 text-green-400 border border-green-500/30' 
+                                    : 'bg-white/5 text-gray-500'
+                            }`}
+                        >
+                            <span>{s.icon}</span>
+                            <span className="hidden sm:inline">{s.name}</span>
+                        </motion.div>
+                    ))}
                 </div>
             </div>
         </section>

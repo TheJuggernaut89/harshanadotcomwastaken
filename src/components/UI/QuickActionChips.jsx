@@ -1,6 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
+// Theme configurations for chip colors
+const CHIP_THEMES = {
+  professional: {
+    // Cool blue-cyan theme
+    background: 'rgba(0, 212, 255, 0.15)',
+    hoverBackground: 'rgba(0, 212, 255, 0.25)',
+    text: '#38bdf8',
+    border: 'rgba(0, 212, 255, 0.3)',
+    hoverBorder: 'rgba(0, 212, 255, 0.5)',
+  },
+  creative: {
+    // Warm coral-orange theme
+    background: 'rgba(255, 107, 107, 0.15)',
+    hoverBackground: 'rgba(255, 107, 107, 0.25)',
+    text: '#ff8e8e',
+    border: 'rgba(255, 107, 107, 0.3)',
+    hoverBorder: 'rgba(255, 107, 107, 0.5)',
+  }
+};
+
 // Generate contextual chips using Gemini API
 const generateContextualChips = async (userQuestion, aiResponse) => {
   try {
@@ -70,9 +90,12 @@ Return ONLY the JSON array, no explanations.`;
   }
 };
 
-const QuickActionChips = ({ messageText, userQuestion, onChipClick }) => {
+const QuickActionChips = ({ messageText, userQuestion, onChipClick, mode = 'professional' }) => {
   const [chips, setChips] = useState([]);
   const [loading, setLoading] = useState(true);
+  
+  // Get current theme based on mode
+  const theme = CHIP_THEMES[mode] || CHIP_THEMES.professional;
 
   useEffect(() => {
     const loadChips = async () => {
@@ -127,7 +150,20 @@ const QuickActionChips = ({ messageText, userQuestion, onChipClick }) => {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: index * 0.1 }}
           onClick={() => onChipClick(chip.action)}
-          className="px-3 py-1.5 text-xs font-medium bg-purple-500/20 hover:bg-purple-500/30 text-purple-300 rounded-full border border-purple-500/30 hover:border-purple-500/50 transition-all duration-200 hover:scale-105"
+          className="px-3 py-1.5 text-xs font-medium rounded-full transition-all duration-200 hover:scale-105"
+          style={{
+            background: theme.background,
+            color: theme.text,
+            border: `1px solid ${theme.border}`,
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = theme.hoverBackground;
+            e.currentTarget.style.borderColor = theme.hoverBorder;
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = theme.background;
+            e.currentTarget.style.borderColor = theme.border;
+          }}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >

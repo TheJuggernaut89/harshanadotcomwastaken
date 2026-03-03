@@ -189,7 +189,7 @@
         .hero-cta:hover { border-color: var(--accent); }
 
         /* Text Band */
-        .text-band-wrapper { overflow: hidden; padding: 3rem 0; margin: 2rem 0; }
+        .text-band-wrapper { overflow: hidden; padding: 1rem 0; margin: 0; }
         .text-band {
             background: var(--accent); color: var(--bg); padding: 1.25rem 0;
             transform: rotate(-2deg) scale(1.05); width: 110%; margin-left: -5%;
@@ -344,7 +344,7 @@
 
         /* ===== SKILLS SECTION ===== */
         .skills-section { 
-            padding: 6rem 2rem; 
+            padding: 4rem 2rem; 
             background: var(--surface); 
         }
         .section-header { 
@@ -437,7 +437,7 @@
 
         /* ===== TOOLS SECTION - FIXED ===== */
         .tools-section {
-            padding: 6rem 2rem;
+            padding: 4rem 2rem;
             background: var(--bg);
         }
         .tools-grid {
@@ -512,7 +512,7 @@
         }
 
         /* Projects Section */
-        .projects-section { padding: 6rem 2rem; background: var(--bg); }
+        .education-section { padding: 4rem 2rem; background: var(--bg); }
         .projects-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; max-width: 1400px; margin: 0 auto; }
         @media (min-width: 768px) { .projects-grid { grid-template-columns: repeat(2, 1fr); } }
         @media (min-width: 1024px) { .projects-grid { grid-template-columns: repeat(3, 1fr); } }
@@ -533,7 +533,7 @@
         }
 
         /* Experience Section */
-        .experience-section { padding: 6rem 2rem; background: var(--surface); }
+        .experience-section { padding: 4rem 2rem; background: var(--surface); }
         .experience-grid {
             display: flex;
             flex-direction: column;
@@ -585,7 +585,11 @@
         .video-slider { display: flex; transition: transform 0.5s ease; }
         .video-slide { flex: 0 0 100%; position: relative; }
         .video-slide video, .video-slide img {
-            width: 100%; height: 400px; object-fit: cover; display: block;
+            width: 100%;
+            height: auto;
+            max-height: 70vh;
+            object-fit: contain;
+            display: block;
             background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
         }
         .video-slide-caption {
@@ -609,12 +613,16 @@
             gap: 1rem;
         }
         .gallery-item {
-            aspect-ratio: 1; border-radius: 12px; overflow: hidden;
+            border-radius: 12px; overflow: hidden;
             border: 1px solid var(--border); cursor: pointer; position: relative;
+            height: auto;
         }
         .gallery-item img {
-            width: 100%; height: 100%; object-fit: cover;
+            width: 100%;
+            height: auto;
+            object-fit: contain;
             transition: transform 0.3s;
+            display: block;
         }
         .gallery-item:hover img { transform: scale(1.1); }
         .gallery-item::after {
@@ -645,7 +653,7 @@
         }
 
         /* Footer */
-        .footer { padding: 6rem 2rem; text-align: center; border-top: 1px solid var(--border); background: var(--bg); }
+        .footer { padding: 4rem 2rem; text-align: center; border-top: 1px solid var(--border); background: var(--bg); }
         .footer-text { font-size: clamp(1.5rem, 4vw, 3rem); font-weight: 400; margin-bottom: 2rem; line-height: 1.3; letter-spacing: -0.02em; }
         .footer-text a { color: var(--accent); text-decoration: none; position: relative; display: inline-block; }
         .footer-text a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: var(--accent); transition: width 0.3s ease; }
@@ -671,7 +679,7 @@
             .split-left, .split-right { padding: 6rem 4rem; }
             .stat-num-large { font-size: 5rem; }
             .split-title { font-size: 2.5rem; }
-            .projects-section, .skills-section, .tools-section, .experience-section { padding: 8rem 4rem; }
+            .education-section, .skills-section, .tools-section, .experience-section { padding: 5rem 4rem; }
         }
         @media (min-width: 1024px) { 
             .split-section { grid-template-columns: 1fr 1fr; }
@@ -685,7 +693,11 @@
             .parallax-text { font-size: clamp(1.5rem, 8vw, 2.5rem); }
             .footer { padding-bottom: 8rem; }
             .hero-roles { flex-direction: column; }
-            .video-slide video, .video-slide img { height: 250px; }
+            .video-slide video, .video-slide img { 
+                height: auto;
+                max-height: 60vh;
+                object-fit: contain;
+            }
             .image-gallery { grid-template-columns: repeat(2, 1fr); }
             .tools-grid { grid-template-columns: repeat(2, 1fr); }
             .artwork-card { width: 85vw; height: 50vh; }
@@ -699,21 +711,21 @@
     <nav class="nav">
         <a href="../" class="logo magnetic">harshana<span>.</span></a>
         <div class="nav-links">
-            <a href="../" class="nav-link magnetic">Pro</a>
+            <a href="/professional/" class="nav-link magnetic">Pro</a>
             <a href="./" class="nav-link magnetic active">Creative</a>
-            <a href="../brutal/" class="nav-link magnetic">Brutal</a>
+            <a href="/brutal/" class="nav-link magnetic">Brutal</a>
         </div>
     </nav>
 
     <nav class="mobile-nav">
         <div class="mobile-nav-links">
-            <a href="../" class="mobile-nav-link">
+            <a href="/professional/" class="mobile-nav-link">
                 <i data-lucide="briefcase"></i><span>Pro</span>
             </a>
             <a href="./" class="mobile-nav-link active">
                 <i data-lucide="sparkles"></i><span>Creative</span>
             </a>
-            <a href="../brutal/" class="mobile-nav-link">
+            <a href="/brutal/" class="mobile-nav-link">
                 <i data-lucide="zap"></i><span>Brutal</span>
             </a>
         </div>
@@ -748,6 +760,231 @@
         </div>
     </section>
 
+    <!-- WHAT I CAN DO - Layered Text Section -->
+    <section class="what-i-can-do-section" id="what-i-can-do">
+        <div class="what-i-can-do-container">
+            <p class="section-label text-center">Expertise</p>
+            <h2 class="section-title text-center mb-8">What I Can Do</h2>
+            <div class="layered-text-wrapper" id="layeredTextContainer">
+                <ul class="layered-text-list">
+                    <!-- Lines will be generated by JS -->
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <style>
+        .what-i-can-do-section {
+            padding: 3rem 2rem 1rem;
+            background: var(--bg);
+            position: relative;
+            overflow: hidden;
+        }
+        .what-i-can-do-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .layered-text-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 600px;
+            cursor: pointer;
+            padding: 2rem 0;
+        }
+        .layered-text-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+        .layered-text-item {
+            overflow: hidden;
+            position: relative;
+            height: 85px;
+            transition: transform 0.3s ease;
+        }
+        .layered-text-item p {
+            font-size: clamp(36px, 8vw, 72px);
+            font-weight: 900;
+            letter-spacing: -2px;
+            text-transform: uppercase;
+            color: var(--text);
+            white-space: nowrap;
+            margin: 0;
+            padding: 0 15px;
+            line-height: 80px;
+            height: 85px;
+            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .layered-text-item:nth-child(even) {
+            transform: skew(0deg, -30deg) scaleY(1.33333);
+        }
+        .layered-text-item:nth-child(odd) {
+            transform: skew(60deg, -30deg) scaleY(0.66667);
+        }
+        @media (max-width: 768px) {
+            .layered-text-list {
+                gap: 8px;
+            }
+            .layered-text-item {
+                height: 50px;
+            }
+            .layered-text-item p {
+                font-size: clamp(24px, 6vw, 36px);
+                line-height: 45px;
+                height: 50px;
+                padding: 0 10px;
+            }
+        }
+    </style>
+
+    <script>
+        // Generate Layered Text for What I Can Do - Auto-trigger on scroll
+        (function() {
+            const container = document.getElementById('layeredTextContainer');
+            const list = container.querySelector('.layered-text-list');
+            
+            // 12 items based on resume skills
+            const services = [
+                { top: "\u00A0", bottom: "MARKETING" },
+                { top: "MARKETING", bottom: "DESIGN" },
+                { top: "DESIGN", bottom: "AUTOMATION" },
+                { top: "AUTOMATION", bottom: "CONTENT" },
+                { top: "CONTENT", bottom: "STRATEGY" },
+                { top: "STRATEGY", bottom: "CREATIVE" },
+                { top: "CREATIVE", bottom: "AI SYSTEMS" },
+                { top: "AI SYSTEMS", bottom: "VIDEO EDIT" },
+                { top: "VIDEO EDIT", bottom: "ANALYTICS" },
+                { top: "ANALYTICS", bottom: "GROWTH" },
+                { top: "GROWTH", bottom: "VISION" },
+                { top: "VISION", bottom: "\u00A0" },
+            ];
+            
+            const centerIndex = Math.floor(services.length / 2);
+            const baseOffset = 45;
+            const baseOffsetMobile = 25;
+            
+            services.forEach((service, index) => {
+                const li = document.createElement('li');
+                li.className = 'layered-text-item';
+                
+                // Calculate staggered offset
+                const offset = (index - centerIndex) * baseOffset;
+                const offsetMobile = (index - centerIndex) * baseOffsetMobile;
+                
+                // Apply transforms with translateX
+                const isEven = index % 2 === 0;
+                const skewTransform = isEven 
+                    ? `skew(60deg, -30deg) scaleY(0.66667)` 
+                    : `skew(0deg, -30deg) scaleY(1.33333)`;
+                
+                li.style.transform = `${skewTransform} translateX(${offset}px)`;
+                li.dataset.offset = offset;
+                li.dataset.offsetMobile = offsetMobile;
+                
+                li.innerHTML = `
+                    <p class="top-text">${service.top}</p>
+                    <p class="bottom-text">${service.bottom}</p>
+                `;
+                
+                list.appendChild(li);
+            });
+            
+            // GSAP animations
+            if (typeof gsap !== 'undefined') {
+                let timeline = null;
+                const items = list.querySelectorAll('.layered-text-item');
+                let hasAutoPlayed = false;
+                
+                const animateUp = () => {
+                    if (timeline) timeline.kill();
+                    timeline = gsap.timeline();
+                    
+                    items.forEach((item, i) => {
+                        const paragraphs = item.querySelectorAll('p');
+                        const yOffset = window.innerWidth >= 768 ? -85 : -50;
+                        
+                        timeline.to(paragraphs, {
+                            y: yOffset,
+                            duration: 0.8,
+                            ease: 'power2.out',
+                            stagger: {
+                                each: 0.06,
+                                from: 'start'
+                            }
+                        }, i * 0.04);
+                    });
+                    return timeline;
+                };
+                
+                const animateDown = () => {
+                    if (timeline) timeline.kill();
+                    timeline = gsap.timeline();
+                    
+                    items.forEach((item, i) => {
+                        const paragraphs = item.querySelectorAll('p');
+                        
+                        timeline.to(paragraphs, {
+                            y: 0,
+                            duration: 0.6,
+                            ease: 'power2.out',
+                            stagger: {
+                                each: 0.03,
+                                from: 'start'
+                            }
+                        }, i * 0.02);
+                    });
+                    return timeline;
+                };
+                
+                // Auto-play 10 rounds when scrolling into view
+                const autoPlayAnimation = async () => {
+                    if (hasAutoPlayed) return;
+                    hasAutoPlayed = true;
+                    
+                    for (let round = 0; round < 10; round++) {
+                        await animateUp();
+                        await new Promise(r => setTimeout(r, 250));
+                        await animateDown();
+                        if (round < 9) {
+                            await new Promise(r => setTimeout(r, 150));
+                        }
+                    }
+                };
+                
+                // Intersection Observer for auto-trigger
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting && !hasAutoPlayed) {
+                            autoPlayAnimation();
+                        }
+                    });
+                }, {
+                    threshold: 0.3,
+                    rootMargin: '0px'
+                });
+                
+                observer.observe(container);
+                
+                // User interaction after auto-play
+                const handleMouseEnter = () => {
+                    animateUp();
+                };
+                
+                const handleMouseLeave = () => {
+                    animateDown();
+                };
+                
+                container.addEventListener('mouseenter', handleMouseEnter);
+                container.addEventListener('mouseleave', handleMouseLeave);
+            }
+        })();
+    </script>
+
     <div class="text-band-wrapper">
         <div class="text-band">
             <div class="text-band-content">
@@ -771,172 +1008,171 @@
         </div>
     </div>
 
-    <!-- ===== ARTWORK SHOWCASE HORIZONTAL SCROLL ===== -->
-    <section class="artwork-section" id="artwork">
-        <div class="artwork-container">
-            <div class="artwork-track">
-                <!-- Creativity Intro Card -->
-                <div class="creativity-card">
-                    <div class="creativity-icon">🎨</div>
-                    <h3>Creative Showcase</h3>
-                    <p>A selection of my visual work across marketing campaigns, brand design, video production, and digital content. Each piece represents a blend of strategic thinking and creative execution.</p>
-                </div>
-
-                <!-- Artwork 1: Malaysian Marketing Platform -->
-                <div class="artwork-card">
-                    <img src="../Visionary/Malaysian%20Marketing%20Platform.png" alt="Malaysian Marketing Platform">
-                    <div class="artwork-overlay">
-                        <h4 class="artwork-title">Malaysian Marketing Platform</h4>
-                        <p class="artwork-desc">System architecture visualization for hyper-localized marketing tools</p>
+    <!-- ABOUT SECTION -->
+    <section class="about-section" id="about">
+        <div class="about-container">
+            <div class="section-header">
+                <p class="section-label">About Me</p>
+                <h2 class="section-title">Marketing Technologist</h2>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <p class="about-lead">
+                        I bridge the gap between marketing strategy, creative design, and technical execution. 
+                        As a Marketing Technologist, I don't just create content—I build systems that drive measurable growth.
+                    </p>
+                    <p class="about-description">
+                        With 6+ years of experience combining Adobe-certified design skills, video editing expertise, 
+                        and marketing technology, I've helped brands achieve 429% follower growth and generate millions 
+                        of impressions. I specialize in AI-powered automation, graphic design, video production, and 
+                        content strategy that connects creative work directly to revenue.
+                    </p>
+                    <div class="about-stats-row">
+                        <div class="about-stat">
+                            <span class="about-stat-num">429%</span>
+                            <span class="about-stat-label">Facebook Growth</span>
+                        </div>
+                        <div class="about-stat">
+                            <span class="about-stat-num">2M+</span>
+                            <span class="about-stat-label">Impressions Generated</span>
+                        </div>
+                        <div class="about-stat">
+                            <span class="about-stat-num">200+</span>
+                            <span class="about-stat-label">Assets/Month</span>
+                        </div>
                     </div>
                 </div>
-
-                <!-- Artwork 2: Revenue Dashboard -->
-                <div class="artwork-card">
-                    <img src="../Visionary/Revenue%20Attribution%20Dashboard.png" alt="Revenue Attribution Dashboard">
-                    <div class="artwork-overlay">
-                        <h4 class="artwork-title">Revenue Attribution Dashboard</h4>
-                        <p class="artwork-desc">Analytics interface design connecting creative to revenue</p>
+                <div class="about-image">
+                    <div class="about-image-wrapper">
+                        <img src="./images/profile-waterfall.jpg" alt="Harshana - Marketing Technologist" onerror="this.src='../images/profile-waterfall.jpg'">
+                        <div class="about-image-glow"></div>
                     </div>
-                </div>
-
-                <!-- Artwork 3: Viral Cheesecake -->
-                <div class="artwork-card">
-                    <img src="../Visionary/Viral%20Cheesecake%20Campaign.png" alt="Viral Cheesecake Campaign">
-                    <div class="artwork-overlay">
-                        <h4 class="artwork-title">Viral Cheesecake Campaign</h4>
-                        <p class="artwork-desc">AI-assisted architectural visualization - 2M+ impressions</p>
-                    </div>
-                </div>
-
-                <!-- Artwork 4: Cream of Creams Content -->
-                <div class="artwork-card">
-                    <img src="../images/journey/cream-of-creams/images/cream-1.png" alt="Cream of Creams Social Content">
-                    <div class="artwork-overlay">
-                        <h4 class="artwork-title">Cream of Creams Social Content</h4>
-                        <p class="artwork-desc">Branded content creation and campaign visuals</p>
-                    </div>
-                </div>
-
-                <!-- Artwork 5: CNY Campaign -->
-                <div class="artwork-card">
-                    <img src="../images/journey/cream-of-creams/images/cream-3.png" alt="CNY Campaign 2025">
-                    <div class="artwork-overlay">
-                        <h4 class="artwork-title">CNY Campaign 2025</h4>
-                        <p class="artwork-desc">Festival marketing creative and brand storytelling</p>
-                    </div>
-                </div>
-
-                <!-- Artwork 6: JungleWalla -->
-                <div class="artwork-card">
-                    <img src="../images/journey/junglewalla/images/Jungle-image1.jpg" alt="JungleWalla Eco-Tourism">
-                    <div class="artwork-overlay">
-                        <h4 class="artwork-title">JungleWalla Eco-Tourism</h4>
-                        <p class="artwork-desc">Nature photography and conservation marketing</p>
-                    </div>
-                </div>
-
-                <!-- Artwork 7: Resort Grounds -->
-                <div class="artwork-card">
-                    <img src="../images/journey/junglewalla/images/Jungle-image3.jpg" alt="Resort Visual Content">
-                    <div class="artwork-overlay">
-                        <h4 class="artwork-title">Resort Visual Content</h4>
-                        <p class="artwork-desc">Hospitality marketing and experience design</p>
-                    </div>
-                </div>
-
-                <!-- Artwork 8: Legal Transcription -->
-                <div class="artwork-card">
-                    <img src="../Visionary/Legal%20Transcription%20Software.png" alt="Legal Transcription System">
-                    <div class="artwork-overlay">
-                        <h4 class="artwork-title">Legal Transcription System</h4>
-                        <p class="artwork-desc">Product design and workflow visualization</p>
-                    </div>
-                </div>
-
-                <!-- Artwork 9: Spotify Recipe -->
-                <div class="artwork-card">
-                    <img src="../Visionary/Spotify%20Recipe%20Songs.png" alt="Spotify Recipe Songs">
-                    <div class="artwork-overlay">
-                        <h4 class="artwork-title">Spotify Recipe Songs</h4>
-                        <p class="artwork-desc">Creative strategy concept - synesthetic marketing</p>
-                    </div>
-                </div>
-
-                <!-- Artwork 10: Medical App -->
-                <div class="artwork-card">
-                    <img src="../Visionary/Medical%20Patient%20Advocate.svg" alt="Medical Patient Advocate">
-                    <div class="artwork-overlay">
-                        <h4 class="artwork-title">Medical Patient Advocate</h4>
-                        <p class="artwork-desc">Healthcare app UI/UX design concept</p>
-                    </div>
-                </div>
-
-                <!-- Creativity Outro Card -->
-                <div class="creativity-card">
-                    <div class="creativity-icon">✨</div>
-                    <h3>Let's Create Together</h3>
-                    <p>Every project starts with understanding your vision. I combine strategic marketing thinking with creative execution to deliver results that matter.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="parallax-section" id="quote">
-        <div class="parallax-bg"></div>
-        <div class="parallax-content">
-            <p class="parallax-text">
-                Good design is obvious.<br>
-                <span>Great design is transparent.</span>
-            </p>
-        </div>
-    </section>
+    <style>
+        .about-section {
+            padding: 4rem 2rem;
+            background: var(--surface);
+            position: relative;
+        }
+        .about-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 4rem;
+            align-items: center;
+            margin-top: 3rem;
+        }
+        @media (min-width: 1024px) {
+            .about-content {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        .about-text {
+            order: 2;
+        }
+        @media (min-width: 1024px) {
+            .about-text {
+                order: 1;
+            }
+        }
+        .about-lead {
+            font-size: 1.5rem;
+            font-weight: 500;
+            line-height: 1.4;
+            margin-bottom: 1.5rem;
+            color: var(--text);
+        }
+        .about-description {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 2rem;
+        }
+        .about-stats-row {
+            display: flex;
+            flex-wrap: nowrap;
+            gap: 1rem;
+            justify-content: flex-start;
+        }
+        @media (max-width: 640px) {
+            .about-stats-row {
+                gap: 0.75rem;
+            }
+        }
+        .about-stat {
+            text-align: center;
+            padding: 0.75rem 1rem;
+            background: rgba(255, 61, 0, 0.1);
+            border: 1px solid rgba(255, 61, 0, 0.2);
+            border-radius: 12px;
+            min-width: 100px;
+        }
+        @media (max-width: 640px) {
+            .about-stat {
+                padding: 0.5rem 0.75rem;
+                min-width: 80px;
+                flex: 1;
+            }
+        }
+        .about-stat-num {
+            display: block;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+            line-height: 1;
+        }
+        @media (max-width: 640px) {
+            .about-stat-num {
+                font-size: 1.25rem;
+            }
+        }
+        .about-stat-label {
+            font-size: 0.65rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-top: 0.25rem;
+            display: block;
+        }
+        .about-image {
+            order: 1;
+            display: flex;
+            justify-content: center;
+        }
+        @media (min-width: 1024px) {
+            .about-image {
+                order: 2;
+            }
+        }
+        .about-image-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            aspect-ratio: 1;
+            border-radius: 24px;
+            overflow: hidden;
+        }
+        .about-image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .about-image-glow {
+            position: absolute;
+            inset: -20px;
+            background: radial-gradient(circle at center, var(--accent-glow), transparent 70%);
+            z-index: -1;
+            filter: blur(40px);
+        }
+    </style>
 
-    <section class="split-section" id="stats">
-        <div class="split-left">
-            <h2 class="split-title">Results</h2>
-            <div class="stat-list">
-                <div class="stat-item">
-                    <span class="stat-num-large">429<span>%</span></span>
-                    <span class="stat-label-large">Facebook Growth (12K→63K)</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-num-large">178<span>%</span></span>
-                    <span class="stat-label-large">Instagram Growth</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-num-large">2M<span>+</span></span>
-                    <span class="stat-label-large">Impressions Generated</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-num-large">200<span>+</span></span>
-                    <span class="stat-label-large">Assets/Month Capability</span>
-                </div>
-            </div>
-        </div>
-        <div class="split-right">
-            <h2 class="split-title">Capabilities</h2>
-            <div class="capability-list">
-                <div class="capability-item">
-                    <h4>Visual Design</h4>
-                    <p>Adobe Photoshop, Illustrator, InDesign. Brand identity, social media graphics, print design, and marketing collateral.</p>
-                </div>
-                <div class="capability-item">
-                    <h4>Video Production</h4>
-                    <p>Adobe Premiere Pro, After Effects. Short-form content, motion graphics, color grading, and platform-optimized formats.</p>
-                </div>
-                <div class="capability-item">
-                    <h4>Marketing Strategy</h4>
-                    <p>Content strategy, campaign planning, brand storytelling, and data-driven creative decisions that drive engagement.</p>
-                </div>
-                <div class="capability-item">
-                    <h4>Workflow Optimization</h4>
-                    <p>Design systems, automation workflows, and scalable processes that maintain quality while increasing output.</p>
-                </div>
-            </div>
-            <a href="mailto:jothiharshana188@gmail.com" class="magnetic-btn">Get in Touch</a>
-        </div>
-    </section>
 
     <!-- SKILLS SECTION -->
     <section class="skills-section" id="skills">
@@ -1042,7 +1278,6 @@
             </div>
         </div>
     </section>
-
     <!-- TOOLS SECTION -->
     <section class="tools-section" id="tools">
         <div class="section-header">
@@ -1145,81 +1380,18 @@
     </section>
 
     <!-- Projects Section -->
-    <section class="projects-section" id="projects">
-        <div class="section-header">
-            <p class="section-label">Selected Work</p>
-            <h2 class="section-title">Visionary Projects</h2>
-        </div>
-        <div class="projects-grid">
-            <div class="project-card">
-                <img src="../Visionary/Malaysian%20Marketing%20Platform.png" alt="Malaysian Marketing Platform" class="project-image" loading="lazy">
-                <div class="project-content">
-                    <p class="project-category">System Architecture</p>
-                    <h3 class="project-title">Malaysian Marketing Platform</h3>
-                    <p class="project-desc">A suite of tools designed for local market penetration. Hyper-localized content systems that speak fluent "Manglish" and understand Malaysian cultural nuances.</p>
-                    <span class="project-status">Operational & Scaling</span>
-                </div>
-            </div>
-            <div class="project-card">
-                <img src="../Visionary/Revenue%20Attribution%20Dashboard.png" alt="Revenue Attribution" class="project-image" loading="lazy">
-                <div class="project-content">
-                    <p class="project-category">Analytics</p>
-                    <h3 class="project-title">Revenue Attribution Dashboard</h3>
-                    <p class="project-desc">Custom-built tracking system connecting creative work directly to revenue. Know exactly which design, video, or campaign generated sales.</p>
-                    <span class="project-status">Building at Cream of Creams</span>
-                </div>
-            </div>
-            <div class="project-card">
-                <img src="../Visionary/Viral%20Cheesecake%20Campaign.png" alt="Viral Cheesecake Campaign" class="project-image" loading="lazy">
-                <div class="project-content">
-                    <p class="project-category">Marketing Campaign</p>
-                    <h3 class="project-title">Viral Cheesecake Campaign</h3>
-                    <p class="project-desc">AI-assisted visuals and strategic distribution. 2M+ impressions, 429% follower growth, sold out in 48 hours. Visualized cakes as architectural marvels.</p>
-                    <span class="project-status">Viral Success</span>
-                </div>
-            </div>
-            <div class="project-card">
-                <img src="../Visionary/Legal%20Transcription%20Software.png" alt="Legal Transcription Software" class="project-image" loading="lazy">
-                <div class="project-content">
-                    <p class="project-category">Automation</p>
-                    <h3 class="project-title">Legal Transcription System</h3>
-                    <p class="project-desc">End-to-end automated workflow transforming raw audio to verified legal transcripts. Cash flow positive business with passive revenue model.</p>
-                    <span class="project-status">Active Business</span>
-                </div>
-            </div>
-            <div class="project-card">
-                <img src="../Visionary/Spotify%20Recipe%20Songs.png" alt="Spotify Recipe Songs" class="project-image" loading="lazy">
-                <div class="project-content">
-                    <p class="project-category">Creative Strategy</p>
-                    <h3 class="project-title">Spotify Recipe Songs</h3>
-                    <p class="project-desc">Synesthetic marketing concept pairing recipes with curated Spotify playlists. Multi-sensory brand experience connecting taste and sound.</p>
-                    <span class="project-status">Concept</span>
-                </div>
-            </div>
-            <div class="project-card">
-                <img src="../Visionary/Medical%20Patient%20Advocate.svg" alt="Medical Patient Advocate" class="project-image" loading="lazy">
-                <div class="project-content">
-                    <p class="project-category">Healthcare Design</p>
-                    <h3 class="project-title">Medical Patient Advocate</h3>
-                    <p class="project-desc">Healthcare app design helping patients prepare for doctor visits. Focus on UX, accessibility, and clear information architecture.</p>
-                    <span class="project-status">In Development</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Experience Section -->
+    <!-- EXPERIENCE SECTION (Journey) -->
     <section class="experience-section" id="experience">
         <div class="section-header">
             <p class="section-label">Career Path</p>
-            <h2 class="section-title">Experience with Video & Photo Stories</h2>
+            <h2 class="section-title">My Journey</h2>
         </div>
         <div class="experience-grid">
             
             <!-- Cream of Creams -->
             <div class="job-card" data-company="cream">
                 <div class="job-header">
-                    <h3 class="job-title">Marketing Technologist</h3>
+                    <h3 class="job-title">Social Media Executive / Marketing Technologist</h3>
                     <span class="job-meta">Jan 2024 – Present | Full-time</span>
                 </div>
                 <p class="job-company">Cream of Creams Sdn Bhd</p>
@@ -1416,8 +1588,125 @@
                 </div>
             </div>
 
+            <!-- PServ Pte Ltd -->
+            <div class="job-card" data-company="pserv">
+                <div class="job-header">
+                    <h3 class="job-title">Senior Customer Service Officer</h3>
+                    <span class="job-meta">Aug 2019 – Dec 2022 | Full-time</span>
+                </div>
+                <p class="job-company">PServ Pte Ltd (Singapore)</p>
+                <ul class="job-achievements">
+                    <li>Managed high-volume customer inquiries for government and corporate accounts</li>
+                    <li>Developed streamlined communication protocols reducing response time by 40%</li>
+                    <li>Trained and mentored junior team members on customer service excellence</li>
+                    <li>Maintained 95%+ customer satisfaction scores across all accounts</li>
+                </ul>
+                
+                <div class="media-gallery">
+                    <div class="media-tabs">
+                        <button class="media-tab active" data-tab="videos" data-company="pserv">
+                            <i data-lucide="video" style="width: 16px; height: 16px;"></i>
+                            Videos <span class="count">4</span>
+                        </button>
+                        <button class="media-tab" data-tab="images" data-company="pserv">
+                            <i data-lucide="image" style="width: 16px; height: 16px;"></i>
+                            Images <span class="count">4</span>
+                        </button>
+                    </div>
+                    
+                    <div class="video-slider-container" data-slider="pserv-videos">
+                        <div class="video-slider">
+                            <div class="video-slide" data-index="0">
+                                <video muted loop playsinline poster="../images/journey/pserv-singapore/images/Customer-image1.jpeg">
+                                    <source src="../images/journey/pserv-singapore/videos/Customer-video2.mp4" type="video/mp4">
+                                </video>
+                                <div class="video-slide-caption">Team Collaboration Sessions</div>
+                            </div>
+                            <div class="video-slide" data-index="1">
+                                <video muted loop playsinline poster="../images/journey/pserv-singapore/images/Customer-image2.jpeg">
+                                    <source src="../images/journey/pserv-singapore/videos/Customer-video3.mp4" type="video/mp4">
+                                </video>
+                                <div class="video-slide-caption">Corporate Account Management</div>
+                            </div>
+                            <div class="video-slide" data-index="2">
+                                <video muted loop playsinline poster="../images/journey/pserv-singapore/images/Customer-image3.jpeg">
+                                    <source src="../images/journey/pserv-singapore/videos/Customer-video4.mp4" type="video/mp4">
+                                </video>
+                                <div class="video-slide-caption">High-Volume Inquiry Handling</div>
+                            </div>
+                            <div class="video-slide" data-index="3">
+                                <video muted loop playsinline poster="../images/journey/pserv-singapore/images/Customer-image4.jpeg">
+                                    <source src="../images/journey/pserv-singapore/videos/Customer-video5.mp4" type="video/mp4">
+                                </video>
+                                <div class="video-slide-caption">Mentoring Junior Staff</div>
+                            </div>
+                        </div>
+                        <div class="video-dots" data-dots="pserv-videos">
+                            <span class="video-dot active" data-slide="0"></span>
+                            <span class="video-dot" data-slide="1"></span>
+                            <span class="video-dot" data-slide="2"></span>
+                            <span class="video-dot" data-slide="3"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="image-gallery" data-gallery="pserv-images" style="display: none;">
+                        <div class="gallery-item" data-src="../images/journey/pserv-singapore/images/Customer-image1.jpeg">
+                            <img src="../images/journey/pserv-singapore/images/Customer-image1.jpeg" alt="Customer Service Operations" loading="lazy">
+                        </div>
+                        <div class="gallery-item" data-src="../images/journey/pserv-singapore/images/Customer-image2.jpeg">
+                            <img src="../images/journey/pserv-singapore/images/Customer-image2.jpeg" alt="Team Training Session" loading="lazy">
+                        </div>
+                        <div class="gallery-item" data-src="../images/journey/pserv-singapore/images/Customer-image3.jpeg">
+                            <img src="../images/journey/pserv-singapore/images/Customer-image3.jpeg" alt="Office Environment" loading="lazy">
+                        </div>
+                        <div class="gallery-item" data-src="../images/journey/pserv-singapore/images/Customer-image4.jpeg">
+                            <img src="../images/journey/pserv-singapore/images/Customer-image4.jpeg" alt="Corporate Event" loading="lazy">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Certis CISCO -->
+            <div class="job-card" data-company="certis">
+                <div class="job-header">
+                    <h3 class="job-title">Private Security Officer</h3>
+                    <span class="job-meta">Jan 2018 – Jul 2019 | Full-time</span>
+                </div>
+                <p class="job-company">Certis CISCO (Singapore)</p>
+                <ul class="job-achievements">
+                    <li>Ensured security and safety protocols at high-profile commercial properties</li>
+                    <li>Developed keen observation skills and attention to detail in high-pressure environments</li>
+                    <li>Collaborated with law enforcement on incident reporting and documentation</li>
+                    <li>Built foundation for understanding operational security and risk management</li>
+                </ul>
+                
+                <div class="media-gallery">
+                    <div class="media-tabs">
+                        <button class="media-tab active" data-tab="images" data-company="certis">
+                            <i data-lucide="image" style="width: 16px; height: 16px;"></i>
+                            Gallery <span class="count">4</span>
+                        </button>
+                    </div>
+                    
+                    <div class="image-gallery" data-gallery="certis-images">
+                        <div class="gallery-item" data-src="../images/journey/Certis/guard1.png">
+                            <img src="../images/journey/Certis/guard1.png" alt="Security Operations" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1557597774-9d273605dfa9?w=400&q=80'">
+                        </div>
+                        <div class="gallery-item" data-src="../images/journey/Certis/guard2.jpeg">
+                            <img src="../images/journey/Certis/guard2.jpeg" alt="High-Profile Property Security" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=400&q=80'">
+                        </div>
+                        <div class="gallery-item" data-src="../images/journey/Certis/guard3.jpeg">
+                            <img src="../images/journey/Certis/guard3.jpeg" alt="Team Coordination" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1560472355-536de3962603?w=400&q=80'">
+                        </div>
+                        <div class="gallery-item" data-src="../images/journey/Certis/guard4.jpeg">
+                            <img src="../images/journey/Certis/guard4.jpeg" alt="Incident Response Training" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=400&q=80'">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Freelance -->
-            <div class="job-card">
+            <div class="job-card freelance-teaser" data-company="freelance">
                 <div class="job-header">
                     <h3 class="job-title">Founder / Creative Consultant</h3>
                     <span class="job-meta">2018 – 2023 | Part-time/Project-based</span>
@@ -1429,6 +1718,21 @@
                     <li>Grew combined client follower base 100K+ through visual content strategy</li>
                     <li>Achieved 8.5% average engagement rate (3x industry benchmark)</li>
                 </ul>
+                
+                <div class="professional-teaser">
+                    <div class="teaser-icon">🔒</div>
+                    <h4>Detailed Portfolio Available</h4>
+                    <p>Project showcases and case studies can be provided during the interview process.</p>
+                    <div class="mode-switch-hint">
+                        <p>Or get a sneak peek in <strong>Professional Mode</strong> for:</p>
+                        <ul>
+                            <li>📊 Detailed metrics & ROI data</li>
+                            <li>📁 Full project case studies</li>
+                            <li>🎯 Strategic breakdowns</li>
+                        </ul>
+                        <a href="/professional/" class="switch-mode-btn">Switch to Professional Mode →</a>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -1441,6 +1745,746 @@
             <video id="lightbox-video" controls style="display: none;"></video>
         </div>
     </div>
+
+
+    <section class="parallax-section" id="quote">
+        <div class="parallax-bg"></div>
+        <div class="parallax-content">
+            <p class="parallax-text">
+                Good design is obvious.<br>
+                <span>Great design is transparent.</span>
+            </p>
+        </div>
+    </section>
+
+    <!-- HOBBIES & CURRENT PROJECTS -->
+    <section class="split-section" id="stats">
+        <div class="split-left">
+            <h2 class="split-title">Hobbies</h2>
+            <div class="hobbies-grid">
+                <div class="hobby-item">
+                    <span class="hobby-icon">🎮</span>
+                    <div class="hobby-info">
+                        <h4>DayZ Server Admin</h4>
+                        <p>Running custom survival servers with modded economies and PvP zones</p>
+                    </div>
+                </div>
+                <div class="hobby-item">
+                    <span class="hobby-icon">💪</span>
+                    <div class="hobby-info">
+                        <h4>Gym & MMA</h4>
+                        <p>Strength training mixed with martial arts discipline</p>
+                    </div>
+                </div>
+                <div class="hobby-item">
+                    <span class="hobby-icon">🥾</span>
+                    <div class="hobby-info">
+                        <h4>Hiking</h4>
+                        <p>Exploring trails and getting lost in nature</p>
+                    </div>
+                </div>
+                <div class="hobby-item">
+                    <span class="hobby-icon">💃</span>
+                    <div class="hobby-info">
+                        <h4>Blues & Lindy Hop</h4>
+                        <p>Social dancing at weekly swing dance events</p>
+                    </div>
+                </div>
+                <div class="hobby-item">
+                    <span class="hobby-icon">🧠</span>
+                    <div class="hobby-info">
+                        <h4>AI Research</h4>
+                        <p>Experimenting with LLMs and multi-agent systems</p>
+                    </div>
+                </div>
+                <div class="hobby-item">
+                    <span class="hobby-icon">♟️</span>
+                    <div class="hobby-info">
+                        <h4>Speed Chess</h4>
+                        <p>Blitz chess for rapid pattern recognition training</p>
+                    </div>
+                </div>
+                <div class="hobby-item">
+                    <span class="hobby-icon">🌿</span>
+                    <div class="hobby-info">
+                        <h4>Building Terrariums</h4>
+                        <p>Creating self-sustaining miniature ecosystems in glass containers</p>
+                    </div>
+                </div>
+                <div class="hobby-item">
+                    <span class="hobby-icon">🎮</span>
+                    <div class="hobby-info">
+                        <h4>Building Indie Video Games</h4>
+                        <p>Developing small passion projects and prototyping game mechanics</p>
+                    </div>
+                </div>
+                <div class="hobby-item">
+                    <span class="hobby-icon">📚</span>
+                    <div class="hobby-info">
+                        <h4>Deep Reading</h4>
+                        <p>Philosophy, behavioral economics, and systems thinking</p>
+                    </div>
+                </div>
+                <div class="hobby-item">
+                    <span class="hobby-icon">💕</span>
+                    <div class="hobby-info">
+                        <h4>Weekend Therapist</h4>
+                        <p>Professional emotional support services for my girlfriend (pro bono)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="split-right">
+            <h2 class="split-title">Current Projects</h2>
+            <div class="project-list">
+                <div class="current-project-card">
+                    <div class="project-header">
+                        <span class="project-badge">🩺 Medical AI</span>
+                        <span class="project-status-pill">In Development</span>
+                    </div>
+                    <h3 class="project-title">Anti-Bullshit Detector</h3>
+                    <p class="project-desc">Live medical transcription app that educates patients on what doctors <strong>should</strong> vs <strong>should not</strong> do. Analyzes prescriptions in real-time, flagging potential medication errors and explaining side effects before you leave the clinic.</p>
+                    <div class="project-features">
+                        <span class="feature-tag">Real-time Transcription</span>
+                        <span class="feature-tag">Drug Interaction Check</span>
+                        <span class="feature-tag">Patient Advocacy</span>
+                    </div>
+                </div>
+                
+                <div class="current-project-card">
+                    <div class="project-header">
+                        <span class="project-badge">🤖 Sales AI</span>
+                        <span class="project-status-pill building">Building</span>
+                    </div>
+                    <h3 class="project-title">Malaysian Sales Manager 24/7</h3>
+                    <p class="project-desc">Full-stack AI sales system using OpenClaw architecture. Operates round-the-clock across WhatsApp, email, and social platforms—understanding Malaysian business culture, Manglish nuances, and local negotiation tactics.</p>
+                    <div class="project-features">
+                        <span class="feature-tag">OpenClaw Stack</span>
+                        <span class="feature-tag">Manglish NLP</span>
+                        <span class="feature-tag">24/7 Autonomous</span>
+                    </div>
+                </div>
+                
+                <div class="current-project-card">
+                    <div class="project-header">
+                        <span class="project-badge">📝 Legal Tech</span>
+                        <span class="project-status-pill live">Live (Testing Only)</span>
+                    </div>
+                    <h3 class="project-title">Legal Transcription 2.0</h3>
+                    <p class="project-desc">Upgraded automated legal transcription service with AI-powered formatting, speaker diarization, and court-specific template generation. Cash-flow positive since 2021.</p>
+                    <div class="project-features">
+                        <span class="feature-tag">Speaker Diarization</span>
+                        <span class="feature-tag">Court Templates</span>
+                        <span class="feature-tag">Cash-flow Positive</span>
+                    </div>
+                </div>
+            </div>
+            <a href="mailto:jothiharshana188@gmail.com" class="magnetic-btn">Collaborate</a>
+        </div>
+    </section>
+
+    <style>
+        .hobbies-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        @media (min-width: 640px) {
+            .hobbies-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        .hobby-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            background: rgba(255,255,255,0.03);
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.3s ease;
+        }
+        .hobby-item:hover {
+            background: rgba(255,61,0,0.1);
+            border-color: rgba(255,61,0,0.3);
+            transform: translateX(5px);
+        }
+        .hobby-icon {
+            font-size: 1.5rem;
+            line-height: 1;
+        }
+        .hobby-info h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin: 0 0 0.25rem;
+            color: var(--text);
+        }
+        .hobby-info p {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin: 0;
+            line-height: 1.4;
+        }
+        .project-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+            margin-top: 1.5rem;
+        }
+        .current-project-card {
+            background: rgba(255,61,0,0.08);
+            border: 1px solid rgba(255,61,0,0.2);
+            border-radius: 16px;
+            padding: 1.25rem;
+            transition: all 0.3s ease;
+        }
+        .current-project-card:hover {
+            background: rgba(255,61,0,0.12);
+            transform: translateY(-3px);
+        }
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+        .project-badge {
+            font-size: 0.75rem;
+        }
+        .project-status-pill {
+            font-size: 0.65rem;
+            padding: 0.25rem 0.75rem;
+            background: rgba(255,255,255,0.1);
+            border-radius: 100px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .project-status-pill.building {
+            background: rgba(255,170,0,0.2);
+            color: #ffaa00;
+        }
+        .project-status-pill.live {
+            background: rgba(0,255,136,0.15);
+            color: #00ff88;
+        }
+        .current-project-card .project-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 0 0 0.5rem;
+            color: var(--text);
+        }
+        .current-project-card .project-desc {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin: 0 0 0.75rem;
+        }
+        .current-project-card .project-desc strong {
+            color: var(--accent);
+        }
+        .project-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        .feature-tag {
+            font-size: 0.65rem;
+            padding: 0.2rem 0.6rem;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 100px;
+            color: var(--text-secondary);
+        }
+        
+        /* Freelance Teaser */
+        .freelance-teaser {
+            position: relative;
+        }
+        .professional-teaser {
+            background: linear-gradient(135deg, rgba(255,61,0,0.1), rgba(255,61,0,0.05));
+            border: 1px solid rgba(255,61,0,0.2);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            text-align: center;
+        }
+        .teaser-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .professional-teaser h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 0 0 0.5rem;
+            color: var(--text);
+        }
+        .professional-teaser p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin: 0 0 1rem;
+        }
+        .mode-switch-hint {
+            background: rgba(0,0,0,0.2);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+        .mode-switch-hint p {
+            margin: 0 0 0.75rem;
+            font-size: 0.8rem;
+        }
+        .mode-switch-hint ul {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 1rem;
+            text-align: left;
+            display: inline-block;
+        }
+        .mode-switch-hint li {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin: 0.25rem 0;
+        }
+        .switch-mode-btn {
+            display: inline-block;
+            background: var(--accent);
+            color: var(--bg);
+            padding: 0.75rem 1.5rem;
+            border-radius: 100px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        .switch-mode-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255,61,0,0.3);
+        }
+    </style>
+
+    <!-- Education & Achievements Section -->
+    <section class="education-section" id="education">
+        <div class="section-header">
+            <p class="section-label">Background</p>
+            <h2 class="section-title">Education & Achievements</h2>
+        </div>
+        
+        <div class="education-grid">
+            <!-- Academic Education -->
+            <div class="education-card academic">
+                <div class="education-header">
+                    <span class="edu-icon">🎓</span>
+                    <h3>Academic Education</h3>
+                </div>
+                <div class="education-list">
+                    <div class="edu-item">
+                        <div class="edu-year">2024</div>
+                        <div class="edu-content">
+                            <h4>Bachelor of Business Administration</h4>
+                            <p>UCSI University KL Campus, Cheras</p>
+                        </div>
+                    </div>
+                    <div class="edu-item">
+                        <div class="edu-year">2020</div>
+                        <div class="edu-content">
+                            <h4>Foundation in Arts</h4>
+                            <p>UCSI University KL Campus, Cheras</p>
+                        </div>
+                    </div>
+                    <div class="edu-item">
+                        <div class="edu-year">2015</div>
+                        <div class="edu-content">
+                            <h4>SPM (Sijil Pelajaran Malaysia)</h4>
+                            <p>SMK Seri Mutiara, Cheras</p>
+                        </div>
+                    </div>
+                    <div class="edu-item">
+                        <div class="edu-year">2013</div>
+                        <div class="edu-content">
+                            <h4>PMR (Penilaian Menengah Rendah)</h4>
+                            <p>SMK Bukit Mewah, Seremban</p>
+                        </div>
+                    </div>
+                    <div class="edu-item">
+                        <div class="edu-year">2010</div>
+                        <div class="edu-content">
+                            <h4>UPSR (Ujian Pencapaian Sekolah Rendah)</h4>
+                            <p>SK Dato Bandar Rasah, Seremban</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Leadership & Special Training -->
+            <div class="education-card leadership">
+                <div class="education-header">
+                    <span class="edu-icon">⭐</span>
+                    <h3>Leadership & Special Training</h3>
+                </div>
+                <div class="education-list">
+                    <div class="edu-item highlight">
+                        <div class="edu-badge">President</div>
+                        <div class="edu-content">
+                            <h4>UCSI University Student Council</h4>
+                            <p>Led student body initiatives and campus-wide events</p>
+                        </div>
+                    </div>
+                    <div class="edu-item">
+                        <div class="edu-badge cert">Certified</div>
+                        <div class="edu-content">
+                            <h4>Counter Terrorism & Emergency Medical Response</h4>
+                            <p>Certis Cisco Pte Ltd, Singapore</p>
+                        </div>
+                    </div>
+                    <div class="edu-item">
+                        <div class="edu-badge cert">Certified</div>
+                        <div class="edu-content">
+                            <h4>Firearms Enforcement & Close Quarters Combat</h4>
+                            <p>Singapore Police Force</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Professional Certifications -->
+            <div class="education-card certifications">
+                <div class="education-header">
+                    <span class="edu-icon">🏆</span>
+                    <h3>Professional Certifications</h3>
+                </div>
+                <div class="cert-grid">
+                    <div class="cert-item">
+                        <div class="cert-logo">Ad</div>
+                        <div class="cert-info">
+                            <h4>Adobe Content Creator</h4>
+                            <span class="cert-verified">Verified</span>
+                        </div>
+                    </div>
+                    <div class="cert-item">
+                        <div class="cert-logo">Ps</div>
+                        <div class="cert-info">
+                            <h4>Adobe Graphic Designer</h4>
+                            <span class="cert-verified">Verified</span>
+                        </div>
+                    </div>
+                    <div class="cert-item">
+                        <div class="cert-logo">AI</div>
+                        <div class="cert-info">
+                            <h4>Nexis Certified AI Development</h4>
+                            <span class="cert-verified">Verified</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <style>
+        .education-section {
+            padding: 4rem 2rem;
+            background: var(--bg);
+        }
+        .education-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        @media (min-width: 768px) {
+            .education-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .certifications {
+                grid-column: span 2;
+            }
+        }
+        @media (min-width: 1024px) {
+            .education-grid {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+            .certifications {
+                grid-column: span 1;
+            }
+        }
+        .education-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        .education-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-3px);
+        }
+        .education-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .edu-icon {
+            font-size: 1.5rem;
+        }
+        .education-header h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 0;
+        }
+        .education-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        .edu-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            background: rgba(255,255,255,0.02);
+            border-radius: 12px;
+            transition: all 0.2s ease;
+        }
+        .edu-item:hover {
+            background: rgba(255,61,0,0.05);
+        }
+        .edu-item.highlight {
+            background: rgba(255,61,0,0.1);
+            border: 1px solid rgba(255,61,0,0.2);
+        }
+        .edu-year {
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--accent);
+            background: rgba(255,61,0,0.1);
+            padding: 0.2rem 0.5rem;
+            border-radius: 100px;
+            white-space: nowrap;
+        }
+        .edu-badge {
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 0.2rem 0.5rem;
+            border-radius: 100px;
+            white-space: nowrap;
+        }
+        .edu-badge:first-child {
+            background: var(--accent);
+            color: var(--bg);
+        }
+        .edu-badge.cert {
+            background: rgba(0,255,136,0.15);
+            color: #00ff88;
+        }
+        .edu-content h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin: 0 0 0.2rem;
+            color: var(--text);
+        }
+        .edu-content p {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+        .cert-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        .cert-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            background: rgba(255,255,255,0.02);
+            border-radius: 12px;
+            transition: all 0.2s ease;
+        }
+        .cert-item:hover {
+            background: rgba(255,61,0,0.05);
+        }
+        .cert-logo {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #ff3d00, #ff6b35);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: white;
+        }
+        .cert-info h4 {
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin: 0 0 0.2rem;
+            color: var(--text);
+        }
+        .cert-verified {
+            font-size: 0.65rem;
+            color: #00ff88;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+        .cert-verified::before {
+            content: '✓';
+            width: 14px;
+            height: 14px;
+            background: rgba(0,255,136,0.15);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.6rem;
+        }
+    </style>
+
+    <!-- Portfolio Modes Explained -->
+    <section class="modes-explained" id="modes">
+        <div class="modes-container">
+            <h2 class="modes-title">Explore Different Versions</h2>
+            <p class="modes-subtitle">This portfolio has multiple personalities. Choose your adventure:</p>
+            
+            <div class="modes-grid">
+                <div class="mode-card current">
+                    <div class="mode-icon">🎨</div>
+                    <h3>Creative Mode</h3>
+                    <p class="mode-desc">You're here! Visual-heavy showcase with horizontal scrolling artwork and experimental layouts.</p>
+                    <span class="mode-current-badge">Current View</span>
+                </div>
+                
+                <a href="/professional/" class="mode-card link">
+                    <div class="mode-icon">💼</div>
+                    <h3>Professional Mode</h3>
+                    <p class="mode-desc">Data-driven marketing technologist portfolio. Metrics, systems, and business impact.</p>
+                    <span class="mode-link">Visit →</span>
+                </a>
+                
+                <a href="/brutal/" class="mode-card link brutal">
+                    <div class="mode-icon">⚡</div>
+                    <h3>Brutal Mode</h3>
+                    <p class="mode-desc">Unfiltered truth. A satirical e-commerce experience selling "career trauma as products." Dark humor warning.</p>
+                    <span class="mode-link">Enter If You Dare →</span>
+                </a>
+            </div>
+            
+            <div class="mode-switch-tip">
+                <p>💡 <strong>Pro Tip:</strong> Use the navigation bar at the top or bottom of the page to switch modes instantly.</p>
+            </div>
+        </div>
+    </section>
+
+    <style>
+        .modes-explained {
+            padding: 4rem 2rem;
+            background: linear-gradient(180deg, var(--surface) 0%, var(--bg) 100%);
+            border-top: 1px solid var(--border);
+        }
+        .modes-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .modes-title {
+            font-size: clamp(1.5rem, 4vw, 2rem);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .modes-subtitle {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+        .modes-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        @media (min-width: 768px) {
+            .modes-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        .mode-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 1.5rem;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .mode-card.link:hover {
+            border-color: var(--accent);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        .mode-card.current {
+            border-color: var(--accent);
+            background: rgba(255,61,0,0.05);
+        }
+        .mode-card.brutal:hover {
+            border-color: #8B0000;
+            box-shadow: 0 20px 40px rgba(139,0,0,0.2);
+        }
+        .mode-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.75rem;
+        }
+        .mode-card h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 0 0 0.5rem;
+        }
+        .mode-desc {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin: 0 0 1rem;
+            line-height: 1.5;
+        }
+        .mode-current-badge {
+            display: inline-block;
+            background: var(--accent);
+            color: var(--bg);
+            padding: 0.3rem 0.8rem;
+            border-radius: 100px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        .mode-link {
+            display: inline-block;
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+        .mode-card.brutal .mode-link {
+            color: #ff6b6b;
+        }
+        .mode-switch-tip {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .mode-switch-tip p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+    </style>
 
     <!-- Footer -->
     <footer class="footer" id="contact">
@@ -1621,7 +2665,7 @@
 
         // Projects animation
         gsap.from('.project-card', {
-            scrollTrigger: { trigger: '.projects-section', start: 'top 80%', toggleActions: 'play none none reverse' },
+            scrollTrigger: { trigger: '.education-section', start: 'top 80%', toggleActions: 'play none none reverse' },
             y: 30, opacity: 0, duration: 0.6, stagger: 0.08, ease: 'power2.out'
         });
 

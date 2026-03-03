@@ -10,6 +10,7 @@ import Hero from './components/Sections/Hero-MarketingTechnologist';
 import ValueProposition from './components/Sections/ValueProposition';
 import AboutBento from './components/Sections/AboutBento';
 import Skills from './components/Sections/Skills';
+import WhatICanDo from './components/Sections/WhatICanDo';
 import Journey from './components/Sections/Journey';
 import Portfolio from './components/Sections/Portfolio';
 import WorkforceWorkflows from './components/Sections/WorkforceWorkflows';
@@ -18,6 +19,7 @@ import MamakWorkshopEvolution from './components/Sections/MamakWorkshopEvolution
 import MakcikApprovalEvolution from './components/Sections/MakcikApprovalEvolution';
 import Contact from './components/Sections/Contact';
 import FloatingNav from './components/Layout/FloatingNav';
+import UniversalNav from './components/Layout/UniversalNav';
 import { FloatingAiAssistant } from './components/UI/FloatingAiAssistant';
 import { trackChatbotEvent } from './utils/chatbotAnalytics';
 
@@ -29,6 +31,20 @@ function App() {
   
   // Navigation State
   const [isNavOpen, setIsNavOpen] = useState(false);
+  
+  // Detect current portfolio mode from URL path
+  const [currentMode, setCurrentMode] = useState('professional');
+  
+  useEffect(() => {
+    const path = window.location.pathname.toLowerCase();
+    if (path.includes('/creative')) {
+      setCurrentMode('creative');
+    } else if (path.includes('/professional')) {
+      setCurrentMode('professional');
+    } else if (path.includes('/brutal')) {
+      setCurrentMode('brutal');
+    }
+  }, []);
 
   // Global Navigation Listeners (Right Click & H Key)
   useEffect(() => {
@@ -74,13 +90,14 @@ function App() {
                 <Hero />
                 <ValueProposition />
                 <div id="about"><AboutBento /></div>
+                <Journey />
                 <Skills />
+                <WhatICanDo />
                 <WorkforceWorkflows />
                 <KopitiamIntelEvolution />
                 <MamakWorkshopEvolution />
                 <MakcikApprovalEvolution />
                 <div id="projects"><Portfolio /></div>
-                <Journey />
                 <div id="contact"><Contact /></div>
 
                 <footer className="py-20 border-t border-navy/5 dark:border-white/5 text-center text-sm text-gray-500 bg-white/30 dark:bg-navy-dark/30 backdrop-blur-sm">
@@ -135,12 +152,14 @@ function App() {
       {/* Global Navigation */}
       {showMain && (
         <>
+          <UniversalNav currentMode={currentMode} />
           <FloatingNav
             isOpen={isNavOpen}
             toggleMenu={() => setIsNavOpen(prev => !prev)}
             toggleArchitect={() => setIsNavOpen(false)}
           />
-          <FloatingAiAssistant />
+          {/* Chatbot enabled only for creative and professional modes */}
+          {currentMode !== 'brutal' && <FloatingAiAssistant mode={currentMode} />}
         </>
       )}
     </div>

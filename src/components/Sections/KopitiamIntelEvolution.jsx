@@ -58,100 +58,46 @@ const intelStages = [
     }
 ];
 
-// Radar visualization component
-const IntelRadar = ({ stage, isPlaying }) => {
-    const radarData = [
-        { label: 'Social', value: stage >= 0 ? 100 : 0, max: 100 },
-        { label: 'Economic', value: stage >= 1 ? 100 : 0, max: 100 },
-        { label: 'Satellite', value: stage >= 2 ? 100 : 0, max: 100 },
-        { label: 'Policy', value: stage >= 3 ? 100 : 0, max: 100 },
-        { label: 'Behavior', value: stage >= 4 ? 100 : 0, max: 100 },
-        { label: 'Auto-RL', value: stage >= 5 ? 100 : 0, max: 100 },
-    ];
+// Kinetic Log Stream for Kopitiam Intel
+import KineticLogStream from '../UI/KineticLogStream';
 
-    return (
-        <div className="relative w-full h-full flex items-center justify-center">
-            {/* Radar circles */}
-            <div className="absolute inset-0 flex items-center justify-center">
-                {[20, 40, 60, 80, 100].map((r, i) => (
-                    <div 
-                        key={i}
-                        className="absolute rounded-full border border-teal/20"
-                        style={{ width: `${r}%`, height: `${r}%` }}
-                    />
-                ))}
-            </div>
-            
-            {/* Radar polygon */}
-            <svg className="absolute inset-0 w-full h-full" viewBox="0 0 200 200">
-                <motion.polygon
-                    points={radarData.map((d, i) => {
-                        const angle = (i * 60 - 90) * (Math.PI / 180);
-                        const r = (d.value / 100) * 80;
-                        return `${100 + r * Math.cos(angle)},${100 + r * Math.sin(angle)}`;
-                    }).join(' ')}
-                    fill="rgba(45, 212, 191, 0.2)"
-                    stroke="#2dd4bf"
-                    strokeWidth="2"
-                    initial={false}
-                    animate={{
-                        points: radarData.map((d, i) => {
-                            const angle = (i * 60 - 90) * (Math.PI / 180);
-                            const r = (d.value / 100) * 80;
-                            return `${100 + r * Math.cos(angle)},${100 + r * Math.sin(angle)}`;
-                        }).join(' ')
-                    }}
-                    transition={{ duration: 0.5 }}
-                />
-                {/* Data points */}
-                {radarData.map((d, i) => {
-                    const angle = (i * 60 - 90) * (Math.PI / 180);
-                    const r = (d.value / 100) * 80;
-                    return (
-                        <motion.circle
-                            key={i}
-                            cx={100 + r * Math.cos(angle)}
-                            cy={100 + r * Math.sin(angle)}
-                            r={4}
-                            fill={d.value > 0 ? "#2dd4bf" : "#374151"}
-                            initial={false}
-                            animate={{
-                                cx: 100 + r * Math.cos(angle),
-                                cy: 100 + r * Math.sin(angle),
-                                fill: d.value > 0 ? "#2dd4bf" : "#374151"
-                            }}
-                        />
-                    );
-                })}
-            </svg>
-            
-            {/* Labels */}
-            {radarData.map((d, i) => {
-                const angle = (i * 60 - 90) * (Math.PI / 180);
-                const r = 95;
-                return (
-                    <div
-                        key={i}
-                        className="absolute text-[10px] text-gray-400 text-center"
-                        style={{
-                            left: `${50 + (r/200) * 100 * Math.cos(angle)}%`,
-                            top: `${50 + (r/200) * 100 * Math.sin(angle)}%`,
-                            transform: 'translate(-50%, -50%)'
-                        }}
-                    >
-                        {d.label}
-                    </div>
-                );
-            })}
-            
-            {/* Center pulsing dot */}
-            <motion.div
-                animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }}
-                transition={{ repeat: Infinity, duration: 2 }}
-                className="absolute w-4 h-4 rounded-full bg-teal"
-            />
-        </div>
-    );
+// Generate logs based on current stage
+const generateIntelLogs = (stage) => {
+    const baseLogs = [
+        { timestamp: '10:00:00', type: 'INFO', message: 'Kopitiam Intel system initialized' },
+    ];
+    
+    if (stage >= 0) {
+        baseLogs.push({ timestamp: '10:00:02', type: 'PROCESS', message: 'Monitoring social feeds (TikTok/IG/FB)...' });
+        baseLogs.push({ timestamp: '10:00:05', type: 'SUCCESS', message: 'Social velocity tracking active' });
+    }
+    
+    if (stage >= 1) {
+        baseLogs.push({ timestamp: '10:00:08', type: 'PROCESS', message: 'LSTM nowcasting models loading...' });
+        baseLogs.push({ timestamp: '10:00:12', type: 'SUCCESS', message: '14-day prediction horizon activated' });
+    }
+    
+    if (stage >= 2) {
+        baseLogs.push({ timestamp: '10:00:15', type: 'PROCESS', message: 'Satellite feed connecting...' });
+        baseLogs.push({ timestamp: '10:00:18', type: 'SUCCESS', message: 'YOLOv8 detecting SG cars in JB malls' });
+    }
+    
+    if (stage >= 3) {
+        baseLogs.push({ timestamp: '10:00:22', type: 'PROCESS', message: 'FedNLP parsing government policies...' });
+        baseLogs.push({ timestamp: '10:00:26', type: 'WARNING', message: 'Petrol subsidy change detected - simulating impact' });
+    }
+    
+    if (stage >= 4) {
+        baseLogs.push({ timestamp: '10:00:30', type: 'PROCESS', message: 'Behavioral economics engine active' });
+        baseLogs.push({ timestamp: '10:00:34', type: 'SUCCESS', message: 'Loss aversion patterns mapped' });
+    }
+    
+    if (stage >= 5) {
+        baseLogs.push({ timestamp: '10:00:38', type: 'PROCESS', message: 'Reinforcement learning initializing...' });
+        baseLogs.push({ timestamp: '10:00:42', type: 'SUCCESS', message: 'Autonomous radar fully operational' });
+    }
+    
+    return baseLogs.reverse();
 };
 
 // Satellite data visualization
@@ -365,18 +311,18 @@ const KopitiamIntelEvolution = () => {
                 </div>
 
                 <div className="grid lg:grid-cols-5 gap-6 max-w-6xl mx-auto">
-                    {/* Left: Radar Visualization */}
+                    {/* Left: Kinetic Log Stream Visualization */}
                     <div className="lg:col-span-3">
                         <motion.div 
-                            className="relative bg-black/40 rounded-2xl p-6 border border-teal/20 h-[400px] overflow-hidden"
+                            className="relative bg-black/40 rounded-2xl border border-teal/20 overflow-hidden"
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                         >
                             {/* Header */}
-                            <div className="flex items-center justify-between mb-4">
+                            <div className="flex items-center justify-between p-4 border-b border-teal/20">
                                 <div className="flex items-center gap-3">
                                     <Radar size={20} className="text-teal" />
-                                    <h3 className="font-bold text-white">Intelligence Radar</h3>
+                                    <h3 className="font-bold text-white">Live Intelligence Feed</h3>
                                 </div>
                                 <div className="flex items-center gap-3">
                                     <span className="text-xs text-gray-500">
@@ -397,22 +343,13 @@ const KopitiamIntelEvolution = () => {
                                 </div>
                             </div>
 
-                            {/* Radar */}
-                            <div className="h-[280px]">
-                                <IntelRadar stage={currentStage} isPlaying={isPlaying} />
-                            </div>
-
-                            {/* Overlays based on stage */}
-                            <SatelliteFeed stage={currentStage} />
-                            <PolicyAlerts stage={currentStage} />
-
-                            {/* Progress bar */}
-                            <div className="absolute bottom-0 left-0 right-0 h-1 bg-white/5">
-                                <motion.div 
-                                    className="h-full bg-teal"
-                                    animate={{ width: `${((currentStage + 1) / 6) * 100}%` }}
-                                />
-                            </div>
+                            {/* Kinetic Log Stream */}
+                            <KineticLogStream 
+                                logs={generateIntelLogs(currentStage)}
+                                showHeader={false}
+                                height="320px"
+                                className="border-0 rounded-none"
+                            />
                         </motion.div>
                     </div>
 
@@ -522,26 +459,24 @@ const KopitiamIntelEvolution = () => {
                     </div>
                 </div>
 
-                {/* Bottom: Before/After */}
-                <div className="grid md:grid-cols-2 gap-6 mt-8 max-w-4xl mx-auto">
-                    <div className="bg-red-500/10 rounded-xl p-6 border border-red-500/20">
-                        <h4 className="font-bold text-red-400 mb-3">Before: Reactive</h4>
-                        <ul className="space-y-2 text-sm text-gray-400">
-                            <li>• Social listening only</li>
-                            <li>• Report after trends peak</li>
-                            <li>• Missed arbitrage windows</li>
-                            <li>• Manual policy tracking</li>
-                        </ul>
-                    </div>
-                    <div className="bg-green-500/10 rounded-xl p-6 border border-green-500/20">
-                        <h4 className="font-bold text-green-400 mb-3">After: Autonomous Radar</h4>
-                        <ul className="space-y-2 text-sm text-gray-400">
-                            <li>• 6-layer data fusion</li>
-                            <li>• 14-day prediction horizon</li>
-                            <li>• Auto-detect SG traffic spikes</li>
-                            <li>• Real-time policy impact sim</li>
-                        </ul>
-                    </div>
+                {/* Stage Indicators */}
+                <div className="flex flex-wrap justify-center gap-4 mt-8">
+                    {intelStages.map((s, idx) => (
+                        <motion.div
+                            key={idx}
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ delay: idx * 0.1 }}
+                            className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm ${
+                                idx <= currentStage 
+                                    ? 'bg-teal/20 text-teal border border-teal/30' 
+                                    : 'bg-white/5 text-gray-500'
+                            }`}
+                        >
+                            <span>{s.icon}</span>
+                            <span className="hidden sm:inline">{s.name}</span>
+                        </motion.div>
+                    ))}
                 </div>
             </div>
         </section>

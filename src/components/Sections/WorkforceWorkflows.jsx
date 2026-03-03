@@ -3,10 +3,11 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { 
     Clock, Users, Zap, TrendingUp, 
     AlertCircle, CheckCircle2, Sparkles, 
-    Play, RotateCcw, Target
+    Play, RotateCcw, Target, Terminal
 } from 'lucide-react';
+import { StepByStepTerminal } from '../UI/KineticLogStream';
 
-// Simplified evolution stages
+// Evolution stages with terminal logs
 const evolutionStages = {
     'content-creation': [
         { stage: 0, name: 'Manual', time: '4-6 hrs', team: '3 people', efficiency: '20%' },
@@ -26,6 +27,31 @@ const evolutionStages = {
         { stage: 2, name: 'Auto', time: '2 min', team: '1 agent', efficiency: '85%' },
         { stage: 3, name: 'Smart', time: '<1 min', team: '0.3 agent', efficiency: '98%' }
     ]
+};
+
+// Terminal step logs for each workflow
+const workflowLogs = {
+    'content-creation': [
+        { message: 'Initializing content pipeline...', type: 'INFO', delay: 500 },
+        { message: 'Analyzing brand guidelines...', type: 'PROCESS', delay: 1500 },
+        { message: 'Generating Manglish variants...', type: 'PROCESS', delay: 3000 },
+        { message: 'Running viral prediction model...', type: 'PROCESS', delay: 4500 },
+        { message: 'Content package ready for publishing', type: 'SUCCESS', delay: 6000 },
+    ],
+    'lead-generation': [
+        { message: 'Initializing lead scraper...', type: 'INFO', delay: 500 },
+        { message: 'Scanning social media for prospects...', type: 'PROCESS', delay: 1500 },
+        { message: 'Scoring leads with AI model...', type: 'PROCESS', delay: 3000 },
+        { message: 'Enriching contact data...', type: 'PROCESS', delay: 4500 },
+        { message: 'High-quality leads exported to CRM', type: 'SUCCESS', delay: 6000 },
+    ],
+    'customer-service': [
+        { message: 'Initializing support agent...', type: 'INFO', delay: 500 },
+        { message: 'Analyzing customer query...', type: 'PROCESS', delay: 1500 },
+        { message: 'Searching knowledge base...', type: 'PROCESS', delay: 2500 },
+        { message: 'Generating personalized response...', type: 'PROCESS', delay: 3500 },
+        { message: 'Response sent - Ticket resolved', type: 'SUCCESS', delay: 4500 },
+    ],
 };
 
 // Realistic typewriter hook with human-like delays
@@ -118,6 +144,16 @@ const WorkforceWorkflows = () => {
     const [currentStage, setCurrentStage] = useState(0);
     const [isPlaying, setIsPlaying] = useState(false);
     const [showResults, setShowResults] = useState(false);
+    const [isMobile, setIsMobile] = useState(false);
+    const [terminalKey, setTerminalKey] = useState(0);
+
+    // Detect mobile
+    useEffect(() => {
+        const checkMobile = () => setIsMobile(window.innerWidth < 768);
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
 
     const workflows = {
         'content-creation': {
@@ -159,6 +195,7 @@ const WorkforceWorkflows = () => {
         setCurrentStage(0);
         setShowResults(false);
         setIsPlaying(true);
+        setTerminalKey(prev => prev + 1); // Reset terminal
     };
 
     const handleWorkflowChange = (key) => {
@@ -166,6 +203,7 @@ const WorkforceWorkflows = () => {
         setCurrentStage(0);
         setShowResults(false);
         setIsPlaying(false);
+        setTerminalKey(prev => prev + 1);
     };
 
     return (
@@ -320,56 +358,51 @@ const WorkforceWorkflows = () => {
                         </div>
                     </motion.div>
 
-                    {/* Compact Before/After Comparison */}
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        className="grid grid-cols-2 gap-3 sm:gap-4"
-                    >
-                        <div className="bg-red-50 dark:bg-red-900/10 rounded-xl p-4 sm:p-5 border border-red-200 dark:border-red-800/50">
+                    {/* Mobile: Terminal Log Stream / Desktop: Stats Summary */}
+                    {isMobile ? (
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            className="mt-6"
+                        >
                             <div className="flex items-center gap-2 mb-3">
-                                <div className="w-8 h-8 rounded-full bg-red-100 dark:bg-red-800 flex items-center justify-center text-lg">
-                                    😫
-                                </div>
-                                <div>
-                                    <h4 className="font-bold text-red-800 dark:text-red-300 text-sm">Before AI</h4>
-                                    <p className="text-[10px] text-red-600 dark:text-red-400">Manual work</p>
-                                </div>
+                                <Terminal size={16} className="text-teal" />
+                                <h4 className="font-bold text-sm text-white">Live Process Log</h4>
                             </div>
-                            <ul className="space-y-1.5 text-xs text-red-700 dark:text-red-300">
-                                <li className="flex items-center gap-1.5">
-                                    <AlertCircle size={10} />
-                                    {stages[0].time} per task
-                                </li>
-                                <li className="flex items-center gap-1.5">
-                                    <Users size={10} />
-                                    {stages[0].team} needed
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div className="bg-green-50 dark:bg-green-900/10 rounded-xl p-4 sm:p-5 border border-green-200 dark:border-green-800/50">
-                            <div className="flex items-center gap-2 mb-3">
-                                <div className="w-8 h-8 rounded-full bg-green-100 dark:bg-green-800 flex items-center justify-center text-lg">
-                                    🚀
-                                </div>
-                                <div>
-                                    <h4 className="font-bold text-green-800 dark:text-green-300 text-sm">After AI</h4>
-                                    <p className="text-[10px] text-green-600 dark:text-green-400">Automated</p>
-                                </div>
-                            </div>
-                            <ul className="space-y-1.5 text-xs text-green-700 dark:text-green-300">
-                                <li className="flex items-center gap-1.5">
-                                    <CheckCircle2 size={10} />
-                                    {stages[3].time} per task
-                                </li>
-                                <li className="flex items-center gap-1.5">
-                                    <Zap size={10} />
-                                    95% less work
-                                </li>
-                            </ul>
-                        </div>
-                    </motion.div>
+                            <StepByStepTerminal 
+                                key={terminalKey}
+                                steps={workflowLogs[activeWorkflow]}
+                                height="200px"
+                            />
+                        </motion.div>
+                    ) : (
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            className="grid grid-cols-3 gap-4 mt-6"
+                        >
+                            {stages.map((s, idx) => (
+                                <motion.div
+                                    key={idx}
+                                    initial={{ opacity: 0, y: 20 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: idx * 0.1 }}
+                                    className={`p-4 rounded-xl border ${
+                                        idx <= currentStage 
+                                            ? 'bg-primary/10 border-primary/30' 
+                                            : 'bg-white/5 border-white/10'
+                                    }`}
+                                >
+                                    <p className="text-xs text-gray-500 mb-1">Stage {idx + 1}</p>
+                                    <p className="font-bold text-sm mb-2">{s.name}</p>
+                                    <div className="space-y-1 text-xs">
+                                        <p className="text-primary">{s.time}</p>
+                                        <p className="text-gray-400">{s.team}</p>
+                                    </div>
+                                </motion.div>
+                            ))}
+                        </motion.div>
+                    )}
                 </div>
             </div>
         </section>

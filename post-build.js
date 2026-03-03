@@ -32,13 +32,17 @@ if (!fs.existsSync(brutalDir)) {
   fs.mkdirSync(brutalDir, { recursive: true });
 }
 
-// Move built React app to professional/
+// Move built React app to professional/ - fix asset paths
 const builtIndex = path.join(distDir, 'index.html');
 if (fs.existsSync(builtIndex)) {
-  const content = fs.readFileSync(builtIndex, 'utf8');
+  let content = fs.readFileSync(builtIndex, 'utf8');
   // Check if it's the React app (has #root)
   if (content.includes('id="root"') || content.includes('/src/main.jsx')) {
-    fs.renameSync(builtIndex, path.join(professionalDir, 'index.html'));
+    // Fix asset paths to be relative (for subfolder deployment)
+    content = content.replace(/src="\/assets\//g, 'src="./assets/');
+    content = content.replace(/href="\/assets\//g, 'href="./assets/');
+    fs.writeFileSync(path.join(professionalDir, 'index.html'), content);
+    fs.unlinkSync(builtIndex);
     console.log('✓ Moved React app to professional/index.html');
   }
 }
@@ -57,31 +61,69 @@ if (fs.existsSync(terminalSource)) {
   }
 }
 
-// Copy creative folder
+// Copy creative folder - USES STATIC HTML (Palmer template)
 const creativeSource = path.join(__dirname, 'creative');
 if (fs.existsSync(creativeSource)) {
-  // Copy index.html
-  fs.copyFileSync(
-    path.join(creativeSource, 'index.html'),
-    path.join(creativeDir, 'index.html')
-  );
-  console.log('✓ Copied creative mode');
+  // Copy the static creative HTML file
+  let creativeContent = fs.readFileSync(path.join(creativeSource, 'index.html'), 'utf8');
+  
+  // Fix asset paths to be relative (for subfolder deployment)
+  creativeContent = creativeContent.replace(/src="\.\.\//g, 'src="./');
+  creativeContent = creativeContent.replace(/href="\.\.\//g, 'href="./');
+  
+  fs.writeFileSync(path.join(creativeDir, 'index.html'), creativeContent);
+  console.log('✓ Copied creative mode (static HTML)');
 }
 
-// Copy brutal folder
+// Copy brutal folder - fix asset paths
 const brutalSource = path.join(__dirname, 'brutal');
 if (fs.existsSync(brutalSource)) {
-  fs.copyFileSync(
-    path.join(brutalSource, 'index.html'),
-    path.join(brutalDir, 'index.html')
-  );
+  let brutalContent = fs.readFileSync(path.join(brutalSource, 'index.html'), 'utf8');
+  
+  // Fix asset paths to be relative (for subfolder deployment)
+  brutalContent = brutalContent.replace(/src="\/assets\//g, 'src="./assets/');
+  brutalContent = brutalContent.replace(/href="\/assets\//g, 'href="./assets/');
+  brutalContent = brutalContent.replace(/src="\.\.\//g, 'src="./');
+  brutalContent = brutalContent.replace(/href="\.\.\//g, 'href="./');
+  
+  fs.writeFileSync(path.join(brutalDir, 'index.html'), brutalContent);
   console.log('✓ Copied brutal mode');
+}
+
+// Copy assets to creative and brutal folders for React app support
+const assetsDir = path.join(distDir, 'assets');
+if (fs.existsSync(assetsDir)) {
+  const copyRecursive = (src, dest) => {
+    if (!fs.existsSync(dest)) {
+      fs.mkdirSync(dest, { recursive: true });
+    }
+    const entries = fs.readdirSync(src, { withFileTypes: true });
+    for (const entry of entries) {
+      const srcPath = path.join(src, entry.name);
+      const destPath = path.join(dest, entry.name);
+      if (entry.isDirectory()) {
+        copyRecursive(srcPath, destPath);
+      } else {
+        fs.copyFileSync(srcPath, destPath);
+      }
+    }
+  };
+  
+  // Copy assets to creative
+  const creativeAssets = path.join(creativeDir, 'assets');
+  copyRecursive(assetsDir, creativeAssets);
+  console.log('✓ Copied assets to creative/');
+  
+  // Copy assets to brutal
+  const brutalAssets = path.join(brutalDir, 'assets');
+  copyRecursive(assetsDir, brutalAssets);
+  console.log('✓ Copied assets to brutal/');
 }
 
 console.log('Post-build complete!');
 console.log('');
 console.log('Structure:');
 console.log('  / (root) -> Terminal boot');
-console.log('  /professional/ -> React app');
-console.log('  /creative/ -> Creative mode');
-console.log('  /brutal/ -> Brutal mode (trauma clearance)');
+console.log('  /professional/ -> React app (professional theme)');
+console.log('  /creative/ -> React app (creative theme + chatbot)');
+console.log('  /brutal/ -> Brutal mode (static HTML - no chatbot)');

@@ -3,6 +3,25 @@
   publish = "dist"
   functions = "api"
 
+# Professional mode SPA redirect
+[[redirects]]
+  from = "/professional/*"
+  to = "/professional/index.html"
+  status = 200
+
+# Creative mode SPA redirect
+[[redirects]]
+  from = "/creative/*"
+  to = "/creative/index.html"
+  status = 200
+
+# Brutal mode SPA redirect
+[[redirects]]
+  from = "/brutal/*"
+  to = "/brutal/index.html"
+  status = 200
+
+# API functions redirect
 [[redirects]]
   from = "/api/*"
   to = "/.netlify/functions/:splat"

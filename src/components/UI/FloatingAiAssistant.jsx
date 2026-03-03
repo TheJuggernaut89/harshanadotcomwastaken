@@ -5,7 +5,57 @@ import QuickActionChips from './QuickActionChips';
 import { useAutoScroll } from '../../hooks/useAutoScroll';
 import { trackChatbotEvent, getChatbotStats } from '../../utils/chatbotAnalytics';
 
-const FloatingAiAssistant = () => {
+// Theme configurations for different modes
+const THEMES = {
+  professional: {
+    name: 'Ocean Executive',
+    // Cool blue-cyan gradient - corporate, trustworthy
+    primaryGradient: 'linear-gradient(135deg, rgba(0, 212, 255, 0.9) 0%, rgba(99, 102, 241, 0.9) 100%)',
+    buttonShadow: '0 0 20px rgba(0, 212, 255, 0.7), 0 0 40px rgba(99, 102, 241, 0.5), 0 0 60px rgba(79, 70, 229, 0.3)',
+    buttonHoverShadow: '0 0 30px rgba(0, 212, 255, 0.8), 0 0 60px rgba(99, 102, 241, 0.4), 0 0 90px rgba(79, 70, 229, 0.2)',
+    chatBorder: 'rgba(0, 212, 255, 0.3)',
+    chatShadow: '0 20px 60px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05)',
+    userMessageGradient: 'linear-gradient(135deg, #00d4ff 0%, #0099cc 100%)',
+    botMessageBorder: 'rgba(0, 212, 255, 0.3)',
+    botMessageShadow: '0 8px 24px rgba(0, 212, 255, 0.15)',
+    gifBorder: 'rgba(0, 212, 255, 0.25)',
+    gifShadow: '0 12px 32px rgba(0, 212, 255, 0.2)',
+    sendButtonGradient: 'linear-gradient(135deg, #00d4ff 0%, #0099cc 100%)',
+    sendButtonHoverShadow: '0 0 20px rgba(0, 212, 255, 0.4)',
+    headerBadgeGradient: 'linear-gradient(135deg, rgba(0, 212, 255, 0.2) 0%, rgba(99, 102, 241, 0.2) 100%)',
+    headerBadgeText: '#38bdf8',
+    headerBadgeBorder: 'rgba(0, 212, 255, 0.3)',
+    goldmineBadgeGradient: 'linear-gradient(135deg, rgba(250, 204, 21, 0.2) 0%, rgba(234, 179, 8, 0.2) 100%)',
+    typingIndicator: 'rgba(0, 212, 255, 0.5)',
+    pingColor: '#00d4ff',
+    backdropOverlay: 'linear-gradient(135deg, rgba(0, 212, 255, 0.03), transparent, rgba(0, 153, 204, 0.03))',
+  },
+  creative: {
+    name: 'Sunset Artisan',
+    // Warm coral-orange to magenta gradient - artistic, vibrant
+    primaryGradient: 'linear-gradient(135deg, rgba(255, 107, 107, 0.9) 0%, rgba(255, 61, 119, 0.9) 50%, rgba(199, 125, 255, 0.9) 100%)',
+    buttonShadow: '0 0 20px rgba(255, 107, 107, 0.7), 0 0 40px rgba(255, 61, 119, 0.5), 0 0 60px rgba(199, 125, 255, 0.3)',
+    buttonHoverShadow: '0 0 30px rgba(255, 107, 107, 0.8), 0 0 60px rgba(255, 61, 119, 0.4), 0 0 90px rgba(199, 125, 255, 0.2)',
+    chatBorder: 'rgba(255, 107, 107, 0.3)',
+    chatShadow: '0 20px 60px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05)',
+    userMessageGradient: 'linear-gradient(135deg, #ff6b6b 0%, #ff3d77 100%)',
+    botMessageBorder: 'rgba(255, 107, 107, 0.3)',
+    botMessageShadow: '0 8px 24px rgba(255, 107, 107, 0.15)',
+    gifBorder: 'rgba(255, 107, 107, 0.25)',
+    gifShadow: '0 12px 32px rgba(255, 107, 107, 0.2)',
+    sendButtonGradient: 'linear-gradient(135deg, #ff6b6b 0%, #ff3d77 100%)',
+    sendButtonHoverShadow: '0 0 20px rgba(255, 107, 107, 0.4)',
+    headerBadgeGradient: 'linear-gradient(135deg, rgba(255, 107, 107, 0.2) 0%, rgba(199, 125, 255, 0.2) 100%)',
+    headerBadgeText: '#ff8e8e',
+    headerBadgeBorder: 'rgba(255, 107, 107, 0.3)',
+    goldmineBadgeGradient: 'linear-gradient(135deg, rgba(255, 209, 102, 0.2) 0%, rgba(255, 179, 71, 0.2) 100%)',
+    typingIndicator: 'rgba(255, 107, 107, 0.5)',
+    pingColor: '#ff6b6b',
+    backdropOverlay: 'linear-gradient(135deg, rgba(255, 107, 107, 0.03), transparent, rgba(255, 61, 119, 0.03))',
+  }
+};
+
+const FloatingAiAssistant = ({ mode = 'professional' }) => {
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState('');
@@ -409,6 +459,9 @@ const FloatingAiAssistant = () => {
     handleSend(chipAction);
   };
 
+  // Get current theme based on mode
+  const theme = THEMES[mode] || THEMES.professional;
+
   // Track when chat is manually opened/closed
   useEffect(() => {
     if (isChatOpen && hasAutoOpened) {
@@ -454,7 +507,7 @@ const FloatingAiAssistant = () => {
         whileHover={{
           scale: 1.1,
           rotate: isChatOpen ? 90 : 10,
-          boxShadow: '0 0 30px rgba(139, 92, 246, 0.8), 0 0 60px rgba(139, 92, 246, 0.4), 0 0 90px rgba(139, 92, 246, 0.2)'
+          boxShadow: theme.buttonHoverShadow
         }}
         whileTap={{ scale: 0.9 }}
         animate={{
@@ -472,8 +525,8 @@ const FloatingAiAssistant = () => {
         aria-controls="ai-chat-dialog"
         className="floating-ai-button relative w-16 h-16 rounded-full flex items-center justify-center"
         style={{
-          background: 'linear-gradient(135deg, rgba(99,102,241,0.9) 0%, rgba(168,85,247,0.9) 100%)',
-          boxShadow: '0 0 20px rgba(139, 92, 246, 0.7), 0 0 40px rgba(124, 58, 237, 0.5), 0 0 60px rgba(109, 40, 217, 0.3), inset 0 1px 2px rgba(255, 255, 255, 0.2)',
+          background: theme.primaryGradient,
+          boxShadow: `${theme.buttonShadow}, inset 0 1px 2px rgba(255, 255, 255, 0.2)`,
           border: '2px solid rgba(255, 255, 255, 0.2)',
         }}
       >
@@ -486,7 +539,10 @@ const FloatingAiAssistant = () => {
         >
           {isChatOpen ? <X className="w-8 h-8 text-white" /> : <Bot className="w-8 h-8 text-white" />}
         </motion.div>
-        <div className="absolute inset-0 rounded-full animate-ping opacity-20 bg-indigo-500"></div>
+        <div 
+          className="absolute inset-0 rounded-full animate-ping opacity-20"
+          style={{ backgroundColor: theme.pingColor }}
+        ></div>
       </motion.button>
 
       {/* Backdrop Overlay - Prevents interaction with site behind */}
@@ -512,12 +568,10 @@ const FloatingAiAssistant = () => {
           }}
         >
           <div
-            className="relative flex flex-col rounded-3xl bg-zinc-900 border border-purple-500/30 overflow-hidden h-full transition-all duration-300"
+            className="relative flex flex-col rounded-3xl bg-zinc-900 overflow-hidden h-full transition-all duration-300"
             style={{
-              boxShadow: `
-                0 20px 60px rgba(0, 0, 0, 0.5),
-                0 0 0 1px rgba(255, 255, 255, 0.05)
-              `
+              border: `1px solid ${theme.chatBorder}`,
+              boxShadow: theme.chatShadow
             }}
           >
 
@@ -526,14 +580,27 @@ const FloatingAiAssistant = () => {
               <div className="flex items-center gap-1.5">
                 <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
                 <span className="text-xs font-medium text-zinc-300">
-                  {isTyping ? 'Typing...' : "Harshana's AI Twin 🤖"}
+                  {isTyping ? 'Typing...' : `Harshana's AI Twin ${mode === 'creative' ? '🎨' : '🤖'}`}
                 </span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="px-2 py-1 text-xs font-medium bg-gradient-to-r from-green-500/20 to-emerald-500/20 text-green-400 rounded-2xl border border-green-500/30">
-                  🤖 AI-Powered
+                <span 
+                  className="px-2 py-1 text-xs font-medium rounded-2xl"
+                  style={{
+                    background: theme.headerBadgeGradient,
+                    color: theme.headerBadgeText,
+                    border: `1px solid ${theme.headerBadgeBorder}`
+                  }}
+                >
+                  {mode === 'creative' ? '🎨 AI-Creative' : '🤖 AI-Powered'}
                 </span>
-                <span className="px-2 py-1 text-xs font-medium bg-gradient-to-r from-yellow-500/20 to-orange-500/20 text-yellow-400 rounded-2xl border border-yellow-500/30">
+                <span 
+                  className="px-2 py-1 text-xs font-medium text-yellow-400 rounded-2xl"
+                  style={{
+                    background: theme.goldmineBadgeGradient,
+                    border: '1px solid rgba(234, 179, 8, 0.3)'
+                  }}
+                >
                   💎 GOLDMINE
                 </span>
                 <button
@@ -575,10 +642,14 @@ const FloatingAiAssistant = () => {
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ duration: 0.4, type: 'spring', stiffness: 100 }}
                         whileHover={{
-                          borderColor: 'rgba(139, 92, 246, 0.5)',
-                          boxShadow: '0 12px 32px rgba(139, 92, 246, 0.2)'
+                          borderColor: theme.gifBorder,
+                          boxShadow: theme.gifShadow
                         }}
-                        className="max-w-[70%] flex flex-col gap-0 rounded-2xl overflow-hidden border-2 border-purple-500/25 bg-zinc-800 shadow-xl shadow-purple-500/15 transition-all duration-300"
+                        className="max-w-[70%] flex flex-col gap-0 rounded-2xl overflow-hidden bg-zinc-800 transition-all duration-300"
+                        style={{
+                          border: `2px solid ${theme.gifBorder}`,
+                          boxShadow: theme.gifShadow
+                        }}
                       >
                       {/* GIF at top */}
                       <img
@@ -608,6 +679,7 @@ const FloatingAiAssistant = () => {
                               messageText={msg.textMessages.join(' ')}
                               userQuestion={msg.userQuestion}
                               onChipClick={handleChipClick}
+                              mode={mode}
                             />
                           )}
                         </div>
@@ -621,14 +693,23 @@ const FloatingAiAssistant = () => {
                       transition={{ duration: 0.3 }}
                       whileHover={msg.sender === 'bot' ? {
                         backgroundColor: 'rgba(63, 63, 70, 1)',
-                        borderColor: 'rgba(139, 92, 246, 0.5)',
-                        boxShadow: '0 8px 24px rgba(139, 92, 246, 0.15)'
+                        borderColor: theme.botMessageBorder,
+                        boxShadow: theme.botMessageShadow
                       } : {}}
-                      className={`max-w-[85%] rounded-2xl px-4 py-3 ${
-                        msg.sender === 'user'
-                          ? 'bg-gradient-to-r from-red-600 to-red-500 text-white'
-                          : 'bg-zinc-800 text-white border border-purple-500/30 shadow-lg shadow-black/20'
-                      } transition-all duration-300`}
+                      className={`max-w-[85%] rounded-2xl px-4 py-3 transition-all duration-300 ${
+                        msg.sender === 'user' ? 'text-white' : 'text-white'
+                      }`}
+                      style={{
+                        background: msg.sender === 'user' 
+                          ? theme.userMessageGradient 
+                          : '#27272a',
+                        border: msg.sender === 'user' 
+                          ? 'none' 
+                          : `1px solid ${theme.botMessageBorder}`,
+                        boxShadow: msg.sender === 'user'
+                          ? '0 8px 24px rgba(0, 0, 0, 0.2)'
+                          : '0 8px 24px rgba(0, 0, 0, 0.2)'
+                      }}
                     >
                       <p className="text-sm leading-relaxed whitespace-pre-line font-medium text-white">
                         {msg.text}
@@ -641,6 +722,7 @@ const FloatingAiAssistant = () => {
                           messageText={msg.text}
                           userQuestion={msg.userQuestion}
                           onChipClick={handleChipClick}
+                          mode={mode}
                         />
                       )}
                     </motion.div>
@@ -669,7 +751,16 @@ const FloatingAiAssistant = () => {
                 <button
                   onClick={() => handleSend()}
                   disabled={!message.trim() || isTyping}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 group w-12 h-12 flex items-center justify-center bg-gradient-to-r from-red-600 to-red-500 border-none rounded-full cursor-pointer transition-all duration-300 text-white shadow-lg hover:from-red-500 hover:to-red-400 hover:scale-110 hover:shadow-red-500/30 hover:shadow-xl active:scale-95 transform disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 group w-12 h-12 flex items-center justify-center border-none rounded-full cursor-pointer transition-all duration-300 text-white shadow-lg hover:scale-110 hover:shadow-xl active:scale-95 transform disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                  style={{
+                    background: theme.sendButtonGradient,
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.boxShadow = theme.sendButtonHoverShadow;
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.boxShadow = '0 10px 15px -3px rgba(0, 0, 0, 0.1)';
+                  }}
                   aria-label="Send message"
                   type="button"
                 >
@@ -682,7 +773,7 @@ const FloatingAiAssistant = () => {
             <div 
               className="absolute inset-0 rounded-3xl pointer-events-none opacity-0 hover:opacity-100 transition-opacity"
               style={{
-                background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.03), transparent, rgba(239, 68, 68, 0.03))'
+                background: theme.backdropOverlay
               }}
             />
           </div>
@@ -711,7 +802,6 @@ const FloatingAiAssistant = () => {
 
         .floating-ai-button:hover {
           transform: scale(1.1) rotate(5deg);
-          boxShadow: 0 0 30px rgba(139, 92, 246, 0.9), 0 0 50px rgba(124, 58, 237, 0.7), 0 0 70px rgba(109, 40, 217, 0.5);
         }
 
         .scrollbar-none::-webkit-scrollbar {
