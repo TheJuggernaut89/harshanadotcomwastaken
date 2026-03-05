@@ -283,54 +283,7 @@ const Journey = () => {
                     </motion.div>
                 )}
 
-                {/* Media Summary */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    className="mt-12 p-6 rounded-2xl bg-gradient-to-r from-primary/5 via-pink-500/5 to-cyan-500/5 border border-primary/10"
-                >
-                    <div className="flex flex-wrap items-center justify-center gap-6">
-                        <div className="flex items-center gap-3">
-                            <div className="w-12 h-12 rounded-xl bg-pink-500/10 flex items-center justify-center">
-                                <Video size={24} className="text-pink-500" />
-                            </div>
-                            <div>
-                                <p className="text-2xl font-bold text-gray-900 dark:text-white">
-                                    {content.experience.reduce((acc, item) => acc + (item.videoGallery?.length || 0), 0)}
-                                </p>
-                                <p className="text-xs text-gray-500 uppercase tracking-wider">Video Stories</p>
-                            </div>
-                        </div>
-                        <div className="w-px h-12 bg-gray-200 dark:bg-white/10" />
-                        <div className="flex items-center gap-3">
-                            <div className="w-12 h-12 rounded-xl bg-cyan-500/10 flex items-center justify-center">
-                                <ImageIcon size={24} className="text-cyan-500" />
-                            </div>
-                            <div>
-                                <p className="text-2xl font-bold text-gray-900 dark:text-white">
-                                    {content.experience.reduce((acc, item) => acc + (item.workplaceGallery?.length || 0), 0)}
-                                </p>
-                                <p className="text-xs text-gray-500 uppercase tracking-wider">Gallery Images</p>
-                            </div>
-                        </div>
-                        <div className="w-px h-12 bg-gray-200 dark:bg-white/10" />
-                        <div className="flex items-center gap-3">
-                            <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
-                                <FolderOpen size={24} className="text-primary" />
-                            </div>
-                            <div>
-                                <p className="text-2xl font-bold text-gray-900 dark:text-white">
-                                    {content.experience.filter(item => 
-                                        (item.videoGallery?.length || 0) > 0 || 
-                                        (item.workplaceGallery?.length || 0) > 0
-                                    ).length}
-                                </p>
-                                <p className="text-xs text-gray-500 uppercase tracking-wider">Companies</p>
-                            </div>
-                        </div>
-                    </div>
-                </motion.div>
+
             </div>
         </section>
     );

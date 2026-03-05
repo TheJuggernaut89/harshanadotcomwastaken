@@ -12,8 +12,7 @@ const Hero = () => {
     return (
         <section
             id="hero"
-            className="relative min-h-[70dvh] flex items-center overflow-hidden pt-16 md:pt-0 pb-16 md:pb-0"
-            style={{ paddingTop: '-20px' }}
+            className="relative min-h-[70dvh] min-h-[70svh] flex items-center overflow-hidden pt-safe pb-safe px-4 sm:px-6"
         >
             {/* Parallax Background Glows */}
             <motion.div
@@ -27,7 +26,7 @@ const Hero = () => {
                 className="absolute bottom-1/4 -right-1/4 w-1/2 h-1/2 bg-teal/10 blur-[120px] rounded-full will-change-transform"
             />
 
-            <div className="container mx-auto relative z-10 px-4 sm:px-6 overflow-x-hidden">
+            <div className="container mx-auto relative z-10 px-4 sm:px-6 overflow-x-hidden pt-16 md:pt-0">
                 <motion.div
                     variants={staggerContainer}
                     initial="initial"
@@ -44,49 +43,49 @@ const Hero = () => {
 
                     <motion.h1
                         variants={fadeInUp}
-                        className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-4 leading-[1.1] sm:leading-tight"
+                        className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-4 leading-[1.15] sm:leading-tight break-words-mobile"
                     >
-                        <span className="text-primary">Professional</span>{' '}
-                        <span className="hero-gradient-title inline-block">Button Pusher</span>
+                        <span className="text-primary">Marketing</span>{' '}
+                        <span className="hero-gradient-title inline-block">Technologist</span>
                     </motion.h1>
 
                     <motion.p
                         variants={fadeInUp}
-                        className="text-lg sm:text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8 sm:mb-10 leading-relaxed font-medium max-w-3xl"
+                        className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-600 dark:text-gray-300 mb-6 sm:mb-8 md:mb-10 leading-relaxed font-medium max-w-3xl"
                     >
-                        {content.personal.tagline}
+                        I build revenue systems that connect marketing to measurable business growth. Technical skills + marketing expertise + creative execution — delivering 429% growth through automation, AI tools, and data-driven strategies.
                     </motion.p>
 
-                    {/* 3-in-1 Visual Cards - Mobile Optimized */}
+                    {/* 3-in-1 Value Proposition Cards */}
                     <motion.div
                         variants={fadeInUp}
-                        className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-8 sm:mb-12"
+                        className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mb-6 sm:mb-8 md:mb-12"
                     >
-                        <div className="flex items-center gap-3 glass-card px-4 py-3 rounded-xl border border-primary/10">
-                            <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-                                <Code size={20} className="text-primary" />
+                        <div className="flex items-center gap-3 glass-card px-3 sm:px-4 py-3 rounded-xl border border-primary/10">
+                            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                                <Code size={18} className="text-primary sm:w-5 sm:h-5" />
                             </div>
-                            <div>
-                                <p className="text-xs text-gray-500 uppercase tracking-wider">Professional Googler</p>
-                                <p className="text-sm font-semibold">Copy-Paste Engineer</p>
-                            </div>
-                        </div>
-                        <div className="flex items-center gap-3 glass-card px-4 py-3 rounded-xl border border-primary/10">
-                            <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-                                <TrendingUp size={20} className="text-primary" />
-                            </div>
-                            <div>
-                                <p className="text-xs text-gray-500 uppercase tracking-wider">Professional Meme Dealer</p>
-                                <p className="text-sm font-semibold">Viral Content Pusher</p>
+                            <div className="min-w-0">
+                                <p className="text-[10px] sm:text-xs text-gray-500 uppercase tracking-wider">Technical Development</p>
+                                <p className="text-xs sm:text-sm font-semibold truncate">n8n, APIs, React, Automation</p>
                             </div>
                         </div>
-                        <div className="flex items-center gap-3 glass-card px-4 py-3 rounded-xl border border-primary/10">
-                            <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-                                <Palette size={20} className="text-primary" />
+                        <div className="flex items-center gap-3 glass-card px-3 sm:px-4 py-3 rounded-xl border border-primary/10">
+                            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                                <TrendingUp size={18} className="text-primary sm:w-5 sm:h-5" />
                             </div>
-                            <div>
-                                <p className="text-xs text-gray-500 uppercase tracking-wider">Pixel Perfectionist</p>
-                                <p className="text-sm font-semibold">Button Color Specialist</p>
+                            <div className="min-w-0">
+                                <p className="text-[10px] sm:text-xs text-gray-500 uppercase tracking-wider">Growth Marketing</p>
+                                <p className="text-xs sm:text-sm font-semibold truncate">Revenue Attribution & Analytics</p>
+                            </div>
+                        </div>
+                        <div className="flex items-center gap-3 glass-card px-3 sm:px-4 py-3 rounded-xl border border-primary/10">
+                            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                                <Palette size={18} className="text-primary sm:w-5 sm:h-5" />
+                            </div>
+                            <div className="min-w-0">
+                                <p className="text-[10px] sm:text-xs text-gray-500 uppercase tracking-wider">Creative Execution</p>
+                                <p className="text-xs sm:text-sm font-semibold truncate">Adobe Certified, Video, Branding</p>
                             </div>
                         </div>
                     </motion.div>
@@ -94,22 +93,24 @@ const Hero = () => {
                     {/* Growth Stats Highlight */}
                     <motion.div
                         variants={fadeInUp}
-                        className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-8 sm:mb-12"
+                        className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3 md:gap-4 mb-6 sm:mb-8 md:mb-12"
                     >
                         {content.stats && content.stats.slice(0, 4).map((stat, i) => (
-                            <div key={i} className="glass-card p-3 sm:p-4 rounded-xl border border-primary/10 bg-white/50 dark:bg-navy/50">
-                                <div className="text-2xl sm:text-3xl font-bold text-primary mb-1">{stat.value}</div>
-                                <div className="text-xs sm:text-sm text-gray-500 font-bold uppercase tracking-wider">{stat.label}</div>
+                            <div key={i} className="glass-card p-2 sm:p-3 md:p-4 rounded-xl border border-primary/10 bg-white/50 dark:bg-navy/50">
+                                <div className="text-xl sm:text-2xl md:text-3xl font-bold text-primary mb-1">{stat.value}</div>
+                                <div className="text-[10px] sm:text-xs md:text-sm text-gray-500 font-bold uppercase tracking-wider leading-tight">{stat.label}</div>
                             </div>
                         ))}
                     </motion.div>
 
                     <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-                        <a href="#projects" className="btn-primary flex items-center justify-center gap-2 text-center">
-                            See The Damage <ArrowRight size={20} />
+                        <a href="#projects" className="btn-primary flex items-center justify-center gap-2 text-center text-sm sm:text-base py-3 px-4 sm:px-6">
+                            View My Projects <ArrowRight size={18} className="sm:w-5 sm:h-5" />
                         </a>
-                        <a href="#contact" className="btn-outline flex items-center justify-center gap-2 text-center">
-                            Hire Me Before Your Competitor Does <MessageCircle size={20} />
+                        <a href="#contact" className="btn-outline flex items-center justify-center gap-2 text-center text-sm sm:text-base py-3 px-4 sm:px-6">
+                            <span className="hidden sm:inline">Let's Discuss Your Growth Goals</span>
+                            <span className="sm:hidden">Get In Touch</span>
+                            <MessageCircle size={18} className="sm:w-5 sm:h-5" />
                         </a>
                     </motion.div>
                 </motion.div>

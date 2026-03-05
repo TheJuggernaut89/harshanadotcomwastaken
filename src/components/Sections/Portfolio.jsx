@@ -115,7 +115,7 @@ const Portfolio = () => {
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
-                            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
+                            className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80 backdrop-blur-sm"
                             onClick={() => setSelectedProject(null)}
                         >
                             <motion.div
@@ -123,10 +123,10 @@ const Portfolio = () => {
                                 animate={{ opacity: 1, scale: 1, y: 0 }}
                                 exit={{ opacity: 0, scale: 0.9, y: 50 }}
                                 onClick={e => e.stopPropagation()}
-                                className="bg-white dark:bg-navy-dark rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-hidden shadow-2xl"
+                                className="bg-white dark:bg-navy-dark rounded-2xl sm:rounded-3xl max-w-4xl w-full max-h-[95vh] sm:max-h-[90vh] overflow-hidden shadow-2xl mx-2 sm:mx-0"
                             >
                                 {/* Modal Header with Image */}
-                                <div className="relative h-48 md:h-64">
+                                <div className="relative h-40 sm:h-48 md:h-64">
                                     {selectedProject.image ? (
                                         <img
                                             src={selectedProject.image}
@@ -141,59 +141,59 @@ const Portfolio = () => {
                                     {/* Close Button */}
                                     <button
                                         onClick={() => setSelectedProject(null)}
-                                        className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-white hover:bg-white/30 transition-all"
+                                        className="absolute top-3 right-3 sm:top-4 sm:right-4 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-white hover:bg-white/30 transition-all"
                                     >
-                                        <X size={20} />
+                                        <X size={18} className="sm:w-5 sm:h-5" />
                                     </button>
                                     
                                     {/* Title Overlay */}
-                                    <div className="absolute bottom-0 left-0 right-0 p-6">
+                                    <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6">
                                         <div className="flex items-center gap-2 mb-2">
-                                            <span className="px-3 py-1 bg-primary text-white text-xs font-bold rounded-full">
+                                            <span className="px-2 sm:px-3 py-1 bg-primary text-white text-[10px] sm:text-xs font-bold rounded-full">
                                                 {selectedProject.category}
                                             </span>
                                         </div>
-                                        <h2 className="text-2xl md:text-3xl font-bold text-white">
+                                        <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white leading-tight">
                                             {selectedProject.title}
                                         </h2>
                                     </div>
                                 </div>
                                 
                                 {/* Modal Content */}
-                                <div className="p-6 md:p-8 overflow-y-auto max-h-[calc(90vh-16rem)]">
+                                <div className="p-4 sm:p-6 md:p-8 overflow-y-auto max-h-[calc(95vh-12rem)] sm:max-h-[calc(90vh-16rem)]">
                                     <p className="text-lg text-gray-600 dark:text-gray-300 mb-6">
                                         {selectedProject.description}
                                     </p>
                                     
                                     {selectedProject.proposalDetails && (
-                                        <div className="space-y-6">
+                                        <div className="space-y-4 sm:space-y-6">
                                             {/* Concept */}
-                                            <div className="bg-gray-50 dark:bg-white/5 rounded-xl p-5">
-                                                <h3 className="font-bold text-lg mb-3 flex items-center gap-2">
-                                                    <Sparkles size={18} className="text-primary" />
+                                            <div className="bg-gray-50 dark:bg-white/5 rounded-xl p-4 sm:p-5">
+                                                <h3 className="font-bold text-base sm:text-lg mb-2 sm:mb-3 flex items-center gap-2">
+                                                    <Sparkles size={16} className="text-primary sm:w-[18px] sm:h-[18px]" />
                                                     The Concept
                                                 </h3>
-                                                <p className="text-gray-600 dark:text-gray-400">
+                                                <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400">
                                                     {selectedProject.proposalDetails.concept}
                                                 </p>
                                             </div>
                                             
                                             {/* Genius Moment */}
-                                            <div className="bg-primary/5 dark:bg-primary/10 rounded-xl p-5 border-l-4 border-primary">
-                                                <h3 className="font-bold text-lg mb-3 flex items-center gap-2 text-primary">
-                                                    <TrendingUp size={18} />
+                                            <div className="bg-primary/5 dark:bg-primary/10 rounded-xl p-4 sm:p-5 border-l-4 border-primary">
+                                                <h3 className="font-bold text-base sm:text-lg mb-2 sm:mb-3 flex items-center gap-2 text-primary">
+                                                    <TrendingUp size={16} className="sm:w-[18px] sm:h-[18px]" />
                                                     The Breakthrough
                                                 </h3>
-                                                <p className="text-gray-600 dark:text-gray-400">
+                                                <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400">
                                                     {selectedProject.proposalDetails.geniusMoment}
                                                 </p>
                                             </div>
                                             
                                             {/* Status */}
-                                            <div className="flex items-center gap-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+                                            <div className="flex items-center gap-4 pt-3 sm:pt-4 border-t border-gray-200 dark:border-gray-700">
                                                 <div className="flex items-center gap-2 text-sm">
                                                     <span className="text-gray-500">Status:</span>
-                                                    <span className="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-xs font-bold rounded-full">
+                                                    <span className="px-2 sm:px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-[10px] sm:text-xs font-bold rounded-full">
                                                         {selectedProject.proposalDetails.status}
                                                     </span>
                                                 </div>

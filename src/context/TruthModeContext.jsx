@@ -15,17 +15,17 @@ export const TruthModeProvider = ({ children }) => {
 
     const activateTruthMode = () => {
         setIsTruthMode(true);
-        console.log('🔓 Truth Mode ACTIVATED');
+        // Truth Mode activated
     };
 
     const deactivateTruthMode = () => {
         setIsTruthMode(false);
-        console.log('🔒 Professional Mode ACTIVATED');
+        // Professional Mode activated
     };
 
     const toggleTruthMode = () => {
         setIsTruthMode(prev => !prev);
-        console.log(isTruthMode ? '🔒 Switched to Professional Mode' : '🔓 Switched to Truth Mode');
+        // Mode switched
     };
 
     return (

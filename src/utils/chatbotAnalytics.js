@@ -269,7 +269,7 @@ export const exportAnalyticsCSV = () => {
 export const clearAnalytics = () => {
   localStorage.removeItem(STORAGE_KEY);
   sessionStorage.removeItem(SESSION_KEY);
-  console.log('Analytics data cleared');
+  // Analytics data cleared
 };
 
 /**
@@ -279,14 +279,7 @@ export const printAnalyticsSummary = () => {
   const stats = getChatbotStats();
   const funnel = getChatbotFunnel();
 
-  console.log('=== CHATBOT ANALYTICS SUMMARY ===\n');
-  console.log('Overview:', stats.overview);
-  console.log('\nEvent Distribution:', stats.events);
-  console.log('\nQuick Reply Actions:', stats.quickReplyActions);
-  console.log('\nConversions:', stats.conversions);
-  console.log('\nFunnel:', funnel.funnel);
-  console.log('\nDrop-off Rates:', funnel.dropOff);
-  console.log('\n=================================');
+  // Analytics summary logged
 
   return stats;
 };

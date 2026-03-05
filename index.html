@@ -3,13 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
   <meta name="theme-color" content="#0a0a0a" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="mobile-web-app-capable" content="yes" />
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
   <title>Harshana Jothi | Marketing Technologist | 429% Growth | AI-Powered Systems</title>
   
   <!-- Google Analytics 4 - REPLACE GA_MEASUREMENT_ID with your actual GA4 ID (e.g., G-XXXXXXXXXX) -->
@@ -36,9 +39,15 @@
     }
 
     /* Height utilities for safe areas */
-    .h-safe-area-inset-top { height: var(--sat); }
-    .h-safe-area-inset-bottom { height: var(--sab); }
-    .pb-safe { padding-bottom: var(--sab); }
+    .h-safe-area-inset-top { height: env(safe-area-inset-top); }
+    .h-safe-area-inset-bottom { height: env(safe-area-inset-bottom); }
+    .pb-safe { padding-bottom: max(env(safe-area-inset-bottom), 1rem); }
+    .pt-safe { padding-top: max(env(safe-area-inset-top), 1rem); }
+    
+    /* Safe area for fixed bottom nav */
+    .safe-area-pb {
+      padding-bottom: max(env(safe-area-inset-bottom), 16px);
+    }
 
     /* Mode-specific variables */
     :root[data-mode="creative"] {
@@ -70,6 +79,13 @@
     /* Touch manipulation for mobile */
     .touch-manipulation {
       touch-action: manipulation;
+      -webkit-touch-callout: none;
+    }
+    
+    /* Prevent text size adjustment on orientation change */
+    html {
+      -webkit-text-size-adjust: 100%;
+      -ms-text-size-adjust: 100%;
     }
 
     /* Hide scrollbar but keep functionality */

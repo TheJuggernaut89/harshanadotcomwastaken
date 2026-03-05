@@ -3,9 +3,10 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { 
     Clock, Users, Zap, TrendingUp, 
     AlertCircle, CheckCircle2, Sparkles, 
-    Play, RotateCcw, Target, Terminal
+    Play, RotateCcw, Target, Terminal, ChevronRight
 } from 'lucide-react';
 import { StepByStepTerminal } from '../UI/KineticLogStream';
+import LiveLogProcess from '../UI/LiveLogProcess';
 
 // Evolution stages with terminal logs
 const evolutionStages = {
@@ -358,51 +359,52 @@ const WorkforceWorkflows = () => {
                         </div>
                     </motion.div>
 
-                    {/* Mobile: Terminal Log Stream / Desktop: Stats Summary */}
-                    {isMobile ? (
-                        <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            className="mt-6"
+                    {/* Live Process Log - Shows for all workflows */}
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        className="mt-6"
+                    >
+                        <div className="flex items-center gap-2 mb-3">
+                            <Terminal size={16} className="text-teal" />
+                            <h4 className="font-bold text-sm">Live Process Log</h4>
+                            <span className="text-xs text-gray-500 ml-auto">
+                                {activeWorkflow === 'content-creation' && '🎨 Content Creation'}
+                                {activeWorkflow === 'lead-generation' && '🎯 Lead Generation'}
+                                {activeWorkflow === 'customer-service' && '💬 Customer Support'}
+                            </span>
+                        </div>
+                        <LiveLogProcess 
+                            key={terminalKey}
+                            workflow={activeWorkflow}
+                            isPlaying={isPlaying}
+                            currentStage={currentStage}
+                        />
+                    </motion.div>
+
+                    {/* CTA to trigger chatbot */}
+                    <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.5 }}
+                        className="mt-6 flex justify-center"
+                    >
+                        <button
+                            onClick={() => {
+                                // Dispatch custom event to open chatbot
+                                window.dispatchEvent(new CustomEvent('openChatbot', { 
+                                    detail: { 
+                                        message: 'Hi! I just saw your AI workflow demo. Can you explain more about how this works?',
+                                        source: 'workflow_cta' 
+                                    } 
+                                }));
+                            }}
+                            className="group flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-primary to-primary/80 text-white rounded-xl font-bold text-sm shadow-lg shadow-primary/30 hover:shadow-primary/50 transition-all hover:scale-105"
                         >
-                            <div className="flex items-center gap-2 mb-3">
-                                <Terminal size={16} className="text-teal" />
-                                <h4 className="font-bold text-sm text-white">Live Process Log</h4>
-                            </div>
-                            <StepByStepTerminal 
-                                key={terminalKey}
-                                steps={workflowLogs[activeWorkflow]}
-                                height="200px"
-                            />
-                        </motion.div>
-                    ) : (
-                        <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            className="grid grid-cols-3 gap-4 mt-6"
-                        >
-                            {stages.map((s, idx) => (
-                                <motion.div
-                                    key={idx}
-                                    initial={{ opacity: 0, y: 20 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    transition={{ delay: idx * 0.1 }}
-                                    className={`p-4 rounded-xl border ${
-                                        idx <= currentStage 
-                                            ? 'bg-primary/10 border-primary/30' 
-                                            : 'bg-white/5 border-white/10'
-                                    }`}
-                                >
-                                    <p className="text-xs text-gray-500 mb-1">Stage {idx + 1}</p>
-                                    <p className="font-bold text-sm mb-2">{s.name}</p>
-                                    <div className="space-y-1 text-xs">
-                                        <p className="text-primary">{s.time}</p>
-                                        <p className="text-gray-400">{s.team}</p>
-                                    </div>
-                                </motion.div>
-                            ))}
-                        </motion.div>
-                    )}
+                            <span>💬 Ask AI About Next Steps</span>
+                            <ChevronRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                        </button>
+                    </motion.div>
                 </div>
             </div>
         </section>

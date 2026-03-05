@@ -5,8 +5,48 @@ import {
     Users, DollarSign, Clock, Target, Sparkles,
     Play, Pause, RefreshCw, ChevronRight, Activity,
     Volume2, UserCircle, ShoppingCart, Flame,
-    CheckCircle2, Shield, Brain
+    CheckCircle2, Shield, Brain, Terminal
 } from 'lucide-react';
+import KineticLogStream from '../UI/KineticLogStream';
+
+// Generate logs for Mamak Workshop
+const generateWorkshopLogs = (stage) => {
+    const baseLogs = [
+        { timestamp: '10:00:00', type: 'INFO', message: 'Mamak Workshop pipeline initialized' },
+    ];
+    
+    if (stage >= 0) {
+        baseLogs.push({ timestamp: '10:00:02', type: 'PROCESS', message: 'Loading translation engines...' });
+        baseLogs.push({ timestamp: '10:00:05', type: 'WARN', message: 'Google Translate: Robotic output detected' });
+    }
+    
+    if (stage >= 1) {
+        baseLogs.push({ timestamp: '10:00:08', type: 'PROCESS', message: 'Loading Manglish GPT (LLaMA 3 fine-tuned)...' });
+        baseLogs.push({ timestamp: '10:00:12', type: 'SUCCESS', message: 'Native Manglish generation active - 9.5/10 authenticity' });
+    }
+    
+    if (stage >= 2) {
+        baseLogs.push({ timestamp: '10:00:15', type: 'PROCESS', message: 'Running viral prediction simulation...' });
+        baseLogs.push({ timestamp: '10:00:18', type: 'SUCCESS', message: 'Variant B selected: 87% viral probability' });
+    }
+    
+    if (stage >= 3) {
+        baseLogs.push({ timestamp: '10:00:22', type: 'PROCESS', message: 'Cloning voice with Malaysian accent...' });
+        baseLogs.push({ timestamp: '10:00:26', type: 'SUCCESS', message: 'Voice clone ready: 95% match accuracy' });
+    }
+    
+    if (stage >= 4) {
+        baseLogs.push({ timestamp: '10:00:30', type: 'PROCESS', message: 'Live adaptation engine active...' });
+        baseLogs.push({ timestamp: '10:00:34', type: 'SUCCESS', message: 'Auto-adjusting content based on viewer metrics' });
+    }
+    
+    if (stage >= 5) {
+        baseLogs.push({ timestamp: '10:00:38', type: 'PROCESS', message: 'Running cultural safety firewall...' });
+        baseLogs.push({ timestamp: '10:00:42', type: 'SUCCESS', message: 'All multi-ethnic checks PASSED' });
+    }
+    
+    return baseLogs.reverse();
+};
 
 // Evolution stages for Mamak Workshop
 const workshopStages = [
@@ -426,70 +466,94 @@ const MamakWorkshopEvolution = () => {
                     ))}
                 </div>
 
-                <div className="grid lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-                    {/* Content Preview */}
-                    <div className="lg:col-span-1">
-                        <ContentPreview stage={currentStage} />
-                    </div>
-
-                    {/* Main Visualization Area */}
-                    <div className="lg:col-span-1">
-                        <motion.div
-                            key={currentStage}
-                            initial={{ opacity: 0, scale: 0.95 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            className="bg-black/40 rounded-2xl p-6 border border-orange-500/20 h-full"
+                <div className="grid lg:grid-cols-5 gap-6 max-w-6xl mx-auto">
+                    {/* Left: Kinetic Log Stream Visualization */}
+                    <div className="lg:col-span-3">
+                        <motion.div 
+                            className="relative bg-black/40 rounded-2xl border border-orange-500/20 overflow-hidden"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
                         >
-                            <div className="flex items-center justify-between mb-4">
-                                <h3 className="font-bold text-white">Pipeline Stage</h3>
-                                <button
-                                    onClick={handlePlay}
-                                    disabled={isPlaying}
-                                    className="flex items-center gap-1.5 px-3 py-1.5 bg-orange-500 text-white rounded-lg text-xs font-bold hover:bg-orange-600 transition-all disabled:opacity-50"
-                                >
-                                    {isPlaying ? (
-                                        <RefreshCw size={12} className="animate-spin" />
-                                    ) : (
-                                        <Play size={12} fill="currentColor" />
-                                    )}
-                                    {isPlaying ? 'Running...' : 'Run Pipeline'}
-                                </button>
+                            {/* Header */}
+                            <div className="flex items-center justify-between p-4 border-b border-orange-500/20">
+                                <div className="flex items-center gap-3">
+                                    <Terminal size={20} className="text-orange-400" />
+                                    <h3 className="font-bold text-white">Live Pipeline Logs</h3>
+                                </div>
+                                <div className="flex items-center gap-3">
+                                    <span className="text-xs text-gray-500">
+                                        Stage {currentStage + 1}/6
+                                    </span>
+                                    <button
+                                        onClick={handlePlay}
+                                        disabled={isPlaying}
+                                        className="flex items-center gap-1.5 px-3 py-1.5 bg-orange-500 text-white rounded-lg text-xs font-bold hover:bg-orange-600 transition-all disabled:opacity-50"
+                                    >
+                                        {isPlaying ? (
+                                            <RefreshCw size={12} className="animate-spin" />
+                                        ) : (
+                                            <Play size={12} fill="currentColor" />
+                                        )}
+                                        {isPlaying ? 'Running...' : 'Run Pipeline'}
+                                    </button>
+                                </div>
                             </div>
 
-                            <div className="text-center py-8">
-                                <span className="text-6xl mb-4 block">{workshopStages[currentStage].icon}</span>
-                                <h4 className="text-xl font-bold text-orange-400 mb-2">
-                                    {stageInfo[currentStage].title}
-                                </h4>
-                                <p className="text-sm text-gray-400 mb-4">
+                            {/* Kinetic Log Stream - Taller */}
+                            <KineticLogStream 
+                                logs={generateWorkshopLogs(currentStage)}
+                                showHeader={false}
+                                height="420px"
+                                className="border-0 rounded-none"
+                            />
+                        </motion.div>
+                    </div>
+
+                    {/* Right: Info Panel + Content Preview */}
+                    <div className="lg:col-span-2 space-y-4">
+                        <AnimatePresence mode="wait">
+                            <motion.div
+                                key={currentStage}
+                                initial={{ opacity: 0, x: 20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                exit={{ opacity: 0, x: -20 }}
+                                className="bg-white/5 rounded-2xl p-6 border border-orange-500/20"
+                            >
+                                <div className="flex items-center gap-3 mb-4">
+                                    <span className="text-3xl">{workshopStages[currentStage].icon}</span>
+                                    <div>
+                                        <span className="text-xs text-orange-400 font-bold uppercase tracking-wider">
+                                            Stage {currentStage}
+                                        </span>
+                                        <h3 className="font-bold text-white text-lg">
+                                            {stageInfo[currentStage].title}
+                                        </h3>
+                                    </div>
+                                </div>
+
+                                <p className="text-gray-300 text-sm mb-4">
                                     {stageInfo[currentStage].desc}
                                 </p>
-                                
-                                <div className="bg-orange-500/10 rounded-lg p-3 border-l-2 border-orange-400">
+
+                                <div className="bg-orange-500/10 rounded-lg p-3 border-l-2 border-orange-400 mb-4">
                                     <p className="text-xs text-orange-300 italic">
                                         "{stageInfo[currentStage].insight}"
                                     </p>
                                 </div>
-                            </div>
 
-                            {/* Progress */}
-                            <div className="mt-4 pt-4 border-t border-white/10">
-                                <div className="flex justify-between text-xs text-gray-500 mb-1">
-                                    <span>Pipeline Progress</span>
-                                    <span>{Math.round(((currentStage + 1) / 6) * 100)}%</span>
+                                <div className="flex items-center gap-2 text-sm">
+                                    <Activity size={14} className="text-green-400" />
+                                    <span className="text-green-400 font-bold">
+                                        {stageInfo[currentStage].metric}
+                                    </span>
                                 </div>
-                                <div className="h-2 bg-gray-700 rounded-full overflow-hidden">
-                                    <motion.div 
-                                        className="h-full bg-gradient-to-r from-orange-500 to-yellow-500"
-                                        animate={{ width: `${((currentStage + 1) / 6) * 100}%` }}
-                                    />
-                                </div>
-                            </div>
-                        </motion.div>
-                    </div>
+                            </motion.div>
+                        </AnimatePresence>
 
-                    {/* Live Selling Dashboard */}
-                    <div className="lg:col-span-1">
+                        {/* Content Preview */}
+                        <ContentPreview stage={currentStage} />
+                        
+                        {/* Live Selling Dashboard */}
                         <LiveSellingDashboard stage={currentStage} />
                     </div>
                 </div>

@@ -114,6 +114,42 @@ const FloatingAiAssistant = ({ mode = 'professional' }) => {
     }
   }, [hasAutoOpened]);
 
+  // Listen for custom openChatbot event from CTA buttons
+  useEffect(() => {
+    const handleOpenChatbot = (e) => {
+      setIsChatOpen(true);
+      setHasAutoOpened(true);
+      
+      // Track chatbot opened event
+      trackChatbotEvent('chatbot_opened', { trigger: e.detail?.source || 'cta_button' });
+      
+      // If a message is provided, simulate user sending it after a short delay
+      if (e.detail?.message) {
+        setTimeout(() => {
+          // Add user message
+          const userMessage = {
+            id: Date.now(),
+            text: e.detail.message,
+            sender: 'user',
+            timestamp: new Date().toLocaleTimeString()
+          };
+          setMessages(prev => [...prev, userMessage]);
+          
+          // Get AI response
+          handleSend(e.detail.message);
+        }, 800);
+      } else if (!greetingGiven) {
+        // Send initial greeting if no custom message
+        setTimeout(() => {
+          sendInitialGreeting();
+        }, 500);
+      }
+    };
+
+    window.addEventListener('openChatbot', handleOpenChatbot);
+    return () => window.removeEventListener('openChatbot', handleOpenChatbot);
+  }, [greetingGiven]);
+
   // Initial greeting from AI
   const sendInitialGreeting = async () => {
     const greetings = [

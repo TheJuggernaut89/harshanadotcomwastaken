@@ -89,34 +89,34 @@ const SkillCard = ({ category, isActive, onClick }) => {
     return (
         <motion.div
             onClick={onClick}
-            whileHover={{ scale: 1.02, y: -5 }}
+            whileHover={{ scale: 1.02, y: -3 }}
             whileTap={{ scale: 0.98 }}
-            className={`flex-shrink-0 w-72 p-5 rounded-2xl cursor-pointer transition-all ${
+            className={`flex-shrink-0 w-64 sm:w-72 p-4 sm:p-5 rounded-xl sm:rounded-2xl cursor-pointer transition-all ${
                 isActive 
                     ? 'bg-white dark:bg-navy-dark shadow-xl ring-2 ring-primary' 
                     : 'bg-white/50 dark:bg-white/5 hover:bg-white dark:hover:bg-white/10'
             }`}
         >
-            <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${category.color} flex items-center justify-center mb-4`}>
-                <Icon size={24} className="text-white" />
+            <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br ${category.color} flex items-center justify-center mb-3 sm:mb-4`}>
+                <Icon size={20} className="text-white sm:w-6 sm:h-6" />
             </div>
-            <h3 className="font-bold text-lg mb-3">{category.title}</h3>
+            <h3 className="font-bold text-base sm:text-lg mb-2 sm:mb-3">{category.title}</h3>
             <div className="space-y-2">
                 {category.skills.slice(0, 3).map((skill, idx) => (
-                    <div key={idx} className="flex items-center justify-between text-sm">
-                        <span className="text-gray-600 dark:text-gray-400">{skill.name}</span>
-                        <div className="flex items-center gap-2">
-                            <div className="w-16 h-1.5 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                    <div key={idx} className="flex items-center justify-between text-xs sm:text-sm">
+                        <span className="text-gray-600 dark:text-gray-400 truncate mr-2">{skill.name}</span>
+                        <div className="flex items-center gap-2 flex-shrink-0">
+                            <div className="w-12 sm:w-16 h-1.5 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
                                 <div 
                                     className={`h-full rounded-full bg-gradient-to-r ${category.color}`}
                                     style={{ width: `${skill.level}%` }}
                                 />
                             </div>
-                            <span className="text-xs font-bold text-gray-500 w-8">{skill.level}%</span>
+                            <span className="text-[10px] sm:text-xs font-bold text-gray-500 w-6 sm:w-8">{skill.level}%</span>
                         </div>
                     </div>
                 ))}
-                <p className="text-xs text-primary mt-2">+{category.skills.length - 3} more skills</p>
+                <p className="text-[10px] sm:text-xs text-primary mt-2">+{category.skills.length - 3} more skills</p>
             </div>
         </motion.div>
     );
@@ -143,25 +143,27 @@ const Skills = () => {
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="mb-8"
+                    className="mb-6 sm:mb-8"
                 >
-                    <div className="flex items-center justify-between">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                         <div>
-                            <h2 className="text-3xl md:text-4xl font-bold mb-2">Skills & Expertise</h2>
-                            <p className="text-gray-600 dark:text-gray-400">Click any category to explore</p>
+                            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-1 sm:mb-2">Skills & Expertise</h2>
+                            <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400">Click any category to explore</p>
                         </div>
                         <div className="flex gap-2">
                             <button 
                                 onClick={() => scroll('left')}
-                                className="w-10 h-10 rounded-full bg-white dark:bg-navy-dark shadow-lg flex items-center justify-center hover:bg-primary hover:text-white transition-all"
+                                className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white dark:bg-navy-dark shadow-lg flex items-center justify-center hover:bg-primary hover:text-white transition-all"
+                                aria-label="Scroll left"
                             >
-                                <ChevronLeft size={20} />
+                                <ChevronLeft size={18} className="sm:w-5 sm:h-5" />
                             </button>
                             <button 
                                 onClick={() => scroll('right')}
-                                className="w-10 h-10 rounded-full bg-white dark:bg-navy-dark shadow-lg flex items-center justify-center hover:bg-primary hover:text-white transition-all"
+                                className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white dark:bg-navy-dark shadow-lg flex items-center justify-center hover:bg-primary hover:text-white transition-all"
+                                aria-label="Scroll right"
                             >
-                                <ChevronRight size={20} />
+                                <ChevronRight size={18} className="sm:w-5 sm:h-5" />
                             </button>
                         </div>
                     </div>
@@ -190,7 +192,7 @@ const Skills = () => {
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: 'auto' }}
                         exit={{ opacity: 0, height: 0 }}
-                        className="mt-8 bg-white dark:bg-navy-dark rounded-2xl p-6 shadow-lg"
+                        className="mt-6 sm:mt-8 bg-white dark:bg-navy-dark rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-lg"
                     >
                         {(() => {
                             const cat = skillCategories.find(c => c.id === activeCategory);
@@ -209,20 +211,20 @@ const Skills = () => {
                                             Close
                                         </button>
                                     </div>
-                                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
                                         {cat.skills.map((skill, idx) => (
-                                            <div key={idx} className="p-4 bg-gray-50 dark:bg-white/5 rounded-xl">
+                                            <div key={idx} className="p-3 sm:p-4 bg-gray-50 dark:bg-white/5 rounded-lg sm:rounded-xl">
                                                 <div className="flex items-center justify-between mb-2">
-                                                    <span className="font-medium">{skill.name}</span>
-                                                    <span className="text-sm font-bold text-primary">{skill.level}%</span>
+                                                    <span className="font-medium text-sm sm:text-base">{skill.name}</span>
+                                                    <span className="text-xs sm:text-sm font-bold text-primary">{skill.level}%</span>
                                                 </div>
-                                                <div className="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden mb-2">
+                                                <div className="w-full h-1.5 sm:h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden mb-2">
                                                     <div 
                                                         className={`h-full rounded-full bg-gradient-to-r ${cat.color}`}
                                                         style={{ width: `${skill.level}%` }}
                                                     />
                                                 </div>
-                                                <p className="text-xs text-gray-500">{skill.note}</p>
+                                                <p className="text-[10px] sm:text-xs text-gray-500">{skill.note}</p>
                                             </div>
                                         ))}
                                     </div>

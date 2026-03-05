@@ -176,6 +176,7 @@ const SmartMediaFrame = ({
                             src={coverImage}
                             alt={altText}
                             className="w-full h-full object-cover rounded-lg"
+                            style={{ aspectRatio: '16/9' }}
                         />
                     ) : (
                         <div className="w-full h-full flex items-center justify-center bg-gray-200 dark:bg-gray-800 text-gray-400">
@@ -192,8 +193,7 @@ const SmartMediaFrame = ({
                         ref={videoRef}
                         src={activeItem && mediaType === 'video' ? activeItem.url : videoGallery[0]?.url}
                         className={cn(
-                            "w-full h-full object-cover rounded-lg transition-all duration-300",
-                            (activeItem && mediaType === 'video') ? "object-contain bg-black" : ""
+                            "w-full h-full rounded-lg transition-all duration-300 object-cover"
                         )}
                         muted={activeItem ? isMuted : true}
                         loop={!activeItem}
@@ -330,6 +330,7 @@ const SmartMediaFrame = ({
                             exit={{ opacity: 0 }}
                             transition={{ duration: 0.2 }}
                             className="absolute inset-0 w-full h-full object-cover"
+                            style={{ aspectRatio: '16/9' }}
                         />
                     </AnimatePresence>
                 </div>

@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="MILO - A satirical e-commerce experience selling career trauma as products. Dark humor meets marketing reality.">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <title>MILO - Trauma Clearance Sale</title>
     <link href="https://fonts.googleapis.com/css2?family=Londrina+Solid:wght@300;400;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -466,7 +468,7 @@
     <!-- Navigation -->
     <nav class="nav">
         <a href="#" class="nav-logo">MILO.</a>
-        <button class="nav-cart" onclick="showCart()">Cart (0)</button>
+        <button type="button" class="nav-cart" onclick="showCart()">Cart (0)</button>
     </nav>
 
     <!-- Hero -->
@@ -491,7 +493,7 @@
                 <p class="product-desc">Blockchain consultant installed MetaMask. Charged a year's salary.</p>
                 <div class="product-footer">
                     <span class="product-price">RM2.50</span>
-                    <button class="product-btn">View</button>
+                    <button type="button" class="product-btn">View</button>
                 </div>
             </div>
 
@@ -503,7 +505,7 @@
                 <p class="product-desc">Three weeks choosing "authentic" emojis. 147 variations of winking face.</p>
                 <div class="product-footer">
                     <span class="product-price">FREE</span>
-                    <button class="product-btn">View</button>
+                    <button type="button" class="product-btn">View</button>
                 </div>
             </div>
 
@@ -515,7 +517,7 @@
                 <p class="product-desc">"Viral energy peaks at full moon." She won. I questioned my degree.</p>
                 <div class="product-footer">
                     <span class="product-price">RM1</span>
-                    <button class="product-btn">View</button>
+                    <button type="button" class="product-btn">View</button>
                 </div>
             </div>
 
@@ -527,7 +529,7 @@
                 <p class="product-desc">"More Islamic but not too Islamic." With Comic Sans. In 2024.</p>
                 <div class="product-footer">
                     <span class="product-price">RM0.15</span>
-                    <button class="product-btn">View</button>
+                    <button type="button" class="product-btn">View</button>
                 </div>
             </div>
 
@@ -540,7 +542,7 @@
                 <p class="product-desc">Desaru is not a destination. Desaru is a trap. Desaru is where hope goes to die in a mangrove swamp.</p>
                 <div class="product-footer">
                     <span class="product-price">RM0</span>
-                    <button class="product-btn">Read</button>
+                    <button type="button" class="product-btn">Read</button>
                 </div>
             </div>
 
@@ -552,7 +554,7 @@
                 <p class="product-desc">The sand isn't golden. It's beige. Depressing, dull beige. The kind of beige that says "I gave up on my dreams."</p>
                 <div class="product-footer">
                     <span class="product-price">RM0</span>
-                    <button class="product-btn">Read</button>
+                    <button type="button" class="product-btn">Read</button>
                 </div>
             </div>
 
@@ -564,7 +566,7 @@
                 <p class="product-desc">These aren't normal sandflies. These are Desaru sandflies. They've evolved. They have union meetings and pension plans.</p>
                 <div class="product-footer">
                     <span class="product-price">RM150</span>
-                    <button class="product-btn">Read</button>
+                    <button type="button" class="product-btn">Read</button>
                 </div>
             </div>
 
@@ -576,7 +578,7 @@
                 <p class="product-desc">Sungai Lebam has a pontianak. Everyone knows it. The boatmen know it. The Orang Asli know it. Even the crocodiles know it.</p>
                 <div class="product-footer">
                     <span class="product-price">RM666</span>
-                    <button class="product-btn">Read</button>
+                    <button type="button" class="product-btn">Read</button>
                 </div>
             </div>
 
@@ -588,7 +590,7 @@
                 <p class="product-desc">This is the story I don't tell at parties. This is the story that made me quit. The story of Amir and the marks around his ankle.</p>
                 <div class="product-footer">
                     <span class="product-price">RM0</span>
-                    <button class="product-btn">Read</button>
+                    <button type="button" class="product-btn">Read</button>
                 </div>
             </div>
 
@@ -600,7 +602,7 @@
                 <p class="product-desc">The python. The crocodile. The winch cable. The bumper. "WhenYourCommuteGetsWild" - TikTok viral potential!</p>
                 <div class="product-footer">
                     <span class="product-price">RM47,500</span>
-                    <button class="product-btn">Read</button>
+                    <button type="button" class="product-btn">Read</button>
                 </div>
             </div>
         </div>
@@ -628,7 +630,7 @@
     <!-- CTA -->
     <section class="cta-section">
         <h2 class="cta-title">Ready for the chaos?</h2>
-        <a href="https://wa.me/601129649143" class="cta-btn" target="_blank">Contact Me for more stories</a>
+        <a href="https://wa.me/601129649143" class="cta-btn" target="_blank" rel="noopener noreferrer">Contact Me for more stories</a>
     </section>
 
     <!-- Footer -->
@@ -668,14 +670,14 @@
     <!-- Modal -->
     <div class="modal" id="modal" onclick="closeModal(event)">
         <div class="modal-content" onclick="event.stopPropagation()">
-            <button class="modal-close" onclick="closeModal()">&times;</button>
+            <button type="button" class="modal-close" onclick="closeModal()">&times;</button>
             <div class="modal-gif">
                 <img id="modal-img" src="" alt="">
             </div>
             <h3 class="modal-title" id="modal-title"></h3>
             <p class="modal-desc" id="modal-desc"></p>
             <div class="modal-price" id="modal-price"></div>
-            <button class="modal-btn" onclick="addToCart()">Add to Cart</button>
+            <button type="button" class="modal-btn" onclick="addToCart()">Add to Cart</button>
         </div>
     </div>
 

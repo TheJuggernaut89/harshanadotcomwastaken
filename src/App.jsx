@@ -92,7 +92,7 @@ function App() {
                 <div id="about"><AboutBento /></div>
                 <Journey />
                 <Skills />
-                <WhatICanDo />
+                {currentMode === 'creative' && <WhatICanDo />}
                 <WorkforceWorkflows />
                 <KopitiamIntelEvolution />
                 <MamakWorkshopEvolution />

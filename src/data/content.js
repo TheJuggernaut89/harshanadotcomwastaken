@@ -385,7 +385,11 @@ export const content = {
                 { id: 2, url: "/images/journey/cream-of-creams/images/cream-2.png", caption: "Product Campaign" },
                 { id: 3, url: "/images/journey/cream-of-creams/images/cream-3.png", caption: "CNY Campaign 2025" },
                 { id: 4, url: "/images/journey/cream-of-creams/images/cream-4.png", caption: "Festival Marketing" },
-                { id: 5, url: "/images/journey/cream-of-creams/images/cream-5.png", caption: "Content Creation" }
+                { id: 5, url: "/images/journey/cream-of-creams/images/cream-5.png", caption: "Content Creation" },
+                { id: 6, url: "/images/journey/cream-of-creams/images/cream-new-1.png", caption: "Cinematic Storyboard Campaign" },
+                { id: 7, url: "/images/journey/cream-of-creams/images/cream-new-2.png", caption: "AI-Generated Visual Content" },
+                { id: 8, url: "/images/journey/cream-of-creams/images/cream-new-3.png", caption: "Impactful Social Media Creative" },
+                { id: 9, url: "/images/journey/cream-of-creams/images/cream-new-4.png", caption: "VZ Cake Product Feature" }
             ],
             companyColor: "#E63946",
             videoGallery: [
@@ -393,7 +397,9 @@ export const content = {
                 { id: 2, url: "/images/journey/cream-of-creams/videos/Cream-video2.mp4", caption: "Product Showcase" },
                 { id: 3, url: "/images/journey/cream-of-creams/videos/Cream-video3.mp4", caption: "Social Media Content" },
                 { id: 4, url: "/images/journey/cream-of-creams/videos/Cream-video4.mp4", caption: "Campaign Video" },
-                { id: 5, url: "/images/journey/cream-of-creams/videos/Cream-video5.mp4", caption: "Viral Content" }
+                { id: 5, url: "/images/journey/cream-of-creams/videos/Cream-video5.mp4", caption: "Viral Content" },
+                { id: 6, url: "/images/journey/cream-of-creams/videos/cream-new-1.mp4", caption: "Blueberry Cream Cheese Product Video" },
+                { id: 7, url: "/images/journey/cream-of-creams/videos/cream-new-2.mp4", caption: "Content Draft & Strategy" }
             ]
         },
         {

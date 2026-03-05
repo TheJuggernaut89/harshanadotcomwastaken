@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Harshana | Creative Technologist — Marketing & Design</title>
     <meta name="description" content="Marketing Technologist combining creative design, technical skills, and strategic marketing. Adobe-certified designer, video editor, and systems builder.">
     
-    <link rel="icon" type="image/svg+xml" href="../vite.svg">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://harshana.me/creative/">
     <meta property="og:title" content="Harshana | Creative Technologist — Marketing & Design">
@@ -306,7 +306,14 @@
             filter: blur(80px); z-index: 0;
         }
         .parallax-content { position: relative; z-index: 1; text-align: center; padding: 2rem; max-width: 900px; }
-        .parallax-text { font-size: clamp(2rem, 6vw, 4rem); font-weight: 500; line-height: 1.2; letter-spacing: -0.03em; }
+        .parallax-text { 
+            font-size: clamp(2rem, 6vw, 4rem); 
+            font-weight: 500; 
+            line-height: 1.2; 
+            letter-spacing: -0.03em;
+            opacity: 1 !important;
+            transform: none !important;
+        }
         .parallax-text span { color: var(--accent); display: block; margin-top: 0.5rem; }
 
         /* Split Section */
@@ -581,15 +588,39 @@
         }
 
         /* Video Slider */
-        .video-slider-container { position: relative; border-radius: 16px; overflow: hidden; background: var(--bg); }
-        .video-slider { display: flex; transition: transform 0.5s ease; }
-        .video-slide { flex: 0 0 100%; position: relative; }
+        .video-slider-container { 
+            position: relative; 
+            border-radius: 16px; 
+            overflow: hidden; 
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            min-height: 400px;
+            height: 400px;
+            display: block !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+        }
+        .video-slider { 
+            display: flex; 
+            transition: transform 0.5s ease; 
+            height: 100%;
+            width: 100%;
+        }
+        .video-slide { 
+            flex: 0 0 100%; 
+            position: relative; 
+            height: 100%;
+            width: 100%;
+            display: block !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+        }
         .video-slide video, .video-slide img {
             width: 100%;
-            height: auto;
-            max-height: 70vh;
-            object-fit: contain;
-            display: block;
+            height: 100%;
+            object-fit: cover;
+            display: block !important;
+            opacity: 1 !important;
+            visibility: visible !important;
             background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
         }
         .video-slide-caption {
@@ -702,6 +733,34 @@
             .tools-grid { grid-template-columns: repeat(2, 1fr); }
             .artwork-card { width: 85vw; height: 50vh; }
             .creativity-card { width: 85vw; }
+            
+            /* Mobile: Artwork horizontal scroll without pinning */
+            .artwork-section { 
+                height: auto !important; 
+            }
+            .artwork-container {
+                position: relative;
+                height: auto;
+                overflow: visible;
+                padding: 2rem 0;
+            }
+            .artwork-track { 
+                display: flex;
+                gap: 1.5rem;
+                padding: 0 1rem;
+                overflow-x: auto;
+                scroll-snap-type: x mandatory;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+                -ms-overflow-style: none;
+            }
+            .artwork-track::-webkit-scrollbar {
+                display: none;
+            }
+            .artwork-card {
+                flex-shrink: 0;
+                scroll-snap-align: center;
+            }
         }
     </style>
 </head>
@@ -709,11 +768,10 @@
     <div class="cursor"></div>
 
     <nav class="nav">
-        <a href="../" class="logo magnetic">harshana<span>.</span></a>
+        <a href="/" class="logo magnetic">harshana<span>.</span></a>
         <div class="nav-links">
             <a href="/professional/" class="nav-link magnetic">Pro</a>
             <a href="./" class="nav-link magnetic active">Creative</a>
-            <a href="/brutal/" class="nav-link magnetic">Brutal</a>
         </div>
     </nav>
 
@@ -725,9 +783,6 @@
             <a href="./" class="mobile-nav-link active">
                 <i data-lucide="sparkles"></i><span>Creative</span>
             </a>
-            <a href="/brutal/" class="mobile-nav-link">
-                <i data-lucide="zap"></i><span>Brutal</span>
-            </a>
         </div>
     </nav>
 
@@ -738,15 +793,18 @@
             <h1 class="hero-title">
                 <span class="line">Marketing</span>
                 <span class="line">Meets</span>
-                <span class="line">Design.</span>
+                <span class="line">AI Engineering</span>
             </h1>
             <p class="hero-subtitle">
                 I bridge the gap between marketing strategy, creative design, and technical execution. Adobe-certified graphic designer, video editor, and marketing technologist with 6+ years building systems that drive revenue.
             </p>
             <div class="hero-roles">
-                <div class="role-tag"><i data-lucide="palette"></i><span>Adobe Certified Designer</span></div>
+                <div class="role-tag"><i data-lucide="users"></i><span>Social Media Manager</span></div>
+                <div class="role-tag"><i data-lucide="brain"></i><span>AI Content Creator</span></div>
                 <div class="role-tag"><i data-lucide="video"></i><span>Video Editor</span></div>
-                <div class="role-tag"><i data-lucide="trending-up"></i><span>Marketing Strategist</span></div>
+                <div class="role-tag"><i data-lucide="trending-up"></i><span>Digital Marketing Strategist</span></div>
+                <div class="role-tag"><i data-lucide="code"></i><span>AI Developer</span></div>
+                <div class="role-tag"><i data-lucide="zap"></i><span>AI Automation</span></div>
             </div>
             <div class="hero-contact">
                 <a href="mailto:jothiharshana188@gmail.com">jothiharshana188@gmail.com</a>
@@ -756,6 +814,20 @@
             <a href="#artwork" class="hero-cta magnetic">
                 View My Work
                 <i data-lucide="arrow-down" style="width: 18px; height: 18px;"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- PROFESSIONAL MODE CTA BANNER -->
+    <section class="professional-cta-banner">
+        <div class="professional-cta-content">
+            <div class="professional-cta-text">
+                <span class="professional-cta-badge">💼 Looking for the full business case?</span>
+                <h3>Switch to Professional Mode for detailed metrics, ROI data & strategic breakdowns</h3>
+            </div>
+            <a href="/professional/" class="professional-cta-button">
+                View Professional Mode
+                <i data-lucide="arrow-right" style="width: 18px; height: 18px;"></i>
             </a>
         </div>
     </section>
@@ -1391,8 +1463,8 @@
             <!-- Cream of Creams -->
             <div class="job-card" data-company="cream">
                 <div class="job-header">
-                    <h3 class="job-title">Social Media Executive / Marketing Technologist</h3>
-                    <span class="job-meta">Jan 2024 – Present | Full-time</span>
+                    <h3 class="job-title">Social Media Executive</h3>
+                    <span class="job-meta">Dec 2024 – Present | Full-time</span>
                 </div>
                 <p class="job-company">Cream of Creams Sdn Bhd</p>
                 <ul class="job-achievements">
@@ -1404,47 +1476,66 @@
                 
                 <div class="media-gallery">
                     <div class="media-tabs">
-                        <button class="media-tab active" data-tab="videos" data-company="cream">
+                        <button type="button" class="media-tab active" data-tab="videos" data-company="cream">
                             <i data-lucide="video" style="width: 16px; height: 16px;"></i>
-                            Videos <span class="count">5</span>
+                            Videos <span class="count">7</span>
                         </button>
-                        <button class="media-tab" data-tab="images" data-company="cream">
+                        <button type="button" class="media-tab" data-tab="images" data-company="cream">
                             <i data-lucide="image" style="width: 16px; height: 16px;"></i>
-                            Images <span class="count">5</span>
+                            Images <span class="count">9</span>
                         </button>
                     </div>
                     
                     <div class="video-slider-container" data-slider="cream-videos">
                         <div class="video-slider">
                             <div class="video-slide" data-index="0">
-                                <video autoplay muted loop playsinline poster="../images/journey/cream-of-creams/images/cream-1.png">
+                                <video autoplay muted loop playsinline preload="auto" poster="../images/journey/cream-of-creams/images/cream-1.png" style="width:100%;height:100%;display:block;" onerror="console.error('Video 1 failed to load:', this.error)">
                                     <source src="../images/journey/cream-of-creams/videos/Cream-video1.mp4" type="video/mp4">
+                                    <img src="../images/journey/cream-of-creams/images/cream-1.png" alt="Content Creation" style="width:100%;height:100%;object-fit:cover;">
                                 </video>
                                 <div class="video-slide-caption">Behind the Scenes - Content Creation</div>
                             </div>
                             <div class="video-slide" data-index="1">
-                                <video autoplay muted loop playsinline poster="../images/journey/cream-of-creams/images/cream-2.png">
+                                <video autoplay muted loop playsinline preload="auto" style="width:100%;height:100%;display:block;" poster="../images/journey/cream-of-creams/images/cream-2.png" onerror="console.error('Video 2 failed:', this.error)">
                                     <source src="../images/journey/cream-of-creams/videos/Cream-video2.mp4" type="video/mp4">
+                                    <img src="../images/journey/cream-of-creams/images/cream-2.png" alt="Campaign Shoot" style="width:100%;height:100%;object-fit:cover;">
                                 </video>
                                 <div class="video-slide-caption">Product Showcase - Campaign Shoot</div>
                             </div>
                             <div class="video-slide" data-index="2">
-                                <video autoplay muted loop playsinline poster="../images/journey/cream-of-creams/images/cream-3.png">
+                                <video autoplay muted loop playsinline preload="auto" style="width:100%;height:100%;display:block;" poster="../images/journey/cream-of-creams/images/cream-3.png" onerror="console.error('Video 3 failed:', this.error)">
                                     <source src="../images/journey/cream-of-creams/videos/Cream-video3.mp4" type="video/mp4">
+                                    <img src="../images/journey/cream-of-creams/images/cream-3.png" alt="CNY Campaign" style="width:100%;height:100%;object-fit:cover;">
                                 </video>
                                 <div class="video-slide-caption">CNY Campaign 2025 - Behind the Scenes</div>
                             </div>
                             <div class="video-slide" data-index="3">
-                                <video autoplay muted loop playsinline poster="../images/journey/cream-of-creams/images/cream-4.png">
+                                <video autoplay muted loop playsinline preload="auto" style="width:100%;height:100%;display:block;" poster="../images/journey/cream-of-creams/images/cream-4.png" onerror="console.error('Video 4 failed:', this.error)">
                                     <source src="../images/journey/cream-of-creams/videos/Cream-video4.mp4" type="video/mp4">
+                                    <img src="../images/journey/cream-of-creams/images/cream-4.png" alt="Festival Marketing" style="width:100%;height:100%;object-fit:cover;">
                                 </video>
                                 <div class="video-slide-caption">Festival Marketing - Setup</div>
                             </div>
                             <div class="video-slide" data-index="4">
-                                <video autoplay muted loop playsinline poster="../images/journey/cream-of-creams/images/cream-5.png">
+                                <video autoplay muted loop playsinline preload="auto" style="width:100%;height:100%;display:block;" poster="../images/journey/cream-of-creams/images/cream-5.png" onerror="console.error('Video 5 failed:', this.error)">
                                     <source src="../images/journey/cream-of-creams/videos/Cream-video5.mp4" type="video/mp4">
+                                    <img src="../images/journey/cream-of-creams/images/cream-5.png" alt="Viral Content" style="width:100%;height:100%;object-fit:cover;">
                                 </video>
                                 <div class="video-slide-caption">Viral Content Production</div>
+                            </div>
+                            <div class="video-slide" data-index="5">
+                                <video autoplay muted loop playsinline preload="auto" style="width:100%;height:100%;display:block;" poster="../images/journey/cream-of-creams/images/cream-new-4.png" onerror="console.error('Video 6 failed:', this.error)">
+                                    <source src="../images/journey/cream-of-creams/videos/cream-new-1.mp4" type="video/mp4">
+                                    <img src="../images/journey/cream-of-creams/images/cream-new-4.png" alt="Blueberry Cream Cheese" style="width:100%;height:100%;object-fit:cover;">
+                                </video>
+                                <div class="video-slide-caption">Blueberry Cream Cheese Product Video</div>
+                            </div>
+                            <div class="video-slide" data-index="6">
+                                <video autoplay muted loop playsinline preload="auto" style="width:100%;height:100%;display:block;" poster="../images/journey/cream-of-creams/images/cream-new-3.png" onerror="console.error('Video 7 failed:', this.error)">
+                                    <source src="../images/journey/cream-of-creams/videos/cream-new-2.mp4" type="video/mp4">
+                                    <img src="../images/journey/cream-of-creams/images/cream-new-3.png" alt="Content Strategy" style="width:100%;height:100%;object-fit:cover;">
+                                </video>
+                                <div class="video-slide-caption">Content Draft & Strategy</div>
                             </div>
                         </div>
                         <div class="video-dots" data-dots="cream-videos">
@@ -1453,6 +1544,8 @@
                             <span class="video-dot" data-slide="2"></span>
                             <span class="video-dot" data-slide="3"></span>
                             <span class="video-dot" data-slide="4"></span>
+                            <span class="video-dot" data-slide="5"></span>
+                            <span class="video-dot" data-slide="6"></span>
                         </div>
                     </div>
                     
@@ -1471,6 +1564,18 @@
                         </div>
                         <div class="gallery-item" data-src="../images/journey/cream-of-creams/images/cream-5.png">
                             <img src="../images/journey/cream-of-creams/images/cream-5.png" alt="Content Creation" loading="lazy">
+                        </div>
+                        <div class="gallery-item" data-src="../images/journey/cream-of-creams/images/cream-new-1.png">
+                            <img src="../images/journey/cream-of-creams/images/cream-new-1.png" alt="Cinematic Storyboard Campaign" loading="lazy">
+                        </div>
+                        <div class="gallery-item" data-src="../images/journey/cream-of-creams/images/cream-new-2.png">
+                            <img src="../images/journey/cream-of-creams/images/cream-new-2.png" alt="AI-Generated Visual Content" loading="lazy">
+                        </div>
+                        <div class="gallery-item" data-src="../images/journey/cream-of-creams/images/cream-new-3.png">
+                            <img src="../images/journey/cream-of-creams/images/cream-new-3.png" alt="Impactful Social Media Creative" loading="lazy">
+                        </div>
+                        <div class="gallery-item" data-src="../images/journey/cream-of-creams/images/cream-new-4.png">
+                            <img src="../images/journey/cream-of-creams/images/cream-new-4.png" alt="VZ Cake Product Feature" loading="lazy">
                         </div>
                     </div>
                 </div>
@@ -1492,11 +1597,11 @@
                 
                 <div class="media-gallery">
                     <div class="media-tabs">
-                        <button class="media-tab active" data-tab="videos" data-company="jungle">
+                        <button type="button" class="media-tab active" data-tab="videos" data-company="jungle">
                             <i data-lucide="video" style="width: 16px; height: 16px;"></i>
                             Videos <span class="count">8</span>
                         </button>
-                        <button class="media-tab" data-tab="images" data-company="jungle">
+                        <button type="button" class="media-tab" data-tab="images" data-company="jungle">
                             <i data-lucide="image" style="width: 16px; height: 16px;"></i>
                             Images <span class="count">6</span>
                         </button>
@@ -1505,49 +1610,49 @@
                     <div class="video-slider-container" data-slider="jungle-videos">
                         <div class="video-slider">
                             <div class="video-slide" data-index="0">
-                                <video autoplay muted loop playsinline poster="../images/journey/junglewalla/thumbnails/Jungle-thumbnail1.png">
+                                <video autoplay muted loop playsinline preload="auto" style="width:100%;height:100%;display:block;" poster="../images/journey/junglewalla/thumbnails/Jungle-thumbnail1.png">
                                     <source src="../images/journey/junglewalla/videos/Jungle-video1.mp4" type="video/mp4">
                                 </video>
                                 <div class="video-slide-caption">Resort Virtual Tour</div>
                             </div>
                             <div class="video-slide" data-index="1">
-                                <video autoplay muted loop playsinline poster="../images/journey/junglewalla/images/Jungle-image1.jpg">
+                                <video autoplay muted loop playsinline preload="auto" style="width:100%;height:100%;display:block;" poster="../images/journey/junglewalla/images/Jungle-image1.jpg">
                                     <source src="../images/journey/junglewalla/videos/Jungle-video2.mp4" type="video/mp4">
                                 </video>
                                 <div class="video-slide-caption">Nature Walk Experience</div>
                             </div>
                             <div class="video-slide" data-index="2">
-                                <video autoplay muted loop playsinline poster="../images/journey/junglewalla/images/Jungle-image2.jpg">
+                                <video autoplay muted loop playsinline preload="auto" style="width:100%;height:100%;display:block;" poster="../images/journey/junglewalla/images/Jungle-image2.jpg">
                                     <source src="../images/journey/junglewalla/videos/Jungle-video3.mp4" type="video/mp4">
                                 </video>
                                 <div class="video-slide-caption">Wildlife Encounters</div>
                             </div>
                             <div class="video-slide" data-index="3">
-                                <video autoplay muted loop playsinline poster="../images/journey/junglewalla/images/Jungle-image3.jpg">
+                                <video autoplay muted loop playsinline preload="auto" style="width:100%;height:100%;display:block;" poster="../images/journey/junglewalla/images/Jungle-image3.jpg">
                                     <source src="../images/journey/junglewalla/videos/Jungle-video4.mp4" type="video/mp4">
                                 </video>
                                 <div class="video-slide-caption">Guest Activities</div>
                             </div>
                             <div class="video-slide" data-index="4">
-                                <video autoplay muted loop playsinline poster="../images/journey/junglewalla/images/Jungle-image4.jpg">
+                                <video autoplay muted loop playsinline preload="auto" style="width:100%;height:100%;display:block;" poster="../images/journey/junglewalla/images/Jungle-image4.jpg">
                                     <source src="../images/journey/junglewalla/videos/Jungle-video5.mp4" type="video/mp4">
                                 </video>
                                 <div class="video-slide-caption">Conservation Efforts</div>
                             </div>
                             <div class="video-slide" data-index="5">
-                                <video autoplay muted loop playsinline poster="../images/journey/junglewalla/images/Jungle-image5.jpg">
+                                <video autoplay muted loop playsinline preload="auto" style="width:100%;height:100%;display:block;" poster="../images/journey/junglewalla/images/Jungle-image5.jpg">
                                     <source src="../images/journey/junglewalla/videos/Jungle-video6.mp4" type="video/mp4">
                                 </video>
                                 <div class="video-slide-caption">Educational Programs</div>
                             </div>
                             <div class="video-slide" data-index="6">
-                                <video autoplay muted loop playsinline poster="../images/journey/junglewalla/images/Jungle-image6.jpg">
+                                <video autoplay muted loop playsinline preload="auto" style="width:100%;height:100%;display:block;" poster="../images/journey/junglewalla/images/Jungle-image6.jpg">
                                     <source src="../images/journey/junglewalla/videos/Jungle-video7.mp4" type="video/mp4">
                                 </video>
                                 <div class="video-slide-caption">Resort Facilities</div>
                             </div>
                             <div class="video-slide" data-index="7">
-                                <video autoplay muted loop playsinline poster="../images/journey/junglewalla/thumbnails/Jungle-thumbnail1.png">
+                                <video autoplay muted loop playsinline preload="auto" style="width:100%;height:100%;display:block;" poster="../images/journey/junglewalla/thumbnails/Jungle-thumbnail1.png">
                                     <source src="../images/journey/junglewalla/videos/Jungle-video8.mp4" type="video/mp4">
                                 </video>
                                 <div class="video-slide-caption">Team Building Events</div>
@@ -1604,11 +1709,11 @@
                 
                 <div class="media-gallery">
                     <div class="media-tabs">
-                        <button class="media-tab active" data-tab="videos" data-company="pserv">
+                        <button type="button" class="media-tab active" data-tab="videos" data-company="pserv">
                             <i data-lucide="video" style="width: 16px; height: 16px;"></i>
                             Videos <span class="count">4</span>
                         </button>
-                        <button class="media-tab" data-tab="images" data-company="pserv">
+                        <button type="button" class="media-tab" data-tab="images" data-company="pserv">
                             <i data-lucide="image" style="width: 16px; height: 16px;"></i>
                             Images <span class="count">4</span>
                         </button>
@@ -1617,25 +1722,25 @@
                     <div class="video-slider-container" data-slider="pserv-videos">
                         <div class="video-slider">
                             <div class="video-slide" data-index="0">
-                                <video muted loop playsinline poster="../images/journey/pserv-singapore/images/Customer-image1.jpeg">
+                                <video autoplay muted loop playsinline preload="auto" style="width:100%;height:100%;display:block;" poster="../images/journey/pserv-singapore/images/Customer-image1.jpeg">
                                     <source src="../images/journey/pserv-singapore/videos/Customer-video2.mp4" type="video/mp4">
                                 </video>
                                 <div class="video-slide-caption">Team Collaboration Sessions</div>
                             </div>
                             <div class="video-slide" data-index="1">
-                                <video muted loop playsinline poster="../images/journey/pserv-singapore/images/Customer-image2.jpeg">
+                                <video autoplay muted loop playsinline preload="auto" style="width:100%;height:100%;display:block;" poster="../images/journey/pserv-singapore/images/Customer-image2.jpeg">
                                     <source src="../images/journey/pserv-singapore/videos/Customer-video3.mp4" type="video/mp4">
                                 </video>
                                 <div class="video-slide-caption">Corporate Account Management</div>
                             </div>
                             <div class="video-slide" data-index="2">
-                                <video muted loop playsinline poster="../images/journey/pserv-singapore/images/Customer-image3.jpeg">
+                                <video autoplay muted loop playsinline preload="auto" style="width:100%;height:100%;display:block;" poster="../images/journey/pserv-singapore/images/Customer-image3.jpeg">
                                     <source src="../images/journey/pserv-singapore/videos/Customer-video4.mp4" type="video/mp4">
                                 </video>
                                 <div class="video-slide-caption">High-Volume Inquiry Handling</div>
                             </div>
                             <div class="video-slide" data-index="3">
-                                <video muted loop playsinline poster="../images/journey/pserv-singapore/images/Customer-image4.jpeg">
+                                <video autoplay muted loop playsinline preload="auto" style="width:100%;height:100%;display:block;" poster="../images/journey/pserv-singapore/images/Customer-image4.jpeg">
                                     <source src="../images/journey/pserv-singapore/videos/Customer-video5.mp4" type="video/mp4">
                                 </video>
                                 <div class="video-slide-caption">Mentoring Junior Staff</div>
@@ -1729,6 +1834,8 @@
                             <li>📊 Detailed metrics & ROI data</li>
                             <li>📁 Full project case studies</li>
                             <li>🎯 Strategic breakdowns</li>
+                            <li>🤖 AI workflow demos</li>
+                            <li>💼 Business impact metrics</li>
                         </ul>
                         <a href="/professional/" class="switch-mode-btn">Switch to Professional Mode →</a>
                     </div>
@@ -1740,7 +1847,7 @@
     <!-- Lightbox -->
     <div class="lightbox" id="lightbox">
         <div class="lightbox-content">
-            <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+            <button type="button" class="lightbox-close" id="lightbox-close-btn">&times;</button>
             <img id="lightbox-img" src="" alt="">
             <video id="lightbox-video" controls style="display: none;"></video>
         </div>
@@ -2061,6 +2168,63 @@
             transform: translateY(-2px);
             box-shadow: 0 10px 30px rgba(255,61,0,0.3);
         }
+
+        /* Professional CTA Banner */
+        .professional-cta-banner {
+            background: linear-gradient(135deg, rgba(255,61,0,0.1) 0%, rgba(255,61,0,0.05) 100%);
+            border-top: 1px solid rgba(255,61,0,0.2);
+            border-bottom: 1px solid rgba(255,61,0,0.2);
+            padding: 2rem;
+        }
+        .professional-cta-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            align-items: center;
+            text-align: center;
+        }
+        @media (min-width: 768px) {
+            .professional-cta-content {
+                flex-direction: row;
+                justify-content: space-between;
+                text-align: left;
+            }
+        }
+        .professional-cta-badge {
+            display: inline-block;
+            background: rgba(255,61,0,0.2);
+            color: var(--accent);
+            padding: 0.5rem 1rem;
+            border-radius: 100px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+        .professional-cta-text h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 0;
+        }
+        .professional-cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: var(--accent);
+            color: var(--bg);
+            padding: 1rem 2rem;
+            border-radius: 100px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+        .professional-cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255,61,0,0.3);
+        }
     </style>
 
     <!-- Education & Achievements Section -->
@@ -2079,28 +2243,28 @@
                 </div>
                 <div class="education-list">
                     <div class="edu-item">
-                        <div class="edu-year">2024</div>
+                        <div class="edu-year">2018</div>
                         <div class="edu-content">
                             <h4>Bachelor of Business Administration</h4>
                             <p>UCSI University KL Campus, Cheras</p>
                         </div>
                     </div>
                     <div class="edu-item">
-                        <div class="edu-year">2020</div>
+                        <div class="edu-year">2012</div>
                         <div class="edu-content">
                             <h4>Foundation in Arts</h4>
                             <p>UCSI University KL Campus, Cheras</p>
                         </div>
                     </div>
                     <div class="edu-item">
-                        <div class="edu-year">2015</div>
+                        <div class="edu-year">2011</div>
                         <div class="edu-content">
                             <h4>SPM (Sijil Pelajaran Malaysia)</h4>
                             <p>SMK Seri Mutiara, Cheras</p>
                         </div>
                     </div>
                     <div class="edu-item">
-                        <div class="edu-year">2013</div>
+                        <div class="edu-year">2009</div>
                         <div class="edu-content">
                             <h4>PMR (Penilaian Menengah Rendah)</h4>
                             <p>SMK Bukit Mewah, Seremban</p>
@@ -2497,13 +2661,13 @@
             <a href="mailto:jothiharshana188@gmail.com" class="footer-social magnetic">
                 <i data-lucide="mail"></i>Email
             </a>
-            <a href="https://linkedin.com/in/harshanajothi" target="_blank" rel="noopener" class="footer-social magnetic">
+            <a href="https://linkedin.com/in/harshanajothi" target="_blank" rel="noopener noreferrer" class="footer-social magnetic">
                 <i data-lucide="linkedin"></i>LinkedIn
             </a>
-            <a href="https://github.com/harshanajothi" target="_blank" rel="noopener" class="footer-social magnetic">
+            <a href="https://github.com/harshanajothi" target="_blank" rel="noopener noreferrer" class="footer-social magnetic">
                 <i data-lucide="github"></i>GitHub
             </a>
-            <a href="https://tiktok.com/@solosync_studios" target="_blank" rel="noopener" class="footer-social magnetic">
+            <a href="https://tiktok.com/@solosync_studios" target="_blank" rel="noopener noreferrer" class="footer-social magnetic">
                 <i data-lucide="music"></i>TikTok
             </a>
         </div>
@@ -2512,6 +2676,140 @@
     <script>
         // Initialize Lucide Icons
         lucide.createIcons();
+        
+        // Global sliders object for tab switching access
+        const sliders = {};
+        
+        // Force all videos to play immediately (bypass autoplay restrictions)
+        function forceVideoPlay() {
+            // Play all visible videos when tab switches
+            document.querySelectorAll('.video-slide').forEach((slide) => {
+                const video = slide.querySelector('video');
+                if (video && slide.style.display !== 'none') {
+                    video.muted = true;
+                    if (video.readyState >= 3) {
+                        video.play().catch(e => console.log('Video play failed:', e));
+                    } else {
+                        const playWhenReady = () => {
+                            video.play().catch(e => console.log('Video play failed:', e));
+                            video.removeEventListener('canplay', playWhenReady);
+                        };
+                        video.addEventListener('canplay', playWhenReady);
+                    }
+                }
+            });
+        }
+        
+        // Initialize sliders immediately but don't auto-play videos until visible
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeVideoSliders();
+            
+            // Use IntersectionObserver to only play videos when visible
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    const sliderId = entry.target.dataset.slider;
+                    if (entry.isIntersecting && sliders[sliderId]) {
+                        // Slider is visible - start auto-advance and play current video
+                        sliders[sliderId].startAutoAdvance();
+                        const currentSlide = entry.target.querySelectorAll('.video-slide')[sliders[sliderId].currentSlide];
+                        if (currentSlide) {
+                            const video = currentSlide.querySelector('video');
+                            if (video) {
+                                video.muted = true;
+                                video.play().catch(() => {});
+                            }
+                        }
+                    } else if (sliders[sliderId]) {
+                        // Slider not visible - stop auto-advance and pause videos
+                        sliders[sliderId].stopAutoAdvance();
+                        entry.target.querySelectorAll('video').forEach(v => v.pause());
+                    }
+                });
+            }, { threshold: 0.3 });
+            
+            document.querySelectorAll('[data-slider]').forEach(slider => {
+                observer.observe(slider);
+            });
+        });
+        
+        function initializeVideoSliders() {
+        // ===== VIDEO SLIDER FUNCTIONALITY =====
+        
+        document.querySelectorAll('[data-slider]').forEach(sliderContainer => {
+            const sliderId = sliderContainer.dataset.slider;
+            const slider = sliderContainer.querySelector('.video-slider');
+            const dots = document.querySelector(`[data-dots="${sliderId}"]`);
+            const slides = slider.querySelectorAll('.video-slide');
+            let currentSlide = 0;
+            let interval;
+            
+            // Make sure slider is visible
+            sliderContainer.style.display = 'block';
+            sliderContainer.style.opacity = '1';
+            
+            sliders[sliderId] = { slider, slides, dots, currentSlide, interval, goToSlide, startAutoAdvance, stopAutoAdvance: () => { if (interval) clearInterval(interval); } };
+            
+            function goToSlide(index) {
+                currentSlide = index;
+                sliders[sliderId].currentSlide = index;
+                slider.style.transform = `translateX(-${index * 100}%)`;
+                
+                if (dots) {
+                    dots.querySelectorAll('.video-dot').forEach((dot, i) => {
+                        dot.classList.toggle('active', i === index);
+                    });
+                }
+                
+                // Handle video play/pause based on visibility
+                slides.forEach((slide, i) => {
+                    const video = slide.querySelector('video');
+                    if (video) {
+                        if (i === index) {
+                            // Active slide - play the video
+                            video.muted = true; // Required for autoplay
+                            const playVideo = () => {
+                                video.currentTime = 0;
+                                video.play().catch(() => {});
+                            };
+                            if (video.readyState >= 2) {
+                                playVideo();
+                            } else {
+                                video.addEventListener('loadeddata', playVideo, { once: true });
+                            }
+                        } else {
+                            // Only pause if video is actually playing
+                            if (!video.paused) {
+                                video.pause();
+                            }
+                        }
+                    }
+                });
+            }
+            
+            // Auto-advance every 5 seconds
+            function startAutoAdvance() {
+                if (interval) clearInterval(interval);
+                interval = setInterval(() => {
+                    const nextIndex = (currentSlide + 1) % slides.length;
+                    goToSlide(nextIndex);
+                }, 5000);
+            }
+            
+            // Don't auto-start - wait for IntersectionObserver
+            goToSlide(0);
+            
+            // Dot click handlers
+            if (dots) {
+                dots.querySelectorAll('.video-dot').forEach((dot, index) => {
+                    dot.addEventListener('click', () => {
+                        goToSlide(index);
+                        startAutoAdvance();
+                    });
+                });
+            }
+            
+        });
+        } // End initializeVideoSliders
 
         // Initialize Lenis Smooth Scroll
         const lenis = new Lenis({
@@ -2562,21 +2860,57 @@
             });
         }
 
-        // Magnetic Effect
-        document.querySelectorAll('.magnetic').forEach(el => {
-            el.addEventListener('mousemove', (e) => {
-                const rect = el.getBoundingClientRect();
-                const x = e.clientX - rect.left - rect.width / 2;
-                const y = e.clientY - rect.top - rect.height / 2;
-                el.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+        // Magnetic Effect - Desktop only
+        if (!isTouchDevice) {
+            document.querySelectorAll('.magnetic').forEach(el => {
+                el.addEventListener('mousemove', (e) => {
+                    const rect = el.getBoundingClientRect();
+                    const x = e.clientX - rect.left - rect.width / 2;
+                    const y = e.clientY - rect.top - rect.height / 2;
+                    el.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+                });
+                el.addEventListener('mouseleave', () => {
+                    el.style.transform = 'translate(0, 0)';
+                });
             });
-            el.addEventListener('mouseleave', () => {
-                el.style.transform = 'translate(0, 0)';
-            });
-        });
+        }
 
         // GSAP Animations
         gsap.registerPlugin(ScrollTrigger);
+
+        // Video initialization and preloading
+        document.querySelectorAll('.video-slide video').forEach(video => {
+            // Set preload to auto
+            video.preload = 'auto';
+            
+            // Handle errors
+            video.addEventListener('error', () => {
+                console.log('Video failed to load:', video.querySelector('source')?.src);
+                const poster = video.getAttribute('poster');
+                if (poster) {
+                    const img = document.createElement('img');
+                    img.src = poster;
+                    img.alt = 'Video thumbnail';
+                    img.style.cssText = 'width:100%;height:100%;object-fit:cover;';
+                    img.className = video.className;
+                    video.parentNode.replaceChild(img, video);
+                }
+            });
+            
+            // Play when loaded
+            video.addEventListener('loadeddata', () => {
+                console.log('Video loaded:', video.querySelector('source')?.src);
+                video.play().catch(e => console.log('Autoplay prevented:', e));
+            });
+            
+            // Also try canplaythrough
+            video.addEventListener('canplaythrough', () => {
+                video.play().catch(e => console.log('Autoplay prevented on canplaythrough:', e));
+            });
+            
+            // Force load
+            video.load();
+        });
 
         // Hero animations
         gsap.to('.hero-title .line', {
@@ -2594,11 +2928,12 @@
             y: 300, opacity: 0.3
         });
 
-        // ===== ARTWORK HORIZONTAL SCROLL - FIXED =====
+        // ===== ARTWORK HORIZONTAL SCROLL - DESKTOP ONLY =====
         const artworkSection = document.querySelector('.artwork-section');
         const artworkTrack = document.querySelector('.artwork-track');
+        // isTouchDevice already declared above
         
-        if (artworkSection && artworkTrack) {
+        if (artworkSection && artworkTrack && !isTouchDevice) {
             // Calculate total scroll width
             const totalWidth = artworkTrack.scrollWidth;
             const viewportWidth = window.innerWidth;
@@ -2620,6 +2955,20 @@
                         gsap.set(artworkTrack, { x: -scrollDistance });
                     }
                 }
+            });
+        } else if (artworkTrack && isTouchDevice) {
+            // Mobile: Enable horizontal swipe without pinning
+            artworkTrack.style.overflowX = 'auto';
+            artworkTrack.style.display = 'flex';
+            artworkTrack.style.gap = '1.5rem';
+            artworkTrack.style.padding = '0 1rem';
+            artworkTrack.style.scrollSnapType = 'x mandatory';
+            artworkTrack.style.webkitOverflowScrolling = 'touch';
+            
+            // Add scroll snap to children
+            artworkTrack.querySelectorAll('.artwork-item').forEach(item => {
+                item.style.scrollSnapAlign = 'center';
+                item.style.flexShrink = '0';
             });
         }
 
@@ -2675,59 +3024,81 @@
             y: 30, opacity: 0, duration: 0.6, stagger: 0.1, ease: 'power2.out'
         });
 
-        // ===== VIDEO SLIDER FUNCTIONALITY =====
-        const sliders = {};
-        
-        document.querySelectorAll('[data-slider]').forEach(sliderContainer => {
-            const sliderId = sliderContainer.dataset.slider;
-            const slider = sliderContainer.querySelector('.video-slider');
-            const dots = document.querySelector(`[data-dots="${sliderId}"]`);
-            const slides = slider.querySelectorAll('.video-slide');
-            let currentSlide = 0;
-            let interval;
-            
-            sliders[sliderId] = { slider, slides, dots, currentSlide };
-            
-            function nextSlide() {
-                currentSlide = (currentSlide + 1) % slides.length;
-                goToSlide(currentSlide);
-            }
-            
-            function goToSlide(index) {
-                currentSlide = index;
-                slider.style.transform = `translateX(-${index * 100}%)`;
-                
-                if (dots) {
-                    dots.querySelectorAll('.video-dot').forEach((dot, i) => {
-                        dot.classList.toggle('active', i === index);
-                    });
-                }
-                
-                slides.forEach((slide, i) => {
-                    const video = slide.querySelector('video');
-                    if (video) {
-                        if (i === index) {
-                            video.play();
-                        } else {
-                            video.pause();
-                        }
-                    }
-                });
-            }
-            
-            interval = setInterval(nextSlide, 4000);
-            
-            if (dots) {
-                dots.querySelectorAll('.video-dot').forEach((dot, index) => {
-                    dot.addEventListener('click', () => {
-                        clearInterval(interval);
-                        goToSlide(index);
-                        interval = setInterval(nextSlide, 4000);
-                    });
-                });
-            }
-            
-            sliders[sliderId].goToSlide = goToSlide;
+        // Hobbies animation - visible by default, then animate
+        gsap.utils.toArray('.hobby-item').forEach((item, i) => {
+            gsap.from(item, {
+                scrollTrigger: { 
+                    trigger: item, 
+                    start: 'top 90%', 
+                    toggleActions: 'play none none none' 
+                },
+                y: 30, 
+                opacity: 0, 
+                duration: 0.5, 
+                delay: i * 0.05,
+                ease: 'power2.out'
+            });
+        });
+
+        // Current projects animation
+        gsap.utils.toArray('.current-project-card').forEach((card, i) => {
+            gsap.from(card, {
+                scrollTrigger: { 
+                    trigger: card, 
+                    start: 'top 90%', 
+                    toggleActions: 'play none none none' 
+                },
+                y: 40, 
+                opacity: 0, 
+                duration: 0.6, 
+                delay: i * 0.1,
+                ease: 'power2.out'
+            });
+        });
+
+        // Education section animations
+        gsap.utils.toArray('.education-card').forEach((card, i) => {
+            gsap.from(card, {
+                scrollTrigger: { 
+                    trigger: card, 
+                    start: 'top 90%', 
+                    toggleActions: 'play none none none' 
+                },
+                y: 40, 
+                opacity: 0, 
+                duration: 0.6, 
+                delay: i * 0.1,
+                ease: 'power2.out'
+            });
+        });
+
+        // Mode cards animation
+        gsap.utils.toArray('.mode-card').forEach((card, i) => {
+            gsap.from(card, {
+                scrollTrigger: { 
+                    trigger: card, 
+                    start: 'top 90%', 
+                    toggleActions: 'play none none none' 
+                },
+                y: 40, 
+                opacity: 0, 
+                duration: 0.6, 
+                delay: i * 0.1,
+                ease: 'power2.out'
+            });
+        });
+
+        // Parallax quote section - always visible, no animation delay
+
+        // Parallax background movement
+        gsap.to('.parallax-bg', {
+            scrollTrigger: { 
+                trigger: '.parallax-section', 
+                start: 'top bottom', 
+                end: 'bottom top', 
+                scrub: 1 
+            },
+            y: -150
         });
 
         // ===== MEDIA TAB SWITCHING =====
@@ -2736,6 +3107,7 @@
                 const company = tab.dataset.company;
                 const tabType = tab.dataset.tab;
                 
+                // Update active tab state
                 document.querySelectorAll(`.media-tab[data-company="${company}"]`).forEach(t => t.classList.remove('active'));
                 tab.classList.add('active');
                 
@@ -2743,11 +3115,36 @@
                 const imagesContainer = document.querySelector(`[data-gallery="${company}-images"]`);
                 
                 if (tabType === 'videos') {
-                    if (videosContainer) videosContainer.style.display = 'block';
+                    if (videosContainer) {
+                        videosContainer.style.display = 'block';
+                        // Force all videos to play
+                        forceVideoPlay();
+                        // Restart auto-advance
+                        if (sliders[`${company}-videos`]) {
+                            sliders[`${company}-videos`].goToSlide(0);
+                        }
+                    }
                     if (imagesContainer) imagesContainer.style.display = 'none';
                 } else {
-                    if (videosContainer) videosContainer.style.display = 'none';
-                    if (imagesContainer) imagesContainer.style.display = 'grid';
+                    // Pause all videos before switching
+                    if (videosContainer) {
+                        videosContainer.querySelectorAll('video').forEach(v => {
+                            v.pause();
+                            v.currentTime = 0;
+                        });
+                        videosContainer.style.display = 'none';
+                    }
+                    if (imagesContainer) {
+                        imagesContainer.style.display = 'grid';
+                        // Animate images in
+                        gsap.from(imagesContainer.querySelectorAll('.gallery-item'), {
+                            opacity: 0,
+                            y: 20,
+                            duration: 0.4,
+                            stagger: 0.05,
+                            ease: 'power2.out'
+                        });
+                    }
                 }
             });
         });
@@ -2778,6 +3175,8 @@
             lightboxVideo.src = '';
         }
         
+        document.getElementById('lightbox-close-btn').addEventListener('click', closeLightbox);
+        
         document.querySelectorAll('.gallery-item').forEach(item => {
             item.addEventListener('click', () => {
                 openLightbox(item.dataset.src, false);
@@ -2795,7 +3194,31 @@
         // Refresh ScrollTrigger on load
         window.addEventListener('load', () => {
             ScrollTrigger.refresh();
+            
+            // Force reveal all elements that might be stuck
+            document.querySelectorAll('.hobby-item, .current-project-card, .education-card, .mode-card, .parallax-text').forEach(el => {
+                el.style.opacity = '1';
+                el.style.transform = 'none';
+            });
+            
+            // Force video sliders visible
+            document.querySelectorAll('.video-slider-container').forEach(container => {
+                container.style.display = 'block';
+                container.style.opacity = '1';
+                container.style.visibility = 'visible';
+            });
+            
+            // Initialize all videos
+            document.querySelectorAll('.video-slide video').forEach(video => {
+                video.load();
+                video.play().catch(e => console.log('Autoplay prevented:', e));
+            });
         });
+        
+        // Also refresh after a short delay to ensure all images loaded
+        setTimeout(() => {
+            ScrollTrigger.refresh();
+        }, 1000);
     </script>
 </body>
 </html>

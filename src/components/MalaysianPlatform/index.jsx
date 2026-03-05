@@ -18,7 +18,7 @@ import { toolLogos } from '../../data/toolLogos';
 
 const MalaysianPlatform = () => {
     const handleDemoClick = (tool) => {
-        console.log('Demo clicked for:', tool.name);
+        // Demo clicked
         // Scroll to featured demos section
         document.getElementById('featured-demos')?.scrollIntoView({ behavior: 'smooth' });
     };

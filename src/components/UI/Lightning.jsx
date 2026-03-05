@@ -6,7 +6,7 @@ const Lightning = ({ hue = 230, xOffset = 0, speed = 1, intensity = 1, size = 1 
     useEffect(() => {
         const canvas = canvasRef.current;
         if (!canvas) {
-            console.warn('Canvas ref not available');
+            // Canvas ref not available
             return;
         }
 

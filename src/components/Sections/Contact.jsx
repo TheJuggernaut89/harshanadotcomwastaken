@@ -345,7 +345,7 @@ const ChooseYourAdventure = () => {
                             </div>
 
                             {/* Options Grid */}
-                            <div className="grid md:grid-cols-2 gap-4">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                                 {currentStory.options.map((option, index) => (
                                     <motion.button
                                         key={index}
@@ -353,23 +353,23 @@ const ChooseYourAdventure = () => {
                                         animate={{ opacity: 1, scale: 1 }}
                                         transition={{ delay: index * 0.1 }}
                                         onClick={() => handleChoice(option.next)}
-                                        className="group relative overflow-hidden rounded-xl p-6 text-left transition-all hover:scale-105"
+                                        className="group relative overflow-hidden rounded-xl p-4 sm:p-6 text-left transition-all hover:scale-[1.02] active:scale-[0.98]"
                                     >
                                         <div className={`absolute inset-0 bg-gradient-to-br ${option.color} opacity-10 group-hover:opacity-20 transition-opacity`} />
-                                        <div className="glass-card h-full border border-primary/20 group-hover:border-primary/40 p-6 relative z-10">
-                                            <div className="flex items-start gap-4">
-                                                <div className={`w-12 h-12 rounded-lg bg-gradient-to-br ${option.color} text-white flex items-center justify-center flex-shrink-0`}>
+                                        <div className="glass-card h-full border border-primary/20 group-hover:border-primary/40 p-4 sm:p-6 relative z-10">
+                                            <div className="flex items-start gap-3 sm:gap-4">
+                                                <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-gradient-to-br ${option.color} text-white flex items-center justify-center flex-shrink-0`}>
                                                     {option.icon}
                                                 </div>
-                                                <div className="flex-1">
-                                                    <h4 className="font-bold text-lg mb-1 group-hover:text-primary transition-colors">
+                                                <div className="flex-1 min-w-0">
+                                                    <h4 className="font-bold text-base sm:text-lg mb-1 group-hover:text-primary transition-colors">
                                                         {option.label}
                                                     </h4>
-                                                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                                                    <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
                                                         {option.description}
                                                     </p>
                                                 </div>
-                                                <ArrowRight className="text-primary opacity-0 group-hover:opacity-100 transition-opacity" size={20} />
+                                                <ArrowRight className="text-primary opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0 hidden sm:block" size={20} />
                                             </div>
                                         </div>
                                     </motion.button>
@@ -394,49 +394,51 @@ const ChooseYourAdventure = () => {
                             initial={{ opacity: 0, scale: 0.95 }}
                             animate={{ opacity: 1, scale: 1 }}
                             exit={{ opacity: 0, scale: 0.95 }}
-                            className="max-w-3xl mx-auto"
+                            className="max-w-3xl mx-auto px-2 sm:px-0"
                         >
-                            <div className="glass-card p-8 md:p-12 rounded-2xl border-2 border-primary/30 bg-gradient-to-br from-primary/5 to-teal/5">
-                                <h3 className="text-4xl font-bold mb-4 text-center">{currentStory.title}</h3>
-                                <p className="text-xl text-gray-700 dark:text-gray-300 mb-6 text-center">
+                            <div className="glass-card p-5 sm:p-8 md:p-12 rounded-xl sm:rounded-2xl border-2 border-primary/30 bg-gradient-to-br from-primary/5 to-teal/5">
+                                <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4 text-center">{currentStory.title}</h3>
+                                <p className="text-base sm:text-lg md:text-xl text-gray-700 dark:text-gray-300 mb-4 sm:mb-6 text-center">
                                     {currentStory.message}
                                 </p>
 
-                                <div className="bg-white/50 dark:bg-navy-dark/50 rounded-xl p-6 mb-8">
-                                    <ul className="space-y-3">
+                                <div className="bg-white/50 dark:bg-navy-dark/50 rounded-xl p-4 sm:p-6 mb-6 sm:mb-8">
+                                    <ul className="space-y-2 sm:space-y-3">
                                         {currentStory.highlights.map((highlight, idx) => (
-                                            <li key={idx} className="flex gap-3">
-                                                <span className="text-teal text-xl">✓</span>
-                                                <span className="text-gray-700 dark:text-gray-300">{highlight}</span>
+                                            <li key={idx} className="flex gap-2 sm:gap-3">
+                                                <span className="text-teal text-lg sm:text-xl flex-shrink-0">✓</span>
+                                                <span className="text-sm sm:text-base text-gray-700 dark:text-gray-300">{highlight}</span>
                                             </li>
                                         ))}
                                     </ul>
                                 </div>
 
-                                <div className="space-y-4">
+                                <div className="space-y-3 sm:space-y-4">
                                     <a
                                         href={`mailto:jothiharshana188@gmail.com?subject=${encodeURIComponent(currentStory.cta)}`}
                                         onClick={() => trackChatbotEvent('email_click', { context: currentStory.title })}
-                                        className="w-full flex items-center justify-center gap-3 px-8 py-4 bg-primary text-white rounded-xl font-bold text-lg shadow-lg shadow-primary/30 hover:shadow-xl hover:shadow-primary/40 transition-all"
+                                        className="w-full flex items-center justify-center gap-2 sm:gap-3 px-4 sm:px-8 py-3 sm:py-4 bg-primary text-white rounded-xl font-bold text-sm sm:text-base md:text-lg shadow-lg shadow-primary/30 hover:shadow-xl hover:shadow-primary/40 transition-all"
                                     >
-                                        <Mail size={20} />
-                                        Email Me: {currentStory.cta}
+                                        <Mail size={18} className="sm:w-5 sm:h-5" />
+                                        <span className="hidden sm:inline">Email Me: {currentStory.cta}</span>
+                                        <span className="sm:hidden">Email Me</span>
                                     </a>
                                     <a
                                         href="https://wa.me/60112964914"
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="w-full flex items-center justify-center gap-3 px-8 py-4 bg-teal text-white rounded-xl font-bold text-lg shadow-lg shadow-teal/30 hover:shadow-xl hover:shadow-teal/40 transition-all"
+                                        className="w-full flex items-center justify-center gap-2 sm:gap-3 px-4 sm:px-8 py-3 sm:py-4 bg-teal text-white rounded-xl font-bold text-sm sm:text-base md:text-lg shadow-lg shadow-teal/30 hover:shadow-xl hover:shadow-teal/40 transition-all"
                                     >
-                                        <MessageSquare size={20} />
-                                        WhatsApp Me Instead
+                                        <MessageSquare size={18} className="sm:w-5 sm:h-5" />
+                                        <span className="hidden sm:inline">WhatsApp Me Instead</span>
+                                        <span className="sm:hidden">WhatsApp Me</span>
                                     </a>
                                 </div>
 
-                                <div className="mt-8 text-center">
+                                <div className="mt-6 sm:mt-8 text-center">
                                     <button
                                         onClick={handleReset}
-                                        className="text-gray-600 dark:text-gray-400 hover:text-primary transition-colors text-sm"
+                                        className="text-gray-600 dark:text-gray-400 hover:text-primary transition-colors text-xs sm:text-sm"
                                     >
                                         ← Start Over
                                     </button>
@@ -451,29 +453,75 @@ const ChooseYourAdventure = () => {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.5 }}
-                    className="mt-12 flex items-center justify-center gap-4"
+                    className="mt-8 sm:mt-12 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4"
                 >
-                    <span className="text-sm text-gray-600 dark:text-gray-400">Or connect directly:</span>
-                    {[
-                        { icon: <Linkedin size={20} />, href: 'https://linkedin.com/in/harshanajothi', label: 'LinkedIn', trackType: 'linkedin_click' },
-                        { icon: <Twitter size={20} />, href: '#', label: 'Twitter' },
-                        { icon: <Github size={20} />, href: '#', label: 'GitHub' }
-                    ].map((social, i) => (
-                        <motion.a
-                            key={i}
-                            href={social.href}
-                            onClick={() => social.trackType && trackChatbotEvent(social.trackType, { location: 'contact_section' })}
-                            whileHover={{ y: -3, scale: 1.1 }}
-                            className="w-10 h-10 rounded-full border border-primary/20 hover:border-primary/50 flex items-center justify-center hover:bg-primary/10 transition-all"
-                            title={social.label}
-                        >
-                            {social.icon}
-                        </motion.a>
-                    ))}
+                    <span className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Or connect directly:</span>
+                    <div className="flex items-center gap-3 sm:gap-4">
+                        {[
+                            { icon: <Linkedin size={18} className="sm:w-5 sm:h-5" />, href: 'https://linkedin.com/in/harshanajothi', label: 'LinkedIn', trackType: 'linkedin_click' },
+                            { icon: <Twitter size={18} className="sm:w-5 sm:h-5" />, href: '#', label: 'Twitter' },
+                            { icon: <Github size={18} className="sm:w-5 sm:h-5" />, href: '#', label: 'GitHub' }
+                        ].map((social, i) => (
+                            <motion.a
+                                key={i}
+                                href={social.href}
+                                onClick={() => social.trackType && trackChatbotEvent(social.trackType, { location: 'contact_section' })}
+                                whileHover={{ y: -3, scale: 1.1 }}
+                                className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-primary/20 hover:border-primary/50 flex items-center justify-center hover:bg-primary/10 transition-all"
+                                title={social.label}
+                            >
+                                {social.icon}
+                            </motion.a>
+                        ))}
+                    </div>
                 </motion.div>
             </div>
         </section>
     );
 };
 
-export default ChooseYourAdventure;
+// Brutal Mode CTA Component with Password Protection
+const BrutalModeCTA = () => {
+    const handleBrutalClick = () => {
+        alert("🔒 BRUTAL MODE IS LOCKED\n\nTo access my unfiltered work horror stories, you need to:\n1. Call me: +60 11-2964 9143\n2. Ask for the password\n\nFair warning: This isn't really about my portfolio. It's just me ranting about all the bullshit I've dealt with in my working life. If you enjoy workplace horror stories, you'll love this.");
+    };
+
+    return (
+        <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="mt-16 text-center"
+        >
+            <div className="inline-flex flex-col items-center gap-4 p-8 rounded-2xl bg-gradient-to-br from-red-950/50 to-orange-950/50 border border-red-500/20">
+                <h3 className="text-2xl font-bold text-red-400">⚡ Brutal Mode</h3>
+                <p className="text-gray-400 max-w-md">
+                    My unfiltered workplace horror stories and rants about the bullshit I've endured. Not for the faint-hearted.
+                </p>
+                <p className="text-sm text-gray-500 max-w-sm">
+                    🔒 <span className="text-gray-400">Locked.</span> Call me and ask for the password if you really want to see me complain about my past jobs.
+                </p>
+                <motion.button
+                    onClick={handleBrutalClick}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="px-8 py-3 bg-red-600 hover:bg-red-500 text-white font-semibold rounded-full transition-colors flex items-center gap-2"
+                >
+                    <Zap size={20} />
+                    Request Access
+                </motion.button>
+            </div>
+        </motion.div>
+    );
+};
+
+const ContactWithBrutal = () => {
+    return (
+        <>
+            <ChooseYourAdventure />
+            <BrutalModeCTA />
+        </>
+    );
+};
+
+export default ContactWithBrutal;

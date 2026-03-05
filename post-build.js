@@ -90,7 +90,7 @@ if (fs.existsSync(brutalSource)) {
   console.log('✓ Copied brutal mode');
 }
 
-// Copy assets to creative and brutal folders for React app support
+// Copy assets to all subfolders for React app support
 const assetsDir = path.join(distDir, 'assets');
 if (fs.existsSync(assetsDir)) {
   const copyRecursive = (src, dest) => {
@@ -108,6 +108,11 @@ if (fs.existsSync(assetsDir)) {
       }
     }
   };
+  
+  // Copy assets to professional
+  const professionalAssets = path.join(professionalDir, 'assets');
+  copyRecursive(assetsDir, professionalAssets);
+  console.log('✓ Copied assets to professional/');
   
   // Copy assets to creative
   const creativeAssets = path.join(creativeDir, 'assets');

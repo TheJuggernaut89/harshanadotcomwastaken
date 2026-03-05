@@ -54,18 +54,18 @@ export default function SubMenuOrbit({
     toggleMenu
 }) {
     if (!items || items.length === 0) {
-        console.log('❌ SubMenuOrbit: No items provided');
+        // SubMenuOrbit: No items provided
         return null;
     }
 
-    console.log('✅ SubMenuOrbit rendering with', items.length, 'items at angle', parentAngle);
+    // SubMenuOrbit rendering
 
     // Calculate position on outer rim based on parent wedge angle
     const offsetDistance = orbitRadius + 160; // Position OUTSIDE main menu (240 + 160 = 400px from center)
     const offsetX = Math.cos(degToRad(parentAngle)) * offsetDistance;
     const offsetY = Math.sin(degToRad(parentAngle)) * offsetDistance;
 
-    console.log('📍 SubMenuOrbit position:', { offsetX, offsetY, offsetDistance });
+    // SubMenuOrbit position calculated
 
     // Secondary radial menu sizing (smaller than main)
     const menuSize = 260; // 260px diameter
@@ -86,7 +86,7 @@ export default function SubMenuOrbit({
     const handleClick = (e, item) => {
         e.stopPropagation();
         
-        console.log('🎯 Secondary menu clicked:', item.name);
+        // Secondary menu clicked
         
         if (item.action) {
             item.action();
@@ -137,7 +137,7 @@ export default function SubMenuOrbit({
                 const { x: iconX, y: iconY } = polarToCartesian(iconRingRadius, midDeg);
                 const iconBoxSize = 60;
 
-                console.log('🔵 Rendering wedge:', item.name, 'at', midDeg, 'degrees');
+                // Rendering wedge
 
                 return (
                     <g

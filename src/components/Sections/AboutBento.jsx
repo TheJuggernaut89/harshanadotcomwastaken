@@ -23,16 +23,16 @@ const AboutBento = () => {
                     </p>
                 </motion.div>
 
-                <BentoGrid className="max-w-7xl mx-auto">
+                <BentoGrid className="max-w-7xl mx-auto grid-cols-1 md:grid-cols-4">
                     <BentoGridItem
-                        className="md:col-span-2 md:row-span-2"
+                        className="col-span-1 md:col-span-2 md:row-span-2"
                         animationType="float"
                         icon={<User size={24} />}
                         title="Who I Am"
                         description={
-                            <div className="flex flex-col md:flex-row gap-6 h-full pt-2">
+                            <div className="flex flex-col md:flex-row gap-4 sm:gap-6 h-full pt-2">
                                 {/* Left: Profile Image (Larger & Side-by-Side) */}
-                                <div className="w-full md:w-[40%] relative min-h-[250px] md:min-h-full shrink-0">
+                                <div className="w-full md:w-[40%] relative min-h-[200px] sm:min-h-[250px] md:min-h-full shrink-0">
                                     <div className="absolute inset-0 bg-gradient-to-br from-primary/40 to-navy opacity-60 rounded-2xl" />
                                     <img
                                         src="/images/profile-waterfall.jpg"
@@ -50,21 +50,21 @@ const AboutBento = () => {
                                 </div>
 
                                 {/* Right: Content */}
-                                <div className="w-full md:w-[60%] space-y-4 flex flex-col justify-center">
-                                    <p className="text-base leading-relaxed">
+                                <div className="w-full md:w-[60%] space-y-3 sm:space-y-4 flex flex-col justify-center">
+                                    <p className="text-sm sm:text-base leading-relaxed">
                                         I'm not a typical marketer who uses tools—I'm a Marketing Technologist who builds systems.
                                     </p>
-                                    <p className="text-base leading-relaxed">
+                                    <p className="text-sm sm:text-base leading-relaxed hidden sm:block">
                                         While most marketers hit technical limitations and file tickets, I code the solution. While most developers build marketing tools without understanding conversion psychology, I bridge that gap.
                                     </p>
-                                    <p className="text-base leading-relaxed">
+                                    <p className="text-sm sm:text-base leading-relaxed">
                                         At Cream of Creams, I delivered <span className="text-primary font-bold">429% Facebook growth</span> by building 6 AI-powered tools that replaced agency operations and connected social media directly to revenue.
                                     </p>
                                     <div className="flex items-center gap-2 pt-2">
-                                        <div className="w-8 h-8 rounded-lg bg-white dark:bg-white/5 shadow-sm flex items-center justify-center text-primary">
-                                            <Sparkles size={16} />
+                                        <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-white dark:bg-white/5 shadow-sm flex items-center justify-center text-primary">
+                                            <Sparkles size={14} className="sm:w-4 sm:h-4" />
                                         </div>
-                                        <span className="text-sm font-medium">{content.personal.location}</span>
+                                        <span className="text-xs sm:text-sm font-medium">{content.personal.location}</span>
                                     </div>
                                 </div>
                             </div>
@@ -73,7 +73,7 @@ const AboutBento = () => {
 
                     {/* Card 2: Technical Arsenal */}
                     <BentoGridItem
-                        className="md:col-span-1"
+                        className="col-span-1"
                         animationType="pulse"
                         icon={<Code size={24} />}
                         title="Technical Arsenal"
@@ -89,7 +89,7 @@ const AboutBento = () => {
 
                     {/* Card 3: Creative Tools */}
                     <BentoGridItem
-                        className="md:col-span-1"
+                        className="col-span-1"
                         animationType="drift"
                         icon={<Palette size={24} />}
                         title="Creative Tools"
@@ -105,7 +105,7 @@ const AboutBento = () => {
 
                     {/* Card 4: Growth Track Record */}
                     <BentoGridItem
-                        className="md:col-span-1"
+                        className="col-span-1"
                         animationType="glow"
                         icon={<TrendingUp size={24} />}
                         title="Growth Track Record"
@@ -129,12 +129,12 @@ const AboutBento = () => {
 
                     {/* Card 5: Industries & Experience */}
                     <BentoGridItem
-                        className="md:col-span-2"
+                        className="col-span-1 md:col-span-2"
                         animationType="float"
                         icon={<Briefcase size={24} />}
                         title="Industries & Experience"
                         description={
-                            <div className="grid grid-cols-2 gap-4">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div>
                                     <p className="text-sm font-medium text-primary mb-2">Sectors:</p>
                                     <ul className="text-sm space-y-1">
