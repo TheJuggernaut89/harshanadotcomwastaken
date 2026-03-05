@@ -2730,6 +2730,54 @@
             document.querySelectorAll('[data-slider]').forEach(slider => {
                 observer.observe(slider);
             });
+            
+            // ===== MEDIA TAB SWITCHING =====
+            document.querySelectorAll('.media-tab').forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const company = tab.dataset.company;
+                    const tabType = tab.dataset.tab;
+                    
+                    // Update active tab state
+                    document.querySelectorAll(`.media-tab[data-company="${company}"]`).forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    
+                    const videosContainer = document.querySelector(`[data-slider="${company}-videos"]`);
+                    const imagesContainer = document.querySelector(`[data-gallery="${company}-images"]`);
+                    
+                    if (tabType === 'videos') {
+                        if (videosContainer) {
+                            videosContainer.style.display = 'block';
+                            // Force all videos to play
+                            forceVideoPlay();
+                            // Restart auto-advance
+                            if (sliders[`${company}-videos`]) {
+                                sliders[`${company}-videos`].goToSlide(0);
+                            }
+                        }
+                        if (imagesContainer) imagesContainer.style.display = 'none';
+                    } else {
+                        // Pause all videos before switching
+                        if (videosContainer) {
+                            videosContainer.querySelectorAll('video').forEach(v => {
+                                v.pause();
+                                v.currentTime = 0;
+                            });
+                            videosContainer.style.display = 'none';
+                        }
+                        if (imagesContainer) {
+                            imagesContainer.style.display = 'grid';
+                            // Animate images in
+                            gsap.from(imagesContainer.querySelectorAll('.gallery-item'), {
+                                opacity: 0,
+                                y: 20,
+                                duration: 0.4,
+                                stagger: 0.05,
+                                ease: 'power2.out'
+                            });
+                        }
+                    }
+                });
+            });
         });
         
         function initializeVideoSliders() {
@@ -3099,54 +3147,6 @@
                 scrub: 1 
             },
             y: -150
-        });
-
-        // ===== MEDIA TAB SWITCHING =====
-        document.querySelectorAll('.media-tab').forEach(tab => {
-            tab.addEventListener('click', () => {
-                const company = tab.dataset.company;
-                const tabType = tab.dataset.tab;
-                
-                // Update active tab state
-                document.querySelectorAll(`.media-tab[data-company="${company}"]`).forEach(t => t.classList.remove('active'));
-                tab.classList.add('active');
-                
-                const videosContainer = document.querySelector(`[data-slider="${company}-videos"]`);
-                const imagesContainer = document.querySelector(`[data-gallery="${company}-images"]`);
-                
-                if (tabType === 'videos') {
-                    if (videosContainer) {
-                        videosContainer.style.display = 'block';
-                        // Force all videos to play
-                        forceVideoPlay();
-                        // Restart auto-advance
-                        if (sliders[`${company}-videos`]) {
-                            sliders[`${company}-videos`].goToSlide(0);
-                        }
-                    }
-                    if (imagesContainer) imagesContainer.style.display = 'none';
-                } else {
-                    // Pause all videos before switching
-                    if (videosContainer) {
-                        videosContainer.querySelectorAll('video').forEach(v => {
-                            v.pause();
-                            v.currentTime = 0;
-                        });
-                        videosContainer.style.display = 'none';
-                    }
-                    if (imagesContainer) {
-                        imagesContainer.style.display = 'grid';
-                        // Animate images in
-                        gsap.from(imagesContainer.querySelectorAll('.gallery-item'), {
-                            opacity: 0,
-                            y: 20,
-                            duration: 0.4,
-                            stagger: 0.05,
-                            ease: 'power2.out'
-                        });
-                    }
-                }
-            });
         });
 
         // ===== LIGHTBOX =====
