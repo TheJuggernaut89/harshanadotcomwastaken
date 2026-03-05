@@ -92,23 +92,25 @@ if (fs.existsSync(brutalSource)) {
 
 // Copy assets to all subfolders for React app support
 const assetsDir = path.join(distDir, 'assets');
+const imagesDir = path.join(distDir, 'images');
+
+const copyRecursive = (src, dest) => {
+  if (!fs.existsSync(dest)) {
+    fs.mkdirSync(dest, { recursive: true });
+  }
+  const entries = fs.readdirSync(src, { withFileTypes: true });
+  for (const entry of entries) {
+    const srcPath = path.join(src, entry.name);
+    const destPath = path.join(dest, entry.name);
+    if (entry.isDirectory()) {
+      copyRecursive(srcPath, destPath);
+    } else {
+      fs.copyFileSync(srcPath, destPath);
+    }
+  }
+};
+
 if (fs.existsSync(assetsDir)) {
-  const copyRecursive = (src, dest) => {
-    if (!fs.existsSync(dest)) {
-      fs.mkdirSync(dest, { recursive: true });
-    }
-    const entries = fs.readdirSync(src, { withFileTypes: true });
-    for (const entry of entries) {
-      const srcPath = path.join(src, entry.name);
-      const destPath = path.join(dest, entry.name);
-      if (entry.isDirectory()) {
-        copyRecursive(srcPath, destPath);
-      } else {
-        fs.copyFileSync(srcPath, destPath);
-      }
-    }
-  };
-  
   // Copy assets to professional
   const professionalAssets = path.join(professionalDir, 'assets');
   copyRecursive(assetsDir, professionalAssets);
@@ -123,6 +125,19 @@ if (fs.existsSync(assetsDir)) {
   const brutalAssets = path.join(brutalDir, 'assets');
   copyRecursive(assetsDir, brutalAssets);
   console.log('✓ Copied assets to brutal/');
+}
+
+// Copy images folder to subfolders for creative mode
+if (fs.existsSync(imagesDir)) {
+  // Copy images to creative
+  const creativeImages = path.join(creativeDir, 'images');
+  copyRecursive(imagesDir, creativeImages);
+  console.log('✓ Copied images to creative/');
+  
+  // Copy images to brutal
+  const brutalImages = path.join(brutalDir, 'images');
+  copyRecursive(imagesDir, brutalImages);
+  console.log('✓ Copied images to brutal/');
 }
 
 console.log('Post-build complete!');
