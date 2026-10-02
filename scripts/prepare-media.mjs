@@ -10,7 +10,7 @@ await fs.mkdir(out, { recursive: true });
 const images = {
   cheesecake: 'public/Visionary/Viral Cheesecake Campaign.png',
   jungle: 'public/images/journey/junglewalla/images/Jungle-image1.jpg',
-  portrait: 'public/images/profile-waterfall.jpg',
+  portrait: 'public/portraits/harshana-with-cat.jpeg',
   'cream-social': 'public/images/journey/cream-of-creams/images/cream-2.png',
   'cream-ai': 'public/images/journey/cream-of-creams/images/cream-new-2.png',
 };
