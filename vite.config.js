@@ -1,30 +1,8 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react-swc'
-
-// https://vitejs.dev/config/
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react-swc';
 export default defineConfig({
   plugins: [react()],
-  base: '/', // Root path for Netlify/Vercel
-  build: {
-    // Optimize chunk splitting
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          'react-vendor': ['react', 'react-dom'],
-          'motion-vendor': ['framer-motion'],
-          'icons-vendor': ['lucide-react'],
-        }
-      }
-    },
-    // Minification and compression (using esbuild - Vite's default)
-    minify: 'esbuild',
-    // Chunk size warnings
-    chunkSizeWarningLimit: 1000,
-    // Source maps for debugging (disable in production)
-    sourcemap: false
-  },
-  // Optimize dependencies
-  optimizeDeps: {
-    include: ['react', 'react-dom', 'framer-motion']
-  }
-})
+  publicDir: 'portfolio-public',
+  build: { sourcemap: false, chunkSizeWarningLimit: 300 },
+  server: { host: '127.0.0.1' },
+});
