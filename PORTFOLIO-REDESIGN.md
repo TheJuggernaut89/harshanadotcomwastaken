@@ -20,3 +20,7 @@ Build, active UI lint and eight regression tests pass. The tests cover guide val
 Phone/desktop rendering, keyboard behaviour and animation smoothness are not visually verified. Browser access was rejected by automatic approval review for an account usage limit, followed by rejection of a retry. No browser bypass was attempted for this revision. Production remains unchanged pending visual review.
 
 The portfolio checkout is independent of the Axiom Labs website. No Axiom site files were changed.
+
+## Selected films update
+
+The owner supplied four films and requested two social edits first, followed by Hogan CKB and July CKB. The marketing view now leads with three screening cards: one for each social edit, then a paired CKB feature. Original square and portrait framing is retained. Muted eight-second previews load near the viewport; full films with sound load on opening the screening dialog. Original case studies remain available in an expandable section. Optimised supplied media lives in public/selected-films; large supplied source copies are local review material and are not committed. Build, lint and the existing regression suite passed. Browser visual verification remains pending.

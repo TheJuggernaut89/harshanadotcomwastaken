@@ -68,3 +68,5 @@ intro = intro.replace('</head>', '<style>@media(prefers-reduced-motion:reduce){*
 await fs.mkdir('portfolio-public/intro',{recursive:true});
 await fs.writeFile('portfolio-public/intro/index.html', intro);
 console.log(`Preserved ${media.filter(x=>x.type==='video').length} videos and ${media.filter(x=>x.type==='image').length} images; compiled portrait and triptych reels; restored original intro.`);
+
+await fs.cp('public/selected-films','portfolio-public/selected-films',{recursive:true});
