@@ -331,3 +331,13 @@ footer>span{font-size:10px}
 .media-filters button[aria-pressed=true]{background:#2A3D3D;text-decoration-thickness:2px}
 .screening-tabs button[aria-pressed=true]{color:#1a2626;text-decoration-thickness:2px}
 .work-studies>summary:focus-visible{outline:3px solid var(--orange);outline-offset:6px}
+.hiring-introduction{padding:20px 0 38px;margin-bottom:30px;border-bottom:1px solid var(--line)}
+.intro-name{font-size:clamp(22px,2.6vw,36px);color:var(--orange);margin-bottom:18px;font-weight:500}
+.hiring-introduction h2{font-size:clamp(50px,7.5vw,112px);line-height:.98;max-width:1100px}
+.hiring-summary{font-size:clamp(17px,1.6vw,23px);max-width:760px;margin-top:24px;color:var(--paper)}
+.hiring-actions{display:flex;align-items:center;gap:25px;flex-wrap:wrap;margin:25px 0 35px}
+.hiring-experience{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:25px;margin:0}
+.hiring-experience>div{border-top:1px solid var(--line);padding-top:18px}
+.hiring-experience dt{font-size:18px;font-weight:600}.hiring-experience dd{margin:8px 0 0;color:var(--muted);font-size:15px;line-height:1.6}
+.project-meta .status{white-space:normal;max-width:50%;font-family:'Space Grotesk Variable',sans-serif;font-size:13px;text-transform:none;letter-spacing:0}
+@media(max-width:700px){.hiring-introduction{padding-top:8px}.hiring-introduction h2{font-size:52px}.hiring-summary{font-size:17px}.hiring-actions{gap:12px 22px;margin:22px 0 28px}.hiring-actions .button{width:100%}.hiring-experience{grid-template-columns:1fr;gap:18px}.hiring-experience dt{font-size:17px}.hiring-experience dd{font-size:14px;margin-top:4px}.project-meta{flex-wrap:wrap}.project-meta .status{max-width:100%;font-size:13px}.site-header nav{gap:14px}.site-header nav a{font-size:11px}}
