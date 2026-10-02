@@ -317,3 +317,17 @@ footer>span{font-size:10px}
 [data-discipline=ai] .work-studies{margin-top:0}[data-discipline=ai] .work-studies>summary{display:none}
 .screening-tabs{display:flex;gap:12px;padding:12px 20px;border-bottom:1px solid var(--line)}.screening-tabs button{padding:12px;font-size:12px}.screening-tabs button[aria-pressed=true]{background:var(--teal);color:#1a2626}
 @media(max-width:700px){.selected-films{grid-template-columns:1fr;gap:36px}.film-pair{grid-column:auto}.film-pair .film-window{aspect-ratio:9/8;gap:6px}.film-pair video{width:calc(50% - 3px)}.film-play{left:12px;bottom:12px;padding:8px 11px;font-size:22px}.film-format{font-size:10px}.film-caption{padding-top:19px}.film-caption h3{font-size:32px}.film-caption p{font-size:13px}.screening-toolbar{font-size:10px}.screening-tabs{padding:10px;gap:5px}.screening-tabs button{font-size:11px}}
+/* Visible text affordances shared by both disciplines. */
+:where(a:not(.button):not(.wordmark),button.text-link,footer button,.showreel button,.screening-toolbar button,.dialog-bar button,.work-studies>summary){text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:5px;text-decoration-color:currentColor}
+.site-header nav a,.hero-bottom a,.text-link,footer a:not(.wordmark),footer button,.showreel button,.screening-toolbar button,.dialog-bar button,.work-studies>summary{color:var(--orange)}
+.text-link{border-bottom-color:transparent}
+:where(a:not(.button):not(.wordmark),button.text-link,footer button,.showreel button,.screening-toolbar button,.dialog-bar button,.work-studies>summary):hover{color:var(--paper);text-decoration-thickness:2px}
+.discipline-bar nav a{color:var(--orange);text-underline-offset:4px}
+.discipline-bar nav a[aria-current]{color:#1a2626;text-decoration-thickness:2px}
+.discipline-bar nav a:not([aria-current]):hover{background:#2A3D3D;color:var(--paper)}
+.project-read,.film-caption h3,.media-tile>span{color:var(--orange);text-decoration:underline;text-underline-offset:5px;text-decoration-thickness:1px}
+.project-open:hover .project-read,.film-open:hover h3,.media-tile:hover>span{color:var(--paper);text-decoration-thickness:2px}
+.media-filters button,.screening-tabs button{color:var(--orange);text-decoration:underline;text-underline-offset:5px}
+.media-filters button[aria-pressed=true]{background:#2A3D3D;text-decoration-thickness:2px}
+.screening-tabs button[aria-pressed=true]{color:#1a2626;text-decoration-thickness:2px}
+.work-studies>summary:focus-visible{outline:3px solid var(--orange);outline-offset:6px}
