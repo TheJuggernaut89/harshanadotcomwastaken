@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
+import vm from 'node:vm';
 import handler, { answerQuestion } from '../netlify/functions/portfolio-guide.mts';
 import { projects } from '../src/portfolio/content.js';
 
@@ -45,5 +46,32 @@ test('all project images and on-demand videos are present, original folders excl
   for (const name of ['images', 'Visionary', 'brutal', 'api', 'src', 'reference']) await assert.rejects(fs.access(`dist/${name}`));
   const media = await fs.readdir('dist/media');
   const total = (await Promise.all(media.map(async name => (await fs.stat(`dist/media/${name}`)).size))).reduce((a,b)=>a+b,0);
-  assert.ok(total < 5 * 1024 * 1024, `Media exceeds 5 MB: ${total}`);
+  assert.ok(total < 120 * 1024 * 1024, `On-demand archive exceeds 120 MB: ${total}`);
+  for (const name of ['showreel.mp4','showreel-phone.mp4']) assert.ok((await fs.stat(`dist/media/${name}`)).size < 6*1024*1024, 'Opening film must stay below 6 MB');
+});
+
+test('original intro compiles and returns only the two active disciplines', async () => {
+  const intro=await fs.readFile('dist/intro/index.html','utf8');
+  const scripts=[...intro.matchAll(/<script>([\s\S]*?)<\/script>/g)];
+  assert.ok(scripts.length>0);
+  scripts.forEach(([,code])=>new vm.Script(code));
+  assert.match(intro,/INITIALIZING HARSHANA_JOTHI/);
+  assert.match(intro,/portfolio-intro-complete/);
+  assert.match(intro,/AI &amp; AUTOMATION/);
+  assert.match(intro,/DIGITAL MARKETING/);
+  assert.doesNotMatch(intro,/data-mode="brutal"|window.location.href = url/);
+  assert.match(await fs.readFile('netlify.toml','utf8'),/X-Frame-Options = "SAMEORIGIN"/);
+});
+
+test('archive preserves every original video and uses valid media files', async () => {
+  const archive=JSON.parse(await fs.readFile('dist/media/archive.json','utf8'));
+  const originalFiles=await fs.readdir('public/images',{recursive:true});
+  assert.equal(archive.filter(x=>x.type==='video').length,originalFiles.filter(x=>/\.mp4$/i.test(x)).length);
+  assert.equal(new Set(archive.map(x=>x.id)).size,archive.length);
+  for(const item of archive){assert.ok((await fs.stat('dist'+item.src)).size>0);assert.ok((await fs.stat('dist'+item.poster)).size>0);}
+});
+
+test('shared dark palette keeps small text at WCAG AA contrast', () => {
+  const luminance=hex=>{const c=hex.match(/\w\w/g).map(v=>parseInt(v,16)/255).map(v=>v<=.04045?v/12.92:((v+.055)/1.055)**2.4);return c[0]*.2126+c[1]*.7152+c[2]*.0722;};
+  for(const bg of ['1a2626','282427','233735','1d3332'])for(const fg of ['EEEBD9','a9bdb8','77A8A8','F4A261'])assert.ok((luminance(fg)+.05)/(luminance(bg)+.05)>=4.5,`${fg} on ${bg}`);
 });

@@ -66,10 +66,11 @@ export const projects = {
   ]
 };
 export const experience = [
-  { company: 'Axiom Labs', role: 'Founder & automation builder', description: 'Business workflows, client ownership and a clear handover.' },
-  { company: 'Cream of Creams', role: 'Social media & creative', description: 'Content planning, visual design and video for a food brand.' },
-  { company: 'JungleWalla Desaru', role: 'Naturalist & marketing communications', description: 'Nature tourism, visitor experiences and visual storytelling.' },
-  { company: 'PServ & Certis CISCO', role: 'Customer service & security', description: 'Earlier roles in Singapore that shaped how I work with people and operations.' }
+  { company: 'Axiom Labs', role: 'Founder & automation builder', description: 'I scope practical business automations, connect the tools, plan human review and document the handover. Axiom Labs brings this work into one business with clear project boundaries.' },
+  { company: 'Cream of Creams', role: 'Social media & creative', description: 'Content planning, product storytelling, graphic design and video production for a food brand. I also explore how content workflows and tracking can reduce repetitive work behind the scenes.' },
+  { company: 'JungleWalla Desaru', role: 'Naturalist & marketing communications', description: 'Naturalist work alongside marketing communications: making nature accessible to visitors, developing visual content and supporting tourism relationships. The lesson I carry forward is to make a subject interesting without losing what makes it true.' },
+  { company: 'PServ', role: 'Customer service / Singapore', description: 'Handling visitor enquiries, communicating across cultures and supporting day-to-day service. This is where clear explanations and a calm response became part of my working habits.' },
+  { company: 'Certis CISCO', role: 'Security operations / Singapore', description: 'Working within procedures, noticing risk and coordinating with people under pressure. That experience informs how I think about checks, exceptions and responsibility in an automated workflow.' }
 ];
 export const capabilities = {
   marketing: [

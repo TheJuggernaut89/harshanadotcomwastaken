@@ -22,7 +22,7 @@ npx netlify dev --no-open
 
 ## Build and media
 
-`prepare-media.mjs` converts a small explicit selection of existing work to responsive WebP images and web-encoded MP4 videos. Original media stays under `public/`; Vite deliberately uses `portfolio-public/`, so the raw media, old pages and private notes are not published. Videos load only when a visitor opens a case study and starts the player.
+`prepare-media.mjs` converts a small explicit selection of existing work to responsive WebP images and web-encoded MP4 videos. Original media stays under `public/`; Vite deliberately uses `portfolio-public/`, so the raw media, old pages and private notes are not published. The short hero edit plays muted when in view, with a pause control and reduced-motion support. Archive videos load only when opened. `prepare-story.mjs` preserves the original video and raster-image collection, builds portrait and triptych reels, and restores the original terminal intro with the two current discipline choices. The two views share a dark palette and self-hosted typography.
 
 `post-build.js` produces the second entry page, canonical and sharing metadata, robots.txt, sitemap.xml and a useful 404 page. Both views share one JS/CSS asset set. Netlify redirects the old creative, professional and brutal routes.
 

@@ -1,22 +1,22 @@
-# Portfolio redesign: 2 October 2026
+# Portfolio: film-led revision, 2 October 2026
 
-Authorised in chat: all audit fixes and the agreed two-discipline direction. The owner confirmed using an email résumé request until a PDF is supplied.
+The owner requested the original terminal intro, the previous résumé's dark colours shared by both disciplines, retained media, a video-led hero, more storytelling and distinctive typography. This supersedes the first light editorial draft.
 
-Implemented:
-- Direct Digital Marketing and AI & Automation views, persistent discipline switch and common identity.
-- Editorial layout, reduced effects, system fonts, real existing media, selected case studies and clear status labels.
-- Axiom Labs business feature and direct external enquiry route.
-- Direct email and corrected WhatsApp contact, real GitHub link, removal of placeholder Twitter and broken PDF links.
-- No terminal gate, floating keyboard prompt, workplace-rant promotion, arbitrary skill scores or simulated live logs in the active UI.
-- Correct canonical/share metadata, shared assets, route redirects, useful 404, sitemap and robots file.
-- Responsive WebP and compressed on-demand MP4 assets, approximately 3 MB in total.
-- Prepared-answer portfolio guide deployed as a real Netlify function; no AI credentials were configured for this project. The UI clearly distinguishes it from an AI assistant.
+## Implemented
 
-Verification:
-- Final production build passed after copy and component validation edits.
-- Active UI lint passed.
-- Five regression tests passed for function input handling, résumé answers, bounded fallback, entry metadata and deploy-media integrity.
-- Phone/desktop rendering, keyboard interaction and visual overflow checks are NOT verified. Browser access was rejected by automatic approval review, first for an account usage limit and again on resume for retrying that block.
-- Production must remain unchanged until visual review is completed. Do not work around the browser approval block with another browser, direct CDP or indirect execution.
+- Original terminal animation restored from its source, with the two current discipline choices, a visible skip control, once-per-session playback and a replay option. Reduced motion goes straight to selection. The original theatrical boot copy remains inside the labelled interactive intro.
+- Shared charcoal, teal, cream and warm orange palette. Self-hosted Barlow Condensed headlines, Space Grotesk body and IBM Plex Mono labels.
+- Twelve-second triptych reel for larger screens and a portrait edit for phones, made from the existing footage. Muted playback, pause/play, off-screen pausing and reduced-motion support.
+- All 20 original videos and 50 raster images preserved in an on-demand collection with filters and full-size playback.
+- Section reveals, title entrances and reading progress. Native scrolling; no forced scroll or locked story stops. Motion can be disabled in the footer.
+- Expanded experience in marketing, nature tourism, customer service, security and Axiom Labs; education, tools, project responsibilities and honest status labels retained.
+- Résumé links continue to request a copy by email. Employment dates remain omitted because the earlier versions conflict.
+- Separate Digital Marketing and AI & Automation URLs, common identity, Axiom Labs external business link and prepared-answer guide retained.
 
-Historical sources are preserved but not shipped. Do not treat old claims in legacy components or notes as approved new copy.
+## Verification
+
+Build, active UI lint and eight regression tests pass. The tests cover guide validation, résumé contact, metadata, project assets, intro script syntax and routing, complete video inventory and dark-palette text contrast. The two hero encodes each stay below 6 MB. The archive is about 87 MB in total and does not download upfront.
+
+Phone/desktop rendering, keyboard behaviour and animation smoothness are not visually verified. Browser access was rejected by automatic approval review for an account usage limit, followed by rejection of a retry. No browser bypass was attempted for this revision. Production remains unchanged pending visual review.
+
+The portfolio checkout is independent of the Axiom Labs website. No Axiom site files were changed.

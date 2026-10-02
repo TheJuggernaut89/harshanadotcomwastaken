@@ -28,6 +28,7 @@ dist-ssr
 .netlify
 
 portfolio-public/media/
+portfolio-public/intro/
 review/
 
 deno.lock
