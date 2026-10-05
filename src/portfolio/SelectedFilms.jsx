@@ -7,7 +7,10 @@ const films = [
   {id:'social-01',title:'Words with momentum.',label:'01 / Social film',note:'A square-format motion piece. Watch the full edit.',format:'SQUARE'},
   {id:'social-02',title:'Set the scene.',label:'02 / Social film',note:'An event-led visual story. Watch the full edit.',format:'SQUARE'},
   {id:'ckb-hogan',title:'Made to make you hungry.',label:'03 / Cream of Creams',note:'Two product films, from preparation to the finished cheesecake.',format:'PORTRAIT',pair:'ckb-july'},
-  ...[1,2,3,4].map(i=>({id:'desaru-'+i,title:'Desaru / Field film '+i,label:'JungleWalla Desaru',note:'From my time at JungleWalla Desaru. Watch the full film with sound.',format:'PORTRAIT'}))
+  {"id":"desaru-1","title":"Coastal wildlife, up close.","label":"JungleWalla Desaru / Tourism content","note":"A close look at coastal wildlife, from shallow water to the shore after dark. From my time in nature tourism and marketing communications at JungleWalla.","format":"PORTRAIT"},
+  {"id":"desaru-2","title":"A day outdoors in Desaru.","label":"JungleWalla Desaru / Tourism content","note":"Beach activities and kayaking, brought together in a short visitor itinerary. From my time in nature tourism and marketing communications at JungleWalla.","format":"PORTRAIT"},
+  {"id":"desaru-3","title":"Along the Lebam River.","label":"JungleWalla Desaru / Tourism content","note":"A river-cruise story through the water and mangroves of Desaru. From my time in nature tourism and marketing communications at JungleWalla.","format":"PORTRAIT"},
+  {"id":"desaru-4","title":"Among the mangroves.","label":"JungleWalla Desaru / Tourism content","note":"A brief look at the mangrove-lined waterways of Desaru. From my time in nature tourism and marketing communications at JungleWalla.","format":"PORTRAIT"}
 ];
 function Preview({id,motion}) {
   const ref=useRef(null);

@@ -5,7 +5,7 @@ export const projects = {
       description: 'Product storytelling that brings Malaysian flavours into the frame.',
       sections: [
         ['The brief', 'Give a cheesecake range a recognisable local voice through product-led creative and social content.'],
-        ['My contribution', 'Social media content, graphic design and video work for Cream of Creams. This selection brings together campaign artwork and a product video from that work.'],
+        ['My contribution', 'Social media content, graphic design and video work for Cream of Creams. This selection brings together campaign artwork. The selected films above show the video work.'],
         ['The work', 'The collection pairs festive cheesecake batter creatives with rose pistachio and sopapilla cheesecake designs. Each uses a different visual treatment to bring the product into focus.'],
         ['Results and evidence', 'The campaign collection is shown here as work samples. Ask me about the brief, production process and campaign reporting.']
       ],

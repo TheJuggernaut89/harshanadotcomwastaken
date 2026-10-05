@@ -36,7 +36,7 @@ for (const [i, source] of sources.entries()) {
 const removedIndex=media.findIndex(item=>item.title==='Cream of Creams / Film 1');
 if(removedIndex>=0){const [removed]=media.splice(removedIndex,1);await fs.rm('portfolio-public'+removed.src,{force:true});await fs.rm('portfolio-public'+removed.poster,{force:true});}
 await fs.cp('public/video-updates',out,{recursive:true});
-for(let i=4;i>=1;i--)media.unshift({id:'desaru-'+i,group:'JungleWalla Desaru',title:'JungleWalla Desaru / Film '+i,type:'video',poster:'/media/desaru-'+i+'.webp',src:'/media/desaru-'+i+'.mp4'});
+for(let i=4;i>=1;i--)media.unshift({id:'desaru-'+i,group:'JungleWalla Desaru',title:["Coastal wildlife, up close.","A day outdoors in Desaru.","Along the Lebam River.","Among the mangroves."][i-1],type:'video',poster:'/media/desaru-'+i+'.webp',src:'/media/desaru-'+i+'.mp4'});
 for(let i=media.length-1;i>=0;i--)if(media[i].group==='Cream of Creams'&&media[i].type==='image')media.splice(i,1);
 for(const [i,name] of ['cream-social','cream-festive','cheesecake','cream-ai'].entries())media.push({id:'cream-approved-'+i,group:'Cream of Creams',title:['Festive cheesecake batter creative','Biscoff cheesecake creative','Rose pistachio cheesecake','Sopapilla cheesecake'][i],type:'image',poster:'/media/'+name+'-960.webp',src:'/media/'+name+'-960.webp'});
 await fs.writeFile(`${out}/archive.json`, JSON.stringify(media));

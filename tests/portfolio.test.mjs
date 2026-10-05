@@ -78,3 +78,12 @@ test('shared dark palette keeps small text at WCAG AA contrast', () => {
   for(const bg of ['1a2626','282427','233735','1d3332'])for(const fg of ['EEEBD9','a9bdb8','77A8A8','F4A261'])assert.ok((luminance(fg)+.05)/(luminance(bg)+.05)>=4.5,`${fg} on ${bg}`);
 });
 
+
+test('removed Cream film is absent from case studies and deployed assets', async () => {
+ assert.ok(!Object.values(projects).flat().some(p=>p.video==='cream-product'));
+ await assert.rejects(fs.access('dist/media/cream-product.mp4'));
+ await assert.rejects(fs.access('dist/media/archive-31.mp4'));
+ const html=await fs.readFile('dist/index.html','utf8');
+ assert.doesNotMatch(html,/Apam Balik/);
+ assert.match(html,/rose pistachio/);
+});

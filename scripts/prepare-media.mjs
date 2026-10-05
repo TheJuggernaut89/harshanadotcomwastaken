@@ -21,8 +21,8 @@ for (const [name, source] of Object.entries(images)) {
   }
 }
 await sharp(path.join(root, images.cheesecake)).resize(1200, 630, { fit: 'contain', background: '#f5f3ec' }).jpeg({ quality: 85 }).toFile(path.join(out, 'share.jpg'));
+await fs.rm(path.join(out,'cream-product.mp4'),{force:true});
 const videos = {
-  'cream-product': 'public/images/journey/cream-of-creams/videos/Cream-video1.mp4',
   'jungle-film': 'public/images/journey/junglewalla/videos/Jungle-video3.mp4',
 };
 for (const [name, source] of Object.entries(videos)) {
