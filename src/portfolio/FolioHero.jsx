@@ -1,0 +1,9 @@
+import {useEffect,useRef} from 'react';
+import PropTypes from 'prop-types';
+import {gsap} from 'gsap';
+export default function FolioHero({ai,motion}) {
+ const root=useRef(null);
+ useEffect(()=>{if(!motion)return;const ctx=gsap.context(()=>{gsap.fromTo('.folio-intro > *',{y:24,opacity:0},{y:0,opacity:1,stagger:.1,duration:.85,ease:'power3.out'});gsap.fromTo('.folio-portrait',{rotation:3,y:32,opacity:0},{rotation:0,y:0,opacity:1,duration:1.2,ease:'power3.out'});},root);return()=>ctx.revert();},[motion,ai]);
+ return <section className="folio-hero" ref={root} aria-labelledby="folio-title"><div className="folio-intro"><p className="eyebrow"><span className="tiny-dot"/>Kuala Lumpur, Malaysia</p><h1 id="folio-title">Hello, I’m<br/><span>Harshana Jothi.</span></h1><p className="folio-role">{ai?'An AI automation builder.':'A digital marketer.'}</p><p className="folio-summary">{ai?'I connect everyday tasks into practical workflows, with human checks and a clear handover.':'I bring ideas to life through design, video and content, connecting the story people see with the work behind it.'}</p><div className="folio-actions"><a className="button" href="#work">View my work <span aria-hidden="true">↗</span></a><a className="text-link" href="#contact">Let’s talk <span aria-hidden="true">↗</span></a></div><div className="folio-disciplines"><span>Content &amp; video</span><span>Design</span><span>AI &amp; automation</span></div></div><figure className="folio-portrait"><img src="/media/portrait-960.webp" srcSet="/media/portrait-480.webp 480w, /media/portrait-960.webp 960w" sizes="(max-width:700px) 100vw, 42vw" alt="Harshana Jothi smiling with an orange cat on his shoulder" width="960" height="1707" fetchPriority="high"/><figcaption><span>Harshana Jothi Sean</span><span>Creative mind. Practical approach.</span></figcaption></figure></section>;
+}
+FolioHero.propTypes={ai:PropTypes.bool.isRequired,motion:PropTypes.bool.isRequired};
