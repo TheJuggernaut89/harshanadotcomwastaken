@@ -9,3 +9,6 @@ Desktop: text left, scene right. Phone: scene upper half, text in the lower half
 
 ## 5 October: Folira direction supersedes the 3D opening
 Owner requested https://folira-lite.framer.website/ with personal branding and colours. The active design now follows its personal introduction, side-by-side portrait, rounded work panels, restrained sans-serif headings and experience layout. The charcoal, teal, cream and orange palette, original intro, original media and truthful copy remain. The previous 3D implementation is retained in source but is not imported or shipped. Reference content and CSS were inspected read-only; no template assets, fabricated clients or claims were copied. Browser visual QA remains blocked. Review deployment only.
+
+## Creative editorial refinement
+Added an arched portrait composition, linked work clipping, three-part signature, staggered project and film layout, expanded Axiom feature, and experience timeline. Phone layouts remove project offsets and retain one reading column. Existing copy and claims unchanged. Browser QA remains unavailable; review only.
