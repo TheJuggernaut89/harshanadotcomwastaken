@@ -374,3 +374,19 @@ html:not([data-motion=on]) *,html:not([data-motion=on]) *::before,html:not([data
 @keyframes contour-drift{from{transform:translateY(-18px)}to{transform:translateY(18px)}}
 @keyframes studio-light{from{transform:translate3d(-1%,0,0)}to{transform:translate3d(1%,2%,0)}}
 @media(max-width:700px){.design-contours{opacity:.4;mask-image:linear-gradient(90deg,transparent 55%,#000);-webkit-mask-image:linear-gradient(90deg,transparent 55%,#000)}.design-contours path:nth-child(n+11){display:none}.hiring-introduction{padding:22px 18px 26px}.hiring-introduction h2{font-size:clamp(42px,11.7vw,64px)}.hiring-introduction:after{width:20px;height:20px;right:10px;top:10px}.design-grain{opacity:.025}}
+/* Clear destinations, editorial spacing and GSAP-led motion. */
+.axiom-feature{padding:clamp(24px,4.5vw,65px);background:#1b2524;border-top:3px solid var(--orange);border-bottom:1px solid var(--line)}
+.axiom-feature-heading{display:flex;justify-content:space-between;align-items:center;gap:20px;margin-bottom:32px}
+.axiom-feature h3{font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:clamp(45px,6vw,86px);letter-spacing:-.015em;line-height:1;text-transform:uppercase;max-width:950px}
+.axiom-feature>p:not(.axiom-disclosure){max-width:690px;font-size:17px;color:var(--muted);margin:25px 0}
+.axiom-services{display:flex;flex-wrap:wrap;gap:12px 28px;padding:20px 0;border-top:1px solid var(--line);font-size:13px;color:var(--paper)}
+.axiom-services span:before{content:'↳';color:var(--orange);margin-right:9px}
+.axiom-actions{display:flex;flex-wrap:wrap;align-items:center;gap:18px 30px;margin:20px 0}
+.axiom-disclosure{font-size:12px;color:var(--muted);line-height:1.7;max-width:620px}
+.design-wash{animation:none;background:linear-gradient(120deg,#172321,#1d2928 70%,#242526)}
+.design-contours{opacity:.25}.design-contours g,.design-contours path{animation:none}
+.hiring-introduction{border:0;border-bottom:1px solid var(--line);padding-left:0;padding-right:0;background:none}
+.hiring-introduction:after{display:none}.showreel,.about-portrait img{outline:none}
+.hero h1,.hero-intro{animation:none!important}
+.gsap-text .animated-word{animation:none!important}
+@media(max-width:700px){.axiom-feature-heading{align-items:start;margin-bottom:25px}.axiom-feature-heading .status{font-size:10px}.axiom-feature>p:not(.axiom-disclosure){font-size:15px}.axiom-services{display:grid;gap:12px}.axiom-actions{display:grid;gap:12px}.axiom-actions .button{width:100%;font-size:15px}.axiom-actions .text-link{width:fit-content}.axiom-feature h3{font-size:47px}.design-contours{opacity:.15}}

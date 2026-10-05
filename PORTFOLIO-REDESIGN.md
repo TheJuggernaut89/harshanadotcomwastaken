@@ -28,3 +28,7 @@ The owner supplied four films and requested two social edits first, followed by 
 ## 5 October: 21st.dev background integration
 
 Resumed the interrupted Background Paths adaptation from Kokonut UI by Dorian Baffier, discovered on 21st.dev. The upstream MIT licence is included in the deployed /licenses/kokonut-ui.txt. Shared dark teal and warm orange contours, edge masking, a fine grain layer and page rules replace the flat background. Text-heavy sections retain dark backings. Phone layouts use fewer paths; motion stops when disabled, during the intro and in hidden browser tabs. No new runtime dependency was required. The user previously authorised replacing the live portfolio and subsequent updates have been published there. Visual browser verification remains unavailable under the earlier approval block.
+
+## 5 October: Axiom CTA and GSAP revision
+
+Replaced the oversized arrow-only Axiom feature with a direct Explore Axiom Labs link and a separate role/approach button. The live website and concept-stage catalogue are distinguished in visible copy. Headings and project entrances now use GSAP with ScrollTrigger and context cleanup. Background drift, drawn contours and ornamental frame corners were removed to reduce competing effects. Motion-off keeps text visible. Build, lint and eight regression checks passed; browser visual verification remains blocked as recorded above.
