@@ -32,3 +32,7 @@ Resumed the interrupted Background Paths adaptation from Kokonut UI by Dorian Ba
 ## 5 October: Axiom CTA and GSAP revision
 
 Replaced the oversized arrow-only Axiom feature with a direct Explore Axiom Labs link and a separate role/approach button. The live website and concept-stage catalogue are distinguished in visible copy. Headings and project entrances now use GSAP with ScrollTrigger and context cleanup. Background drift, drawn contours and ornamental frame corners were removed to reduce competing effects. Motion-off keeps text visible. Build, lint and eight regression checks passed; browser visual verification remains blocked as recorded above.
+
+## 5 October: visual storytelling
+
+Rebuilt the opening around the supplied portrait and a clear professional introduction. Three visual chapters connect experience with people, creative production and automation, using existing nature imagery, the film reel and an explicitly illustrative workflow. GSAP drives chapter entrances and reading lines without forcing scroll position. Chapter links and hiring shortcuts remain available; mobile scenes stack naturally. Selected projects, media, experience, education and contacts are preserved. Build, lint and regression checks are used; browser visual verification remains pending.
