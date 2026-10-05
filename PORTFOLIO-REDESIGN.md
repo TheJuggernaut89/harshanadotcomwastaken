@@ -36,3 +36,11 @@ Replaced the oversized arrow-only Axiom feature with a direct Explore Axiom Labs
 ## 5 October: visual storytelling
 
 Rebuilt the opening around the supplied portrait and a clear professional introduction. Three visual chapters connect experience with people, creative production and automation, using existing nature imagery, the film reel and an explicitly illustrative workflow. GSAP drives chapter entrances and reading lines without forcing scroll position. Chapter links and hiring shortcuts remain available; mobile scenes stack naturally. Selected projects, media, experience, education and contacts are preserved. Build, lint and regression checks are used; browser visual verification remains pending.
+
+## 5 October 2026: custom 3D review
+
+The opening now uses a lazy-loaded Three.js editing table, scrubbed in both directions with GSAP. Four reading stops connect Harshana, people, creative work and systems. Actual supplied photographs and film stills form the scene. The original intro, project films, employment details and contact actions remain available.
+
+Design references: Impeccable (https://github.com/pbakaus/impeccable), Taste (https://github.com/Leonxlnx/taste-skill) and the supplied 10K website reference. No paid image or film generation was used. PRODUCT.md and DESIGN.md record the adaptations.
+
+Build, lint and 10 tests pass. Browser QA was blocked by automatic approval review's account usage limit, so phone rendering and real-device smoothness remain unverified. This change is for the portfolio-review deployment; production is not promoted.
