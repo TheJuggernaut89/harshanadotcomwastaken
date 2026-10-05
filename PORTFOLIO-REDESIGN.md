@@ -24,3 +24,7 @@ The portfolio checkout is independent of the Axiom Labs website. No Axiom site f
 ## Selected films update
 
 The owner supplied four films and requested two social edits first, followed by Hogan CKB and July CKB. The marketing view now leads with three screening cards: one for each social edit, then a paired CKB feature. Original square and portrait framing is retained. Muted eight-second previews load near the viewport; full films with sound load on opening the screening dialog. Original case studies remain available in an expandable section. Optimised supplied media lives in public/selected-films; large supplied source copies are local review material and are not committed. Build, lint and the existing regression suite passed. Browser visual verification remains pending.
+
+## 5 October: 21st.dev background integration
+
+Resumed the interrupted Background Paths adaptation from Kokonut UI by Dorian Baffier, discovered on 21st.dev. The upstream MIT licence is included in the deployed /licenses/kokonut-ui.txt. Shared dark teal and warm orange contours, edge masking, a fine grain layer and page rules replace the flat background. Text-heavy sections retain dark backings. Phone layouts use fewer paths; motion stops when disabled, during the intro and in hidden browser tabs. No new runtime dependency was required. The user previously authorised replacing the live portfolio and subsequent updates have been published there. Visual browser verification remains unavailable under the earlier approval block.

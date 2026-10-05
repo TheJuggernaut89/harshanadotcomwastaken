@@ -9,6 +9,7 @@ import { Intro, Showreel, MediaArchive } from './Story';
 import { useStoryMotion } from './useStoryMotion';
 import SelectedFilms from './SelectedFilms';
 import AnimatedText from './AnimatedText';
+import DesignBackdrop from './DesignBackdrop';
 import './portfolio.css';
 
 const email = 'mailto:jothiharshana188@gmail.com';
@@ -93,7 +94,7 @@ export default function Portfolio() {
     history.pushState({}, '', value === 'ai' ? '/ai/' : '/'); setMode(value); setSelected(null); window.scrollTo({ top: 0, behavior: 'instant' });
   }
   return <>
-    <div className="portfolio-page" inert={intro ? '' : undefined}><div className="reading-progress" aria-hidden="true" /><a className="skip-link" href="#main">Skip to content</a>
+    <div className="portfolio-page" inert={intro ? '' : undefined}><DesignBackdrop active={motion && !intro} /><div className="reading-progress" aria-hidden="true" /><a className="skip-link" href="#main">Skip to content</a>
     <header className="site-header"><a href="/" onClick={e => changeMode(e, 'marketing')} className="wordmark" aria-label="Harshana Jothi, home">harshana<span>.</span></a><span className="header-location">KUALA LUMPUR / MALAYSIA</span><nav aria-label="Main navigation"><a href="#work">Work</a><a href="#experience">Experience</a><a href={resume}>Request résumé <Arrow /></a><a href="#contact" className="contact-nav">Discuss a role <Arrow /></a></nav></header>
     <main id="main">
       <div className="discipline-bar"><span className="eyebrow">One person. Two disciplines.</span><nav aria-label="Portfolio discipline"><a href="/" aria-current={!ai ? 'page' : undefined} onClick={e => changeMode(e, 'marketing')}>Digital Marketing</a><a href="/ai/" aria-current={ai ? 'page' : undefined} onClick={e => changeMode(e, 'ai')}>AI & Automation</a></nav></div>

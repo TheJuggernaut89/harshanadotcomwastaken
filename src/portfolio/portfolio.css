@@ -350,3 +350,27 @@ html:not([data-motion=on]) *,html:not([data-motion=on]) *::before,html:not([data
 @media(prefers-reduced-motion:reduce){html:not([data-motion=on]) .animated-word{animation:none!important;transform:none!important;opacity:1!important}}
 
 .text-motion-controls{display:flex;flex-wrap:wrap;gap:12px 24px;margin:0 0 20px;font-size:13px}.text-motion-controls button{padding:12px 0;color:var(--orange);text-decoration:underline;text-underline-offset:5px}
+/* Art direction: flowing contour engraving, warm light and quiet printed texture. */
+.portfolio-page{position:relative;isolation:isolate;background:transparent}
+.design-backdrop{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none;background:#182423}
+.design-wash{position:absolute;inset:-15%;background:radial-gradient(ellipse at 90% 15%,#b8733824,transparent 40%),radial-gradient(ellipse at 5% 75%,#77a8a827,transparent 42%),linear-gradient(120deg,#172321,#1d2928 55%,#242526);animation:studio-light 20s ease-in-out infinite alternate}
+.design-contours{position:absolute;inset:0;width:100%;height:100%;opacity:.65;mask-image:linear-gradient(90deg,#0008,transparent 30%,transparent 60%,#000);-webkit-mask-image:linear-gradient(90deg,#0008,transparent 30%,transparent 60%,#000)}
+.design-contours g{animation:contour-drift 16s ease-in-out infinite alternate;transform-origin:center}
+.design-contours path{stroke-dasharray:.35 .65;animation:contour-draw 26s linear infinite;animation-delay:var(--path-delay)}
+.design-grain{position:absolute;inset:0;opacity:.035;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Cpath fill='%23fff' filter='url(%23n)' opacity='.7' d='M0 0h180v180H0z'/%3E%3C/svg%3E")}
+.design-margin{position:absolute;top:0;bottom:0;width:1px;background:linear-gradient(transparent,#77a8a825 20%,#77a8a825 80%,transparent)}
+.design-margin-left{left:calc(var(--pad) / 2)}.design-margin-right{right:calc(var(--pad) / 2)}
+.design-backdrop[data-active=false] *{animation-play-state:paused!important}
+.hiring-introduction{position:relative;background:linear-gradient(110deg,#182423ee 0%,#182423bb 65%,#18242300);padding:30px clamp(18px,3vw,45px) 38px;border:1px solid #77a8a833;border-left:3px solid var(--orange)}
+.hiring-introduction:after{content:'';position:absolute;right:18px;top:18px;width:35px;height:35px;border-top:1px solid var(--orange);border-right:1px solid var(--orange);opacity:.65;pointer-events:none}
+.hero-headline{position:relative}.hero-symbol{color:var(--orange)}
+.story-statement{background:linear-gradient(90deg,#182423ee,#182423bb 65%,#18242355)}
+.work-section{background:linear-gradient(145deg,#282427fa,#232624f5);border-top:1px solid #f4a26130;border-bottom:1px solid #f4a26122}
+.media-section{background:#182423db}.about-section{background:linear-gradient(100deg,#182423bb,#182423f5 60%)}
+.experience-section{background:linear-gradient(115deg,#233735fa,#1c2c2af5);border-top:1px solid #77a8a844;border-bottom:1px solid #77a8a833}
+.capabilities-section{background:#182423e8}.contact-section{background:radial-gradient(ellipse at 100% 100%,#60442a33,transparent 60%),#282427f5}
+.showreel,.about-portrait img{outline:1px solid #77a8a83a;outline-offset:7px}.hero-bottom{margin-top:8px}
+@keyframes contour-draw{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+@keyframes contour-drift{from{transform:translateY(-18px)}to{transform:translateY(18px)}}
+@keyframes studio-light{from{transform:translate3d(-1%,0,0)}to{transform:translate3d(1%,2%,0)}}
+@media(max-width:700px){.design-contours{opacity:.4;mask-image:linear-gradient(90deg,transparent 55%,#000);-webkit-mask-image:linear-gradient(90deg,transparent 55%,#000)}.design-contours path:nth-child(n+11){display:none}.hiring-introduction{padding:22px 18px 26px}.hiring-introduction h2{font-size:clamp(42px,11.7vw,64px)}.hiring-introduction:after{width:20px;height:20px;right:10px;top:10px}.design-grain{opacity:.025}}
