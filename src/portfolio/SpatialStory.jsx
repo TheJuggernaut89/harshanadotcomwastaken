@@ -7,9 +7,9 @@ gsap.registerPlugin(ScrollTrigger);
 
 const beats = [
   {id:'story-intro',title:<>Harshana<br/>Jothi.</>,copy:'Digital marketer and AI automation builder. I make the content and connect the work behind it.',image:'/media/portrait-960.webp',alt:'Harshana with an orange cat on his shoulder'},
-  {id:'story-people',title:<>It starts<br/>with people.</>,copy:'Customer service, security and nature tourism taught me to listen. At JungleWalla, that understanding became part of the story I told.',image:'/media/jungle-960.webp',alt:'Forest wildlife from the JungleWalla collection'},
-  {id:'story-content',title:<>An idea.<br/>An edit.<br/>A story.</>,copy:'For Cream of Creams, I bring together social content, design and video. These are pieces from my actual portfolio.',image:'/selected-films/ckb-july.jpg',alt:'Cheesecake from a supplied Cream of Creams film'},
-  {id:'story-systems',title:<>Make the work<br/>work together.</>,copy:'I founded Axiom Labs to connect repetitive tasks into practical workflows, with human checks and a clear handover.',image:'/media/cream-social-960.webp',alt:'A design from the original creative work collection'}
+  {id:'story-people',title:<>It starts <br/>with people.</>,copy:'Customer service, security and nature tourism taught me to listen. At JungleWalla, that understanding became part of the story I told.',image:'/media/jungle-960.webp',alt:'Forest wildlife from the JungleWalla collection'},
+  {id:'story-content',title:<>An idea. <br/>An edit. <br/>A story.</>,copy:'For Cream of Creams, I bring together social content, design and video. These are pieces from my actual portfolio.',image:'/selected-films/ckb-july.jpg',alt:'Cheesecake from a supplied Cream of Creams film'},
+  {id:'story-systems',title:<>Make the work <br/>work together.</>,copy:'I founded Axiom Labs to connect repetitive tasks into practical workflows, with human checks and a clear handover.',image:'/media/cream-social-960.webp',alt:'A design from the original creative work collection'}
 ];
 
 export default function SpatialStory({motion,enabled,onMotionChange}) {
@@ -40,3 +40,4 @@ export default function SpatialStory({motion,enabled,onMotionChange}) {
   </section>;
 }
 SpatialStory.propTypes={motion:PropTypes.bool.isRequired,enabled:PropTypes.bool.isRequired,onMotionChange:PropTypes.func.isRequired};
+
