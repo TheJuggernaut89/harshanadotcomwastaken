@@ -9,8 +9,7 @@ export const projects = {
         ['The work', 'The collection pairs festive cheesecake batter creatives with rose pistachio and sopapilla cheesecake designs. Each uses a different visual treatment to bring the product into focus.'],
         ['Results and evidence', 'The campaign collection is shown here as work samples. Ask me about the brief, production process and campaign reporting.']
       ],
-      gallery: [{ name: 'cream-social', alt: 'Cream of Creams social media design', caption: 'A selected social creative from the campaign collection.' }, { name: 'cream-festive', alt: 'Festive Biscoff cheesecake batter creative', caption: 'Festive product creative.' }, { name: 'cream-ai', alt: 'Sopapilla cheesecake recipe inspiration', caption: 'Sopapilla cheesecake creative.' }],
-      video: 'cream-product', videoLabel: 'Cream of Creams product video'
+      gallery: [{ name: 'cream-social', alt: 'Cream of Creams social media design', caption: 'A selected social creative from the campaign collection.' }, { name: 'cream-festive', alt: 'Festive Biscoff cheesecake batter creative', caption: 'Festive product creative.' }, { name: 'cream-ai', alt: 'Sopapilla cheesecake recipe inspiration', caption: 'Sopapilla cheesecake creative.' }]
     },
     {
       id: 'jungle', title: 'Let the place tell the story.', category: 'JungleWalla / Tourism & nature', status: 'DEMO', image: 'jungle', alt: 'A gibbon moving through a green forest canopy',
@@ -84,3 +83,4 @@ export const capabilities = {
     ['Make it maintainable', 'Check failure paths and leave practical notes for the next person.', 'Human review / Testing / Documentation / Handover']
   ]
 };
+
