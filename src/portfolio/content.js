@@ -1,15 +1,15 @@
 export const projects = {
   marketing: [
     {
-      id: 'cream', title: 'A familiar flavour. A fresh story.', category: 'Cream of Creams / Campaign design', status: 'DEMO', image: 'cheesecake', alt: 'Apam Balik Cheesecake campaign artwork',
+      id: 'cream', title: 'A familiar flavour. A fresh story.', category: 'Cream of Creams / Campaign design', status: 'DEMO', image: 'cheesecake', alt: 'Rose pistachio cheesecake campaign artwork',
       description: 'Product storytelling that brings Malaysian flavours into the frame.',
       sections: [
         ['The brief', 'Give a cheesecake range a recognisable local voice through product-led creative and social content.'],
         ['My contribution', 'Social media content, graphic design and video work for Cream of Creams. This selection brings together campaign artwork and a product video from that work.'],
-        ['The work', 'The Apam Balik creative puts the product first, pairing a familiar Malaysian flavour with a simple, prominent headline. The additional pieces show different visual treatments from the content collection.'],
+        ['The work', 'The collection pairs festive cheesecake batter creatives with rose pistachio and sopapilla cheesecake designs. Each uses a different visual treatment to bring the product into focus.'],
         ['Results and evidence', 'The campaign collection is shown here as work samples. Ask me about the brief, production process and campaign reporting.']
       ],
-      gallery: [{ name: 'cream-social', alt: 'Cream of Creams social media design', caption: 'A selected social creative from the campaign collection.' }, { name: 'cream-ai', alt: 'AI-assisted Cream of Creams campaign visual', caption: 'AI-assisted visual exploration from the existing work collection.' }],
+      gallery: [{ name: 'cream-social', alt: 'Cream of Creams social media design', caption: 'A selected social creative from the campaign collection.' }, { name: 'cream-festive', alt: 'Festive Biscoff cheesecake batter creative', caption: 'Festive product creative.' }, { name: 'cream-ai', alt: 'Sopapilla cheesecake recipe inspiration', caption: 'Sopapilla cheesecake creative.' }],
       video: 'cream-product', videoLabel: 'Cream of Creams product video'
     },
     {
@@ -23,11 +23,11 @@ export const projects = {
       ], video: 'jungle-film', videoLabel: 'Selected JungleWalla video from the work collection'
     },
     {
-      id: 'visual', title: 'Room to try a different direction.', category: 'Visual studies / Design & AI', status: 'CONCEPT', image: 'cream-ai', alt: 'AI-assisted visual study for Cream of Creams',
-      description: 'A small selection of visual experiments, with room for a human edit.',
+      id: 'visual', title: 'Room to try a different direction.', category: 'Visual studies / Product design', status: 'CONCEPT', image: 'cream-ai', alt: 'Sopapilla cheesecake product creative',
+      description: 'A product-led visual direction from my Cream of Creams collection.',
       sections: [
-        ['The intent', 'Explore a visual direction before treating it as a finished campaign. This piece comes from the AI-generated visual content collection in my portfolio.'],
-        ['My approach', 'Use generated material as part of an editing process, then examine the composition, wording and whether the result serves the brief.'],
+        ['The intent', 'Explore a product-led visual direction. This supplied sopapilla cheesecake design brings the product, recipe inspiration and packaging into one composition.'],
+        ['My approach', 'Consider the composition, wording and whether the finished piece serves the brief.'],
         ['Current status', 'Concept work. It is shown to discuss visual direction, not as evidence of a launched campaign or a measured commercial result.']
       ]
     }

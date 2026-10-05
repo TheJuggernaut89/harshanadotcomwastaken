@@ -8,11 +8,12 @@ const root = process.cwd();
 const out = path.join(root, 'portfolio-public/media');
 await fs.mkdir(out, { recursive: true });
 const images = {
-  cheesecake: 'public/Visionary/Viral Cheesecake Campaign.png',
+  'cream-festive': 'public/cream-approved/design-2.png',
+  cheesecake: 'public/cream-approved/design-3.png',
   jungle: 'public/images/journey/junglewalla/images/Jungle-image1.jpg',
   portrait: 'public/portraits/harshana-with-cat.jpeg',
-  'cream-social': 'public/images/journey/cream-of-creams/images/cream-2.png',
-  'cream-ai': 'public/images/journey/cream-of-creams/images/cream-new-2.png',
+  'cream-social': 'public/cream-approved/design-1.png',
+  'cream-ai': 'public/cream-approved/design-4.png',
 };
 for (const [name, source] of Object.entries(images)) {
   for (const width of [480, 960, 1440]) {
