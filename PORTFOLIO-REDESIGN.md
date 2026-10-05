@@ -44,3 +44,6 @@ The opening now uses a lazy-loaded Three.js editing table, scrubbed in both dire
 Design references: Impeccable (https://github.com/pbakaus/impeccable), Taste (https://github.com/Leonxlnx/taste-skill) and the supplied 10K website reference. No paid image or film generation was used. PRODUCT.md and DESIGN.md record the adaptations.
 
 Build, lint and 10 tests pass. Browser QA was blocked by automatic approval review's account usage limit, so phone rendering and real-device smoothness remain unverified. This change is for the portfolio-review deployment; production is not promoted.
+
+## Video revision
+Removed the archive entry Cream of Creams / Film 1 (Cream-video1.mp4), preserving original source files and the remaining film numbers. Remaining six archive films exported at 720x1280 with higher-quality compression; Film 2, 3 and 4 are upscaled from 360x640 and do not gain native detail. Selected Hogan and July films already use 720x1280. Added four supplied JungleWalla Desaru films at their original 720x1280, preserving streams and sound, with web playback metadata moved to the front. Archive now contains 23 films and 50 images. On-demand media budget raised to 190 MB to accommodate these requested HD files; actual current media is about 167 MiB. No extra initial-page video downloads. Review only.

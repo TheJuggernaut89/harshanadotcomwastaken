@@ -32,6 +32,11 @@ for (const [i, source] of sources.entries()) {
   } else if (!await exists(poster)) await sharp(source,{limitInputPixels:false}).rotate().resize({width:1200,height:1600,fit:'inside',withoutEnlargement:true}).webp({quality:80}).toFile(poster);
   media.push({id,group,title,type:video?'video':'image',poster:`/media/${id}.webp`,src:`/media/${id}.${video?'mp4':'webp'}`});
 }
+// Owner's media revision: preserve stable archive identifiers and film numbering.
+const removedIndex=media.findIndex(item=>item.title==='Cream of Creams / Film 1');
+if(removedIndex>=0){const [removed]=media.splice(removedIndex,1);await fs.rm('portfolio-public'+removed.src,{force:true});await fs.rm('portfolio-public'+removed.poster,{force:true});}
+await fs.cp('public/video-updates',out,{recursive:true});
+for(let i=4;i>=1;i--)media.unshift({id:'desaru-'+i,group:'JungleWalla Desaru',title:'JungleWalla Desaru / Film '+i,type:'video',poster:'/media/desaru-'+i+'.webp',src:'/media/desaru-'+i+'.mp4'});
 await fs.writeFile(`${out}/archive.json`, JSON.stringify(media));
 // Keep the original portrait framing. The desktop reel is three portrait edits alongside one another.
 const clips = ['public/images/journey/cream-of-creams/videos/cream-new-1.mp4','public/images/journey/junglewalla/videos/Jungle-video1.mp4','public/images/journey/cream-of-creams/videos/Cream-video2.mp4'];
@@ -70,3 +75,4 @@ await fs.writeFile('portfolio-public/intro/index.html', intro);
 console.log(`Preserved ${media.filter(x=>x.type==='video').length} videos and ${media.filter(x=>x.type==='image').length} images; compiled portrait and triptych reels; restored original intro.`);
 
 await fs.cp('public/selected-films','portfolio-public/selected-films',{recursive:true});
+
