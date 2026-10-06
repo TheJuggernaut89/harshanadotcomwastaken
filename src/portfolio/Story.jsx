@@ -2,10 +2,20 @@ import { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import {disciplines} from './disciplines';
 
+const welcomeStory = 'Welcome. I’m Harshana.\nI tell stories, build useful systems and help people find their next step.';
 export function Intro({ mode, onComplete }) {
- const ref=useRef(null);
+ const ref=useRef(null), choices=useRef(null);
+ const [count,setCount]=useState(()=>matchMedia('(prefers-reduced-motion: reduce)').matches?welcomeStory.length:0);
+ const ready=count>=welcomeStory.length;
  useEffect(()=>{const dialog=ref.current;dialog.showModal();const old=document.body.style.overflow;document.body.style.overflow='hidden';return()=>{dialog.close();document.body.style.overflow=old;};},[]);
- return <dialog ref={ref} className="mode-intro" aria-labelledby="mode-intro-title" onCancel={e=>{e.preventDefault();onComplete(mode);}}><div className="mode-intro-top"><span>HARSHANA JOTHI / PORTFOLIO</span><button autoFocus onClick={()=>onComplete(mode)}>Continue to {disciplines.find(d=>d.id===mode).name} ↗</button></div><p className="eyebrow">One person. Three ways to contribute.</p><h1 id="mode-intro-title">What brings<br/>you here?</h1><p className="mode-intro-lead">Choose a focus. Explore the work, experience and skills that matter to you.</p><div className="mode-intro-options">{disciplines.map(d=><button className={'mode-choice mode-'+d.id} key={d.id} onClick={()=>onComplete(d.id)}><span className="mode-number">{d.number} / {d.tag}</span><strong>{d.name}</strong><span>{d.scope}</span><span className="mode-enter">Explore this portfolio <b aria-hidden="true">↗</b></span></button>)}</div><p className="mode-intro-note">You can switch focus at any time. Each view has its own colour palette.</p></dialog>;
+ useEffect(()=>{if(ready)return;const timer=setTimeout(()=>setCount(n=>Math.min(n+1,welcomeStory.length)),count===0?350:welcomeStory[count-1]==='.'?240:30);return()=>clearTimeout(timer);},[count,ready]);
+ useEffect(()=>{const query=matchMedia('(prefers-reduced-motion: reduce)');const changed=e=>{if(e.matches)setCount(welcomeStory.length);};query.addEventListener('change',changed);return()=>query.removeEventListener('change',changed);},[]);
+ function skip(){setCount(welcomeStory.length);requestAnimationFrame(()=>choices.current?.focus());}
+ return <dialog ref={ref} className={'mode-intro story-intro '+(ready?'story-ready':'story-typing')} aria-labelledby="mode-intro-title" onCancel={e=>{e.preventDefault();onComplete(mode);}}>
+ <div className="mode-intro-top"><span>HARSHANA JOTHI <span className="intro-top-separator">/</span> A SHORT INTRODUCTION</span><button autoFocus onClick={skip}>Skip to choices <span aria-hidden="true">↓</span></button></div>
+ <div className="welcome-scene"><p className="eyebrow">Every career has a through-line. Mine is connection.</p><h1 id="mode-intro-title">People.<br/>Stories.<br/><em>Possibilities.</em></h1><div className="welcome-note"><span className="welcome-note-label">A NOTE FROM HARSHANA</span><p className="welcome-typed" aria-hidden="true">{welcomeStory.slice(0,count)}{!ready&&<span className="type-cursor">▍</span>}</p><p className="sr-welcome">{welcomeStory}</p><span className="welcome-signature" aria-hidden="true">Harshana.</span></div></div>
+ <div className="story-choice-region" hidden={!ready}><div className="story-choice-heading"><p className="eyebrow">The next chapter is yours to choose.</p><h2 ref={choices} tabIndex={-1}>Where shall we begin?</h2><p>Three sides of my work. Start with the one that brought you here.</p></div><div className="mode-intro-options">{disciplines.map(d=><button className={'mode-choice mode-'+d.id} key={d.id} onClick={()=>onComplete(d.id)}><span className="mode-number">CHAPTER {d.number} / {d.tag}</span><strong>{d.name}</strong><span>{d.scope}</span><span className="mode-enter">Enter this chapter <b aria-hidden="true">↗</b></span></button>)}</div><p className="mode-intro-note">No wrong door. You can explore the other chapters at any time.</p></div>
+ </dialog>;
 }
 Intro.propTypes = {mode:PropTypes.string.isRequired,onComplete:PropTypes.func.isRequired};
 
