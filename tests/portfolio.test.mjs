@@ -96,3 +96,15 @@ test('Customer Service supports direct entry with correct metadata and shared as
  assert.equal(html.match(/src="(\/assets\/[^"]+\.js)"/)[1],home.match(/src="(\/assets\/[^"]+\.js)"/)[1]);
  assert.match(await fs.readFile('dist/sitemap.xml','utf8'),/customer-service/);
 });
+
+test('all three discipline themes keep normal text and action labels legible',()=>{
+ const lum=hex=>{const c=hex.match(/\w\w/g).map(v=>parseInt(v,16)/255).map(v=>v<=.04045?v/12.92:((v+.055)/1.055)**2.4);return c[0]*.2126+c[1]*.7152+c[2]*.0722};
+ const contrast=(a,b)=>(Math.max(lum(a),lum(b))+.05)/(Math.min(lum(a),lum(b))+.05);
+ for(const [backgrounds,foregrounds,accent] of [
+ [['292324','362e30','211c1e','3d3132'],['fff4e6','d3c4b9','deb89d','f4b17a'],'f4b17a'],
+ [['152535','20364a','101e2d','253e53'],['edf4fa','b9cddd','89ccd9','a2dce5'],'a2dce5'],
+ [['202e29','2b4037','18261f','344b3f'],['f4f4e8','c7d4c6','b5d4af','e7cd96'],'e7cd96']]){
+  for(const bg of backgrounds)for(const fg of foregrounds)assert.ok(contrast(bg,fg)>=4.5,`${bg}/${fg}`);
+  assert.ok(contrast(accent,'1a2626')>=4.5);
+ }
+});

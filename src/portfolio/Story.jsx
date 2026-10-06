@@ -1,19 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
+import {disciplines} from './disciplines';
 
 export function Intro({ mode, onComplete }) {
-  const frame = useRef(null);
-  useEffect(() => {
-    const previous = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-    function receive(e) {
-      if(e.origin === location.origin && e.source === frame.current?.contentWindow && e.data?.type === 'portfolio-intro-complete' && ['marketing','ai','service'].includes(e.data.mode)) onComplete(e.data.mode);
-    }
-    const escape = e => { if(e.key === 'Escape') onComplete(mode); };
-    window.addEventListener('message',receive); window.addEventListener('keydown',escape);
-    return () => {document.body.style.overflow = previous; window.removeEventListener('message',receive);window.removeEventListener('keydown',escape);};
-  }, [mode,onComplete]);
-  return <div className="intro-screen" role="dialog" aria-modal="true" aria-label="Original interactive terminal intro"><iframe ref={frame} src={`/intro/?mode=${mode}`} title="Harshana’s original terminal intro" /><div className="intro-controls"><span>Interactive intro</span><button onClick={() => onComplete('service')}>Customer Service ↗</button><button autoFocus onClick={() => onComplete(mode)}>Skip intro ↗</button></div></div>;
+ const ref=useRef(null);
+ useEffect(()=>{const dialog=ref.current;dialog.showModal();const old=document.body.style.overflow;document.body.style.overflow='hidden';return()=>{dialog.close();document.body.style.overflow=old;};},[]);
+ return <dialog ref={ref} className="mode-intro" aria-labelledby="mode-intro-title" onCancel={e=>{e.preventDefault();onComplete(mode);}}><div className="mode-intro-top"><span>HARSHANA JOTHI / PORTFOLIO</span><button autoFocus onClick={()=>onComplete(mode)}>Continue to {disciplines.find(d=>d.id===mode).name} ↗</button></div><p className="eyebrow">One person. Three ways to contribute.</p><h1 id="mode-intro-title">What brings<br/>you here?</h1><p className="mode-intro-lead">Choose a focus. Explore the work, experience and skills that matter to you.</p><div className="mode-intro-options">{disciplines.map(d=><button className={'mode-choice mode-'+d.id} key={d.id} onClick={()=>onComplete(d.id)}><span className="mode-number">{d.number} / {d.tag}</span><strong>{d.name}</strong><span>{d.scope}</span><span className="mode-enter">Explore this portfolio <b aria-hidden="true">↗</b></span></button>)}</div><p className="mode-intro-note">You can switch focus at any time. Each view has its own colour palette.</p></dialog>;
 }
 Intro.propTypes = {mode:PropTypes.string.isRequired,onComplete:PropTypes.func.isRequired};
 
