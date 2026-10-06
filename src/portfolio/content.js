@@ -72,6 +72,7 @@ export const experience = [
   { company: 'Certis CISCO', role: 'Security operations / Singapore', description: 'Working within procedures, noticing risk and coordinating with people under pressure. That experience informs how I think about checks, exceptions and responsibility in an automated workflow.' }
 ];
 export const capabilities = {
+ service: [['Listen and understand','Clarify the enquiry and explain the next step in straightforward language.','Visitor enquiries / Clear communication'],['Support the experience','Help people from different backgrounds feel informed and supported.','Cross-cultural service / Visitor support'],['Work with care','Follow procedures and coordinate with the right people when a situation needs attention.','Operations / Team coordination / Responsibility']],
   marketing: [
     ['Find the story', 'Turn a brief and an audience into a clear direction for the content.', 'Content strategy / Social media / Brand communication'],
     ['Make the work', 'Bring an idea into images, video and a consistent visual language.', 'Photoshop / Illustrator / Premiere / After Effects'],

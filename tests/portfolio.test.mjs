@@ -87,3 +87,12 @@ test('removed Cream film is absent from case studies and deployed assets', async
  assert.doesNotMatch(html,/Apam Balik/);
  assert.match(html,/rose pistachio/);
 });
+
+test('Customer Service supports direct entry with correct metadata and shared assets',async()=>{
+ const html=await fs.readFile('dist/customer-service/index.html','utf8');
+ assert.match(html,/<title>Harshana Jothi \| Customer Service<\/title>/);
+ assert.match(html,/rel="canonical" href="https:\/\/harshanajothidotcomwastaken.netlify.app\/customer-service\/"/);
+ const home=await fs.readFile('dist/index.html','utf8');
+ assert.equal(html.match(/src="(\/assets\/[^"]+\.js)"/)[1],home.match(/src="(\/assets\/[^"]+\.js)"/)[1]);
+ assert.match(await fs.readFile('dist/sitemap.xml','utf8'),/customer-service/);
+});

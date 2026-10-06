@@ -7,13 +7,13 @@ export function Intro({ mode, onComplete }) {
     const previous = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
     function receive(e) {
-      if(e.origin === location.origin && e.source === frame.current?.contentWindow && e.data?.type === 'portfolio-intro-complete' && ['marketing','ai'].includes(e.data.mode)) onComplete(e.data.mode);
+      if(e.origin === location.origin && e.source === frame.current?.contentWindow && e.data?.type === 'portfolio-intro-complete' && ['marketing','ai','service'].includes(e.data.mode)) onComplete(e.data.mode);
     }
     const escape = e => { if(e.key === 'Escape') onComplete(mode); };
     window.addEventListener('message',receive); window.addEventListener('keydown',escape);
     return () => {document.body.style.overflow = previous; window.removeEventListener('message',receive);window.removeEventListener('keydown',escape);};
   }, [mode,onComplete]);
-  return <div className="intro-screen" role="dialog" aria-modal="true" aria-label="Original interactive terminal intro"><iframe ref={frame} src={`/intro/?mode=${mode}`} title="Harshana’s original terminal intro" /><div className="intro-controls"><span>Interactive intro</span><button autoFocus onClick={() => onComplete(mode)}>Skip intro ↗</button></div></div>;
+  return <div className="intro-screen" role="dialog" aria-modal="true" aria-label="Original interactive terminal intro"><iframe ref={frame} src={`/intro/?mode=${mode}`} title="Harshana’s original terminal intro" /><div className="intro-controls"><span>Interactive intro</span><button onClick={() => onComplete('service')}>Customer Service ↗</button><button autoFocus onClick={() => onComplete(mode)}>Skip intro ↗</button></div></div>;
 }
 Intro.propTypes = {mode:PropTypes.string.isRequired,onComplete:PropTypes.func.isRequired};
 

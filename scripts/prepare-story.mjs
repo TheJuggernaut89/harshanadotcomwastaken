@@ -72,6 +72,7 @@ intro = intro.replace(/<button[^>]*data-mode="brutal"[\s\S]*?<\/button>/g,'')
   .replace(/id="mode-input"/g,'aria-label="Choose 1 for AI and automation or 2 for digital marketing" id="mode-input"')
   .replace(/selectMode\('creative', '\.\/creative\/index.html'\);/, "selectMode(new URLSearchParams(location.search).get('mode') === 'ai' ? 'professional' : 'creative', '/');");
 intro = intro.replace('</head>', '<style>@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}} .skip-hint{display:none!important}</style></head>');
+intro = intro.replace('function startAutoSelect() {', "function startAutoSelect() { if(new URLSearchParams(location.search).get('mode') === 'service') return;");
 await fs.mkdir('portfolio-public/intro',{recursive:true});
 await fs.writeFile('portfolio-public/intro/index.html', intro);
 console.log(`Preserved ${media.filter(x=>x.type==='video').length} videos and ${media.filter(x=>x.type==='image').length} images; compiled portrait and triptych reels; restored original intro.`);

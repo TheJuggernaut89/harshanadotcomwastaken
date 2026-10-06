@@ -8,5 +8,9 @@ let ai = html.replaceAll('Harshana Jothi | Digital Marketing', 'Harshana Jothi |
 await fs.writeFile('dist/ai/index.html', ai);
 await fs.writeFile('dist/robots.txt', `User-agent: *\nAllow: /\nSitemap: ${root}/sitemap.xml\n`);
 await fs.writeFile('dist/sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>${root}/</loc></url><url><loc>${root}/ai/</loc></url></urlset>`);
-await fs.writeFile('dist/404.html', '<!doctype html><html lang="en"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Page not found | Harshana Jothi</title><body style="background:#f5f3ec;color:#252922;font:18px Arial;padding:10vw"><h1>This page has moved.</h1><p><a href="/">Digital Marketing</a> · <a href="/ai/">AI &amp; Automation</a></p><p><a href="mailto:jothiharshana188@gmail.com?subject=Resume%20request">Request my résumé by email</a></p></body></html>');
-console.log('Built two directly linkable views with shared assets and correct metadata.');
+await fs.writeFile('dist/404.html', '<!doctype html><html lang="en"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Page not found | Harshana Jothi</title><body style="background:#f5f3ec;color:#252922;font:18px Arial;padding:10vw"><h1>This page has moved.</h1><p><a href="/">Digital Marketing</a> · <a href="/ai/">AI &amp; Automation</a> · <a href="/customer-service/">Customer Service</a></p><p><a href="mailto:jothiharshana188@gmail.com?subject=Resume%20request">Request my résumé by email</a></p></body></html>');
+console.log('Built three directly linkable views with shared assets and correct metadata.');
+
+await fs.mkdir('dist/customer-service',{recursive:true});
+await fs.writeFile('dist/customer-service/index.html',html.replaceAll('Harshana Jothi | Digital Marketing','Harshana Jothi | Customer Service').replaceAll('Campaign design, video and content strategy by Harshana Jothi. Selected work, experience and direct contact in Kuala Lumpur.','Customer service, visitor enquiries and operations experience by Harshana Jothi in Kuala Lumpur and Singapore.').replaceAll(root+'/"',root+'/customer-service/"'));
+const sitemap=await fs.readFile('dist/sitemap.xml','utf8');await fs.writeFile('dist/sitemap.xml',sitemap.replace('</urlset>','<url><loc>'+root+'/customer-service/</loc></url></urlset>'));
