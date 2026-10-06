@@ -74,13 +74,12 @@ function Guide() {
 export default function Portfolio() {
   const [mode, setMode] = useState(initialMode), [selected, setSelected] = useState(null);
   const ai = mode === 'ai', service = mode === 'service';
-  const [intro, setIntro] = useState(() => { try { return !sessionStorage.getItem('portfolio-intro-seen') && !new URLSearchParams(location.search).has('skipIntro'); } catch { return true; } });
+  const [intro, setIntro] = useState(true);
   const [textReplay] = useState(0);
   const [motion, setMotion] = useState(() => !matchMedia('(prefers-reduced-motion: reduce)').matches);
   useStoryMotion(motion, mode);
   useEffect(() => {const query=matchMedia('(prefers-reduced-motion: reduce)');const change=e=>setMotion(!e.matches);query.addEventListener('change',change);return()=>query.removeEventListener('change',change);},[]);
   function finishIntro(value) {
-    try {sessionStorage.setItem('portfolio-intro-seen','1');} catch { /* Storage may be disabled. */ }
     if(value !== mode) { history.pushState({},'',modePath(value)); setMode(value); }
     setIntro(false); requestAnimationFrame(()=>document.querySelector('.wordmark')?.focus());
   }
@@ -117,4 +116,5 @@ export default function Portfolio() {
     {selected && <CaseStudy project={selected} onClose={() => setSelected(null)} />}
   </>;
 }
+
 
