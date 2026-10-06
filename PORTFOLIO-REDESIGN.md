@@ -1,0 +1,52 @@
+# Portfolio: film-led revision, 2 October 2026
+
+The owner requested the original terminal intro, the previous résumé's dark colours shared by both disciplines, retained media, a video-led hero, more storytelling and distinctive typography. This supersedes the first light editorial draft.
+
+## Implemented
+
+- Original terminal animation restored from its source, with the two current discipline choices, a visible skip control, once-per-session playback and a replay option. Reduced motion goes straight to selection. The original theatrical boot copy remains inside the labelled interactive intro.
+- Shared charcoal, teal, cream and warm orange palette. Self-hosted Barlow Condensed headlines, Space Grotesk body and IBM Plex Mono labels.
+- Twelve-second triptych reel for larger screens and a portrait edit for phones, made from the existing footage. Muted playback, pause/play, off-screen pausing and reduced-motion support.
+- All 20 original videos and 50 raster images preserved in an on-demand collection with filters and full-size playback.
+- Section reveals, title entrances and reading progress. Native scrolling; no forced scroll or locked story stops. Motion can be disabled in the footer.
+- Expanded experience in marketing, nature tourism, customer service, security and Axiom Labs; education, tools, project responsibilities and honest status labels retained.
+- Résumé links continue to request a copy by email. Employment dates remain omitted because the earlier versions conflict.
+- Separate Digital Marketing and AI & Automation URLs, common identity, Axiom Labs external business link and prepared-answer guide retained.
+
+## Verification
+
+Build, active UI lint and eight regression tests pass. The tests cover guide validation, résumé contact, metadata, project assets, intro script syntax and routing, complete video inventory and dark-palette text contrast. The two hero encodes each stay below 6 MB. The archive is about 87 MB in total and does not download upfront.
+
+Phone/desktop rendering, keyboard behaviour and animation smoothness are not visually verified. Browser access was rejected by automatic approval review for an account usage limit, followed by rejection of a retry. No browser bypass was attempted for this revision. Production remains unchanged pending visual review.
+
+The portfolio checkout is independent of the Axiom Labs website. No Axiom site files were changed.
+
+## Selected films update
+
+The owner supplied four films and requested two social edits first, followed by Hogan CKB and July CKB. The marketing view now leads with three screening cards: one for each social edit, then a paired CKB feature. Original square and portrait framing is retained. Muted eight-second previews load near the viewport; full films with sound load on opening the screening dialog. Original case studies remain available in an expandable section. Optimised supplied media lives in public/selected-films; large supplied source copies are local review material and are not committed. Build, lint and the existing regression suite passed. Browser visual verification remains pending.
+
+## 5 October: 21st.dev background integration
+
+Resumed the interrupted Background Paths adaptation from Kokonut UI by Dorian Baffier, discovered on 21st.dev. The upstream MIT licence is included in the deployed /licenses/kokonut-ui.txt. Shared dark teal and warm orange contours, edge masking, a fine grain layer and page rules replace the flat background. Text-heavy sections retain dark backings. Phone layouts use fewer paths; motion stops when disabled, during the intro and in hidden browser tabs. No new runtime dependency was required. The user previously authorised replacing the live portfolio and subsequent updates have been published there. Visual browser verification remains unavailable under the earlier approval block.
+
+## 5 October: Axiom CTA and GSAP revision
+
+Replaced the oversized arrow-only Axiom feature with a direct Explore Axiom Labs link and a separate role/approach button. The live website and concept-stage catalogue are distinguished in visible copy. Headings and project entrances now use GSAP with ScrollTrigger and context cleanup. Background drift, drawn contours and ornamental frame corners were removed to reduce competing effects. Motion-off keeps text visible. Build, lint and eight regression checks passed; browser visual verification remains blocked as recorded above.
+
+## 5 October: visual storytelling
+
+Rebuilt the opening around the supplied portrait and a clear professional introduction. Three visual chapters connect experience with people, creative production and automation, using existing nature imagery, the film reel and an explicitly illustrative workflow. GSAP drives chapter entrances and reading lines without forcing scroll position. Chapter links and hiring shortcuts remain available; mobile scenes stack naturally. Selected projects, media, experience, education and contacts are preserved. Build, lint and regression checks are used; browser visual verification remains pending.
+
+## 5 October 2026: custom 3D review
+
+The opening now uses a lazy-loaded Three.js editing table, scrubbed in both directions with GSAP. Four reading stops connect Harshana, people, creative work and systems. Actual supplied photographs and film stills form the scene. The original intro, project films, employment details and contact actions remain available.
+
+Design references: Impeccable (https://github.com/pbakaus/impeccable), Taste (https://github.com/Leonxlnx/taste-skill) and the supplied 10K website reference. No paid image or film generation was used. PRODUCT.md and DESIGN.md record the adaptations.
+
+Build, lint and 10 tests pass. Browser QA was blocked by automatic approval review's account usage limit, so phone rendering and real-device smoothness remain unverified. This change is for the portfolio-review deployment; production is not promoted.
+
+## Video revision
+Removed the archive entry Cream of Creams / Film 1 (Cream-video1.mp4), preserving original source files and the remaining film numbers. Remaining six archive films exported at 720x1280 with higher-quality compression; Film 2, 3 and 4 are upscaled from 360x640 and do not gain native detail. Selected Hogan and July films already use 720x1280. Added four supplied JungleWalla Desaru films at their original 720x1280, preserving streams and sound, with web playback metadata moved to the front. Archive now contains 23 films and 50 images. On-demand media budget raised to 190 MB to accommodate these requested HD files; actual current media is about 167 MiB. No extra initial-page video downloads. Review only.
+
+## Final audit resolution
+Owner requested all fixes and final publication. Removed the Cream Film 1 case-study reference and obsolete published copy, corrected social preview text, reset collection on media-type changes and added an explicit empty state. Desaru titles and summaries now describe frames reviewed from the supplied videos and use the existing approved role description. Captions omitted at owner's explicit request. Build, lint and 11 tests pass, including regression coverage for removed media across archive, case study and deployment. Visual browser QA remains blocked and no visual compliance claim is made.
